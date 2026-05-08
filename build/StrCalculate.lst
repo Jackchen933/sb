@@ -1,0 +1,1774 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"StrCalculate.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/Func/Src/StrCalculate.c"
+  20              		.section	.text.strput,"ax",%progbits
+  21              		.align	1
+  22              		.global	strput
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	strput:
+  28              	.LVL0:
+  29              	.LFB3:
+   1:User/Func/Src/StrCalculate.c **** #include <stdio.h>
+   2:User/Func/Src/StrCalculate.c **** #include <stdlib.h>
+   3:User/Func/Src/StrCalculate.c **** #include <string.h>
+   4:User/Func/Src/StrCalculate.c **** #include "../Inc/StrCalculate.h"
+   5:User/Func/Src/StrCalculate.c **** 
+   6:User/Func/Src/StrCalculate.c **** uint8_t strput(StrStack_t * st,char strin)
+   7:User/Func/Src/StrCalculate.c **** {
+  30              		.loc 1 7 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+   8:User/Func/Src/StrCalculate.c ****     if(st->Top_Point == 15 - 1)
+  35              		.loc 1 8 5 view .LVU1
+  36              		.loc 1 8 10 is_stmt 0 view .LVU2
+  37 0000 837A     		ldrb	r3, [r0, #10]	@ zero_extendqisi2
+  38              		.loc 1 8 7 view .LVU3
+  39 0002 0E2B     		cmp	r3, #14
+  40 0004 04D0     		beq	.L3
+   9:User/Func/Src/StrCalculate.c ****     {return -1;}
+  10:User/Func/Src/StrCalculate.c **** 
+  11:User/Func/Src/StrCalculate.c ****     st->strque[st->Top_Point++] = strin;
+  41              		.loc 1 11 5 is_stmt 1 view .LVU4
+  42              		.loc 1 11 29 is_stmt 0 view .LVU5
+  43 0006 5A1C     		adds	r2, r3, #1
+  44 0008 8272     		strb	r2, [r0, #10]
+  45              		.loc 1 11 33 view .LVU6
+  46 000a C154     		strb	r1, [r0, r3]
+  12:User/Func/Src/StrCalculate.c ****     return 0;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 2
+
+
+  47              		.loc 1 12 5 is_stmt 1 view .LVU7
+  48              		.loc 1 12 12 is_stmt 0 view .LVU8
+  49 000c 0020     		movs	r0, #0
+  50              	.LVL1:
+  51              		.loc 1 12 12 view .LVU9
+  52 000e 7047     		bx	lr
+  53              	.LVL2:
+  54              	.L3:
+   9:User/Func/Src/StrCalculate.c ****     {return -1;}
+  55              		.loc 1 9 13 view .LVU10
+  56 0010 FF20     		movs	r0, #255
+  57              	.LVL3:
+  13:User/Func/Src/StrCalculate.c **** }
+  58              		.loc 1 13 1 view .LVU11
+  59 0012 7047     		bx	lr
+  60              		.cfi_endproc
+  61              	.LFE3:
+  63              		.section	.text.strdel,"ax",%progbits
+  64              		.align	1
+  65              		.global	strdel
+  66              		.syntax unified
+  67              		.thumb
+  68              		.thumb_func
+  70              	strdel:
+  71              	.LVL4:
+  72              	.LFB4:
+  14:User/Func/Src/StrCalculate.c **** 
+  15:User/Func/Src/StrCalculate.c **** uint8_t strdel(StrStack_t * st)
+  16:User/Func/Src/StrCalculate.c **** {
+  73              		.loc 1 16 1 is_stmt 1 view -0
+  74              		.cfi_startproc
+  75              		@ args = 0, pretend = 0, frame = 0
+  76              		@ frame_needed = 0, uses_anonymous_args = 0
+  77              		@ link register save eliminated.
+  17:User/Func/Src/StrCalculate.c ****     if(st->Top_Point == 0)
+  78              		.loc 1 17 5 view .LVU13
+  79              		.loc 1 17 10 is_stmt 0 view .LVU14
+  80 0000 837A     		ldrb	r3, [r0, #10]	@ zero_extendqisi2
+  81              		.loc 1 17 7 view .LVU15
+  82 0002 33B1     		cbz	r3, .L6
+  18:User/Func/Src/StrCalculate.c ****     {return -1;}
+  19:User/Func/Src/StrCalculate.c **** 
+  20:User/Func/Src/StrCalculate.c ****     st->strque[--st->Top_Point] = NULL;
+  83              		.loc 1 20 5 is_stmt 1 view .LVU16
+  84              		.loc 1 20 16 is_stmt 0 view .LVU17
+  85 0004 013B     		subs	r3, r3, #1
+  86 0006 DBB2     		uxtb	r3, r3
+  87              		.loc 1 20 33 view .LVU18
+  88 0008 8372     		strb	r3, [r0, #10]
+  89 000a 0022     		movs	r2, #0
+  90 000c C254     		strb	r2, [r0, r3]
+  21:User/Func/Src/StrCalculate.c ****     return 0;
+  91              		.loc 1 21 5 is_stmt 1 view .LVU19
+  92              		.loc 1 21 12 is_stmt 0 view .LVU20
+  93 000e 1046     		mov	r0, r2
+  94              	.LVL5:
+  95              		.loc 1 21 12 view .LVU21
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 3
+
+
+  96 0010 7047     		bx	lr
+  97              	.LVL6:
+  98              	.L6:
+  18:User/Func/Src/StrCalculate.c ****     {return -1;}
+  99              		.loc 1 18 13 view .LVU22
+ 100 0012 FF20     		movs	r0, #255
+ 101              	.LVL7:
+  22:User/Func/Src/StrCalculate.c **** }
+ 102              		.loc 1 22 1 view .LVU23
+ 103 0014 7047     		bx	lr
+ 104              		.cfi_endproc
+ 105              	.LFE4:
+ 107              		.section	.text.strstack_isEmpty,"ax",%progbits
+ 108              		.align	1
+ 109              		.global	strstack_isEmpty
+ 110              		.syntax unified
+ 111              		.thumb
+ 112              		.thumb_func
+ 114              	strstack_isEmpty:
+ 115              	.LVL8:
+ 116              	.LFB5:
+  23:User/Func/Src/StrCalculate.c **** 
+  24:User/Func/Src/StrCalculate.c **** uint8_t strstack_isEmpty(StrStack_t* st)
+  25:User/Func/Src/StrCalculate.c **** {
+ 117              		.loc 1 25 1 is_stmt 1 view -0
+ 118              		.cfi_startproc
+ 119              		@ args = 0, pretend = 0, frame = 0
+ 120              		@ frame_needed = 0, uses_anonymous_args = 0
+ 121              		@ link register save eliminated.
+  26:User/Func/Src/StrCalculate.c ****     if(st->Top_Point == 0)
+ 122              		.loc 1 26 5 view .LVU25
+ 123              		.loc 1 26 10 is_stmt 0 view .LVU26
+ 124 0000 837A     		ldrb	r3, [r0, #10]	@ zero_extendqisi2
+ 125              		.loc 1 26 7 view .LVU27
+ 126 0002 0BB1     		cbz	r3, .L9
+  27:User/Func/Src/StrCalculate.c ****     {return 1;}
+  28:User/Func/Src/StrCalculate.c **** 
+  29:User/Func/Src/StrCalculate.c ****     return 0;
+ 127              		.loc 1 29 12 view .LVU28
+ 128 0004 0020     		movs	r0, #0
+ 129              	.LVL9:
+ 130              		.loc 1 29 12 view .LVU29
+ 131 0006 7047     		bx	lr
+ 132              	.LVL10:
+ 133              	.L9:
+  27:User/Func/Src/StrCalculate.c ****     {return 1;}
+ 134              		.loc 1 27 13 view .LVU30
+ 135 0008 0120     		movs	r0, #1
+ 136              	.LVL11:
+  30:User/Func/Src/StrCalculate.c **** }
+ 137              		.loc 1 30 1 view .LVU31
+ 138 000a 7047     		bx	lr
+ 139              		.cfi_endproc
+ 140              	.LFE5:
+ 142              		.section	.text.strclear,"ax",%progbits
+ 143              		.align	1
+ 144              		.global	strclear
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 4
+
+
+ 145              		.syntax unified
+ 146              		.thumb
+ 147              		.thumb_func
+ 149              	strclear:
+ 150              	.LVL12:
+ 151              	.LFB6:
+  31:User/Func/Src/StrCalculate.c **** 
+  32:User/Func/Src/StrCalculate.c **** void strclear(StrStack_t* sq)
+  33:User/Func/Src/StrCalculate.c **** {
+ 152              		.loc 1 33 1 is_stmt 1 view -0
+ 153              		.cfi_startproc
+ 154              		@ args = 0, pretend = 0, frame = 0
+ 155              		@ frame_needed = 0, uses_anonymous_args = 0
+ 156              		.loc 1 33 1 is_stmt 0 view .LVU33
+ 157 0000 10B5     		push	{r4, lr}
+ 158              	.LCFI0:
+ 159              		.cfi_def_cfa_offset 8
+ 160              		.cfi_offset 4, -8
+ 161              		.cfi_offset 14, -4
+ 162 0002 0446     		mov	r4, r0
+  34:User/Func/Src/StrCalculate.c ****     while(!strstack_isEmpty(sq))
+ 163              		.loc 1 34 5 is_stmt 1 view .LVU34
+ 164              		.loc 1 34 10 is_stmt 0 view .LVU35
+ 165 0004 02E0     		b	.L11
+ 166              	.LVL13:
+ 167              	.L12:
+  35:User/Func/Src/StrCalculate.c ****     {
+  36:User/Func/Src/StrCalculate.c ****         strdel(sq);
+ 168              		.loc 1 36 9 is_stmt 1 view .LVU36
+ 169 0006 2046     		mov	r0, r4
+ 170 0008 FFF7FEFF 		bl	strdel
+ 171              	.LVL14:
+ 172              	.L11:
+  34:User/Func/Src/StrCalculate.c ****     while(!strstack_isEmpty(sq))
+ 173              		.loc 1 34 11 view .LVU37
+  34:User/Func/Src/StrCalculate.c ****     while(!strstack_isEmpty(sq))
+ 174              		.loc 1 34 12 is_stmt 0 view .LVU38
+ 175 000c 2046     		mov	r0, r4
+ 176 000e FFF7FEFF 		bl	strstack_isEmpty
+ 177              	.LVL15:
+  34:User/Func/Src/StrCalculate.c ****     while(!strstack_isEmpty(sq))
+ 178              		.loc 1 34 11 discriminator 1 view .LVU39
+ 179 0012 0028     		cmp	r0, #0
+ 180 0014 F7D0     		beq	.L12
+  37:User/Func/Src/StrCalculate.c ****     }
+  38:User/Func/Src/StrCalculate.c **** }
+ 181              		.loc 1 38 1 view .LVU40
+ 182 0016 10BD     		pop	{r4, pc}
+ 183              		.loc 1 38 1 view .LVU41
+ 184              		.cfi_endproc
+ 185              	.LFE6:
+ 187              		.section	.text.NumStackPut,"ax",%progbits
+ 188              		.align	1
+ 189              		.global	NumStackPut
+ 190              		.syntax unified
+ 191              		.thumb
+ 192              		.thumb_func
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 5
+
+
+ 194              	NumStackPut:
+ 195              	.LVL16:
+ 196              	.LFB7:
+  39:User/Func/Src/StrCalculate.c **** 
+  40:User/Func/Src/StrCalculate.c **** uint8_t NumStackPut(NumStack_t * st, float in)
+  41:User/Func/Src/StrCalculate.c **** {
+ 197              		.loc 1 41 1 is_stmt 1 view -0
+ 198              		.cfi_startproc
+ 199              		@ args = 0, pretend = 0, frame = 0
+ 200              		@ frame_needed = 0, uses_anonymous_args = 0
+ 201              		@ link register save eliminated.
+  42:User/Func/Src/StrCalculate.c ****    if(st->Top_Point == CAL_DEPTH - 1)
+ 202              		.loc 1 42 4 view .LVU43
+ 203              		.loc 1 42 9 is_stmt 0 view .LVU44
+ 204 0000 037D     		ldrb	r3, [r0, #20]	@ zero_extendqisi2
+ 205              		.loc 1 42 6 view .LVU45
+ 206 0002 042B     		cmp	r3, #4
+ 207 0004 07D0     		beq	.L16
+  43:User/Func/Src/StrCalculate.c **** 	{return -1;}
+  44:User/Func/Src/StrCalculate.c **** 
+  45:User/Func/Src/StrCalculate.c **** 	st->data[st->Top_Point++] = in;
+ 208              		.loc 1 45 2 is_stmt 1 view .LVU46
+ 209              		.loc 1 45 24 is_stmt 0 view .LVU47
+ 210 0006 5A1C     		adds	r2, r3, #1
+ 211 0008 0275     		strb	r2, [r0, #20]
+ 212              		.loc 1 45 28 view .LVU48
+ 213 000a 00EB8300 		add	r0, r0, r3, lsl #2
+ 214              	.LVL17:
+ 215              		.loc 1 45 28 view .LVU49
+ 216 000e 80ED000A 		vstr.32	s0, [r0]
+  46:User/Func/Src/StrCalculate.c **** 	return 0;
+ 217              		.loc 1 46 2 is_stmt 1 view .LVU50
+ 218              		.loc 1 46 9 is_stmt 0 view .LVU51
+ 219 0012 0020     		movs	r0, #0
+ 220 0014 7047     		bx	lr
+ 221              	.LVL18:
+ 222              	.L16:
+  43:User/Func/Src/StrCalculate.c **** 	{return -1;}
+ 223              		.loc 1 43 10 view .LVU52
+ 224 0016 FF20     		movs	r0, #255
+ 225              	.LVL19:
+  47:User/Func/Src/StrCalculate.c **** }
+ 226              		.loc 1 47 1 view .LVU53
+ 227 0018 7047     		bx	lr
+ 228              		.cfi_endproc
+ 229              	.LFE7:
+ 231              		.section	.text.NumStackDel,"ax",%progbits
+ 232              		.align	1
+ 233              		.global	NumStackDel
+ 234              		.syntax unified
+ 235              		.thumb
+ 236              		.thumb_func
+ 238              	NumStackDel:
+ 239              	.LVL20:
+ 240              	.LFB8:
+  48:User/Func/Src/StrCalculate.c **** 
+  49:User/Func/Src/StrCalculate.c **** uint8_t NumStackDel(NumStack_t * st)
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 6
+
+
+  50:User/Func/Src/StrCalculate.c **** {
+ 241              		.loc 1 50 1 is_stmt 1 view -0
+ 242              		.cfi_startproc
+ 243              		@ args = 0, pretend = 0, frame = 0
+ 244              		@ frame_needed = 0, uses_anonymous_args = 0
+ 245              		@ link register save eliminated.
+  51:User/Func/Src/StrCalculate.c ****     if(st->Top_Point == 0)
+ 246              		.loc 1 51 5 view .LVU55
+ 247              		.loc 1 51 10 is_stmt 0 view .LVU56
+ 248 0000 037D     		ldrb	r3, [r0, #20]	@ zero_extendqisi2
+ 249              		.loc 1 51 7 view .LVU57
+ 250 0002 3BB1     		cbz	r3, .L19
+  52:User/Func/Src/StrCalculate.c **** 	{return -1;}
+  53:User/Func/Src/StrCalculate.c ****     st->data[st->Top_Point--] = 0;
+ 251              		.loc 1 53 5 is_stmt 1 view .LVU58
+ 252              		.loc 1 53 27 is_stmt 0 view .LVU59
+ 253 0004 5A1E     		subs	r2, r3, #1
+ 254 0006 0275     		strb	r2, [r0, #20]
+ 255              		.loc 1 53 31 view .LVU60
+ 256 0008 00EB8300 		add	r0, r0, r3, lsl #2
+ 257              	.LVL21:
+ 258              		.loc 1 53 31 view .LVU61
+ 259 000c 0023     		movs	r3, #0
+ 260 000e 0360     		str	r3, [r0]	@ float
+  54:User/Func/Src/StrCalculate.c **** 	return 0;
+ 261              		.loc 1 54 2 is_stmt 1 view .LVU62
+ 262              		.loc 1 54 9 is_stmt 0 view .LVU63
+ 263 0010 0020     		movs	r0, #0
+ 264 0012 7047     		bx	lr
+ 265              	.LVL22:
+ 266              	.L19:
+  52:User/Func/Src/StrCalculate.c **** 	{return -1;}
+ 267              		.loc 1 52 10 view .LVU64
+ 268 0014 FF20     		movs	r0, #255
+ 269              	.LVL23:
+  55:User/Func/Src/StrCalculate.c **** }
+ 270              		.loc 1 55 1 view .LVU65
+ 271 0016 7047     		bx	lr
+ 272              		.cfi_endproc
+ 273              	.LFE8:
+ 275              		.section	.text.NumStack_isEmpty,"ax",%progbits
+ 276              		.align	1
+ 277              		.global	NumStack_isEmpty
+ 278              		.syntax unified
+ 279              		.thumb
+ 280              		.thumb_func
+ 282              	NumStack_isEmpty:
+ 283              	.LVL24:
+ 284              	.LFB9:
+  56:User/Func/Src/StrCalculate.c **** 
+  57:User/Func/Src/StrCalculate.c **** uint8_t NumStack_isEmpty(NumStack_t* st)
+  58:User/Func/Src/StrCalculate.c **** {
+ 285              		.loc 1 58 1 is_stmt 1 view -0
+ 286              		.cfi_startproc
+ 287              		@ args = 0, pretend = 0, frame = 0
+ 288              		@ frame_needed = 0, uses_anonymous_args = 0
+ 289              		@ link register save eliminated.
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 7
+
+
+  59:User/Func/Src/StrCalculate.c **** 	if(st->Top_Point == 0)
+ 290              		.loc 1 59 2 view .LVU67
+ 291              		.loc 1 59 7 is_stmt 0 view .LVU68
+ 292 0000 037D     		ldrb	r3, [r0, #20]	@ zero_extendqisi2
+ 293              		.loc 1 59 4 view .LVU69
+ 294 0002 0BB1     		cbz	r3, .L22
+  60:User/Func/Src/StrCalculate.c **** 	{return 1;}
+  61:User/Func/Src/StrCalculate.c **** 
+  62:User/Func/Src/StrCalculate.c **** 	return 0;
+ 295              		.loc 1 62 9 view .LVU70
+ 296 0004 0020     		movs	r0, #0
+ 297              	.LVL25:
+ 298              		.loc 1 62 9 view .LVU71
+ 299 0006 7047     		bx	lr
+ 300              	.LVL26:
+ 301              	.L22:
+  60:User/Func/Src/StrCalculate.c **** 	{return 1;}
+ 302              		.loc 1 60 10 view .LVU72
+ 303 0008 0120     		movs	r0, #1
+ 304              	.LVL27:
+  63:User/Func/Src/StrCalculate.c **** }
+ 305              		.loc 1 63 1 view .LVU73
+ 306 000a 7047     		bx	lr
+ 307              		.cfi_endproc
+ 308              	.LFE9:
+ 310              		.section	.text.NumStackClear,"ax",%progbits
+ 311              		.align	1
+ 312              		.global	NumStackClear
+ 313              		.syntax unified
+ 314              		.thumb
+ 315              		.thumb_func
+ 317              	NumStackClear:
+ 318              	.LVL28:
+ 319              	.LFB10:
+  64:User/Func/Src/StrCalculate.c **** 
+  65:User/Func/Src/StrCalculate.c **** void NumStackClear(NumStack_t* st)
+  66:User/Func/Src/StrCalculate.c **** {
+ 320              		.loc 1 66 1 is_stmt 1 view -0
+ 321              		.cfi_startproc
+ 322              		@ args = 0, pretend = 0, frame = 0
+ 323              		@ frame_needed = 0, uses_anonymous_args = 0
+ 324              		.loc 1 66 1 is_stmt 0 view .LVU75
+ 325 0000 10B5     		push	{r4, lr}
+ 326              	.LCFI1:
+ 327              		.cfi_def_cfa_offset 8
+ 328              		.cfi_offset 4, -8
+ 329              		.cfi_offset 14, -4
+ 330 0002 0446     		mov	r4, r0
+  67:User/Func/Src/StrCalculate.c **** 	while(!NumStack_isEmpty(st))
+ 331              		.loc 1 67 2 is_stmt 1 view .LVU76
+ 332              		.loc 1 67 7 is_stmt 0 view .LVU77
+ 333 0004 02E0     		b	.L24
+ 334              	.LVL29:
+ 335              	.L25:
+  68:User/Func/Src/StrCalculate.c **** 	{
+  69:User/Func/Src/StrCalculate.c **** 		NumStackDel(st);
+ 336              		.loc 1 69 3 is_stmt 1 view .LVU78
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 8
+
+
+ 337 0006 2046     		mov	r0, r4
+ 338 0008 FFF7FEFF 		bl	NumStackDel
+ 339              	.LVL30:
+ 340              	.L24:
+  67:User/Func/Src/StrCalculate.c **** 	while(!NumStack_isEmpty(st))
+ 341              		.loc 1 67 8 view .LVU79
+  67:User/Func/Src/StrCalculate.c **** 	while(!NumStack_isEmpty(st))
+ 342              		.loc 1 67 9 is_stmt 0 view .LVU80
+ 343 000c 2046     		mov	r0, r4
+ 344 000e FFF7FEFF 		bl	NumStack_isEmpty
+ 345              	.LVL31:
+  67:User/Func/Src/StrCalculate.c **** 	while(!NumStack_isEmpty(st))
+ 346              		.loc 1 67 8 discriminator 1 view .LVU81
+ 347 0012 0028     		cmp	r0, #0
+ 348 0014 F7D0     		beq	.L25
+  70:User/Func/Src/StrCalculate.c **** 	}
+  71:User/Func/Src/StrCalculate.c **** }
+ 349              		.loc 1 71 1 view .LVU82
+ 350 0016 10BD     		pop	{r4, pc}
+ 351              		.loc 1 71 1 view .LVU83
+ 352              		.cfi_endproc
+ 353              	.LFE10:
+ 355              		.section	.text.SymStackPut,"ax",%progbits
+ 356              		.align	1
+ 357              		.global	SymStackPut
+ 358              		.syntax unified
+ 359              		.thumb
+ 360              		.thumb_func
+ 362              	SymStackPut:
+ 363              	.LVL32:
+ 364              	.LFB11:
+  72:User/Func/Src/StrCalculate.c **** 
+  73:User/Func/Src/StrCalculate.c **** uint8_t SymStackPut(SymStack_t * st, char in)
+  74:User/Func/Src/StrCalculate.c **** {
+ 365              		.loc 1 74 1 is_stmt 1 view -0
+ 366              		.cfi_startproc
+ 367              		@ args = 0, pretend = 0, frame = 0
+ 368              		@ frame_needed = 0, uses_anonymous_args = 0
+ 369              		@ link register save eliminated.
+  75:User/Func/Src/StrCalculate.c **** 	if(st->Top_Point == CAL_DEPTH - 1)
+ 370              		.loc 1 75 2 view .LVU85
+ 371              		.loc 1 75 7 is_stmt 0 view .LVU86
+ 372 0000 4379     		ldrb	r3, [r0, #5]	@ zero_extendqisi2
+ 373              		.loc 1 75 4 view .LVU87
+ 374 0002 042B     		cmp	r3, #4
+ 375 0004 04D0     		beq	.L29
+  76:User/Func/Src/StrCalculate.c **** 	{return -1;}
+  77:User/Func/Src/StrCalculate.c **** 
+  78:User/Func/Src/StrCalculate.c **** 	st->data[st->Top_Point++] = in;
+ 376              		.loc 1 78 2 is_stmt 1 view .LVU88
+ 377              		.loc 1 78 24 is_stmt 0 view .LVU89
+ 378 0006 5A1C     		adds	r2, r3, #1
+ 379 0008 4271     		strb	r2, [r0, #5]
+ 380              		.loc 1 78 28 view .LVU90
+ 381 000a C154     		strb	r1, [r0, r3]
+  79:User/Func/Src/StrCalculate.c **** 	return 0;
+ 382              		.loc 1 79 2 is_stmt 1 view .LVU91
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 9
+
+
+ 383              		.loc 1 79 9 is_stmt 0 view .LVU92
+ 384 000c 0020     		movs	r0, #0
+ 385              	.LVL33:
+ 386              		.loc 1 79 9 view .LVU93
+ 387 000e 7047     		bx	lr
+ 388              	.LVL34:
+ 389              	.L29:
+  76:User/Func/Src/StrCalculate.c **** 	{return -1;}
+ 390              		.loc 1 76 10 view .LVU94
+ 391 0010 FF20     		movs	r0, #255
+ 392              	.LVL35:
+  80:User/Func/Src/StrCalculate.c **** }
+ 393              		.loc 1 80 1 view .LVU95
+ 394 0012 7047     		bx	lr
+ 395              		.cfi_endproc
+ 396              	.LFE11:
+ 398              		.section	.text.SymStackDel,"ax",%progbits
+ 399              		.align	1
+ 400              		.global	SymStackDel
+ 401              		.syntax unified
+ 402              		.thumb
+ 403              		.thumb_func
+ 405              	SymStackDel:
+ 406              	.LVL36:
+ 407              	.LFB12:
+  81:User/Func/Src/StrCalculate.c **** 
+  82:User/Func/Src/StrCalculate.c **** uint8_t SymStackDel(SymStack_t * st)
+  83:User/Func/Src/StrCalculate.c **** {
+ 408              		.loc 1 83 1 is_stmt 1 view -0
+ 409              		.cfi_startproc
+ 410              		@ args = 0, pretend = 0, frame = 0
+ 411              		@ frame_needed = 0, uses_anonymous_args = 0
+ 412              		@ link register save eliminated.
+  84:User/Func/Src/StrCalculate.c ****   if(st->Top_Point == 0)
+ 413              		.loc 1 84 3 view .LVU97
+ 414              		.loc 1 84 8 is_stmt 0 view .LVU98
+ 415 0000 4279     		ldrb	r2, [r0, #5]	@ zero_extendqisi2
+ 416              		.loc 1 84 5 view .LVU99
+ 417 0002 2AB1     		cbz	r2, .L32
+  85:User/Func/Src/StrCalculate.c **** 	{return -1;}
+  86:User/Func/Src/StrCalculate.c ****     st->data[st->Top_Point--] = 0;
+ 418              		.loc 1 86 5 is_stmt 1 view .LVU100
+ 419              		.loc 1 86 27 is_stmt 0 view .LVU101
+ 420 0004 531E     		subs	r3, r2, #1
+ 421 0006 4371     		strb	r3, [r0, #5]
+ 422              		.loc 1 86 31 view .LVU102
+ 423 0008 0023     		movs	r3, #0
+ 424 000a 8354     		strb	r3, [r0, r2]
+  87:User/Func/Src/StrCalculate.c **** 	return 0;
+ 425              		.loc 1 87 2 is_stmt 1 view .LVU103
+ 426              		.loc 1 87 9 is_stmt 0 view .LVU104
+ 427 000c 1846     		mov	r0, r3
+ 428              	.LVL37:
+ 429              		.loc 1 87 9 view .LVU105
+ 430 000e 7047     		bx	lr
+ 431              	.LVL38:
+ 432              	.L32:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 10
+
+
+  85:User/Func/Src/StrCalculate.c **** 	{return -1;}
+ 433              		.loc 1 85 10 view .LVU106
+ 434 0010 FF20     		movs	r0, #255
+ 435              	.LVL39:
+  88:User/Func/Src/StrCalculate.c **** }
+ 436              		.loc 1 88 1 view .LVU107
+ 437 0012 7047     		bx	lr
+ 438              		.cfi_endproc
+ 439              	.LFE12:
+ 441              		.section	.text.SymStack_isEmpty,"ax",%progbits
+ 442              		.align	1
+ 443              		.global	SymStack_isEmpty
+ 444              		.syntax unified
+ 445              		.thumb
+ 446              		.thumb_func
+ 448              	SymStack_isEmpty:
+ 449              	.LVL40:
+ 450              	.LFB13:
+  89:User/Func/Src/StrCalculate.c **** 
+  90:User/Func/Src/StrCalculate.c **** uint8_t SymStack_isEmpty(SymStack_t* st)
+  91:User/Func/Src/StrCalculate.c **** {
+ 451              		.loc 1 91 1 is_stmt 1 view -0
+ 452              		.cfi_startproc
+ 453              		@ args = 0, pretend = 0, frame = 0
+ 454              		@ frame_needed = 0, uses_anonymous_args = 0
+ 455              		@ link register save eliminated.
+  92:User/Func/Src/StrCalculate.c **** 	if(st->Top_Point == 0)
+ 456              		.loc 1 92 2 view .LVU109
+ 457              		.loc 1 92 7 is_stmt 0 view .LVU110
+ 458 0000 4379     		ldrb	r3, [r0, #5]	@ zero_extendqisi2
+ 459              		.loc 1 92 4 view .LVU111
+ 460 0002 0BB1     		cbz	r3, .L35
+  93:User/Func/Src/StrCalculate.c **** 	{return 1;}
+  94:User/Func/Src/StrCalculate.c **** 
+  95:User/Func/Src/StrCalculate.c **** 	return 0;
+ 461              		.loc 1 95 9 view .LVU112
+ 462 0004 0020     		movs	r0, #0
+ 463              	.LVL41:
+ 464              		.loc 1 95 9 view .LVU113
+ 465 0006 7047     		bx	lr
+ 466              	.LVL42:
+ 467              	.L35:
+  93:User/Func/Src/StrCalculate.c **** 	{return 1;}
+ 468              		.loc 1 93 10 view .LVU114
+ 469 0008 0120     		movs	r0, #1
+ 470              	.LVL43:
+  96:User/Func/Src/StrCalculate.c **** }
+ 471              		.loc 1 96 1 view .LVU115
+ 472 000a 7047     		bx	lr
+ 473              		.cfi_endproc
+ 474              	.LFE13:
+ 476              		.section	.text.SymStackClear,"ax",%progbits
+ 477              		.align	1
+ 478              		.global	SymStackClear
+ 479              		.syntax unified
+ 480              		.thumb
+ 481              		.thumb_func
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 11
+
+
+ 483              	SymStackClear:
+ 484              	.LVL44:
+ 485              	.LFB14:
+  97:User/Func/Src/StrCalculate.c **** 
+  98:User/Func/Src/StrCalculate.c **** void SymStackClear(SymStack_t* st)
+  99:User/Func/Src/StrCalculate.c **** {
+ 486              		.loc 1 99 1 is_stmt 1 view -0
+ 487              		.cfi_startproc
+ 488              		@ args = 0, pretend = 0, frame = 0
+ 489              		@ frame_needed = 0, uses_anonymous_args = 0
+ 490              		.loc 1 99 1 is_stmt 0 view .LVU117
+ 491 0000 10B5     		push	{r4, lr}
+ 492              	.LCFI2:
+ 493              		.cfi_def_cfa_offset 8
+ 494              		.cfi_offset 4, -8
+ 495              		.cfi_offset 14, -4
+ 496 0002 0446     		mov	r4, r0
+ 100:User/Func/Src/StrCalculate.c **** 	while(!SymStack_isEmpty(st))
+ 497              		.loc 1 100 2 is_stmt 1 view .LVU118
+ 498              		.loc 1 100 7 is_stmt 0 view .LVU119
+ 499 0004 02E0     		b	.L37
+ 500              	.LVL45:
+ 501              	.L38:
+ 101:User/Func/Src/StrCalculate.c **** 	{
+ 102:User/Func/Src/StrCalculate.c **** 		SymStackDel(st);
+ 502              		.loc 1 102 3 is_stmt 1 view .LVU120
+ 503 0006 2046     		mov	r0, r4
+ 504 0008 FFF7FEFF 		bl	SymStackDel
+ 505              	.LVL46:
+ 506              	.L37:
+ 100:User/Func/Src/StrCalculate.c **** 	while(!SymStack_isEmpty(st))
+ 507              		.loc 1 100 8 view .LVU121
+ 100:User/Func/Src/StrCalculate.c **** 	while(!SymStack_isEmpty(st))
+ 508              		.loc 1 100 9 is_stmt 0 view .LVU122
+ 509 000c 2046     		mov	r0, r4
+ 510 000e FFF7FEFF 		bl	SymStack_isEmpty
+ 511              	.LVL47:
+ 100:User/Func/Src/StrCalculate.c **** 	while(!SymStack_isEmpty(st))
+ 512              		.loc 1 100 8 discriminator 1 view .LVU123
+ 513 0012 0028     		cmp	r0, #0
+ 514 0014 F7D0     		beq	.L38
+ 103:User/Func/Src/StrCalculate.c **** 	}
+ 104:User/Func/Src/StrCalculate.c **** }
+ 515              		.loc 1 104 1 view .LVU124
+ 516 0016 10BD     		pop	{r4, pc}
+ 517              		.loc 1 104 1 view .LVU125
+ 518              		.cfi_endproc
+ 519              	.LFE14:
+ 521              		.section	.text.SymisHighPriority,"ax",%progbits
+ 522              		.align	1
+ 523              		.global	SymisHighPriority
+ 524              		.syntax unified
+ 525              		.thumb
+ 526              		.thumb_func
+ 528              	SymisHighPriority:
+ 529              	.LVL48:
+ 530              	.LFB15:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 12
+
+
+ 105:User/Func/Src/StrCalculate.c **** 
+ 106:User/Func/Src/StrCalculate.c **** uint8_t SymisHighPriority(char top, char present)
+ 107:User/Func/Src/StrCalculate.c **** {
+ 531              		.loc 1 107 1 is_stmt 1 view -0
+ 532              		.cfi_startproc
+ 533              		@ args = 0, pretend = 0, frame = 0
+ 534              		@ frame_needed = 0, uses_anonymous_args = 0
+ 535              		@ link register save eliminated.
+ 108:User/Func/Src/StrCalculate.c ****     //乘除的优先级最大
+ 109:User/Func/Src/StrCalculate.c ****     if(top == '*' || top == '/')
+ 536              		.loc 1 109 5 view .LVU127
+ 537 0000 2A38     		subs	r0, r0, #42
+ 538              	.LVL49:
+ 539              		.loc 1 109 5 is_stmt 0 view .LVU128
+ 540 0002 0528     		cmp	r0, #5
+ 541 0004 10D8     		bhi	.L41
+ 542 0006 DFE800F0 		tbb	[pc, r0]
+ 543              	.L43:
+ 544 000a 10       		.byte	(.L46-.L43)/2
+ 545 000b 03       		.byte	(.L45-.L43)/2
+ 546 000c 0F       		.byte	(.L41-.L43)/2
+ 547 000d 09       		.byte	(.L44-.L43)/2
+ 548 000e 0F       		.byte	(.L41-.L43)/2
+ 549 000f 10       		.byte	(.L46-.L43)/2
+ 550              		.p2align 1
+ 551              	.L45:
+ 110:User/Func/Src/StrCalculate.c ****     {
+ 111:User/Func/Src/StrCalculate.c ****         return 1;
+ 112:User/Func/Src/StrCalculate.c ****     }
+ 113:User/Func/Src/StrCalculate.c ****     else if(top == '+')
+ 114:User/Func/Src/StrCalculate.c ****     {
+ 115:User/Func/Src/StrCalculate.c ****         if(present == '-')
+ 552              		.loc 1 115 9 is_stmt 1 view .LVU129
+ 553              		.loc 1 115 11 is_stmt 0 view .LVU130
+ 554 0010 2D29     		cmp	r1, #45
+ 555 0012 01D0     		beq	.L49
+ 116:User/Func/Src/StrCalculate.c ****         {return 1;}
+ 117:User/Func/Src/StrCalculate.c ****         else
+ 118:User/Func/Src/StrCalculate.c ****         {return 0;}
+ 556              		.loc 1 118 17 view .LVU131
+ 557 0014 0020     		movs	r0, #0
+ 558              	.LVL50:
+ 559              		.loc 1 118 17 view .LVU132
+ 560 0016 7047     		bx	lr
+ 561              	.L49:
+ 116:User/Func/Src/StrCalculate.c ****         {return 1;}
+ 562              		.loc 1 116 17 view .LVU133
+ 563 0018 0120     		movs	r0, #1
+ 564 001a 7047     		bx	lr
+ 565              	.L44:
+ 119:User/Func/Src/StrCalculate.c ****     }
+ 120:User/Func/Src/StrCalculate.c ****     else if(top == '-')
+ 121:User/Func/Src/StrCalculate.c ****     {
+ 122:User/Func/Src/StrCalculate.c ****         if(present == '+')
+ 566              		.loc 1 122 9 is_stmt 1 view .LVU134
+ 567              		.loc 1 122 11 is_stmt 0 view .LVU135
+ 568 001c 2B29     		cmp	r1, #43
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 13
+
+
+ 569 001e 01D0     		beq	.L50
+ 123:User/Func/Src/StrCalculate.c ****         {return 1;}
+ 124:User/Func/Src/StrCalculate.c ****         else
+ 125:User/Func/Src/StrCalculate.c ****         {return 0;}
+ 570              		.loc 1 125 17 view .LVU136
+ 571 0020 0020     		movs	r0, #0
+ 126:User/Func/Src/StrCalculate.c ****     }
+ 127:User/Func/Src/StrCalculate.c **** }
+ 572              		.loc 1 127 1 view .LVU137
+ 573 0022 7047     		bx	lr
+ 574              	.L50:
+ 123:User/Func/Src/StrCalculate.c ****         {return 1;}
+ 575              		.loc 1 123 17 view .LVU138
+ 576 0024 0120     		movs	r0, #1
+ 577 0026 7047     		bx	lr
+ 578              	.L41:
+ 579              		.loc 1 127 1 view .LVU139
+ 580 0028 7047     		bx	lr
+ 581              	.L46:
+ 107:User/Func/Src/StrCalculate.c ****     //乘除的优先级最大
+ 582              		.loc 1 107 1 view .LVU140
+ 583 002a 0120     		movs	r0, #1
+ 584 002c 7047     		bx	lr
+ 585              		.cfi_endproc
+ 586              	.LFE15:
+ 588              		.section	.text.CalculateOne,"ax",%progbits
+ 589              		.align	1
+ 590              		.global	CalculateOne
+ 591              		.syntax unified
+ 592              		.thumb
+ 593              		.thumb_func
+ 595              	CalculateOne:
+ 596              	.LVL51:
+ 597              	.LFB16:
+ 128:User/Func/Src/StrCalculate.c **** 
+ 129:User/Func/Src/StrCalculate.c **** void CalculateOne(NumStack_t * numstack, SymStack_t * symstack)
+ 130:User/Func/Src/StrCalculate.c **** {
+ 598              		.loc 1 130 1 is_stmt 1 view -0
+ 599              		.cfi_startproc
+ 600              		@ args = 0, pretend = 0, frame = 16
+ 601              		@ frame_needed = 0, uses_anonymous_args = 0
+ 602              		.loc 1 130 1 is_stmt 0 view .LVU142
+ 603 0000 30B5     		push	{r4, r5, lr}
+ 604              	.LCFI3:
+ 605              		.cfi_def_cfa_offset 12
+ 606              		.cfi_offset 4, -12
+ 607              		.cfi_offset 5, -8
+ 608              		.cfi_offset 14, -4
+ 609 0002 85B0     		sub	sp, sp, #20
+ 610              	.LCFI4:
+ 611              		.cfi_def_cfa_offset 32
+ 612 0004 0446     		mov	r4, r0
+ 613 0006 0D46     		mov	r5, r1
+ 131:User/Func/Src/StrCalculate.c ****     caldata_t temp;
+ 614              		.loc 1 131 5 is_stmt 1 view .LVU143
+ 132:User/Func/Src/StrCalculate.c ****     temp.datatype = NUMBER_TYPE;
+ 615              		.loc 1 132 5 view .LVU144
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 14
+
+
+ 616              		.loc 1 132 19 is_stmt 0 view .LVU145
+ 617 0008 0023     		movs	r3, #0
+ 618 000a 8DF80430 		strb	r3, [sp, #4]
+ 133:User/Func/Src/StrCalculate.c ****     temp.symbol = NULL;
+ 619              		.loc 1 133 5 is_stmt 1 view .LVU146
+ 620              		.loc 1 133 17 is_stmt 0 view .LVU147
+ 621 000e 8DF80C30 		strb	r3, [sp, #12]
+ 134:User/Func/Src/StrCalculate.c ****     //计算数字栈中的顶部两数,结果存到temp中
+ 135:User/Func/Src/StrCalculate.c ****     if(symstack->data[symstack->Top_Point-1] == '+')
+ 622              		.loc 1 135 5 is_stmt 1 view .LVU148
+ 623              		.loc 1 135 31 is_stmt 0 view .LVU149
+ 624 0012 4B79     		ldrb	r3, [r1, #5]	@ zero_extendqisi2
+ 625              		.loc 1 135 42 view .LVU150
+ 626 0014 013B     		subs	r3, r3, #1
+ 627              		.loc 1 135 22 view .LVU151
+ 628 0016 CB5C     		ldrb	r3, [r1, r3]	@ zero_extendqisi2
+ 629 0018 2A3B     		subs	r3, r3, #42
+ 630 001a 052B     		cmp	r3, #5
+ 631 001c 13D8     		bhi	.L52
+ 632 001e DFE803F0 		tbb	[pc, r3]
+ 633              	.L54:
+ 634 0022 32       		.byte	(.L57-.L54)/2
+ 635 0023 03       		.byte	(.L56-.L54)/2
+ 636 0024 12       		.byte	(.L52-.L54)/2
+ 637 0025 22       		.byte	(.L55-.L54)/2
+ 638 0026 12       		.byte	(.L52-.L54)/2
+ 639 0027 42       		.byte	(.L53-.L54)/2
+ 640              		.p2align 1
+ 641              	.L56:
+ 136:User/Func/Src/StrCalculate.c ****         temp.number = (numstack->data[numstack->Top_Point-2]) + (numstack->data[numstack->Top_Point
+ 642              		.loc 1 136 9 is_stmt 1 view .LVU152
+ 643              		.loc 1 136 47 is_stmt 0 view .LVU153
+ 644 0028 037D     		ldrb	r3, [r0, #20]	@ zero_extendqisi2
+ 645              		.loc 1 136 58 view .LVU154
+ 646 002a 9A1E     		subs	r2, r3, #2
+ 647              		.loc 1 136 38 view .LVU155
+ 648 002c 00EB8202 		add	r2, r0, r2, lsl #2
+ 649 0030 D2ED007A 		vldr.32	s15, [r2]
+ 650              		.loc 1 136 100 view .LVU156
+ 651 0034 013B     		subs	r3, r3, #1
+ 652              		.loc 1 136 80 view .LVU157
+ 653 0036 00EB8303 		add	r3, r0, r3, lsl #2
+ 654 003a 93ED007A 		vldr.32	s14, [r3]
+ 655              		.loc 1 136 63 view .LVU158
+ 656 003e 77EE877A 		vadd.f32	s15, s15, s14
+ 657              		.loc 1 136 21 view .LVU159
+ 658 0042 CDED027A 		vstr.32	s15, [sp, #8]
+ 659              	.L52:
+ 137:User/Func/Src/StrCalculate.c **** 
+ 138:User/Func/Src/StrCalculate.c ****     else if(symstack->data[symstack->Top_Point-1] == '-')
+ 139:User/Func/Src/StrCalculate.c ****         temp.number = (numstack->data[numstack->Top_Point-2]) - (numstack->data[numstack->Top_Point
+ 140:User/Func/Src/StrCalculate.c **** 
+ 141:User/Func/Src/StrCalculate.c ****     else if(symstack->data[symstack->Top_Point-1] == '*')
+ 142:User/Func/Src/StrCalculate.c ****         temp.number = (numstack->data[numstack->Top_Point-2]) * (numstack->data[numstack->Top_Point
+ 143:User/Func/Src/StrCalculate.c **** 
+ 144:User/Func/Src/StrCalculate.c ****     else if(symstack->data[symstack->Top_Point-1] == '/')
+ 145:User/Func/Src/StrCalculate.c ****         temp.number = (numstack->data[numstack->Top_Point-2]) / (numstack->data[numstack->Top_Point
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 15
+
+
+ 146:User/Func/Src/StrCalculate.c **** 
+ 147:User/Func/Src/StrCalculate.c ****     //运算前两数出栈,运算结果数入栈
+ 148:User/Func/Src/StrCalculate.c ****     NumStackDel(numstack);
+ 660              		.loc 1 148 5 is_stmt 1 view .LVU160
+ 661 0046 2046     		mov	r0, r4
+ 662              	.LVL52:
+ 663              		.loc 1 148 5 is_stmt 0 view .LVU161
+ 664 0048 FFF7FEFF 		bl	NumStackDel
+ 665              	.LVL53:
+ 149:User/Func/Src/StrCalculate.c ****     NumStackDel(numstack);
+ 666              		.loc 1 149 5 is_stmt 1 view .LVU162
+ 667 004c 2046     		mov	r0, r4
+ 668 004e FFF7FEFF 		bl	NumStackDel
+ 669              	.LVL54:
+ 150:User/Func/Src/StrCalculate.c ****     NumStackPut(numstack,temp.number);
+ 670              		.loc 1 150 5 view .LVU163
+ 671 0052 9DED020A 		vldr.32	s0, [sp, #8]
+ 672 0056 2046     		mov	r0, r4
+ 673 0058 FFF7FEFF 		bl	NumStackPut
+ 674              	.LVL55:
+ 151:User/Func/Src/StrCalculate.c ****     SymStackDel(symstack);
+ 675              		.loc 1 151 5 view .LVU164
+ 676 005c 2846     		mov	r0, r5
+ 677 005e FFF7FEFF 		bl	SymStackDel
+ 678              	.LVL56:
+ 152:User/Func/Src/StrCalculate.c **** 
+ 153:User/Func/Src/StrCalculate.c **** }
+ 679              		.loc 1 153 1 is_stmt 0 view .LVU165
+ 680 0062 05B0     		add	sp, sp, #20
+ 681              	.LCFI5:
+ 682              		.cfi_remember_state
+ 683              		.cfi_def_cfa_offset 12
+ 684              		@ sp needed
+ 685 0064 30BD     		pop	{r4, r5, pc}
+ 686              	.LVL57:
+ 687              	.L55:
+ 688              	.LCFI6:
+ 689              		.cfi_restore_state
+ 139:User/Func/Src/StrCalculate.c **** 
+ 690              		.loc 1 139 9 is_stmt 1 view .LVU166
+ 139:User/Func/Src/StrCalculate.c **** 
+ 691              		.loc 1 139 47 is_stmt 0 view .LVU167
+ 692 0066 037D     		ldrb	r3, [r0, #20]	@ zero_extendqisi2
+ 139:User/Func/Src/StrCalculate.c **** 
+ 693              		.loc 1 139 58 view .LVU168
+ 694 0068 9A1E     		subs	r2, r3, #2
+ 139:User/Func/Src/StrCalculate.c **** 
+ 695              		.loc 1 139 38 view .LVU169
+ 696 006a 00EB8202 		add	r2, r0, r2, lsl #2
+ 697 006e D2ED007A 		vldr.32	s15, [r2]
+ 139:User/Func/Src/StrCalculate.c **** 
+ 698              		.loc 1 139 100 view .LVU170
+ 699 0072 013B     		subs	r3, r3, #1
+ 139:User/Func/Src/StrCalculate.c **** 
+ 700              		.loc 1 139 80 view .LVU171
+ 701 0074 00EB8303 		add	r3, r0, r3, lsl #2
+ 702 0078 93ED007A 		vldr.32	s14, [r3]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 16
+
+
+ 139:User/Func/Src/StrCalculate.c **** 
+ 703              		.loc 1 139 63 view .LVU172
+ 704 007c 77EEC77A 		vsub.f32	s15, s15, s14
+ 139:User/Func/Src/StrCalculate.c **** 
+ 705              		.loc 1 139 21 view .LVU173
+ 706 0080 CDED027A 		vstr.32	s15, [sp, #8]
+ 707 0084 DFE7     		b	.L52
+ 708              	.L57:
+ 142:User/Func/Src/StrCalculate.c **** 
+ 709              		.loc 1 142 9 is_stmt 1 view .LVU174
+ 142:User/Func/Src/StrCalculate.c **** 
+ 710              		.loc 1 142 47 is_stmt 0 view .LVU175
+ 711 0086 037D     		ldrb	r3, [r0, #20]	@ zero_extendqisi2
+ 142:User/Func/Src/StrCalculate.c **** 
+ 712              		.loc 1 142 58 view .LVU176
+ 713 0088 9A1E     		subs	r2, r3, #2
+ 142:User/Func/Src/StrCalculate.c **** 
+ 714              		.loc 1 142 38 view .LVU177
+ 715 008a 00EB8202 		add	r2, r0, r2, lsl #2
+ 716 008e D2ED007A 		vldr.32	s15, [r2]
+ 142:User/Func/Src/StrCalculate.c **** 
+ 717              		.loc 1 142 100 view .LVU178
+ 718 0092 013B     		subs	r3, r3, #1
+ 142:User/Func/Src/StrCalculate.c **** 
+ 719              		.loc 1 142 80 view .LVU179
+ 720 0094 00EB8303 		add	r3, r0, r3, lsl #2
+ 721 0098 93ED007A 		vldr.32	s14, [r3]
+ 142:User/Func/Src/StrCalculate.c **** 
+ 722              		.loc 1 142 63 view .LVU180
+ 723 009c 67EE877A 		vmul.f32	s15, s15, s14
+ 142:User/Func/Src/StrCalculate.c **** 
+ 724              		.loc 1 142 21 view .LVU181
+ 725 00a0 CDED027A 		vstr.32	s15, [sp, #8]
+ 726 00a4 CFE7     		b	.L52
+ 727              	.L53:
+ 145:User/Func/Src/StrCalculate.c **** 
+ 728              		.loc 1 145 9 is_stmt 1 view .LVU182
+ 145:User/Func/Src/StrCalculate.c **** 
+ 729              		.loc 1 145 47 is_stmt 0 view .LVU183
+ 730 00a6 037D     		ldrb	r3, [r0, #20]	@ zero_extendqisi2
+ 145:User/Func/Src/StrCalculate.c **** 
+ 731              		.loc 1 145 58 view .LVU184
+ 732 00a8 9A1E     		subs	r2, r3, #2
+ 145:User/Func/Src/StrCalculate.c **** 
+ 733              		.loc 1 145 38 view .LVU185
+ 734 00aa 00EB8202 		add	r2, r0, r2, lsl #2
+ 735 00ae D2ED006A 		vldr.32	s13, [r2]
+ 145:User/Func/Src/StrCalculate.c **** 
+ 736              		.loc 1 145 100 view .LVU186
+ 737 00b2 013B     		subs	r3, r3, #1
+ 145:User/Func/Src/StrCalculate.c **** 
+ 738              		.loc 1 145 80 view .LVU187
+ 739 00b4 00EB8303 		add	r3, r0, r3, lsl #2
+ 740 00b8 93ED007A 		vldr.32	s14, [r3]
+ 145:User/Func/Src/StrCalculate.c **** 
+ 741              		.loc 1 145 63 view .LVU188
+ 742 00bc C6EE877A 		vdiv.f32	s15, s13, s14
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 17
+
+
+ 145:User/Func/Src/StrCalculate.c **** 
+ 743              		.loc 1 145 21 view .LVU189
+ 744 00c0 CDED027A 		vstr.32	s15, [sp, #8]
+ 745 00c4 BFE7     		b	.L52
+ 746              		.cfi_endproc
+ 747              	.LFE16:
+ 749              		.section	.text.NumSymSeparate,"ax",%progbits
+ 750              		.align	1
+ 751              		.global	NumSymSeparate
+ 752              		.syntax unified
+ 753              		.thumb
+ 754              		.thumb_func
+ 756              	NumSymSeparate:
+ 757              	.LVL58:
+ 758              	.LFB17:
+ 154:User/Func/Src/StrCalculate.c **** 
+ 155:User/Func/Src/StrCalculate.c **** uint8_t NumSymSeparate(char * str, uint8_t strlen, NumStack_t * NumStack, SymStack_t * SymStack)
+ 156:User/Func/Src/StrCalculate.c **** {
+ 759              		.loc 1 156 1 is_stmt 1 view -0
+ 760              		.cfi_startproc
+ 761              		@ args = 0, pretend = 0, frame = 24
+ 762              		@ frame_needed = 0, uses_anonymous_args = 0
+ 763              		.loc 1 156 1 is_stmt 0 view .LVU191
+ 764 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 765              	.LCFI7:
+ 766              		.cfi_def_cfa_offset 32
+ 767              		.cfi_offset 4, -32
+ 768              		.cfi_offset 5, -28
+ 769              		.cfi_offset 6, -24
+ 770              		.cfi_offset 7, -20
+ 771              		.cfi_offset 8, -16
+ 772              		.cfi_offset 9, -12
+ 773              		.cfi_offset 10, -8
+ 774              		.cfi_offset 14, -4
+ 775 0004 2DED028B 		vpush.64	{d8}
+ 776              	.LCFI8:
+ 777              		.cfi_def_cfa_offset 40
+ 778              		.cfi_offset 80, -40
+ 779              		.cfi_offset 81, -36
+ 780 0008 86B0     		sub	sp, sp, #24
+ 781              	.LCFI9:
+ 782              		.cfi_def_cfa_offset 64
+ 783 000a 8046     		mov	r8, r0
+ 784 000c 8946     		mov	r9, r1
+ 785 000e 1746     		mov	r7, r2
+ 786 0010 1E46     		mov	r6, r3
+ 157:User/Func/Src/StrCalculate.c **** 		NumStackClear(NumStack);
+ 787              		.loc 1 157 3 is_stmt 1 view .LVU192
+ 788 0012 1046     		mov	r0, r2
+ 789              	.LVL59:
+ 790              		.loc 1 157 3 is_stmt 0 view .LVU193
+ 791 0014 FFF7FEFF 		bl	NumStackClear
+ 792              	.LVL60:
+ 158:User/Func/Src/StrCalculate.c **** 		SymStackClear(SymStack);
+ 793              		.loc 1 158 3 is_stmt 1 view .LVU194
+ 794 0018 3046     		mov	r0, r6
+ 795 001a FFF7FEFF 		bl	SymStackClear
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 18
+
+
+ 796              	.LVL61:
+ 159:User/Func/Src/StrCalculate.c ****     caldata_t temp,temp_pre;
+ 797              		.loc 1 159 5 view .LVU195
+ 160:User/Func/Src/StrCalculate.c ****     char NumBehindPoint_Flag = 0;//数字是否在小数点后,后多少位
+ 798              		.loc 1 160 5 view .LVU196
+ 161:User/Func/Src/StrCalculate.c ****     temp.datatype = NUMBER_TYPE;
+ 799              		.loc 1 161 5 view .LVU197
+ 800              		.loc 1 161 19 is_stmt 0 view .LVU198
+ 801 001e 0023     		movs	r3, #0
+ 802 0020 8DF80C30 		strb	r3, [sp, #12]
+ 162:User/Func/Src/StrCalculate.c ****     temp.number = 0;
+ 803              		.loc 1 162 5 is_stmt 1 view .LVU199
+ 804              		.loc 1 162 17 is_stmt 0 view .LVU200
+ 805 0024 0022     		movs	r2, #0
+ 806 0026 0492     		str	r2, [sp, #16]	@ float
+ 163:User/Func/Src/StrCalculate.c ****     temp.symbol = NULL;
+ 807              		.loc 1 163 5 is_stmt 1 view .LVU201
+ 808              		.loc 1 163 17 is_stmt 0 view .LVU202
+ 809 0028 8DF81430 		strb	r3, [sp, #20]
+ 164:User/Func/Src/StrCalculate.c ****     temp_pre = temp;
+ 810              		.loc 1 164 5 is_stmt 1 view .LVU203
+ 811              		.loc 1 164 14 is_stmt 0 view .LVU204
+ 812 002c 6B46     		mov	r3, sp
+ 813 002e 06AA     		add	r2, sp, #24
+ 814 0030 12E90700 		ldmdb	r2, {r0, r1, r2}
+ 815 0034 83E80700 		stm	r3, {r0, r1, r2}
+ 165:User/Func/Src/StrCalculate.c ****     temp_pre.datatype = SYMBOL_TYPE;
+ 816              		.loc 1 165 5 is_stmt 1 view .LVU205
+ 817              		.loc 1 165 23 is_stmt 0 view .LVU206
+ 818 0038 0123     		movs	r3, #1
+ 819 003a 8DF80030 		strb	r3, [sp]
+ 166:User/Func/Src/StrCalculate.c ****     if(str[0]>'9' || str[0]<'0')
+ 820              		.loc 1 166 5 is_stmt 1 view .LVU207
+ 821              		.loc 1 166 11 is_stmt 0 view .LVU208
+ 822 003e 98F80030 		ldrb	r3, [r8]	@ zero_extendqisi2
+ 823              		.loc 1 166 19 view .LVU209
+ 824 0042 303B     		subs	r3, r3, #48
+ 825 0044 DBB2     		uxtb	r3, r3
+ 826              		.loc 1 166 7 view .LVU210
+ 827 0046 092B     		cmp	r3, #9
+ 828 0048 00F2F080 		bhi	.L78
+ 167:User/Func/Src/StrCalculate.c ****         return 1;//erro
+ 168:User/Func/Src/StrCalculate.c **** 		int i;
+ 169:User/Func/Src/StrCalculate.c ****     for(i=0;i<strlen;i++)
+ 829              		.loc 1 169 10 view .LVU211
+ 830 004c 0025     		movs	r5, #0
+ 160:User/Func/Src/StrCalculate.c ****     temp.datatype = NUMBER_TYPE;
+ 831              		.loc 1 160 10 view .LVU212
+ 832 004e AA46     		mov	r10, r5
+ 833 0050 46E0     		b	.L62
+ 834              	.LVL62:
+ 835              	.L88:
+ 170:User/Func/Src/StrCalculate.c ****     {
+ 171:User/Func/Src/StrCalculate.c ****         if(str[i]=='.')
+ 172:User/Func/Src/StrCalculate.c ****         {
+ 173:User/Func/Src/StrCalculate.c ****             temp.datatype = POINT_TYPE;
+ 836              		.loc 1 173 13 is_stmt 1 view .LVU213
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 19
+
+
+ 837              		.loc 1 173 27 is_stmt 0 view .LVU214
+ 838 0052 0323     		movs	r3, #3
+ 839 0054 8DF80C30 		strb	r3, [sp, #12]
+ 174:User/Func/Src/StrCalculate.c ****             if(temp_pre.datatype == NUMBER_TYPE)
+ 840              		.loc 1 174 13 is_stmt 1 view .LVU215
+ 841              		.loc 1 174 24 is_stmt 0 view .LVU216
+ 842 0058 9DF80030 		ldrb	r3, [sp]	@ zero_extendqisi2
+ 843              		.loc 1 174 15 view .LVU217
+ 844 005c 002B     		cmp	r3, #0
+ 845 005e 40F0EB80 		bne	.L79
+ 175:User/Func/Src/StrCalculate.c ****             {}
+ 846              		.loc 1 175 14 is_stmt 1 view .LVU218
+ 176:User/Func/Src/StrCalculate.c ****             else
+ 177:User/Func/Src/StrCalculate.c ****             {return 2;}
+ 178:User/Func/Src/StrCalculate.c ****             temp_pre = temp;
+ 847              		.loc 1 178 13 view .LVU219
+ 848              		.loc 1 178 22 is_stmt 0 view .LVU220
+ 849 0062 6B46     		mov	r3, sp
+ 850 0064 06AA     		add	r2, sp, #24
+ 851 0066 12E90700 		ldmdb	r2, {r0, r1, r2}
+ 852 006a 83E80700 		stm	r3, {r0, r1, r2}
+ 853 006e 3EE0     		b	.L63
+ 854              	.L65:
+ 179:User/Func/Src/StrCalculate.c ****         }
+ 180:User/Func/Src/StrCalculate.c ****         if(str[i]<='9' && str[i]>='0')
+ 181:User/Func/Src/StrCalculate.c ****         {
+ 182:User/Func/Src/StrCalculate.c ****             //溢出报错
+ 183:User/Func/Src/StrCalculate.c ****             if(NumStack->Top_Point>CAL_DEPTH || SymStack->Top_Point>CAL_DEPTH)
+ 855              		.loc 1 183 13 is_stmt 1 view .LVU221
+ 856              		.loc 1 183 24 is_stmt 0 view .LVU222
+ 857 0070 3B7D     		ldrb	r3, [r7, #20]	@ zero_extendqisi2
+ 858              		.loc 1 183 15 view .LVU223
+ 859 0072 052B     		cmp	r3, #5
+ 860 0074 00F2E280 		bhi	.L80
+ 861              		.loc 1 183 57 discriminator 1 view .LVU224
+ 862 0078 7279     		ldrb	r2, [r6, #5]	@ zero_extendqisi2
+ 863              		.loc 1 183 46 discriminator 1 view .LVU225
+ 864 007a 052A     		cmp	r2, #5
+ 865 007c 00F2E080 		bhi	.L81
+ 184:User/Func/Src/StrCalculate.c ****             {return 3;}
+ 185:User/Func/Src/StrCalculate.c ****             //读取当前的字符到temp中
+ 186:User/Func/Src/StrCalculate.c ****             temp.datatype = NUMBER_TYPE;
+ 866              		.loc 1 186 13 is_stmt 1 view .LVU226
+ 867              		.loc 1 186 27 is_stmt 0 view .LVU227
+ 868 0080 0022     		movs	r2, #0
+ 869 0082 8DF80C20 		strb	r2, [sp, #12]
+ 187:User/Func/Src/StrCalculate.c ****             temp.number = (str[i] - '0');
+ 870              		.loc 1 187 13 is_stmt 1 view .LVU228
+ 871              		.loc 1 187 35 is_stmt 0 view .LVU229
+ 872 0086 A4F13001 		sub	r1, r4, #48
+ 873 008a 00EE101A 		vmov	s0, r1	@ int
+ 874              		.loc 1 187 25 view .LVU230
+ 875 008e B8EEC00A 		vcvt.f32.s32	s0, s0
+ 876 0092 8DED040A 		vstr.32	s0, [sp, #16]
+ 188:User/Func/Src/StrCalculate.c ****             temp.symbol = NULL;
+ 877              		.loc 1 188 13 is_stmt 1 view .LVU231
+ 878              		.loc 1 188 25 is_stmt 0 view .LVU232
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 20
+
+
+ 879 0096 8DF81420 		strb	r2, [sp, #20]
+ 189:User/Func/Src/StrCalculate.c ****             //如果为连续数字,需要进行进位,将数字栈顶读出进位，再加上现�
+ 190:User/Func/Src/StrCalculate.c ****             if(temp_pre.datatype == NUMBER_TYPE)
+ 880              		.loc 1 190 13 is_stmt 1 view .LVU233
+ 881              		.loc 1 190 24 is_stmt 0 view .LVU234
+ 882 009a 9DF80020 		ldrb	r2, [sp]	@ zero_extendqisi2
+ 883              		.loc 1 190 15 view .LVU235
+ 884 009e 002A     		cmp	r2, #0
+ 885 00a0 6DD1     		bne	.L68
+ 191:User/Func/Src/StrCalculate.c ****             {
+ 192:User/Func/Src/StrCalculate.c ****                 if(!NumBehindPoint_Flag)
+ 886              		.loc 1 192 17 is_stmt 1 view .LVU236
+ 887              		.loc 1 192 19 is_stmt 0 view .LVU237
+ 888 00a2 BAF1000F 		cmp	r10, #0
+ 889 00a6 4BD1     		bne	.L69
+ 193:User/Func/Src/StrCalculate.c ****                 {temp.number += NumStack->data[NumStack->Top_Point-1] * 10;}
+ 890              		.loc 1 193 18 is_stmt 1 view .LVU238
+ 891              		.loc 1 193 67 is_stmt 0 view .LVU239
+ 892 00a8 013B     		subs	r3, r3, #1
+ 893              		.loc 1 193 47 view .LVU240
+ 894 00aa 07EB8303 		add	r3, r7, r3, lsl #2
+ 895 00ae D3ED007A 		vldr.32	s15, [r3]
+ 896              		.loc 1 193 71 view .LVU241
+ 897 00b2 B2EE047A 		vmov.f32	s14, #1.0e+1
+ 898 00b6 67EE877A 		vmul.f32	s15, s15, s14
+ 899              		.loc 1 193 30 view .LVU242
+ 900 00ba 30EE270A 		vadd.f32	s0, s0, s15
+ 901 00be 8DED040A 		vstr.32	s0, [sp, #16]
+ 902              	.L70:
+ 194:User/Func/Src/StrCalculate.c ****                 else
+ 195:User/Func/Src/StrCalculate.c ****                 {
+ 196:User/Func/Src/StrCalculate.c ****                     NumBehindPoint_Flag += 1;
+ 197:User/Func/Src/StrCalculate.c ****                     char i = NumBehindPoint_Flag;
+ 198:User/Func/Src/StrCalculate.c ****                     while(i--)
+ 199:User/Func/Src/StrCalculate.c ****                     {temp.number /= 10;}
+ 200:User/Func/Src/StrCalculate.c ****                     temp.number += NumStack->data[NumStack->Top_Point-1];
+ 201:User/Func/Src/StrCalculate.c ****                 }
+ 202:User/Func/Src/StrCalculate.c ****                 NumStackDel(NumStack);
+ 903              		.loc 1 202 17 is_stmt 1 view .LVU243
+ 904 00c2 3846     		mov	r0, r7
+ 905 00c4 FFF7FEFF 		bl	NumStackDel
+ 906              	.LVL63:
+ 203:User/Func/Src/StrCalculate.c ****                 NumStackPut(NumStack,temp.number);
+ 907              		.loc 1 203 17 view .LVU244
+ 908 00c8 9DED040A 		vldr.32	s0, [sp, #16]
+ 909 00cc 3846     		mov	r0, r7
+ 910 00ce FFF7FEFF 		bl	NumStackPut
+ 911              	.LVL64:
+ 912              	.L73:
+ 204:User/Func/Src/StrCalculate.c ****             }
+ 205:User/Func/Src/StrCalculate.c ****             //当前数字刚好是小数点后一位
+ 206:User/Func/Src/StrCalculate.c ****             else if(temp_pre.datatype == POINT_TYPE)
+ 207:User/Func/Src/StrCalculate.c ****             {
+ 208:User/Func/Src/StrCalculate.c ****                 NumBehindPoint_Flag = 1;
+ 209:User/Func/Src/StrCalculate.c ****                 temp.number /= 10;
+ 210:User/Func/Src/StrCalculate.c ****                 temp.number += NumStack->data[NumStack->Top_Point-1];
+ 211:User/Func/Src/StrCalculate.c ****                 NumStackDel(NumStack);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 21
+
+
+ 212:User/Func/Src/StrCalculate.c ****                 NumStackPut(NumStack,temp.number);
+ 213:User/Func/Src/StrCalculate.c ****             }
+ 214:User/Func/Src/StrCalculate.c ****             //前一位不是数字或小数点,现在读取的这一位是数字，直接入栈
+ 215:User/Func/Src/StrCalculate.c ****             else
+ 216:User/Func/Src/StrCalculate.c ****             {
+ 217:User/Func/Src/StrCalculate.c ****                 NumStackPut(NumStack,temp.number);
+ 218:User/Func/Src/StrCalculate.c ****             }
+ 219:User/Func/Src/StrCalculate.c ****             temp_pre = temp;
+ 913              		.loc 1 219 13 view .LVU245
+ 914              		.loc 1 219 22 is_stmt 0 view .LVU246
+ 915 00d2 6B46     		mov	r3, sp
+ 916 00d4 06AA     		add	r2, sp, #24
+ 917 00d6 12E90700 		ldmdb	r2, {r0, r1, r2}
+ 918 00da 83E80700 		stm	r3, {r0, r1, r2}
+ 919              	.LVL65:
+ 920              	.L64:
+ 169:User/Func/Src/StrCalculate.c ****     {
+ 921              		.loc 1 169 23 is_stmt 1 discriminator 2 view .LVU247
+ 922 00de 0135     		adds	r5, r5, #1
+ 923              	.LVL66:
+ 924              	.L62:
+ 169:User/Func/Src/StrCalculate.c ****     {
+ 925              		.loc 1 169 14 discriminator 1 view .LVU248
+ 926 00e0 A945     		cmp	r9, r5
+ 927 00e2 40F3A180 		ble	.L87
+ 171:User/Func/Src/StrCalculate.c ****         {
+ 928              		.loc 1 171 9 view .LVU249
+ 171:User/Func/Src/StrCalculate.c ****         {
+ 929              		.loc 1 171 15 is_stmt 0 view .LVU250
+ 930 00e6 18F80540 		ldrb	r4, [r8, r5]	@ zero_extendqisi2
+ 171:User/Func/Src/StrCalculate.c ****         {
+ 931              		.loc 1 171 11 view .LVU251
+ 932 00ea 2E2C     		cmp	r4, #46
+ 933 00ec B1D0     		beq	.L88
+ 934              	.L63:
+ 180:User/Func/Src/StrCalculate.c ****         {
+ 935              		.loc 1 180 9 is_stmt 1 view .LVU252
+ 936 00ee A4F12A0C 		sub	ip, r4, #42
+ 937 00f2 BCF10F0F 		cmp	ip, #15
+ 938 00f6 F2D8     		bhi	.L64
+ 939 00f8 01A3     		adr	r3, .L66
+ 940 00fa 53F82CF0 		ldr	pc, [r3, ip, lsl #2]
+ 941 00fe 00BF     		.p2align 2
+ 942              	.L66:
+ 943 0100 BF010000 		.word	.L67+1
+ 944 0104 BF010000 		.word	.L67+1
+ 945 0108 DF000000 		.word	.L64+1
+ 946 010c BF010000 		.word	.L67+1
+ 947 0110 DF000000 		.word	.L64+1
+ 948 0114 BF010000 		.word	.L67+1
+ 949 0118 71000000 		.word	.L65+1
+ 950 011c 71000000 		.word	.L65+1
+ 951 0120 71000000 		.word	.L65+1
+ 952 0124 71000000 		.word	.L65+1
+ 953 0128 71000000 		.word	.L65+1
+ 954 012c 71000000 		.word	.L65+1
+ 955 0130 71000000 		.word	.L65+1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 22
+
+
+ 956 0134 71000000 		.word	.L65+1
+ 957 0138 71000000 		.word	.L65+1
+ 958 013c 71000000 		.word	.L65+1
+ 959              		.p2align 1
+ 960              	.L69:
+ 961              	.LBB2:
+ 196:User/Func/Src/StrCalculate.c ****                     char i = NumBehindPoint_Flag;
+ 962              		.loc 1 196 21 view .LVU253
+ 196:User/Func/Src/StrCalculate.c ****                     char i = NumBehindPoint_Flag;
+ 963              		.loc 1 196 41 is_stmt 0 view .LVU254
+ 964 0140 0AF1010A 		add	r10, r10, #1
+ 965              	.LVL67:
+ 196:User/Func/Src/StrCalculate.c ****                     char i = NumBehindPoint_Flag;
+ 966              		.loc 1 196 41 view .LVU255
+ 967 0144 5FFA8AFA 		uxtb	r10, r10
+ 968              	.LVL68:
+ 197:User/Func/Src/StrCalculate.c ****                     while(i--)
+ 969              		.loc 1 197 21 is_stmt 1 view .LVU256
+ 198:User/Func/Src/StrCalculate.c ****                     {temp.number /= 10;}
+ 970              		.loc 1 198 21 view .LVU257
+ 197:User/Func/Src/StrCalculate.c ****                     while(i--)
+ 971              		.loc 1 197 26 is_stmt 0 view .LVU258
+ 972 0148 5146     		mov	r1, r10
+ 198:User/Func/Src/StrCalculate.c ****                     {temp.number /= 10;}
+ 973              		.loc 1 198 26 view .LVU259
+ 974 014a 08E0     		b	.L71
+ 975              	.LVL69:
+ 976              	.L72:
+ 199:User/Func/Src/StrCalculate.c ****                     temp.number += NumStack->data[NumStack->Top_Point-1];
+ 977              		.loc 1 199 22 is_stmt 1 view .LVU260
+ 199:User/Func/Src/StrCalculate.c ****                     temp.number += NumStack->data[NumStack->Top_Point-1];
+ 978              		.loc 1 199 34 is_stmt 0 view .LVU261
+ 979 014c DDED046A 		vldr.32	s13, [sp, #16]
+ 980 0150 B2EE047A 		vmov.f32	s14, #1.0e+1
+ 981 0154 C6EE877A 		vdiv.f32	s15, s13, s14
+ 982 0158 CDED047A 		vstr.32	s15, [sp, #16]
+ 198:User/Func/Src/StrCalculate.c ****                     {temp.number /= 10;}
+ 983              		.loc 1 198 28 view .LVU262
+ 984 015c 1146     		mov	r1, r2
+ 985              	.LVL70:
+ 986              	.L71:
+ 198:User/Func/Src/StrCalculate.c ****                     {temp.number /= 10;}
+ 987              		.loc 1 198 27 is_stmt 1 view .LVU263
+ 198:User/Func/Src/StrCalculate.c ****                     {temp.number /= 10;}
+ 988              		.loc 1 198 28 is_stmt 0 view .LVU264
+ 989 015e 4A1E     		subs	r2, r1, #1
+ 990 0160 D2B2     		uxtb	r2, r2
+ 991              	.LVL71:
+ 198:User/Func/Src/StrCalculate.c ****                     {temp.number /= 10;}
+ 992              		.loc 1 198 27 view .LVU265
+ 993 0162 0029     		cmp	r1, #0
+ 994 0164 F2D1     		bne	.L72
+ 200:User/Func/Src/StrCalculate.c ****                 }
+ 995              		.loc 1 200 21 is_stmt 1 view .LVU266
+ 200:User/Func/Src/StrCalculate.c ****                 }
+ 996              		.loc 1 200 70 is_stmt 0 view .LVU267
+ 997 0166 013B     		subs	r3, r3, #1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 23
+
+
+ 200:User/Func/Src/StrCalculate.c ****                 }
+ 998              		.loc 1 200 50 view .LVU268
+ 999 0168 07EB8303 		add	r3, r7, r3, lsl #2
+ 1000 016c 93ED007A 		vldr.32	s14, [r3]
+ 200:User/Func/Src/StrCalculate.c ****                 }
+ 1001              		.loc 1 200 33 view .LVU269
+ 1002 0170 DDED047A 		vldr.32	s15, [sp, #16]
+ 1003 0174 77EE877A 		vadd.f32	s15, s15, s14
+ 1004 0178 CDED047A 		vstr.32	s15, [sp, #16]
+ 1005 017c A1E7     		b	.L70
+ 1006              	.LVL72:
+ 1007              	.L68:
+ 200:User/Func/Src/StrCalculate.c ****                 }
+ 1008              		.loc 1 200 33 view .LVU270
+ 1009              	.LBE2:
+ 206:User/Func/Src/StrCalculate.c ****             {
+ 1010              		.loc 1 206 18 is_stmt 1 view .LVU271
+ 206:User/Func/Src/StrCalculate.c ****             {
+ 1011              		.loc 1 206 20 is_stmt 0 view .LVU272
+ 1012 017e 032A     		cmp	r2, #3
+ 1013 0180 03D0     		beq	.L89
+ 217:User/Func/Src/StrCalculate.c ****             }
+ 1014              		.loc 1 217 17 is_stmt 1 view .LVU273
+ 1015 0182 3846     		mov	r0, r7
+ 1016 0184 FFF7FEFF 		bl	NumStackPut
+ 1017              	.LVL73:
+ 1018 0188 A3E7     		b	.L73
+ 1019              	.L89:
+ 208:User/Func/Src/StrCalculate.c ****                 temp.number /= 10;
+ 1020              		.loc 1 208 17 view .LVU274
+ 1021              	.LVL74:
+ 209:User/Func/Src/StrCalculate.c ****                 temp.number += NumStack->data[NumStack->Top_Point-1];
+ 1022              		.loc 1 209 17 view .LVU275
+ 209:User/Func/Src/StrCalculate.c ****                 temp.number += NumStack->data[NumStack->Top_Point-1];
+ 1023              		.loc 1 209 29 is_stmt 0 view .LVU276
+ 1024 018a F2EE047A 		vmov.f32	s15, #1.0e+1
+ 1025 018e 80EE278A 		vdiv.f32	s16, s0, s15
+ 1026 0192 8DED048A 		vstr.32	s16, [sp, #16]
+ 210:User/Func/Src/StrCalculate.c ****                 NumStackDel(NumStack);
+ 1027              		.loc 1 210 17 is_stmt 1 view .LVU277
+ 210:User/Func/Src/StrCalculate.c ****                 NumStackDel(NumStack);
+ 1028              		.loc 1 210 66 is_stmt 0 view .LVU278
+ 1029 0196 013B     		subs	r3, r3, #1
+ 210:User/Func/Src/StrCalculate.c ****                 NumStackDel(NumStack);
+ 1030              		.loc 1 210 46 view .LVU279
+ 1031 0198 07EB8303 		add	r3, r7, r3, lsl #2
+ 1032 019c D3ED007A 		vldr.32	s15, [r3]
+ 210:User/Func/Src/StrCalculate.c ****                 NumStackDel(NumStack);
+ 1033              		.loc 1 210 29 view .LVU280
+ 1034 01a0 38EE278A 		vadd.f32	s16, s16, s15
+ 1035 01a4 8DED048A 		vstr.32	s16, [sp, #16]
+ 211:User/Func/Src/StrCalculate.c ****                 NumStackPut(NumStack,temp.number);
+ 1036              		.loc 1 211 17 is_stmt 1 view .LVU281
+ 1037 01a8 3846     		mov	r0, r7
+ 1038 01aa FFF7FEFF 		bl	NumStackDel
+ 1039              	.LVL75:
+ 212:User/Func/Src/StrCalculate.c ****             }
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 24
+
+
+ 1040              		.loc 1 212 17 view .LVU282
+ 1041 01ae B0EE480A 		vmov.f32	s0, s16
+ 1042 01b2 3846     		mov	r0, r7
+ 1043 01b4 FFF7FEFF 		bl	NumStackPut
+ 1044              	.LVL76:
+ 208:User/Func/Src/StrCalculate.c ****                 temp.number /= 10;
+ 1045              		.loc 1 208 37 is_stmt 0 view .LVU283
+ 1046 01b8 4FF0010A 		mov	r10, #1
+ 1047 01bc 89E7     		b	.L73
+ 1048              	.LVL77:
+ 1049              	.L67:
+ 220:User/Func/Src/StrCalculate.c ****         }
+ 221:User/Func/Src/StrCalculate.c ****         else if(str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/')
+ 222:User/Func/Src/StrCalculate.c ****         {
+ 223:User/Func/Src/StrCalculate.c ****             //溢出报错
+ 224:User/Func/Src/StrCalculate.c ****             if(NumStack->Top_Point>CAL_DEPTH || SymStack->Top_Point>CAL_DEPTH)
+ 1050              		.loc 1 224 13 is_stmt 1 view .LVU284
+ 1051              		.loc 1 224 24 is_stmt 0 view .LVU285
+ 1052 01be 3B7D     		ldrb	r3, [r7, #20]	@ zero_extendqisi2
+ 1053              		.loc 1 224 15 view .LVU286
+ 1054 01c0 052B     		cmp	r3, #5
+ 1055 01c2 3FD8     		bhi	.L82
+ 1056              		.loc 1 224 57 discriminator 1 view .LVU287
+ 1057 01c4 96F805A0 		ldrb	r10, [r6, #5]	@ zero_extendqisi2
+ 1058              	.LVL78:
+ 1059              		.loc 1 224 46 discriminator 1 view .LVU288
+ 1060 01c8 BAF1050F 		cmp	r10, #5
+ 1061 01cc 3CD8     		bhi	.L83
+ 225:User/Func/Src/StrCalculate.c ****             {return 4;}
+ 226:User/Func/Src/StrCalculate.c ****             //读取当前的字符到temp中
+ 227:User/Func/Src/StrCalculate.c ****             temp.datatype = SYMBOL_TYPE;
+ 1062              		.loc 1 227 13 is_stmt 1 view .LVU289
+ 1063              		.loc 1 227 27 is_stmt 0 view .LVU290
+ 1064 01ce 0123     		movs	r3, #1
+ 1065 01d0 8DF80C30 		strb	r3, [sp, #12]
+ 228:User/Func/Src/StrCalculate.c ****             temp.symbol = str[i];
+ 1066              		.loc 1 228 13 is_stmt 1 view .LVU291
+ 1067              		.loc 1 228 25 is_stmt 0 view .LVU292
+ 1068 01d4 8DF81440 		strb	r4, [sp, #20]
+ 229:User/Func/Src/StrCalculate.c ****             temp.number = 0;
+ 1069              		.loc 1 229 13 is_stmt 1 view .LVU293
+ 1070              		.loc 1 229 25 is_stmt 0 view .LVU294
+ 1071 01d8 0023     		movs	r3, #0
+ 1072 01da 0493     		str	r3, [sp, #16]	@ float
+ 230:User/Func/Src/StrCalculate.c ****             NumBehindPoint_Flag = 0;//小数点计算已经结束
+ 1073              		.loc 1 230 13 is_stmt 1 view .LVU295
+ 1074              	.LVL79:
+ 231:User/Func/Src/StrCalculate.c ****             //重复输入了运算符号
+ 232:User/Func/Src/StrCalculate.c ****             if(temp_pre.datatype == SYMBOL_TYPE)
+ 1075              		.loc 1 232 13 view .LVU296
+ 1076              		.loc 1 232 24 is_stmt 0 view .LVU297
+ 1077 01dc 9DF80030 		ldrb	r3, [sp]	@ zero_extendqisi2
+ 1078              		.loc 1 232 15 view .LVU298
+ 1079 01e0 012B     		cmp	r3, #1
+ 1080 01e2 33D0     		beq	.L84
+ 233:User/Func/Src/StrCalculate.c ****             {
+ 234:User/Func/Src/StrCalculate.c ****                 return 5 ;//erro
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 25
+
+
+ 235:User/Func/Src/StrCalculate.c ****             }
+ 236:User/Func/Src/StrCalculate.c ****             else
+ 237:User/Func/Src/StrCalculate.c ****             {
+ 238:User/Func/Src/StrCalculate.c ****                 if((!SymStack_isEmpty(SymStack)) && SymisHighPriority(SymStack->data[SymStack->Top_
+ 1081              		.loc 1 238 17 is_stmt 1 view .LVU299
+ 1082              		.loc 1 238 22 is_stmt 0 view .LVU300
+ 1083 01e4 3046     		mov	r0, r6
+ 1084 01e6 FFF7FEFF 		bl	SymStack_isEmpty
+ 1085              	.LVL80:
+ 1086              		.loc 1 238 19 discriminator 1 view .LVU301
+ 1087 01ea 38B9     		cbnz	r0, .L75
+ 1088              		.loc 1 238 105 discriminator 1 view .LVU302
+ 1089 01ec 0AF1FF3A 		add	r10, r10, #-1
+ 1090              		.loc 1 238 53 discriminator 1 view .LVU303
+ 1091 01f0 2146     		mov	r1, r4
+ 1092 01f2 16F80A00 		ldrb	r0, [r6, r10]	@ zero_extendqisi2
+ 1093 01f6 FFF7FEFF 		bl	SymisHighPriority
+ 1094              	.LVL81:
+ 1095              		.loc 1 238 50 discriminator 1 view .LVU304
+ 1096 01fa 60B9     		cbnz	r0, .L90
+ 1097              	.L75:
+ 239:User/Func/Src/StrCalculate.c ****                 {
+ 240:User/Func/Src/StrCalculate.c ****                     CalculateOne(NumStack, SymStack);
+ 241:User/Func/Src/StrCalculate.c ****                     SymStackPut(SymStack,temp.symbol);
+ 242:User/Func/Src/StrCalculate.c ****                 }
+ 243:User/Func/Src/StrCalculate.c ****                 else
+ 244:User/Func/Src/StrCalculate.c ****                 {
+ 245:User/Func/Src/StrCalculate.c ****                     //符号压入符号栈
+ 246:User/Func/Src/StrCalculate.c ****                     SymStackPut(SymStack,temp.symbol);
+ 1098              		.loc 1 246 21 is_stmt 1 view .LVU305
+ 1099 01fc 2146     		mov	r1, r4
+ 1100 01fe 3046     		mov	r0, r6
+ 1101 0200 FFF7FEFF 		bl	SymStackPut
+ 1102              	.LVL82:
+ 1103              	.L76:
+ 247:User/Func/Src/StrCalculate.c ****                 }
+ 248:User/Func/Src/StrCalculate.c ****                 temp_pre = temp;
+ 1104              		.loc 1 248 17 view .LVU306
+ 1105              		.loc 1 248 26 is_stmt 0 view .LVU307
+ 1106 0204 6B46     		mov	r3, sp
+ 1107 0206 06AA     		add	r2, sp, #24
+ 1108 0208 12E90700 		ldmdb	r2, {r0, r1, r2}
+ 1109 020c 83E80700 		stm	r3, {r0, r1, r2}
+ 230:User/Func/Src/StrCalculate.c ****             //重复输入了运算符号
+ 1110              		.loc 1 230 33 view .LVU308
+ 1111 0210 4FF0000A 		mov	r10, #0
+ 1112 0214 63E7     		b	.L64
+ 1113              	.L90:
+ 240:User/Func/Src/StrCalculate.c ****                     SymStackPut(SymStack,temp.symbol);
+ 1114              		.loc 1 240 21 is_stmt 1 view .LVU309
+ 1115 0216 3146     		mov	r1, r6
+ 1116 0218 3846     		mov	r0, r7
+ 1117 021a FFF7FEFF 		bl	CalculateOne
+ 1118              	.LVL83:
+ 241:User/Func/Src/StrCalculate.c ****                 }
+ 1119              		.loc 1 241 21 view .LVU310
+ 1120 021e 2146     		mov	r1, r4
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 26
+
+
+ 1121 0220 3046     		mov	r0, r6
+ 1122 0222 FFF7FEFF 		bl	SymStackPut
+ 1123              	.LVL84:
+ 1124 0226 EDE7     		b	.L76
+ 1125              	.LVL85:
+ 1126              	.L87:
+ 249:User/Func/Src/StrCalculate.c ****             }
+ 250:User/Func/Src/StrCalculate.c ****         }
+ 251:User/Func/Src/StrCalculate.c ****     }
+ 252:User/Func/Src/StrCalculate.c ****     return 0;
+ 1127              		.loc 1 252 12 is_stmt 0 view .LVU311
+ 1128 0228 0020     		movs	r0, #0
+ 1129 022a 00E0     		b	.L61
+ 1130              	.LVL86:
+ 1131              	.L78:
+ 167:User/Func/Src/StrCalculate.c **** 		int i;
+ 1132              		.loc 1 167 16 view .LVU312
+ 1133 022c 0120     		movs	r0, #1
+ 1134              	.LVL87:
+ 1135              	.L61:
+ 253:User/Func/Src/StrCalculate.c **** }
+ 1136              		.loc 1 253 1 view .LVU313
+ 1137 022e 06B0     		add	sp, sp, #24
+ 1138              	.LCFI10:
+ 1139              		.cfi_remember_state
+ 1140              		.cfi_def_cfa_offset 40
+ 1141              		@ sp needed
+ 1142 0230 BDEC028B 		vldm	sp!, {d8}
+ 1143              	.LCFI11:
+ 1144              		.cfi_restore 80
+ 1145              		.cfi_restore 81
+ 1146              		.cfi_def_cfa_offset 32
+ 1147 0234 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 1148              	.LVL88:
+ 1149              	.L79:
+ 1150              	.LCFI12:
+ 1151              		.cfi_restore_state
+ 177:User/Func/Src/StrCalculate.c ****             temp_pre = temp;
+ 1152              		.loc 1 177 21 view .LVU314
+ 1153 0238 0220     		movs	r0, #2
+ 1154 023a F8E7     		b	.L61
+ 1155              	.L80:
+ 184:User/Func/Src/StrCalculate.c ****             //读取当前的字符到temp中
+ 1156              		.loc 1 184 21 view .LVU315
+ 1157 023c 0320     		movs	r0, #3
+ 1158 023e F6E7     		b	.L61
+ 1159              	.L81:
+ 184:User/Func/Src/StrCalculate.c ****             //读取当前的字符到temp中
+ 1160              		.loc 1 184 21 view .LVU316
+ 1161 0240 0320     		movs	r0, #3
+ 1162 0242 F4E7     		b	.L61
+ 1163              	.L82:
+ 225:User/Func/Src/StrCalculate.c ****             //读取当前的字符到temp中
+ 1164              		.loc 1 225 21 view .LVU317
+ 1165 0244 0420     		movs	r0, #4
+ 1166 0246 F2E7     		b	.L61
+ 1167              	.LVL89:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 27
+
+
+ 1168              	.L83:
+ 225:User/Func/Src/StrCalculate.c ****             //读取当前的字符到temp中
+ 1169              		.loc 1 225 21 view .LVU318
+ 1170 0248 0420     		movs	r0, #4
+ 1171 024a F0E7     		b	.L61
+ 1172              	.LVL90:
+ 1173              	.L84:
+ 234:User/Func/Src/StrCalculate.c ****             }
+ 1174              		.loc 1 234 24 view .LVU319
+ 1175 024c 0520     		movs	r0, #5
+ 1176 024e EEE7     		b	.L61
+ 1177              		.cfi_endproc
+ 1178              	.LFE17:
+ 1180              		.section	.text.StrCalculate,"ax",%progbits
+ 1181              		.align	1
+ 1182              		.global	StrCalculate
+ 1183              		.syntax unified
+ 1184              		.thumb
+ 1185              		.thumb_func
+ 1187              	StrCalculate:
+ 1188              	.LVL91:
+ 1189              	.LFB18:
+ 254:User/Func/Src/StrCalculate.c **** 
+ 255:User/Func/Src/StrCalculate.c **** uint8_t StrCalculate(char * str,NumStack_t * NumStack, SymStack_t * SymStack)
+ 256:User/Func/Src/StrCalculate.c **** {
+ 1190              		.loc 1 256 1 is_stmt 1 view -0
+ 1191              		.cfi_startproc
+ 1192              		@ args = 0, pretend = 0, frame = 0
+ 1193              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1194              		.loc 1 256 1 is_stmt 0 view .LVU321
+ 1195 0000 70B5     		push	{r4, r5, r6, lr}
+ 1196              	.LCFI13:
+ 1197              		.cfi_def_cfa_offset 16
+ 1198              		.cfi_offset 4, -16
+ 1199              		.cfi_offset 5, -12
+ 1200              		.cfi_offset 6, -8
+ 1201              		.cfi_offset 14, -4
+ 1202 0002 0646     		mov	r6, r0
+ 1203 0004 0D46     		mov	r5, r1
+ 1204 0006 1446     		mov	r4, r2
+ 257:User/Func/Src/StrCalculate.c ****     if(NumSymSeparate(str,strlen(str),NumStack,SymStack))
+ 1205              		.loc 1 257 5 is_stmt 1 view .LVU322
+ 1206              		.loc 1 257 27 is_stmt 0 view .LVU323
+ 1207 0008 FFF7FEFF 		bl	strlen
+ 1208              	.LVL92:
+ 1209              		.loc 1 257 8 discriminator 1 view .LVU324
+ 1210 000c 2346     		mov	r3, r4
+ 1211 000e 2A46     		mov	r2, r5
+ 1212 0010 C1B2     		uxtb	r1, r0
+ 1213 0012 3046     		mov	r0, r6
+ 1214 0014 FFF7FEFF 		bl	NumSymSeparate
+ 1215              	.LVL93:
+ 1216              		.loc 1 257 7 discriminator 2 view .LVU325
+ 1217 0018 0646     		mov	r6, r0
+ 1218              	.LVL94:
+ 1219              		.loc 1 257 7 discriminator 2 view .LVU326
+ 1220 001a 58B1     		cbz	r0, .L92
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 28
+
+
+ 258:User/Func/Src/StrCalculate.c ****     {
+ 259:User/Func/Src/StrCalculate.c ****         //erro, clear all
+ 260:User/Func/Src/StrCalculate.c ****         NumStackClear(NumStack);
+ 1221              		.loc 1 260 9 is_stmt 1 view .LVU327
+ 1222 001c 2846     		mov	r0, r5
+ 1223 001e FFF7FEFF 		bl	NumStackClear
+ 1224              	.LVL95:
+ 261:User/Func/Src/StrCalculate.c ****         SymStackClear(SymStack);
+ 1225              		.loc 1 261 9 view .LVU328
+ 1226 0022 2046     		mov	r0, r4
+ 1227 0024 FFF7FEFF 		bl	SymStackClear
+ 1228              	.LVL96:
+ 262:User/Func/Src/StrCalculate.c ****         return -1;
+ 1229              		.loc 1 262 9 view .LVU329
+ 1230              		.loc 1 262 16 is_stmt 0 view .LVU330
+ 1231 0028 FF26     		movs	r6, #255
+ 1232 002a 08E0     		b	.L93
+ 1233              	.L94:
+ 263:User/Func/Src/StrCalculate.c ****     }
+ 264:User/Func/Src/StrCalculate.c ****     else
+ 265:User/Func/Src/StrCalculate.c ****     {
+ 266:User/Func/Src/StrCalculate.c ****         while(!SymStack_isEmpty(SymStack))
+ 267:User/Func/Src/StrCalculate.c ****         {
+ 268:User/Func/Src/StrCalculate.c ****             CalculateOne(NumStack,SymStack);
+ 1234              		.loc 1 268 13 is_stmt 1 view .LVU331
+ 1235 002c 2146     		mov	r1, r4
+ 1236 002e 2846     		mov	r0, r5
+ 1237 0030 FFF7FEFF 		bl	CalculateOne
+ 1238              	.LVL97:
+ 1239              	.L92:
+ 266:User/Func/Src/StrCalculate.c ****         {
+ 1240              		.loc 1 266 15 view .LVU332
+ 266:User/Func/Src/StrCalculate.c ****         {
+ 1241              		.loc 1 266 16 is_stmt 0 view .LVU333
+ 1242 0034 2046     		mov	r0, r4
+ 1243 0036 FFF7FEFF 		bl	SymStack_isEmpty
+ 1244              	.LVL98:
+ 266:User/Func/Src/StrCalculate.c ****         {
+ 1245              		.loc 1 266 15 discriminator 1 view .LVU334
+ 1246 003a 0028     		cmp	r0, #0
+ 1247 003c F6D0     		beq	.L94
+ 1248              	.L93:
+ 269:User/Func/Src/StrCalculate.c ****         }
+ 270:User/Func/Src/StrCalculate.c ****     }
+ 271:User/Func/Src/StrCalculate.c ****     return 0;
+ 272:User/Func/Src/StrCalculate.c **** }
+ 1249              		.loc 1 272 1 view .LVU335
+ 1250 003e 3046     		mov	r0, r6
+ 1251 0040 70BD     		pop	{r4, r5, r6, pc}
+ 1252              		.loc 1 272 1 view .LVU336
+ 1253              		.cfi_endproc
+ 1254              	.LFE18:
+ 1256              		.section	.text.isIntNumber,"ax",%progbits
+ 1257              		.align	1
+ 1258              		.global	isIntNumber
+ 1259              		.syntax unified
+ 1260              		.thumb
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 29
+
+
+ 1261              		.thumb_func
+ 1263              	isIntNumber:
+ 1264              	.LVL99:
+ 1265              	.LFB19:
+ 273:User/Func/Src/StrCalculate.c **** 
+ 274:User/Func/Src/StrCalculate.c **** uint8_t isIntNumber(float number)
+ 275:User/Func/Src/StrCalculate.c **** {
+ 1266              		.loc 1 275 1 is_stmt 1 view -0
+ 1267              		.cfi_startproc
+ 1268              		@ args = 0, pretend = 0, frame = 0
+ 1269              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1270              		@ link register save eliminated.
+ 276:User/Func/Src/StrCalculate.c **** 	if(number == (int)number)
+ 1271              		.loc 1 276 2 view .LVU338
+ 1272              		.loc 1 276 15 is_stmt 0 view .LVU339
+ 1273 0000 FDEEC07A 		vcvt.s32.f32	s15, s0
+ 1274              		.loc 1 276 12 view .LVU340
+ 1275 0004 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1276              		.loc 1 276 4 view .LVU341
+ 1277 0008 F4EE407A 		vcmp.f32	s15, s0
+ 1278 000c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1279 0010 01D0     		beq	.L98
+ 277:User/Func/Src/StrCalculate.c **** 	{return 1;}
+ 278:User/Func/Src/StrCalculate.c **** 	return 0;
+ 1280              		.loc 1 278 9 view .LVU342
+ 1281 0012 0020     		movs	r0, #0
+ 1282 0014 7047     		bx	lr
+ 1283              	.L98:
+ 277:User/Func/Src/StrCalculate.c **** 	{return 1;}
+ 1284              		.loc 1 277 10 view .LVU343
+ 1285 0016 0120     		movs	r0, #1
+ 279:User/Func/Src/StrCalculate.c **** }
+ 1286              		.loc 1 279 1 view .LVU344
+ 1287 0018 7047     		bx	lr
+ 1288              		.cfi_endproc
+ 1289              	.LFE19:
+ 1291              		.text
+ 1292              	.Letext0:
+ 1293              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1294              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1295              		.file 4 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1296              		.file 5 "User/Func/Src/../Inc/StrCalculate.h"
+ 1297              		.file 6 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccshA81a.s 			page 30
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 StrCalculate.c
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:21     .text.strput:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:27     .text.strput:00000000 strput
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:64     .text.strdel:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:70     .text.strdel:00000000 strdel
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:108    .text.strstack_isEmpty:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:114    .text.strstack_isEmpty:00000000 strstack_isEmpty
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:143    .text.strclear:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:149    .text.strclear:00000000 strclear
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:188    .text.NumStackPut:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:194    .text.NumStackPut:00000000 NumStackPut
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:232    .text.NumStackDel:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:238    .text.NumStackDel:00000000 NumStackDel
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:276    .text.NumStack_isEmpty:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:282    .text.NumStack_isEmpty:00000000 NumStack_isEmpty
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:311    .text.NumStackClear:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:317    .text.NumStackClear:00000000 NumStackClear
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:356    .text.SymStackPut:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:362    .text.SymStackPut:00000000 SymStackPut
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:399    .text.SymStackDel:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:405    .text.SymStackDel:00000000 SymStackDel
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:442    .text.SymStack_isEmpty:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:448    .text.SymStack_isEmpty:00000000 SymStack_isEmpty
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:477    .text.SymStackClear:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:483    .text.SymStackClear:00000000 SymStackClear
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:522    .text.SymisHighPriority:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:528    .text.SymisHighPriority:00000000 SymisHighPriority
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:544    .text.SymisHighPriority:0000000a $d
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:550    .text.SymisHighPriority:00000010 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:589    .text.CalculateOne:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:595    .text.CalculateOne:00000000 CalculateOne
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:634    .text.CalculateOne:00000022 $d
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:640    .text.CalculateOne:00000028 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:750    .text.NumSymSeparate:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:756    .text.NumSymSeparate:00000000 NumSymSeparate
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:943    .text.NumSymSeparate:00000100 $d
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:959    .text.NumSymSeparate:00000140 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:1181   .text.StrCalculate:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:1187   .text.StrCalculate:00000000 StrCalculate
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:1257   .text.isIntNumber:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccshA81a.s:1263   .text.isIntNumber:00000000 isIntNumber
+
+UNDEFINED SYMBOLS
+strlen

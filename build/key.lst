@@ -1,0 +1,487 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccdui5DN.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"key.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "BSP/KEY/key.c"
+  20              		.section	.text.Key_Port_Init,"ax",%progbits
+  21              		.align	1
+  22              		.global	Key_Port_Init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	Key_Port_Init:
+  28              	.LFB221:
+   1:BSP/KEY/key.c **** #include "key.h"
+   2:BSP/KEY/key.c **** #include "delay.h"
+   3:BSP/KEY/key.c **** #include "user_TasksInit.h"
+   4:BSP/KEY/key.c **** 
+   5:BSP/KEY/key.c **** void Key_Port_Init(void)
+   6:BSP/KEY/key.c **** {
+  29              		.loc 1 6 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 24
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 30B5     		push	{r4, r5, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 12
+  36              		.cfi_offset 4, -12
+  37              		.cfi_offset 5, -8
+  38              		.cfi_offset 14, -4
+  39 0002 87B0     		sub	sp, sp, #28
+  40              	.LCFI1:
+  41              		.cfi_def_cfa_offset 40
+   7:BSP/KEY/key.c ****   GPIO_InitTypeDef GPIO_InitStruct = {0};
+  42              		.loc 1 7 3 view .LVU1
+  43              		.loc 1 7 20 is_stmt 0 view .LVU2
+  44 0004 0024     		movs	r4, #0
+  45 0006 0194     		str	r4, [sp, #4]
+  46 0008 0294     		str	r4, [sp, #8]
+  47 000a 0394     		str	r4, [sp, #12]
+  48 000c 0494     		str	r4, [sp, #16]
+  49 000e 0594     		str	r4, [sp, #20]
+   8:BSP/KEY/key.c **** 
+   9:BSP/KEY/key.c ****   /* GPIO Ports Clock Enable */
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccdui5DN.s 			page 2
+
+
+  10:BSP/KEY/key.c ****   __HAL_RCC_GPIOA_CLK_ENABLE();
+  50              		.loc 1 10 3 is_stmt 1 view .LVU3
+  51              	.LBB2:
+  52              		.loc 1 10 3 view .LVU4
+  53 0010 0094     		str	r4, [sp]
+  54              		.loc 1 10 3 view .LVU5
+  55 0012 194B     		ldr	r3, .L3
+  56 0014 1A6B     		ldr	r2, [r3, #48]
+  57 0016 42F00102 		orr	r2, r2, #1
+  58 001a 1A63     		str	r2, [r3, #48]
+  59              		.loc 1 10 3 view .LVU6
+  60 001c 1B6B     		ldr	r3, [r3, #48]
+  61 001e 03F00103 		and	r3, r3, #1
+  62 0022 0093     		str	r3, [sp]
+  63              		.loc 1 10 3 view .LVU7
+  64 0024 009B     		ldr	r3, [sp]
+  65              	.LBE2:
+  66              		.loc 1 10 3 view .LVU8
+  11:BSP/KEY/key.c **** 
+  12:BSP/KEY/key.c ****   /*Configure GPIO pin : PA5 */
+  13:BSP/KEY/key.c ****   GPIO_InitStruct.Pin = KEY1_PIN;
+  67              		.loc 1 13 3 view .LVU9
+  68              		.loc 1 13 23 is_stmt 0 view .LVU10
+  69 0026 2023     		movs	r3, #32
+  70 0028 0193     		str	r3, [sp, #4]
+  14:BSP/KEY/key.c ****   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  71              		.loc 1 14 3 is_stmt 1 view .LVU11
+  72              		.loc 1 14 24 is_stmt 0 view .LVU12
+  73 002a 4FF40413 		mov	r3, #2162688
+  74 002e 0293     		str	r3, [sp, #8]
+  15:BSP/KEY/key.c ****   GPIO_InitStruct.Pull = GPIO_PULLUP;
+  75              		.loc 1 15 3 is_stmt 1 view .LVU13
+  76              		.loc 1 15 24 is_stmt 0 view .LVU14
+  77 0030 0123     		movs	r3, #1
+  78 0032 0393     		str	r3, [sp, #12]
+  16:BSP/KEY/key.c ****   HAL_GPIO_Init(KEY1_PORT, &GPIO_InitStruct);
+  79              		.loc 1 16 3 is_stmt 1 view .LVU15
+  80 0034 114D     		ldr	r5, .L3+4
+  81 0036 01A9     		add	r1, sp, #4
+  82 0038 2846     		mov	r0, r5
+  83 003a FFF7FEFF 		bl	HAL_GPIO_Init
+  84              	.LVL0:
+  17:BSP/KEY/key.c **** 
+  18:BSP/KEY/key.c **** 	/*Configure GPIO pin : PA4 */
+  19:BSP/KEY/key.c ****   GPIO_InitStruct.Pin = GPIO_PIN_4;
+  85              		.loc 1 19 3 view .LVU16
+  86              		.loc 1 19 23 is_stmt 0 view .LVU17
+  87 003e 1023     		movs	r3, #16
+  88 0040 0193     		str	r3, [sp, #4]
+  20:BSP/KEY/key.c ****   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  89              		.loc 1 20 3 is_stmt 1 view .LVU18
+  90              		.loc 1 20 24 is_stmt 0 view .LVU19
+  91 0042 4FF48813 		mov	r3, #1114112
+  92 0046 0293     		str	r3, [sp, #8]
+  21:BSP/KEY/key.c ****   GPIO_InitStruct.Pull = GPIO_NOPULL;
+  93              		.loc 1 21 3 is_stmt 1 view .LVU20
+  94              		.loc 1 21 24 is_stmt 0 view .LVU21
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccdui5DN.s 			page 3
+
+
+  95 0048 0394     		str	r4, [sp, #12]
+  22:BSP/KEY/key.c ****   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  96              		.loc 1 22 3 is_stmt 1 view .LVU22
+  97 004a 01A9     		add	r1, sp, #4
+  98 004c 2846     		mov	r0, r5
+  99 004e FFF7FEFF 		bl	HAL_GPIO_Init
+ 100              	.LVL1:
+  23:BSP/KEY/key.c **** 	
+  24:BSP/KEY/key.c ****   /* EXTI interrupt init*/
+  25:BSP/KEY/key.c ****   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+ 101              		.loc 1 25 3 view .LVU23
+ 102 0052 2246     		mov	r2, r4
+ 103 0054 2146     		mov	r1, r4
+ 104 0056 1720     		movs	r0, #23
+ 105 0058 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 106              	.LVL2:
+  26:BSP/KEY/key.c ****   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+ 107              		.loc 1 26 3 view .LVU24
+ 108 005c 1720     		movs	r0, #23
+ 109 005e FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 110              	.LVL3:
+  27:BSP/KEY/key.c **** 	
+  28:BSP/KEY/key.c **** 	HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
+ 111              		.loc 1 28 2 view .LVU25
+ 112 0062 2246     		mov	r2, r4
+ 113 0064 2146     		mov	r1, r4
+ 114 0066 0A20     		movs	r0, #10
+ 115 0068 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 116              	.LVL4:
+  29:BSP/KEY/key.c ****   HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+ 117              		.loc 1 29 3 view .LVU26
+ 118 006c 0A20     		movs	r0, #10
+ 119 006e FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 120              	.LVL5:
+  30:BSP/KEY/key.c **** }
+ 121              		.loc 1 30 1 is_stmt 0 view .LVU27
+ 122 0072 07B0     		add	sp, sp, #28
+ 123              	.LCFI2:
+ 124              		.cfi_def_cfa_offset 12
+ 125              		@ sp needed
+ 126 0074 30BD     		pop	{r4, r5, pc}
+ 127              	.L4:
+ 128 0076 00BF     		.align	2
+ 129              	.L3:
+ 130 0078 00380240 		.word	1073887232
+ 131 007c 00000240 		.word	1073872896
+ 132              		.cfi_endproc
+ 133              	.LFE221:
+ 135              		.section	.text.KeyScan,"ax",%progbits
+ 136              		.align	1
+ 137              		.global	KeyScan
+ 138              		.syntax unified
+ 139              		.thumb
+ 140              		.thumb_func
+ 142              	KeyScan:
+ 143              	.LVL6:
+ 144              	.LFB222:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccdui5DN.s 			page 4
+
+
+  31:BSP/KEY/key.c **** 
+  32:BSP/KEY/key.c **** uint8_t KeyScan(uint8_t mode)
+  33:BSP/KEY/key.c **** {
+ 145              		.loc 1 33 1 is_stmt 1 view -0
+ 146              		.cfi_startproc
+ 147              		@ args = 0, pretend = 0, frame = 0
+ 148              		@ frame_needed = 0, uses_anonymous_args = 0
+ 149              		.loc 1 33 1 is_stmt 0 view .LVU29
+ 150 0000 10B5     		push	{r4, lr}
+ 151              	.LCFI3:
+ 152              		.cfi_def_cfa_offset 8
+ 153              		.cfi_offset 4, -8
+ 154              		.cfi_offset 14, -4
+  34:BSP/KEY/key.c **** 	static uint8_t key_up = 1;
+ 155              		.loc 1 34 2 is_stmt 1 view .LVU30
+  35:BSP/KEY/key.c **** 	static uint8_t key_down = 0;
+ 156              		.loc 1 35 2 view .LVU31
+  36:BSP/KEY/key.c **** 	uint8_t keyvalue = 0;
+ 157              		.loc 1 36 2 view .LVU32
+ 158              	.LVL7:
+  37:BSP/KEY/key.c **** 
+  38:BSP/KEY/key.c **** 	if(mode)
+ 159              		.loc 1 38 2 view .LVU33
+ 160              		.loc 1 38 4 is_stmt 0 view .LVU34
+ 161 0002 28B1     		cbz	r0, .L6
+  39:BSP/KEY/key.c **** 	{
+  40:BSP/KEY/key.c **** 		key_up = 1;
+ 162              		.loc 1 40 3 is_stmt 1 view .LVU35
+ 163              		.loc 1 40 10 is_stmt 0 view .LVU36
+ 164 0004 2C4B     		ldr	r3, .L18
+ 165 0006 0122     		movs	r2, #1
+ 166 0008 1A70     		strb	r2, [r3]
+  41:BSP/KEY/key.c **** 		key_down = 0;
+ 167              		.loc 1 41 3 is_stmt 1 view .LVU37
+ 168              		.loc 1 41 12 is_stmt 0 view .LVU38
+ 169 000a 2C4B     		ldr	r3, .L18+4
+ 170 000c 0022     		movs	r2, #0
+ 171 000e 1A70     		strb	r2, [r3]
+ 172              	.L6:
+  42:BSP/KEY/key.c **** 	}
+  43:BSP/KEY/key.c **** 
+  44:BSP/KEY/key.c **** 	if( key_up && ((!KEY1) || KEY2))
+ 173              		.loc 1 44 2 is_stmt 1 view .LVU39
+ 174              		.loc 1 44 6 is_stmt 0 view .LVU40
+ 175 0010 294B     		ldr	r3, .L18
+ 176 0012 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 177              		.loc 1 44 4 view .LVU41
+ 178 0014 1BB9     		cbnz	r3, .L15
+ 179              	.LVL8:
+ 180              	.L7:
+  45:BSP/KEY/key.c **** 	{
+  46:BSP/KEY/key.c **** 		osDelay(3);//ensure the key
+  47:BSP/KEY/key.c **** 		if(!KEY1)
+  48:BSP/KEY/key.c **** 			key_down = 1;
+  49:BSP/KEY/key.c **** 		if(KEY2)
+  50:BSP/KEY/key.c **** 			key_down = 2;
+  51:BSP/KEY/key.c **** 		if(key_down) 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccdui5DN.s 			page 5
+
+
+  52:BSP/KEY/key.c **** 			key_up = 0;
+  53:BSP/KEY/key.c **** 	}
+  54:BSP/KEY/key.c **** 
+  55:BSP/KEY/key.c **** 	if ( key_down && (KEY1 && (!KEY2)) )
+ 181              		.loc 1 55 2 is_stmt 1 view .LVU42
+ 182              		.loc 1 55 7 is_stmt 0 view .LVU43
+ 183 0016 294B     		ldr	r3, .L18+4
+ 184 0018 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 185              		.loc 1 55 5 view .LVU44
+ 186 001a 30BB     		cbnz	r0, .L16
+ 187              	.LVL9:
+ 188              	.L11:
+  56:BSP/KEY/key.c **** 	{
+  57:BSP/KEY/key.c **** 		osDelay(3);//ensure the key
+  58:BSP/KEY/key.c **** 		if(KEY1 && (!KEY2)) 
+  59:BSP/KEY/key.c **** 		{
+  60:BSP/KEY/key.c **** 			key_up = 1;
+  61:BSP/KEY/key.c **** 			keyvalue = key_down;
+  62:BSP/KEY/key.c **** 			key_down = 0;
+  63:BSP/KEY/key.c **** 		}
+  64:BSP/KEY/key.c **** 	}
+  65:BSP/KEY/key.c **** 
+  66:BSP/KEY/key.c **** 	return keyvalue;
+ 189              		.loc 1 66 2 is_stmt 1 view .LVU45
+  67:BSP/KEY/key.c **** }
+ 190              		.loc 1 67 1 is_stmt 0 view .LVU46
+ 191 001c 10BD     		pop	{r4, pc}
+ 192              	.LVL10:
+ 193              	.L15:
+  44:BSP/KEY/key.c **** 	{
+ 194              		.loc 1 44 19 discriminator 1 view .LVU47
+ 195 001e 2021     		movs	r1, #32
+ 196 0020 2748     		ldr	r0, .L18+8
+ 197              	.LVL11:
+  44:BSP/KEY/key.c **** 	{
+ 198              		.loc 1 44 19 discriminator 1 view .LVU48
+ 199 0022 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 200              	.LVL12:
+  44:BSP/KEY/key.c **** 	{
+ 201              		.loc 1 44 13 discriminator 1 view .LVU49
+ 202 0026 28B1     		cbz	r0, .L8
+  44:BSP/KEY/key.c **** 	{
+ 203              		.loc 1 44 28 discriminator 2 view .LVU50
+ 204 0028 1021     		movs	r1, #16
+ 205 002a 2548     		ldr	r0, .L18+8
+ 206 002c FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 207              	.LVL13:
+  44:BSP/KEY/key.c **** 	{
+ 208              		.loc 1 44 25 discriminator 1 view .LVU51
+ 209 0030 0028     		cmp	r0, #0
+ 210 0032 F0D0     		beq	.L7
+ 211              	.L8:
+  46:BSP/KEY/key.c **** 		if(!KEY1)
+ 212              		.loc 1 46 3 is_stmt 1 view .LVU52
+ 213 0034 0320     		movs	r0, #3
+ 214 0036 FFF7FEFF 		bl	osDelay
+ 215              	.LVL14:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccdui5DN.s 			page 6
+
+
+  47:BSP/KEY/key.c **** 			key_down = 1;
+ 216              		.loc 1 47 3 view .LVU53
+  47:BSP/KEY/key.c **** 			key_down = 1;
+ 217              		.loc 1 47 7 is_stmt 0 view .LVU54
+ 218 003a 2021     		movs	r1, #32
+ 219 003c 2048     		ldr	r0, .L18+8
+ 220 003e FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 221              	.LVL15:
+  47:BSP/KEY/key.c **** 			key_down = 1;
+ 222              		.loc 1 47 5 discriminator 1 view .LVU55
+ 223 0042 10B9     		cbnz	r0, .L9
+  48:BSP/KEY/key.c **** 		if(KEY2)
+ 224              		.loc 1 48 4 is_stmt 1 view .LVU56
+  48:BSP/KEY/key.c **** 		if(KEY2)
+ 225              		.loc 1 48 13 is_stmt 0 view .LVU57
+ 226 0044 1D4B     		ldr	r3, .L18+4
+ 227 0046 0122     		movs	r2, #1
+ 228 0048 1A70     		strb	r2, [r3]
+ 229              	.L9:
+  49:BSP/KEY/key.c **** 			key_down = 2;
+ 230              		.loc 1 49 3 is_stmt 1 view .LVU58
+  49:BSP/KEY/key.c **** 			key_down = 2;
+ 231              		.loc 1 49 6 is_stmt 0 view .LVU59
+ 232 004a 1021     		movs	r1, #16
+ 233 004c 1C48     		ldr	r0, .L18+8
+ 234 004e FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 235              	.LVL16:
+  49:BSP/KEY/key.c **** 			key_down = 2;
+ 236              		.loc 1 49 5 discriminator 1 view .LVU60
+ 237 0052 10B1     		cbz	r0, .L10
+  50:BSP/KEY/key.c **** 		if(key_down) 
+ 238              		.loc 1 50 4 is_stmt 1 view .LVU61
+  50:BSP/KEY/key.c **** 		if(key_down) 
+ 239              		.loc 1 50 13 is_stmt 0 view .LVU62
+ 240 0054 194B     		ldr	r3, .L18+4
+ 241 0056 0222     		movs	r2, #2
+ 242 0058 1A70     		strb	r2, [r3]
+ 243              	.L10:
+  51:BSP/KEY/key.c **** 			key_up = 0;
+ 244              		.loc 1 51 3 is_stmt 1 view .LVU63
+  51:BSP/KEY/key.c **** 			key_up = 0;
+ 245              		.loc 1 51 6 is_stmt 0 view .LVU64
+ 246 005a 184B     		ldr	r3, .L18+4
+ 247 005c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  51:BSP/KEY/key.c **** 			key_up = 0;
+ 248              		.loc 1 51 5 view .LVU65
+ 249 005e 002B     		cmp	r3, #0
+ 250 0060 D9D0     		beq	.L7
+  52:BSP/KEY/key.c **** 	}
+ 251              		.loc 1 52 4 is_stmt 1 view .LVU66
+  52:BSP/KEY/key.c **** 	}
+ 252              		.loc 1 52 11 is_stmt 0 view .LVU67
+ 253 0062 154B     		ldr	r3, .L18
+ 254 0064 0022     		movs	r2, #0
+ 255 0066 1A70     		strb	r2, [r3]
+ 256 0068 D5E7     		b	.L7
+ 257              	.L16:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccdui5DN.s 			page 7
+
+
+  55:BSP/KEY/key.c **** 	{
+ 258              		.loc 1 55 20 discriminator 1 view .LVU68
+ 259 006a 2021     		movs	r1, #32
+ 260 006c 1448     		ldr	r0, .L18+8
+ 261 006e FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 262              	.LVL17:
+  55:BSP/KEY/key.c **** 	{
+ 263              		.loc 1 55 16 discriminator 1 view .LVU69
+ 264 0072 0028     		cmp	r0, #0
+ 265 0074 D2D0     		beq	.L11
+  55:BSP/KEY/key.c **** 	{
+ 266              		.loc 1 55 30 discriminator 2 view .LVU70
+ 267 0076 1021     		movs	r1, #16
+ 268 0078 1148     		ldr	r0, .L18+8
+ 269 007a FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 270              	.LVL18:
+  55:BSP/KEY/key.c **** 	{
+ 271              		.loc 1 55 25 discriminator 1 view .LVU71
+ 272 007e 0446     		mov	r4, r0
+ 273 0080 08B1     		cbz	r0, .L17
+  36:BSP/KEY/key.c **** 
+ 274              		.loc 1 36 10 view .LVU72
+ 275 0082 0020     		movs	r0, #0
+ 276 0084 CAE7     		b	.L11
+ 277              	.L17:
+  57:BSP/KEY/key.c **** 		if(KEY1 && (!KEY2)) 
+ 278              		.loc 1 57 3 is_stmt 1 view .LVU73
+ 279 0086 0320     		movs	r0, #3
+ 280 0088 FFF7FEFF 		bl	osDelay
+ 281              	.LVL19:
+  58:BSP/KEY/key.c **** 		{
+ 282              		.loc 1 58 3 view .LVU74
+  58:BSP/KEY/key.c **** 		{
+ 283              		.loc 1 58 6 is_stmt 0 view .LVU75
+ 284 008c 2021     		movs	r1, #32
+ 285 008e 0C48     		ldr	r0, .L18+8
+ 286 0090 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 287              	.LVL20:
+  58:BSP/KEY/key.c **** 		{
+ 288              		.loc 1 58 5 discriminator 1 view .LVU76
+ 289 0094 0028     		cmp	r0, #0
+ 290 0096 C1D0     		beq	.L11
+  58:BSP/KEY/key.c **** 		{
+ 291              		.loc 1 58 16 discriminator 1 view .LVU77
+ 292 0098 1021     		movs	r1, #16
+ 293 009a 0948     		ldr	r0, .L18+8
+ 294 009c FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 295              	.LVL21:
+  58:BSP/KEY/key.c **** 		{
+ 296              		.loc 1 58 11 discriminator 1 view .LVU78
+ 297 00a0 38B9     		cbnz	r0, .L13
+  60:BSP/KEY/key.c **** 			keyvalue = key_down;
+ 298              		.loc 1 60 4 is_stmt 1 view .LVU79
+  60:BSP/KEY/key.c **** 			keyvalue = key_down;
+ 299              		.loc 1 60 11 is_stmt 0 view .LVU80
+ 300 00a2 054B     		ldr	r3, .L18
+ 301 00a4 0122     		movs	r2, #1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccdui5DN.s 			page 8
+
+
+ 302 00a6 1A70     		strb	r2, [r3]
+  61:BSP/KEY/key.c **** 			key_down = 0;
+ 303              		.loc 1 61 4 is_stmt 1 view .LVU81
+  61:BSP/KEY/key.c **** 			key_down = 0;
+ 304              		.loc 1 61 13 is_stmt 0 view .LVU82
+ 305 00a8 044B     		ldr	r3, .L18+4
+ 306 00aa 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 307              	.LVL22:
+  62:BSP/KEY/key.c **** 		}
+ 308              		.loc 1 62 4 is_stmt 1 view .LVU83
+  62:BSP/KEY/key.c **** 		}
+ 309              		.loc 1 62 13 is_stmt 0 view .LVU84
+ 310 00ac 0022     		movs	r2, #0
+ 311 00ae 1A70     		strb	r2, [r3]
+ 312 00b0 B4E7     		b	.L11
+ 313              	.LVL23:
+ 314              	.L13:
+  36:BSP/KEY/key.c **** 
+ 315              		.loc 1 36 10 view .LVU85
+ 316 00b2 2046     		mov	r0, r4
+ 317 00b4 B2E7     		b	.L11
+ 318              	.L19:
+ 319 00b6 00BF     		.align	2
+ 320              	.L18:
+ 321 00b8 00000000 		.word	key_up.1
+ 322 00bc 00000000 		.word	key_down.0
+ 323 00c0 00000240 		.word	1073872896
+ 324              		.cfi_endproc
+ 325              	.LFE222:
+ 327              		.section	.bss.key_down.0,"aw",%nobits
+ 330              	key_down.0:
+ 331 0000 00       		.space	1
+ 332              		.section	.data.key_up.1,"aw"
+ 335              	key_up.1:
+ 336 0000 01       		.byte	1
+ 337              		.text
+ 338              	.Letext0:
+ 339              		.file 2 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 340              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 341              		.file 4 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 342              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 343              		.file 6 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ 344              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccdui5DN.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 key.c
+C:\Users\chen\AppData\Local\Temp\ccdui5DN.s:21     .text.Key_Port_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccdui5DN.s:27     .text.Key_Port_Init:00000000 Key_Port_Init
+C:\Users\chen\AppData\Local\Temp\ccdui5DN.s:130    .text.Key_Port_Init:00000078 $d
+C:\Users\chen\AppData\Local\Temp\ccdui5DN.s:136    .text.KeyScan:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccdui5DN.s:142    .text.KeyScan:00000000 KeyScan
+C:\Users\chen\AppData\Local\Temp\ccdui5DN.s:321    .text.KeyScan:000000b8 $d
+C:\Users\chen\AppData\Local\Temp\ccdui5DN.s:335    .data.key_up.1:00000000 key_up.1
+C:\Users\chen\AppData\Local\Temp\ccdui5DN.s:330    .bss.key_down.0:00000000 key_down.0
+C:\Users\chen\AppData\Local\Temp\ccdui5DN.s:331    .bss.key_down.0:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_GPIO_Init
+HAL_NVIC_SetPriority
+HAL_NVIC_EnableIRQ
+HAL_GPIO_ReadPin
+osDelay

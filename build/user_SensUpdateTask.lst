@@ -1,0 +1,1178 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"user_SensUpdateTask.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/Tasks/Src/user_SensUpdateTask.c"
+  20              		.section	.text.MPUCheckTask,"ax",%progbits
+  21              		.align	1
+  22              		.global	MPUCheckTask
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	MPUCheckTask:
+  28              	.LFB416:
+   1:User/Tasks/Src/user_SensUpdateTask.c **** /* Private includes -----------------------------------------------------------*/
+   2:User/Tasks/Src/user_SensUpdateTask.c **** //includes
+   3:User/Tasks/Src/user_SensUpdateTask.c **** #include "user_TasksInit.h"
+   4:User/Tasks/Src/user_SensUpdateTask.c **** #include "user_ScrRenewTask.h"
+   5:User/Tasks/Src/user_SensUpdateTask.c **** #include "user_SensUpdateTask.h"
+   6:User/Tasks/Src/user_SensUpdateTask.c **** #include "ui_HomePage.h"
+   7:User/Tasks/Src/user_SensUpdateTask.c **** #include "ui_MenuPage.h"
+   8:User/Tasks/Src/user_SensUpdateTask.c **** #include "ui_SetPage.h"
+   9:User/Tasks/Src/user_SensUpdateTask.c **** #include "ui_HRPage.h"
+  10:User/Tasks/Src/user_SensUpdateTask.c **** #include "ui_SPO2Page.h"
+  11:User/Tasks/Src/user_SensUpdateTask.c **** #include "ui_ENVPage.h"
+  12:User/Tasks/Src/user_SensUpdateTask.c **** #include "ui_CompassPage.h"
+  13:User/Tasks/Src/user_SensUpdateTask.c **** #include "main.h"
+  14:User/Tasks/Src/user_SensUpdateTask.c **** 
+  15:User/Tasks/Src/user_SensUpdateTask.c **** #include "AHT21.h"
+  16:User/Tasks/Src/user_SensUpdateTask.c **** #include "LSM303.h"
+  17:User/Tasks/Src/user_SensUpdateTask.c **** #include "SPL06_001.h"
+  18:User/Tasks/Src/user_SensUpdateTask.c **** #include "em70x8.h"
+  19:User/Tasks/Src/user_SensUpdateTask.c **** #include "HrAlgorythm.h"
+  20:User/Tasks/Src/user_SensUpdateTask.c **** 
+  21:User/Tasks/Src/user_SensUpdateTask.c **** #include "HWDataAccess.h"
+  22:User/Tasks/Src/user_SensUpdateTask.c **** 
+  23:User/Tasks/Src/user_SensUpdateTask.c **** /* Private typedef -----------------------------------------------------------*/
+  24:User/Tasks/Src/user_SensUpdateTask.c **** 
+  25:User/Tasks/Src/user_SensUpdateTask.c **** /* Private define ------------------------------------------------------------*/
+  26:User/Tasks/Src/user_SensUpdateTask.c **** 
+  27:User/Tasks/Src/user_SensUpdateTask.c **** /* Private variables ---------------------------------------------------------*/
+  28:User/Tasks/Src/user_SensUpdateTask.c **** uint32_t user_HR_timecount=0;
+  29:User/Tasks/Src/user_SensUpdateTask.c **** 
+  30:User/Tasks/Src/user_SensUpdateTask.c **** /* Private function prototypes -----------------------------------------------*/
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 2
+
+
+  31:User/Tasks/Src/user_SensUpdateTask.c **** // 这是EM7028官方lib的库函数, 没有lib用不了
+  32:User/Tasks/Src/user_SensUpdateTask.c **** extern uint8_t GET_BP_MAX (void);
+  33:User/Tasks/Src/user_SensUpdateTask.c **** extern uint8_t GET_BP_MIN (void);
+  34:User/Tasks/Src/user_SensUpdateTask.c **** extern void Blood_Process (void);
+  35:User/Tasks/Src/user_SensUpdateTask.c **** extern void Blood_50ms_process (void);
+  36:User/Tasks/Src/user_SensUpdateTask.c **** extern void Blood_500ms_process(void);
+  37:User/Tasks/Src/user_SensUpdateTask.c **** extern int em70xx_bpm_dynamic(int RECEIVED_BYTE, int g_sensor_x, int g_sensor_y, int g_sensor_z);
+  38:User/Tasks/Src/user_SensUpdateTask.c **** extern int em70xx_reset(int ref);
+  39:User/Tasks/Src/user_SensUpdateTask.c **** 
+  40:User/Tasks/Src/user_SensUpdateTask.c **** 
+  41:User/Tasks/Src/user_SensUpdateTask.c **** /**
+  42:User/Tasks/Src/user_SensUpdateTask.c ****   * @brief  MPU6050 Check the state
+  43:User/Tasks/Src/user_SensUpdateTask.c ****   * @param  argument: Not used
+  44:User/Tasks/Src/user_SensUpdateTask.c ****   * @retval None
+  45:User/Tasks/Src/user_SensUpdateTask.c ****   */
+  46:User/Tasks/Src/user_SensUpdateTask.c **** void MPUCheckTask(void *argument)
+  47:User/Tasks/Src/user_SensUpdateTask.c **** {
+  29              		.loc 1 47 1 view -0
+  30              		.cfi_startproc
+  31              		@ Volatile: function does not return.
+  32              		@ args = 0, pretend = 0, frame = 8
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              	.LVL0:
+  35              		.loc 1 47 1 is_stmt 0 view .LVU1
+  36 0000 00B5     		push	{lr}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 4
+  39              		.cfi_offset 14, -4
+  40 0002 83B0     		sub	sp, sp, #12
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_offset 16
+  43 0004 0CE0     		b	.L6
+  44              	.LVL1:
+  45              	.L3:
+  48:User/Tasks/Src/user_SensUpdateTask.c **** 	while(1)
+  49:User/Tasks/Src/user_SensUpdateTask.c **** 	{
+  50:User/Tasks/Src/user_SensUpdateTask.c **** 		if(HWInterface.IMU.wrist_is_enabled)
+  51:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+  52:User/Tasks/Src/user_SensUpdateTask.c **** 			if(MPU_isHorizontal())
+  53:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+  54:User/Tasks/Src/user_SensUpdateTask.c **** 				HWInterface.IMU.wrist_state = WRIST_UP;
+  55:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+  56:User/Tasks/Src/user_SensUpdateTask.c **** 			else
+  57:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+  58:User/Tasks/Src/user_SensUpdateTask.c **** 				if(WRIST_UP == HWInterface.IMU.wrist_state)
+  46              		.loc 1 58 5 is_stmt 1 view .LVU2
+  47              		.loc 1 58 35 is_stmt 0 view .LVU3
+  48 0006 1D4B     		ldr	r3, .L9
+  49 0008 93F83430 		ldrb	r3, [r3, #52]	@ zero_extendqisi2
+  50              		.loc 1 58 7 view .LVU4
+  51 000c 012B     		cmp	r3, #1
+  52 000e 15D0     		beq	.L8
+  53              	.L4:
+  59:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+  60:User/Tasks/Src/user_SensUpdateTask.c **** 					HWInterface.IMU.wrist_state = WRIST_DOWN;
+  61:User/Tasks/Src/user_SensUpdateTask.c **** 					if( Page_Get_NowPage()->page_obj == &ui_HomePage ||
+  62:User/Tasks/Src/user_SensUpdateTask.c **** 						Page_Get_NowPage()->page_obj == &ui_MenuPage ||
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 3
+
+
+  63:User/Tasks/Src/user_SensUpdateTask.c **** 						Page_Get_NowPage()->page_obj == &ui_SetPage )
+  64:User/Tasks/Src/user_SensUpdateTask.c **** 					{
+  65:User/Tasks/Src/user_SensUpdateTask.c **** 						uint8_t Stopstr;
+  66:User/Tasks/Src/user_SensUpdateTask.c **** 						osMessageQueuePut(Stop_MessageQueue, &Stopstr, 0, 1);//sleep
+  67:User/Tasks/Src/user_SensUpdateTask.c **** 					}
+  68:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+  69:User/Tasks/Src/user_SensUpdateTask.c **** 				HWInterface.IMU.wrist_state = WRIST_DOWN;
+  54              		.loc 1 69 5 is_stmt 1 view .LVU5
+  55              		.loc 1 69 33 is_stmt 0 view .LVU6
+  56 0010 1A4B     		ldr	r3, .L9
+  57 0012 0022     		movs	r2, #0
+  58 0014 83F83420 		strb	r2, [r3, #52]
+  59              	.L2:
+  70:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+  71:User/Tasks/Src/user_SensUpdateTask.c **** 		}
+  72:User/Tasks/Src/user_SensUpdateTask.c **** 		osDelay(300);
+  60              		.loc 1 72 3 is_stmt 1 view .LVU7
+  61 0018 4FF49670 		mov	r0, #300
+  62 001c FFF7FEFF 		bl	osDelay
+  63              	.LVL2:
+  48:User/Tasks/Src/user_SensUpdateTask.c **** 	{
+  64              		.loc 1 48 7 view .LVU8
+  65              	.L6:
+  48:User/Tasks/Src/user_SensUpdateTask.c **** 	{
+  66              		.loc 1 48 2 view .LVU9
+  50:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+  67              		.loc 1 50 3 view .LVU10
+  50:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+  68              		.loc 1 50 21 is_stmt 0 view .LVU11
+  69 0020 164B     		ldr	r3, .L9
+  70 0022 93F83530 		ldrb	r3, [r3, #53]	@ zero_extendqisi2
+  50:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+  71              		.loc 1 50 5 view .LVU12
+  72 0026 002B     		cmp	r3, #0
+  73 0028 F6D0     		beq	.L2
+  52:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+  74              		.loc 1 52 4 is_stmt 1 view .LVU13
+  52:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+  75              		.loc 1 52 7 is_stmt 0 view .LVU14
+  76 002a FFF7FEFF 		bl	MPU_isHorizontal
+  77              	.LVL3:
+  52:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+  78              		.loc 1 52 6 discriminator 1 view .LVU15
+  79 002e 0028     		cmp	r0, #0
+  80 0030 E9D0     		beq	.L3
+  54:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+  81              		.loc 1 54 5 is_stmt 1 view .LVU16
+  54:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+  82              		.loc 1 54 33 is_stmt 0 view .LVU17
+  83 0032 124B     		ldr	r3, .L9
+  84 0034 0122     		movs	r2, #1
+  85 0036 83F83420 		strb	r2, [r3, #52]
+  86 003a EDE7     		b	.L2
+  87              	.L8:
+  60:User/Tasks/Src/user_SensUpdateTask.c **** 					if( Page_Get_NowPage()->page_obj == &ui_HomePage ||
+  88              		.loc 1 60 6 is_stmt 1 view .LVU18
+  60:User/Tasks/Src/user_SensUpdateTask.c **** 					if( Page_Get_NowPage()->page_obj == &ui_HomePage ||
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 4
+
+
+  89              		.loc 1 60 34 is_stmt 0 view .LVU19
+  90 003c 0F4B     		ldr	r3, .L9
+  91 003e 0022     		movs	r2, #0
+  92 0040 83F83420 		strb	r2, [r3, #52]
+  61:User/Tasks/Src/user_SensUpdateTask.c **** 						Page_Get_NowPage()->page_obj == &ui_MenuPage ||
+  93              		.loc 1 61 6 is_stmt 1 view .LVU20
+  61:User/Tasks/Src/user_SensUpdateTask.c **** 						Page_Get_NowPage()->page_obj == &ui_MenuPage ||
+  94              		.loc 1 61 10 is_stmt 0 view .LVU21
+  95 0044 FFF7FEFF 		bl	Page_Get_NowPage
+  96              	.LVL4:
+  61:User/Tasks/Src/user_SensUpdateTask.c **** 						Page_Get_NowPage()->page_obj == &ui_MenuPage ||
+  97              		.loc 1 61 28 discriminator 1 view .LVU22
+  98 0048 8268     		ldr	r2, [r0, #8]
+  61:User/Tasks/Src/user_SensUpdateTask.c **** 						Page_Get_NowPage()->page_obj == &ui_MenuPage ||
+  99              		.loc 1 61 8 discriminator 1 view .LVU23
+ 100 004a 0D4B     		ldr	r3, .L9+4
+ 101 004c 9A42     		cmp	r2, r3
+ 102 004e 0BD0     		beq	.L5
+  62:User/Tasks/Src/user_SensUpdateTask.c **** 						Page_Get_NowPage()->page_obj == &ui_SetPage )
+ 103              		.loc 1 62 7 view .LVU24
+ 104 0050 FFF7FEFF 		bl	Page_Get_NowPage
+ 105              	.LVL5:
+  62:User/Tasks/Src/user_SensUpdateTask.c **** 						Page_Get_NowPage()->page_obj == &ui_SetPage )
+ 106              		.loc 1 62 25 discriminator 1 view .LVU25
+ 107 0054 8268     		ldr	r2, [r0, #8]
+  61:User/Tasks/Src/user_SensUpdateTask.c **** 						Page_Get_NowPage()->page_obj == &ui_MenuPage ||
+ 108              		.loc 1 61 55 discriminator 1 view .LVU26
+ 109 0056 0B4B     		ldr	r3, .L9+8
+ 110 0058 9A42     		cmp	r2, r3
+ 111 005a 05D0     		beq	.L5
+  63:User/Tasks/Src/user_SensUpdateTask.c **** 					{
+ 112              		.loc 1 63 7 view .LVU27
+ 113 005c FFF7FEFF 		bl	Page_Get_NowPage
+ 114              	.LVL6:
+  63:User/Tasks/Src/user_SensUpdateTask.c **** 					{
+ 115              		.loc 1 63 25 discriminator 1 view .LVU28
+ 116 0060 8268     		ldr	r2, [r0, #8]
+  62:User/Tasks/Src/user_SensUpdateTask.c **** 						Page_Get_NowPage()->page_obj == &ui_SetPage )
+ 117              		.loc 1 62 52 view .LVU29
+ 118 0062 094B     		ldr	r3, .L9+12
+ 119 0064 9A42     		cmp	r2, r3
+ 120 0066 D3D1     		bne	.L4
+ 121              	.L5:
+ 122              	.LBB2:
+  65:User/Tasks/Src/user_SensUpdateTask.c **** 						osMessageQueuePut(Stop_MessageQueue, &Stopstr, 0, 1);//sleep
+ 123              		.loc 1 65 7 is_stmt 1 view .LVU30
+  66:User/Tasks/Src/user_SensUpdateTask.c **** 					}
+ 124              		.loc 1 66 7 view .LVU31
+ 125 0068 0123     		movs	r3, #1
+ 126 006a 0022     		movs	r2, #0
+ 127 006c 0DF10701 		add	r1, sp, #7
+ 128 0070 0648     		ldr	r0, .L9+16
+ 129 0072 0068     		ldr	r0, [r0]
+ 130 0074 FFF7FEFF 		bl	osMessageQueuePut
+ 131              	.LVL7:
+ 132 0078 CAE7     		b	.L4
+ 133              	.L10:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 5
+
+
+ 134 007a 00BF     		.align	2
+ 135              	.L9:
+ 136 007c 00000000 		.word	HWInterface
+ 137 0080 00000000 		.word	ui_HomePage
+ 138 0084 00000000 		.word	ui_MenuPage
+ 139 0088 00000000 		.word	ui_SetPage
+ 140 008c 00000000 		.word	Stop_MessageQueue
+ 141              	.LBE2:
+ 142              		.cfi_endproc
+ 143              	.LFE416:
+ 145              		.section	.text.HRDataUpdateTask,"ax",%progbits
+ 146              		.align	1
+ 147              		.global	HRDataUpdateTask
+ 148              		.syntax unified
+ 149              		.thumb
+ 150              		.thumb_func
+ 152              	HRDataUpdateTask:
+ 153              	.LVL8:
+ 154              	.LFB417:
+  73:User/Tasks/Src/user_SensUpdateTask.c **** 	}
+  74:User/Tasks/Src/user_SensUpdateTask.c **** }
+  75:User/Tasks/Src/user_SensUpdateTask.c **** 
+  76:User/Tasks/Src/user_SensUpdateTask.c **** /**
+  77:User/Tasks/Src/user_SensUpdateTask.c ****   * @brief  HR data renew task
+  78:User/Tasks/Src/user_SensUpdateTask.c ****   * @param  argument: Not used
+  79:User/Tasks/Src/user_SensUpdateTask.c ****   * @retval None
+  80:User/Tasks/Src/user_SensUpdateTask.c ****   */
+  81:User/Tasks/Src/user_SensUpdateTask.c **** void HRDataUpdateTask(void *argument)
+  82:User/Tasks/Src/user_SensUpdateTask.c **** {
+ 155              		.loc 1 82 1 view -0
+ 156              		.cfi_startproc
+ 157              		@ args = 0, pretend = 0, frame = 8
+ 158              		@ frame_needed = 0, uses_anonymous_args = 0
+ 159              		.loc 1 82 1 is_stmt 0 view .LVU33
+ 160 0000 10B5     		push	{r4, lr}
+ 161              	.LCFI2:
+ 162              		.cfi_def_cfa_offset 8
+ 163              		.cfi_offset 4, -8
+ 164              		.cfi_offset 14, -4
+ 165 0002 82B0     		sub	sp, sp, #8
+ 166              	.LCFI3:
+ 167              		.cfi_def_cfa_offset 16
+  83:User/Tasks/Src/user_SensUpdateTask.c **** 	uint8_t IdleBreakstr=0;
+ 168              		.loc 1 83 2 is_stmt 1 view .LVU34
+ 169              		.loc 1 83 10 is_stmt 0 view .LVU35
+ 170 0004 0023     		movs	r3, #0
+ 171 0006 8DF80730 		strb	r3, [sp, #7]
+  84:User/Tasks/Src/user_SensUpdateTask.c **** 	uint16_t dat=0;
+ 172              		.loc 1 84 2 is_stmt 1 view .LVU36
+ 173              	.LVL9:
+  85:User/Tasks/Src/user_SensUpdateTask.c **** 	uint8_t hr_temp=0;
+ 174              		.loc 1 85 2 view .LVU37
+ 175              		.loc 1 85 2 is_stmt 0 view .LVU38
+ 176 000a 02E0     		b	.L13
+ 177              	.LVL10:
+ 178              	.L12:
+  86:User/Tasks/Src/user_SensUpdateTask.c **** 	while(1)
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 6
+
+
+  87:User/Tasks/Src/user_SensUpdateTask.c **** 	{
+  88:User/Tasks/Src/user_SensUpdateTask.c **** 		if(Page_Get_NowPage()->page_obj == &ui_HRPage)
+  89:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+  90:User/Tasks/Src/user_SensUpdateTask.c **** 			osMessageQueuePut(IdleBreak_MessageQueue, &IdleBreakstr, 0, 1);
+  91:User/Tasks/Src/user_SensUpdateTask.c **** 			//sensor wake up
+  92:User/Tasks/Src/user_SensUpdateTask.c **** 			EM7028_hrs_Enable();
+  93:User/Tasks/Src/user_SensUpdateTask.c **** 			//receive the sensor wakeup message, sensor wakeup
+  94:User/Tasks/Src/user_SensUpdateTask.c **** 			if(!HWInterface.HR_meter.ConnectionError)
+  95:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+  96:User/Tasks/Src/user_SensUpdateTask.c **** 				//Hr messure
+  97:User/Tasks/Src/user_SensUpdateTask.c **** 				vTaskSuspendAll();
+  98:User/Tasks/Src/user_SensUpdateTask.c **** 				hr_temp = HR_Calculate(EM7028_Get_HRS1(),user_HR_timecount);
+  99:User/Tasks/Src/user_SensUpdateTask.c **** 				xTaskResumeAll();
+ 100:User/Tasks/Src/user_SensUpdateTask.c **** 				if(HWInterface.HR_meter.HrRate != hr_temp && hr_temp>50 && hr_temp<120)
+ 101:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 102:User/Tasks/Src/user_SensUpdateTask.c **** 					HWInterface.HR_meter.HrRate = hr_temp;
+ 103:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 104:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+ 105:User/Tasks/Src/user_SensUpdateTask.c **** 		}
+ 106:User/Tasks/Src/user_SensUpdateTask.c **** 		osDelay(50);
+ 179              		.loc 1 106 3 is_stmt 1 view .LVU39
+ 180 000c 3220     		movs	r0, #50
+ 181 000e FFF7FEFF 		bl	osDelay
+ 182              	.LVL11:
+  86:User/Tasks/Src/user_SensUpdateTask.c **** 	while(1)
+ 183              		.loc 1 86 7 view .LVU40
+ 184              	.L13:
+  86:User/Tasks/Src/user_SensUpdateTask.c **** 	while(1)
+ 185              		.loc 1 86 2 view .LVU41
+  88:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 186              		.loc 1 88 3 view .LVU42
+  88:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 187              		.loc 1 88 6 is_stmt 0 view .LVU43
+ 188 0012 FFF7FEFF 		bl	Page_Get_NowPage
+ 189              	.LVL12:
+  88:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 190              		.loc 1 88 24 discriminator 1 view .LVU44
+ 191 0016 8268     		ldr	r2, [r0, #8]
+  88:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 192              		.loc 1 88 5 discriminator 1 view .LVU45
+ 193 0018 144B     		ldr	r3, .L15
+ 194 001a 9A42     		cmp	r2, r3
+ 195 001c F6D1     		bne	.L12
+  90:User/Tasks/Src/user_SensUpdateTask.c **** 			//sensor wake up
+ 196              		.loc 1 90 4 is_stmt 1 view .LVU46
+ 197 001e 0123     		movs	r3, #1
+ 198 0020 0022     		movs	r2, #0
+ 199 0022 0DF10701 		add	r1, sp, #7
+ 200 0026 1248     		ldr	r0, .L15+4
+ 201 0028 0068     		ldr	r0, [r0]
+ 202 002a FFF7FEFF 		bl	osMessageQueuePut
+ 203              	.LVL13:
+  92:User/Tasks/Src/user_SensUpdateTask.c **** 			//receive the sensor wakeup message, sensor wakeup
+ 204              		.loc 1 92 4 view .LVU47
+ 205 002e FFF7FEFF 		bl	EM7028_hrs_Enable
+ 206              	.LVL14:
+  94:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 7
+
+
+ 207              		.loc 1 94 4 view .LVU48
+  94:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 208              		.loc 1 94 28 is_stmt 0 view .LVU49
+ 209 0032 104B     		ldr	r3, .L15+8
+ 210 0034 93F86C30 		ldrb	r3, [r3, #108]	@ zero_extendqisi2
+  94:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 211              		.loc 1 94 6 view .LVU50
+ 212 0038 002B     		cmp	r3, #0
+ 213 003a E7D1     		bne	.L12
+  97:User/Tasks/Src/user_SensUpdateTask.c **** 				hr_temp = HR_Calculate(EM7028_Get_HRS1(),user_HR_timecount);
+ 214              		.loc 1 97 5 is_stmt 1 view .LVU51
+ 215 003c FFF7FEFF 		bl	vTaskSuspendAll
+ 216              	.LVL15:
+  98:User/Tasks/Src/user_SensUpdateTask.c **** 				xTaskResumeAll();
+ 217              		.loc 1 98 5 view .LVU52
+  98:User/Tasks/Src/user_SensUpdateTask.c **** 				xTaskResumeAll();
+ 218              		.loc 1 98 15 is_stmt 0 view .LVU53
+ 219 0040 FFF7FEFF 		bl	EM7028_Get_HRS1
+ 220              	.LVL16:
+  98:User/Tasks/Src/user_SensUpdateTask.c **** 				xTaskResumeAll();
+ 221              		.loc 1 98 15 discriminator 1 view .LVU54
+ 222 0044 0C4B     		ldr	r3, .L15+12
+ 223 0046 1968     		ldr	r1, [r3]
+ 224 0048 FFF7FEFF 		bl	HR_Calculate
+ 225              	.LVL17:
+  98:User/Tasks/Src/user_SensUpdateTask.c **** 				xTaskResumeAll();
+ 226              		.loc 1 98 13 discriminator 2 view .LVU55
+ 227 004c C4B2     		uxtb	r4, r0
+ 228              	.LVL18:
+  99:User/Tasks/Src/user_SensUpdateTask.c **** 				if(HWInterface.HR_meter.HrRate != hr_temp && hr_temp>50 && hr_temp<120)
+ 229              		.loc 1 99 5 is_stmt 1 view .LVU56
+ 230 004e FFF7FEFF 		bl	xTaskResumeAll
+ 231              	.LVL19:
+ 100:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 232              		.loc 1 100 5 view .LVU57
+ 100:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 233              		.loc 1 100 28 is_stmt 0 view .LVU58
+ 234 0052 084B     		ldr	r3, .L15+8
+ 235 0054 93F86D30 		ldrb	r3, [r3, #109]	@ zero_extendqisi2
+ 100:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 236              		.loc 1 100 7 view .LVU59
+ 237 0058 A342     		cmp	r3, r4
+ 238 005a D7D0     		beq	.L12
+ 100:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 239              		.loc 1 100 47 discriminator 1 view .LVU60
+ 240 005c 322C     		cmp	r4, #50
+ 241 005e D5D9     		bls	.L12
+ 100:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 242              		.loc 1 100 61 discriminator 2 view .LVU61
+ 243 0060 772C     		cmp	r4, #119
+ 244 0062 D3D8     		bhi	.L12
+ 102:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 245              		.loc 1 102 6 is_stmt 1 view .LVU62
+ 102:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 246              		.loc 1 102 34 is_stmt 0 view .LVU63
+ 247 0064 034B     		ldr	r3, .L15+8
+ 248 0066 83F86D40 		strb	r4, [r3, #109]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 8
+
+
+ 249 006a CFE7     		b	.L12
+ 250              	.L16:
+ 251              		.align	2
+ 252              	.L15:
+ 253 006c 00000000 		.word	ui_HRPage
+ 254 0070 00000000 		.word	IdleBreak_MessageQueue
+ 255 0074 00000000 		.word	HWInterface
+ 256 0078 00000000 		.word	user_HR_timecount
+ 257              		.cfi_endproc
+ 258              	.LFE417:
+ 260              		.section	.text.SensorDataUpdateTask,"ax",%progbits
+ 261              		.align	1
+ 262              		.global	SensorDataUpdateTask
+ 263              		.syntax unified
+ 264              		.thumb
+ 265              		.thumb_func
+ 267              	SensorDataUpdateTask:
+ 268              	.LVL20:
+ 269              	.LFB418:
+ 107:User/Tasks/Src/user_SensUpdateTask.c **** 	}
+ 108:User/Tasks/Src/user_SensUpdateTask.c **** }
+ 109:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 110:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 111:User/Tasks/Src/user_SensUpdateTask.c **** /**
+ 112:User/Tasks/Src/user_SensUpdateTask.c ****   * @brief  Sensor data update task
+ 113:User/Tasks/Src/user_SensUpdateTask.c ****   * @param  argument: Not used
+ 114:User/Tasks/Src/user_SensUpdateTask.c ****   * @retval None
+ 115:User/Tasks/Src/user_SensUpdateTask.c ****   */
+ 116:User/Tasks/Src/user_SensUpdateTask.c **** void SensorDataUpdateTask(void *argument)
+ 117:User/Tasks/Src/user_SensUpdateTask.c **** {
+ 270              		.loc 1 117 1 is_stmt 1 view -0
+ 271              		.cfi_startproc
+ 272              		@ args = 0, pretend = 0, frame = 24
+ 273              		@ frame_needed = 0, uses_anonymous_args = 0
+ 274              		.loc 1 117 1 is_stmt 0 view .LVU65
+ 275 0000 10B5     		push	{r4, lr}
+ 276              	.LCFI4:
+ 277              		.cfi_def_cfa_offset 8
+ 278              		.cfi_offset 4, -8
+ 279              		.cfi_offset 14, -4
+ 280 0002 88B0     		sub	sp, sp, #32
+ 281              	.LCFI5:
+ 282              		.cfi_def_cfa_offset 40
+ 118:User/Tasks/Src/user_SensUpdateTask.c **** 	uint8_t value_strbuf[6];
+ 283              		.loc 1 118 2 is_stmt 1 view .LVU66
+ 119:User/Tasks/Src/user_SensUpdateTask.c **** 	uint8_t IdleBreakstr=0;
+ 284              		.loc 1 119 2 view .LVU67
+ 285              		.loc 1 119 10 is_stmt 0 view .LVU68
+ 286 0004 0023     		movs	r3, #0
+ 287 0006 8DF81F30 		strb	r3, [sp, #31]
+ 288 000a 0BE0     		b	.L41
+ 289              	.LVL21:
+ 290              	.L54:
+ 291              	.LBB3:
+ 120:User/Tasks/Src/user_SensUpdateTask.c **** 	while(1)
+ 121:User/Tasks/Src/user_SensUpdateTask.c **** 	{
+ 122:User/Tasks/Src/user_SensUpdateTask.c **** 		// Update the sens data showed in Home
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 9
+
+
+ 123:User/Tasks/Src/user_SensUpdateTask.c **** 		uint8_t HomeUpdataStr;
+ 124:User/Tasks/Src/user_SensUpdateTask.c **** 		if(osMessageQueueGet(HomeUpdata_MessageQueue, &HomeUpdataStr, NULL, 0)==osOK)
+ 125:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 126:User/Tasks/Src/user_SensUpdateTask.c **** 			//bat
+ 127:User/Tasks/Src/user_SensUpdateTask.c **** 			uint8_t value_strbuf[5];
+ 128:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 129:User/Tasks/Src/user_SensUpdateTask.c **** 			HWInterface.Power.power_remain = HWInterface.Power.BatCalculate();
+ 130:User/Tasks/Src/user_SensUpdateTask.c **** 			if(HWInterface.Power.power_remain>0 && HWInterface.Power.power_remain<=100)
+ 131:User/Tasks/Src/user_SensUpdateTask.c **** 			{}
+ 132:User/Tasks/Src/user_SensUpdateTask.c **** 			else
+ 133:User/Tasks/Src/user_SensUpdateTask.c **** 			{HWInterface.Power.power_remain = 0;}
+ 134:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 135:User/Tasks/Src/user_SensUpdateTask.c **** 			//steps
+ 136:User/Tasks/Src/user_SensUpdateTask.c **** 			if(!(HWInterface.IMU.ConnectionError))
+ 137:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 138:User/Tasks/Src/user_SensUpdateTask.c **** 				HWInterface.IMU.Steps = HWInterface.IMU.GetSteps();
+ 139:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+ 140:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 141:User/Tasks/Src/user_SensUpdateTask.c **** 			//temp and humi
+ 142:User/Tasks/Src/user_SensUpdateTask.c **** 			if(!(HWInterface.AHT21.ConnectionError))
+ 143:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 144:User/Tasks/Src/user_SensUpdateTask.c **** 				//temp and humi messure
+ 145:User/Tasks/Src/user_SensUpdateTask.c **** 				float humi,temp;
+ 146:User/Tasks/Src/user_SensUpdateTask.c **** 				HWInterface.AHT21.GetHumiTemp(&humi,&temp);
+ 147:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 148:User/Tasks/Src/user_SensUpdateTask.c **** 				if(temp>-10 && temp<50 && humi>0 && humi<100)
+ 149:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 150:User/Tasks/Src/user_SensUpdateTask.c **** 					// ui_EnvTempValue = (int8_t)temp;
+ 151:User/Tasks/Src/user_SensUpdateTask.c **** 					// ui_EnvHumiValue = (int8_t)humi;
+ 152:User/Tasks/Src/user_SensUpdateTask.c **** 					HWInterface.AHT21.humidity = humi;
+ 153:User/Tasks/Src/user_SensUpdateTask.c **** 					HWInterface.AHT21.temperature = temp;
+ 154:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 155:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+ 156:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 157:User/Tasks/Src/user_SensUpdateTask.c **** 			//send data save message queue
+ 158:User/Tasks/Src/user_SensUpdateTask.c **** 			uint8_t Datastr = 3;
+ 159:User/Tasks/Src/user_SensUpdateTask.c **** 			osMessageQueuePut(DataSave_MessageQueue, &Datastr, 0, 1);
+ 160:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 161:User/Tasks/Src/user_SensUpdateTask.c **** 		}
+ 162:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 163:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 164:User/Tasks/Src/user_SensUpdateTask.c **** 		// SPO2 Page
+ 165:User/Tasks/Src/user_SensUpdateTask.c **** 		if(Page_Get_NowPage()->page_obj == &ui_SPO2Page)
+ 166:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 167:User/Tasks/Src/user_SensUpdateTask.c **** 			osMessageQueuePut(IdleBreak_MessageQueue, &IdleBreakstr, 0, 1);
+ 292              		.loc 1 167 4 is_stmt 1 view .LVU69
+ 293 000c 0123     		movs	r3, #1
+ 294 000e 0022     		movs	r2, #0
+ 295 0010 0DF11F01 		add	r1, sp, #31
+ 296 0014 8A48     		ldr	r0, .L58
+ 297 0016 0068     		ldr	r0, [r0]
+ 298 0018 FFF7FEFF 		bl	osMessageQueuePut
+ 299              	.LVL22:
+ 168:User/Tasks/Src/user_SensUpdateTask.c **** 			//sensor wake up
+ 169:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 170:User/Tasks/Src/user_SensUpdateTask.c **** 			//receive the sensor wakeup message, sensor wakeup
+ 171:User/Tasks/Src/user_SensUpdateTask.c **** 			if(0)
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 10
+
+
+ 300              		.loc 1 171 4 view .LVU70
+ 172:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 173:User/Tasks/Src/user_SensUpdateTask.c **** 				//SPO2 messure
+ 174:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+ 301              		.loc 1 174 4 view .LVU71
+ 302              	.L28:
+ 175:User/Tasks/Src/user_SensUpdateTask.c **** 		}
+ 176:User/Tasks/Src/user_SensUpdateTask.c **** 		// Env Page
+ 177:User/Tasks/Src/user_SensUpdateTask.c **** 		else if(Page_Get_NowPage()->page_obj == &ui_EnvPage)
+ 178:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 179:User/Tasks/Src/user_SensUpdateTask.c **** 			osMessageQueuePut(IdleBreak_MessageQueue, &IdleBreakstr, 0, 1);
+ 180:User/Tasks/Src/user_SensUpdateTask.c **** 			//receive the sensor wakeup message, sensor wakeup
+ 181:User/Tasks/Src/user_SensUpdateTask.c **** 			if(!HWInterface.AHT21.ConnectionError)
+ 182:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 183:User/Tasks/Src/user_SensUpdateTask.c **** 				//temp and humi messure
+ 184:User/Tasks/Src/user_SensUpdateTask.c **** 				float humi,temp;
+ 185:User/Tasks/Src/user_SensUpdateTask.c **** 				HWInterface.AHT21.GetHumiTemp(&humi,&temp);
+ 186:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 187:User/Tasks/Src/user_SensUpdateTask.c **** 				if(temp>-10 && temp<50 && humi>0 && humi<100)
+ 188:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 189:User/Tasks/Src/user_SensUpdateTask.c **** 					HWInterface.AHT21.temperature = (int8_t)temp;
+ 190:User/Tasks/Src/user_SensUpdateTask.c **** 					HWInterface.AHT21.humidity = (int8_t)humi;
+ 191:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 192:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+ 193:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 194:User/Tasks/Src/user_SensUpdateTask.c **** 		}
+ 195:User/Tasks/Src/user_SensUpdateTask.c **** 		// Compass page
+ 196:User/Tasks/Src/user_SensUpdateTask.c **** 		else if(Page_Get_NowPage()->page_obj == &ui_CompassPage)
+ 197:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 198:User/Tasks/Src/user_SensUpdateTask.c **** 			osMessageQueuePut(IdleBreak_MessageQueue, &IdleBreakstr, 0, 1);
+ 199:User/Tasks/Src/user_SensUpdateTask.c **** 			//receive the sensor wakeup message, sensor wakeup
+ 200:User/Tasks/Src/user_SensUpdateTask.c **** 			LSM303DLH_Wakeup();
+ 201:User/Tasks/Src/user_SensUpdateTask.c **** 			//SPL_Wakeup();
+ 202:User/Tasks/Src/user_SensUpdateTask.c **** 			//if the sensor is no problem
+ 203:User/Tasks/Src/user_SensUpdateTask.c **** 			if(!HWInterface.Ecompass.ConnectionError)
+ 204:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 205:User/Tasks/Src/user_SensUpdateTask.c **** 				//messure
+ 206:User/Tasks/Src/user_SensUpdateTask.c **** 				int16_t Xa,Ya,Za,Xm,Ym,Zm;
+ 207:User/Tasks/Src/user_SensUpdateTask.c **** 				LSM303_ReadAcceleration(&Xa,&Ya,&Za);
+ 208:User/Tasks/Src/user_SensUpdateTask.c **** 				LSM303_ReadMagnetic(&Xm,&Ym,&Zm);
+ 209:User/Tasks/Src/user_SensUpdateTask.c **** 				float temp = Azimuth_Calculate(Xa,Ya,Za,Xm,Ym,Zm)+0;//0 offset
+ 210:User/Tasks/Src/user_SensUpdateTask.c **** 				if(temp<0)
+ 211:User/Tasks/Src/user_SensUpdateTask.c **** 				{temp+=360;}
+ 212:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 213:User/Tasks/Src/user_SensUpdateTask.c **** 				if(temp>=0 && temp<=360)
+ 214:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 215:User/Tasks/Src/user_SensUpdateTask.c **** 					HWInterface.Ecompass.direction = (uint16_t)temp;
+ 216:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 217:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+ 218:User/Tasks/Src/user_SensUpdateTask.c **** 			//if the sensor is no problem
+ 219:User/Tasks/Src/user_SensUpdateTask.c **** 			if(!HWInterface.Barometer.ConnectionError)
+ 220:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 221:User/Tasks/Src/user_SensUpdateTask.c **** 				//messure
+ 222:User/Tasks/Src/user_SensUpdateTask.c **** 				float alti = Altitude_Calculate();
+ 223:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 224:User/Tasks/Src/user_SensUpdateTask.c **** 				if(1)
+ 225:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 11
+
+
+ 226:User/Tasks/Src/user_SensUpdateTask.c **** 					HWInterface.Barometer.altitude = (int16_t)alti;
+ 227:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 228:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+ 229:User/Tasks/Src/user_SensUpdateTask.c **** 		}
+ 230:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 231:User/Tasks/Src/user_SensUpdateTask.c **** 		osDelay(500);
+ 303              		.loc 1 231 3 view .LVU72
+ 304 001c 4FF4FA70 		mov	r0, #500
+ 305 0020 FFF7FEFF 		bl	osDelay
+ 306              	.LVL23:
+ 307              	.LBE3:
+ 120:User/Tasks/Src/user_SensUpdateTask.c **** 	{
+ 308              		.loc 1 120 7 view .LVU73
+ 309              	.L41:
+ 120:User/Tasks/Src/user_SensUpdateTask.c **** 	{
+ 310              		.loc 1 120 2 view .LVU74
+ 311              	.LBB9:
+ 123:User/Tasks/Src/user_SensUpdateTask.c **** 		if(osMessageQueueGet(HomeUpdata_MessageQueue, &HomeUpdataStr, NULL, 0)==osOK)
+ 312              		.loc 1 123 3 view .LVU75
+ 124:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 313              		.loc 1 124 3 view .LVU76
+ 124:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 314              		.loc 1 124 6 is_stmt 0 view .LVU77
+ 315 0024 0023     		movs	r3, #0
+ 316 0026 1A46     		mov	r2, r3
+ 317 0028 0DF10B01 		add	r1, sp, #11
+ 318 002c 8548     		ldr	r0, .L58+4
+ 319 002e 0068     		ldr	r0, [r0]
+ 320 0030 FFF7FEFF 		bl	osMessageQueueGet
+ 321              	.LVL24:
+ 124:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 322              		.loc 1 124 5 discriminator 1 view .LVU78
+ 323 0034 0028     		cmp	r0, #0
+ 324 0036 4FD1     		bne	.L18
+ 325              	.LBB4:
+ 127:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 326              		.loc 1 127 4 is_stmt 1 view .LVU79
+ 129:User/Tasks/Src/user_SensUpdateTask.c **** 			if(HWInterface.Power.power_remain>0 && HWInterface.Power.power_remain<=100)
+ 327              		.loc 1 129 4 view .LVU80
+ 129:User/Tasks/Src/user_SensUpdateTask.c **** 			if(HWInterface.Power.power_remain>0 && HWInterface.Power.power_remain<=100)
+ 328              		.loc 1 129 54 is_stmt 0 view .LVU81
+ 329 0038 834C     		ldr	r4, .L58+8
+ 330 003a A36A     		ldr	r3, [r4, #40]
+ 129:User/Tasks/Src/user_SensUpdateTask.c **** 			if(HWInterface.Power.power_remain>0 && HWInterface.Power.power_remain<=100)
+ 331              		.loc 1 129 37 view .LVU82
+ 332 003c 9847     		blx	r3
+ 333              	.LVL25:
+ 129:User/Tasks/Src/user_SensUpdateTask.c **** 			if(HWInterface.Power.power_remain>0 && HWInterface.Power.power_remain<=100)
+ 334              		.loc 1 129 35 discriminator 1 view .LVU83
+ 335 003e 2077     		strb	r0, [r4, #28]
+ 130:User/Tasks/Src/user_SensUpdateTask.c **** 			{}
+ 336              		.loc 1 130 4 is_stmt 1 view .LVU84
+ 130:User/Tasks/Src/user_SensUpdateTask.c **** 			{}
+ 337              		.loc 1 130 40 is_stmt 0 view .LVU85
+ 338 0040 0138     		subs	r0, r0, #1
+ 339 0042 C0B2     		uxtb	r0, r0
+ 130:User/Tasks/Src/user_SensUpdateTask.c **** 			{}
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 12
+
+
+ 340              		.loc 1 130 6 view .LVU86
+ 341 0044 6328     		cmp	r0, #99
+ 342 0046 01D9     		bls	.L19
+ 133:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 343              		.loc 1 133 5 is_stmt 1 view .LVU87
+ 133:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 344              		.loc 1 133 36 is_stmt 0 view .LVU88
+ 345 0048 0022     		movs	r2, #0
+ 346 004a 2277     		strb	r2, [r4, #28]
+ 347              	.L19:
+ 136:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 348              		.loc 1 136 4 is_stmt 1 view .LVU89
+ 136:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 349              		.loc 1 136 24 is_stmt 0 view .LVU90
+ 350 004c 7E4B     		ldr	r3, .L58+8
+ 351 004e 93F83030 		ldrb	r3, [r3, #48]	@ zero_extendqisi2
+ 136:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 352              		.loc 1 136 6 view .LVU91
+ 353 0052 1BB9     		cbnz	r3, .L20
+ 138:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+ 354              		.loc 1 138 5 is_stmt 1 view .LVU92
+ 138:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+ 355              		.loc 1 138 44 is_stmt 0 view .LVU93
+ 356 0054 7C4C     		ldr	r4, .L58+8
+ 357 0056 636C     		ldr	r3, [r4, #68]
+ 138:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+ 358              		.loc 1 138 29 view .LVU94
+ 359 0058 9847     		blx	r3
+ 360              	.LVL26:
+ 138:User/Tasks/Src/user_SensUpdateTask.c **** 			}
+ 361              		.loc 1 138 27 discriminator 1 view .LVU95
+ 362 005a 6086     		strh	r0, [r4, #50]	@ movhi
+ 363              	.L20:
+ 142:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 364              		.loc 1 142 4 is_stmt 1 view .LVU96
+ 142:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 365              		.loc 1 142 26 is_stmt 0 view .LVU97
+ 366 005c 7A4B     		ldr	r3, .L58+8
+ 367 005e 93F84C30 		ldrb	r3, [r3, #76]	@ zero_extendqisi2
+ 142:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 368              		.loc 1 142 6 view .LVU98
+ 369 0062 7BBB     		cbnz	r3, .L21
+ 370              	.LBB5:
+ 145:User/Tasks/Src/user_SensUpdateTask.c **** 				HWInterface.AHT21.GetHumiTemp(&humi,&temp);
+ 371              		.loc 1 145 5 is_stmt 1 view .LVU99
+ 146:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 372              		.loc 1 146 5 view .LVU100
+ 146:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 373              		.loc 1 146 22 is_stmt 0 view .LVU101
+ 374 0064 784B     		ldr	r3, .L58+8
+ 375 0066 5B6D     		ldr	r3, [r3, #84]
+ 146:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 376              		.loc 1 146 5 view .LVU102
+ 377 0068 06A9     		add	r1, sp, #24
+ 378 006a 05A8     		add	r0, sp, #20
+ 379 006c 9847     		blx	r3
+ 380              	.LVL27:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 13
+
+
+ 148:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 381              		.loc 1 148 5 is_stmt 1 view .LVU103
+ 148:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 382              		.loc 1 148 12 is_stmt 0 view .LVU104
+ 383 006e DDED067A 		vldr.32	s15, [sp, #24]
+ 148:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 384              		.loc 1 148 7 view .LVU105
+ 385 0072 BAEE047A 		vmov.f32	s14, #-1.0e+1
+ 386 0076 F4EEC77A 		vcmpe.f32	s15, s14
+ 387 007a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 388 007e 21DD     		ble	.L21
+ 148:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 389              		.loc 1 148 17 discriminator 1 view .LVU106
+ 390 0080 9FED727A 		vldr.32	s14, .L58+12
+ 391 0084 F4EEC77A 		vcmpe.f32	s15, s14
+ 392 0088 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 393 008c 1AD5     		bpl	.L21
+ 148:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 394              		.loc 1 148 35 discriminator 2 view .LVU107
+ 395 008e 9DED057A 		vldr.32	s14, [sp, #20]
+ 148:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 396              		.loc 1 148 28 discriminator 2 view .LVU108
+ 397 0092 B5EEC07A 		vcmpe.f32	s14, #0
+ 398 0096 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 399 009a 13DD     		ble	.L21
+ 148:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 400              		.loc 1 148 38 discriminator 3 view .LVU109
+ 401 009c DFED6C6A 		vldr.32	s13, .L58+16
+ 402 00a0 B4EEE67A 		vcmpe.f32	s14, s13
+ 403 00a4 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 404 00a8 0CD5     		bpl	.L21
+ 152:User/Tasks/Src/user_SensUpdateTask.c **** 					HWInterface.AHT21.temperature = temp;
+ 405              		.loc 1 152 6 is_stmt 1 view .LVU110
+ 152:User/Tasks/Src/user_SensUpdateTask.c **** 					HWInterface.AHT21.temperature = temp;
+ 406              		.loc 1 152 33 is_stmt 0 view .LVU111
+ 407 00aa 674A     		ldr	r2, .L58+8
+ 408 00ac BCEEC77A 		vcvt.u32.f32	s14, s14
+ 409 00b0 17EE103A 		vmov	r3, s14	@ int
+ 410 00b4 82F84E30 		strb	r3, [r2, #78]
+ 153:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 411              		.loc 1 153 6 is_stmt 1 view .LVU112
+ 153:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 412              		.loc 1 153 36 is_stmt 0 view .LVU113
+ 413 00b8 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 414 00bc 17EE903A 		vmov	r3, s15	@ int
+ 415 00c0 82F84D30 		strb	r3, [r2, #77]
+ 416              	.L21:
+ 417              	.LBE5:
+ 158:User/Tasks/Src/user_SensUpdateTask.c **** 			osMessageQueuePut(DataSave_MessageQueue, &Datastr, 0, 1);
+ 418              		.loc 1 158 4 is_stmt 1 view .LVU114
+ 158:User/Tasks/Src/user_SensUpdateTask.c **** 			osMessageQueuePut(DataSave_MessageQueue, &Datastr, 0, 1);
+ 419              		.loc 1 158 12 is_stmt 0 view .LVU115
+ 420 00c4 0323     		movs	r3, #3
+ 421 00c6 8DF81830 		strb	r3, [sp, #24]
+ 159:User/Tasks/Src/user_SensUpdateTask.c **** 
+ 422              		.loc 1 159 4 is_stmt 1 view .LVU116
+ 423 00ca 0123     		movs	r3, #1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 14
+
+
+ 424 00cc 0022     		movs	r2, #0
+ 425 00ce 06A9     		add	r1, sp, #24
+ 426 00d0 6048     		ldr	r0, .L58+20
+ 427 00d2 0068     		ldr	r0, [r0]
+ 428 00d4 FFF7FEFF 		bl	osMessageQueuePut
+ 429              	.LVL28:
+ 430              	.L18:
+ 431              	.LBE4:
+ 165:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 432              		.loc 1 165 3 view .LVU117
+ 165:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 433              		.loc 1 165 6 is_stmt 0 view .LVU118
+ 434 00d8 FFF7FEFF 		bl	Page_Get_NowPage
+ 435              	.LVL29:
+ 165:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 436              		.loc 1 165 24 discriminator 1 view .LVU119
+ 437 00dc 8268     		ldr	r2, [r0, #8]
+ 165:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 438              		.loc 1 165 5 discriminator 1 view .LVU120
+ 439 00de 5E4B     		ldr	r3, .L58+24
+ 440 00e0 9A42     		cmp	r2, r3
+ 441 00e2 93D0     		beq	.L54
+ 177:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 442              		.loc 1 177 8 is_stmt 1 view .LVU121
+ 177:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 443              		.loc 1 177 11 is_stmt 0 view .LVU122
+ 444 00e4 FFF7FEFF 		bl	Page_Get_NowPage
+ 445              	.LVL30:
+ 177:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 446              		.loc 1 177 29 discriminator 1 view .LVU123
+ 447 00e8 8268     		ldr	r2, [r0, #8]
+ 177:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 448              		.loc 1 177 10 discriminator 1 view .LVU124
+ 449 00ea 5C4B     		ldr	r3, .L58+28
+ 450 00ec 9A42     		cmp	r2, r3
+ 451 00ee 24D0     		beq	.L55
+ 196:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 452              		.loc 1 196 8 is_stmt 1 view .LVU125
+ 196:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 453              		.loc 1 196 11 is_stmt 0 view .LVU126
+ 454 00f0 FFF7FEFF 		bl	Page_Get_NowPage
+ 455              	.LVL31:
+ 196:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 456              		.loc 1 196 29 discriminator 1 view .LVU127
+ 457 00f4 8268     		ldr	r2, [r0, #8]
+ 196:User/Tasks/Src/user_SensUpdateTask.c **** 		{
+ 458              		.loc 1 196 10 discriminator 1 view .LVU128
+ 459 00f6 5A4B     		ldr	r3, .L58+32
+ 460 00f8 9A42     		cmp	r2, r3
+ 461 00fa 8FD1     		bne	.L28
+ 198:User/Tasks/Src/user_SensUpdateTask.c **** 			//receive the sensor wakeup message, sensor wakeup
+ 462              		.loc 1 198 4 is_stmt 1 view .LVU129
+ 463 00fc 0123     		movs	r3, #1
+ 464 00fe 0022     		movs	r2, #0
+ 465 0100 0DF11F01 		add	r1, sp, #31
+ 466 0104 4E48     		ldr	r0, .L58
+ 467 0106 0068     		ldr	r0, [r0]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 15
+
+
+ 468 0108 FFF7FEFF 		bl	osMessageQueuePut
+ 469              	.LVL32:
+ 200:User/Tasks/Src/user_SensUpdateTask.c **** 			//SPL_Wakeup();
+ 470              		.loc 1 200 4 view .LVU130
+ 471 010c FFF7FEFF 		bl	LSM303DLH_Wakeup
+ 472              	.LVL33:
+ 203:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 473              		.loc 1 203 4 view .LVU131
+ 203:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 474              		.loc 1 203 28 is_stmt 0 view .LVU132
+ 475 0110 4D4B     		ldr	r3, .L58+8
+ 476 0112 93F86030 		ldrb	r3, [r3, #96]	@ zero_extendqisi2
+ 203:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 477              		.loc 1 203 6 view .LVU133
+ 478 0116 002B     		cmp	r3, #0
+ 479 0118 52D0     		beq	.L56
+ 480              	.L35:
+ 219:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 481              		.loc 1 219 4 is_stmt 1 view .LVU134
+ 219:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 482              		.loc 1 219 29 is_stmt 0 view .LVU135
+ 483 011a 4B4B     		ldr	r3, .L58+8
+ 484 011c 93F85830 		ldrb	r3, [r3, #88]	@ zero_extendqisi2
+ 219:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 485              		.loc 1 219 6 view .LVU136
+ 486 0120 002B     		cmp	r3, #0
+ 487 0122 7FF47BAF 		bne	.L28
+ 488              	.LBB6:
+ 222:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 489              		.loc 1 222 5 is_stmt 1 view .LVU137
+ 222:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 490              		.loc 1 222 18 is_stmt 0 view .LVU138
+ 491 0126 FFF7FEFF 		bl	Altitude_Calculate
+ 492              	.LVL34:
+ 224:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 493              		.loc 1 224 5 is_stmt 1 view .LVU139
+ 226:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 494              		.loc 1 226 6 view .LVU140
+ 226:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 495              		.loc 1 226 39 is_stmt 0 view .LVU141
+ 496 012a BDEEC00A 		vcvt.s32.f32	s0, s0
+ 497              	.LVL35:
+ 226:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 498              		.loc 1 226 37 view .LVU142
+ 499 012e 464B     		ldr	r3, .L58+8
+ 500 0130 10EE102A 		vmov	r2, s0	@ int
+ 501 0134 A3F85A20 		strh	r2, [r3, #90]	@ movhi
+ 502 0138 70E7     		b	.L28
+ 503              	.LVL36:
+ 504              	.L55:
+ 226:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 505              		.loc 1 226 37 view .LVU143
+ 506              	.LBE6:
+ 179:User/Tasks/Src/user_SensUpdateTask.c **** 			//receive the sensor wakeup message, sensor wakeup
+ 507              		.loc 1 179 4 is_stmt 1 view .LVU144
+ 508 013a 0123     		movs	r3, #1
+ 509 013c 0022     		movs	r2, #0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 16
+
+
+ 510 013e 0DF11F01 		add	r1, sp, #31
+ 511 0142 3F48     		ldr	r0, .L58
+ 512 0144 0068     		ldr	r0, [r0]
+ 513 0146 FFF7FEFF 		bl	osMessageQueuePut
+ 514              	.LVL37:
+ 181:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 515              		.loc 1 181 4 view .LVU145
+ 181:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 516              		.loc 1 181 25 is_stmt 0 view .LVU146
+ 517 014a 3F4B     		ldr	r3, .L58+8
+ 518 014c 93F84C30 		ldrb	r3, [r3, #76]	@ zero_extendqisi2
+ 181:User/Tasks/Src/user_SensUpdateTask.c **** 			{
+ 519              		.loc 1 181 6 view .LVU147
+ 520 0150 002B     		cmp	r3, #0
+ 521 0152 7FF463AF 		bne	.L28
+ 522              	.LBB7:
+ 184:User/Tasks/Src/user_SensUpdateTask.c **** 				HWInterface.AHT21.GetHumiTemp(&humi,&temp);
+ 523              		.loc 1 184 5 is_stmt 1 view .LVU148
+ 185:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 524              		.loc 1 185 5 view .LVU149
+ 185:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 525              		.loc 1 185 22 is_stmt 0 view .LVU150
+ 526 0156 3C4B     		ldr	r3, .L58+8
+ 527 0158 5B6D     		ldr	r3, [r3, #84]
+ 185:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 528              		.loc 1 185 5 view .LVU151
+ 529 015a 06A9     		add	r1, sp, #24
+ 530 015c 05A8     		add	r0, sp, #20
+ 531 015e 9847     		blx	r3
+ 532              	.LVL38:
+ 187:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 533              		.loc 1 187 5 is_stmt 1 view .LVU152
+ 187:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 534              		.loc 1 187 12 is_stmt 0 view .LVU153
+ 535 0160 DDED067A 		vldr.32	s15, [sp, #24]
+ 187:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 536              		.loc 1 187 7 view .LVU154
+ 537 0164 BAEE047A 		vmov.f32	s14, #-1.0e+1
+ 538 0168 F4EEC77A 		vcmpe.f32	s15, s14
+ 539 016c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 540 0170 7FF754AF 		ble	.L28
+ 187:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 541              		.loc 1 187 17 discriminator 1 view .LVU155
+ 542 0174 9FED357A 		vldr.32	s14, .L58+12
+ 543 0178 F4EEC77A 		vcmpe.f32	s15, s14
+ 544 017c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 545 0180 7FF54CAF 		bpl	.L28
+ 187:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 546              		.loc 1 187 35 discriminator 2 view .LVU156
+ 547 0184 9DED057A 		vldr.32	s14, [sp, #20]
+ 187:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 548              		.loc 1 187 28 discriminator 2 view .LVU157
+ 549 0188 B5EEC07A 		vcmpe.f32	s14, #0
+ 550 018c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 551 0190 7FF744AF 		ble	.L28
+ 187:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 552              		.loc 1 187 38 discriminator 3 view .LVU158
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 17
+
+
+ 553 0194 DFED2E6A 		vldr.32	s13, .L58+16
+ 554 0198 B4EEE67A 		vcmpe.f32	s14, s13
+ 555 019c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 556 01a0 7FF53CAF 		bpl	.L28
+ 189:User/Tasks/Src/user_SensUpdateTask.c **** 					HWInterface.AHT21.humidity = (int8_t)humi;
+ 557              		.loc 1 189 6 is_stmt 1 view .LVU159
+ 189:User/Tasks/Src/user_SensUpdateTask.c **** 					HWInterface.AHT21.humidity = (int8_t)humi;
+ 558              		.loc 1 189 38 is_stmt 0 view .LVU160
+ 559 01a4 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 560 01a8 17EE903A 		vmov	r3, s15	@ int
+ 189:User/Tasks/Src/user_SensUpdateTask.c **** 					HWInterface.AHT21.humidity = (int8_t)humi;
+ 561              		.loc 1 189 36 view .LVU161
+ 562 01ac 264A     		ldr	r2, .L58+8
+ 563 01ae 82F84D30 		strb	r3, [r2, #77]
+ 190:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 564              		.loc 1 190 6 is_stmt 1 view .LVU162
+ 190:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 565              		.loc 1 190 35 is_stmt 0 view .LVU163
+ 566 01b2 FDEEC77A 		vcvt.s32.f32	s15, s14
+ 567 01b6 17EE903A 		vmov	r3, s15	@ int
+ 190:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 568              		.loc 1 190 33 view .LVU164
+ 569 01ba 82F84E30 		strb	r3, [r2, #78]
+ 570 01be 2DE7     		b	.L28
+ 571              	.L56:
+ 572              	.LBE7:
+ 573              	.LBB8:
+ 206:User/Tasks/Src/user_SensUpdateTask.c **** 				LSM303_ReadAcceleration(&Xa,&Ya,&Za);
+ 574              		.loc 1 206 5 is_stmt 1 view .LVU165
+ 207:User/Tasks/Src/user_SensUpdateTask.c **** 				LSM303_ReadMagnetic(&Xm,&Ym,&Zm);
+ 575              		.loc 1 207 5 view .LVU166
+ 576 01c0 04AA     		add	r2, sp, #16
+ 577 01c2 0DF10E01 		add	r1, sp, #14
+ 578 01c6 03A8     		add	r0, sp, #12
+ 579 01c8 FFF7FEFF 		bl	LSM303_ReadAcceleration
+ 580              	.LVL39:
+ 208:User/Tasks/Src/user_SensUpdateTask.c **** 				float temp = Azimuth_Calculate(Xa,Ya,Za,Xm,Ym,Zm)+0;//0 offset
+ 581              		.loc 1 208 5 view .LVU167
+ 582 01cc 06AA     		add	r2, sp, #24
+ 583 01ce 05A9     		add	r1, sp, #20
+ 584 01d0 0DF11200 		add	r0, sp, #18
+ 585 01d4 FFF7FEFF 		bl	LSM303_ReadMagnetic
+ 586              	.LVL40:
+ 209:User/Tasks/Src/user_SensUpdateTask.c **** 				if(temp<0)
+ 587              		.loc 1 209 5 view .LVU168
+ 209:User/Tasks/Src/user_SensUpdateTask.c **** 				if(temp<0)
+ 588              		.loc 1 209 18 is_stmt 0 view .LVU169
+ 589 01d8 BDF91830 		ldrsh	r3, [sp, #24]
+ 590 01dc 0193     		str	r3, [sp, #4]
+ 591 01de BDF91430 		ldrsh	r3, [sp, #20]
+ 592 01e2 0093     		str	r3, [sp]
+ 593 01e4 BDF91230 		ldrsh	r3, [sp, #18]
+ 594 01e8 BDF91020 		ldrsh	r2, [sp, #16]
+ 595 01ec BDF90E10 		ldrsh	r1, [sp, #14]
+ 596 01f0 BDF90C00 		ldrsh	r0, [sp, #12]
+ 597 01f4 FFF7FEFF 		bl	Azimuth_Calculate
+ 598              	.LVL41:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 18
+
+
+ 209:User/Tasks/Src/user_SensUpdateTask.c **** 				if(temp<0)
+ 599              		.loc 1 209 11 discriminator 1 view .LVU170
+ 600 01f8 DFED1A7A 		vldr.32	s15, .L58+36
+ 601 01fc 30EE270A 		vadd.f32	s0, s0, s15
+ 602              	.LVL42:
+ 210:User/Tasks/Src/user_SensUpdateTask.c **** 				{temp+=360;}
+ 603              		.loc 1 210 5 is_stmt 1 view .LVU171
+ 210:User/Tasks/Src/user_SensUpdateTask.c **** 				{temp+=360;}
+ 604              		.loc 1 210 7 is_stmt 0 view .LVU172
+ 605 0200 B4EEE70A 		vcmpe.f32	s0, s15
+ 606 0204 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 607 0208 14D4     		bmi	.L57
+ 608              	.L36:
+ 213:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 609              		.loc 1 213 5 is_stmt 1 view .LVU173
+ 213:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 610              		.loc 1 213 7 is_stmt 0 view .LVU174
+ 611 020a B5EEC00A 		vcmpe.f32	s0, #0
+ 612 020e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 613 0212 82DB     		blt	.L35
+ 213:User/Tasks/Src/user_SensUpdateTask.c **** 				{
+ 614              		.loc 1 213 16 discriminator 1 view .LVU175
+ 615 0214 DFED147A 		vldr.32	s15, .L58+40
+ 616 0218 B4EEE70A 		vcmpe.f32	s0, s15
+ 617 021c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 618 0220 3FF67BAF 		bhi	.L35
+ 215:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 619              		.loc 1 215 6 is_stmt 1 view .LVU176
+ 215:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 620              		.loc 1 215 39 is_stmt 0 view .LVU177
+ 621 0224 BCEEC00A 		vcvt.u32.f32	s0, s0
+ 622              	.LVL43:
+ 215:User/Tasks/Src/user_SensUpdateTask.c **** 				}
+ 623              		.loc 1 215 37 view .LVU178
+ 624 0228 074B     		ldr	r3, .L58+8
+ 625 022a 10EE102A 		vmov	r2, s0	@ int
+ 626 022e A3F86220 		strh	r2, [r3, #98]	@ movhi
+ 627 0232 72E7     		b	.L35
+ 628              	.LVL44:
+ 629              	.L57:
+ 211:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 630              		.loc 1 211 6 is_stmt 1 view .LVU179
+ 211:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 631              		.loc 1 211 10 is_stmt 0 view .LVU180
+ 632 0234 DFED0C7A 		vldr.32	s15, .L58+40
+ 633 0238 30EE270A 		vadd.f32	s0, s0, s15
+ 634              	.LVL45:
+ 211:User/Tasks/Src/user_SensUpdateTask.c **** 				//check
+ 635              		.loc 1 211 10 view .LVU181
+ 636 023c E5E7     		b	.L36
+ 637              	.L59:
+ 638 023e 00BF     		.align	2
+ 639              	.L58:
+ 640 0240 00000000 		.word	IdleBreak_MessageQueue
+ 641 0244 00000000 		.word	HomeUpdata_MessageQueue
+ 642 0248 00000000 		.word	HWInterface
+ 643 024c 00004842 		.word	1112014848
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 19
+
+
+ 644 0250 0000C842 		.word	1120403456
+ 645 0254 00000000 		.word	DataSave_MessageQueue
+ 646 0258 00000000 		.word	ui_SPO2Page
+ 647 025c 00000000 		.word	ui_EnvPage
+ 648 0260 00000000 		.word	ui_CompassPage
+ 649 0264 00000000 		.word	0
+ 650 0268 0000B443 		.word	1135869952
+ 651              	.LBE8:
+ 652              	.LBE9:
+ 653              		.cfi_endproc
+ 654              	.LFE418:
+ 656              		.global	user_HR_timecount
+ 657              		.section	.bss.user_HR_timecount,"aw",%nobits
+ 658              		.align	2
+ 661              	user_HR_timecount:
+ 662 0000 00000000 		.space	4
+ 663              		.text
+ 664              	.Letext0:
+ 665              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 666              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 667              		.file 4 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h"
+ 668              		.file 5 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ 669              		.file 6 "User/Tasks/Inc/user_TasksInit.h"
+ 670              		.file 7 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/../font/../misc/lv_area.h"
+ 671              		.file 8 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h"
+ 672              		.file 9 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_style.h"
+ 673              		.file 10 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj.h"
+ 674              		.file 11 "Middlewares/LVGL/GUI/lvgl/src/hal/../misc/lv_ll.h"
+ 675              		.file 12 "Middlewares/LVGL/GUI/lvgl/src/core/lv_group.h"
+ 676              		.file 13 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_scroll.h"
+ 677              		.file 14 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style.h"
+ 678              		.file 15 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_class.h"
+ 679              		.file 16 "Middlewares/LVGL/GUI/lvgl/src/core/lv_event.h"
+ 680              		.file 17 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_bar.h"
+ 681              		.file 18 "User/Func/Inc/PageManager.h"
+ 682              		.file 19 "User/Tasks/Inc/user_SensUpdateTask.h"
+ 683              		.file 20 "User/GUI_App/Screens/Inc/ui_HomePage.h"
+ 684              		.file 21 "User/GUI_App/Screens/Inc/ui_MenuPage.h"
+ 685              		.file 22 "User/GUI_App/Screens/Inc/ui_SetPage.h"
+ 686              		.file 23 "User/GUI_App/Screens/Inc/ui_HRPage.h"
+ 687              		.file 24 "User/GUI_App/Screens/Inc/ui_SPO2Page.h"
+ 688              		.file 25 "User/GUI_App/Screens/Inc/ui_ENVPage.h"
+ 689              		.file 26 "User/GUI_App/Screens/Inc/ui_CompassPage.h"
+ 690              		.file 27 "User/Func/Inc/HWDataAccess.h"
+ 691              		.file 28 "BSP/LSM303DLH/LSM303.h"
+ 692              		.file 29 "BSP/SPL06_001/SPL06_001.h"
+ 693              		.file 30 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
+ 694              		.file 31 "BSP/EM7028/HrAlgorythm.h"
+ 695              		.file 32 "BSP/EM7028/em70x8.h"
+ 696              		.file 33 "BSP/MPU6050/MPU6050.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 user_SensUpdateTask.c
+C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s:21     .text.MPUCheckTask:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s:27     .text.MPUCheckTask:00000000 MPUCheckTask
+C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s:136    .text.MPUCheckTask:0000007c $d
+C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s:146    .text.HRDataUpdateTask:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s:152    .text.HRDataUpdateTask:00000000 HRDataUpdateTask
+C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s:253    .text.HRDataUpdateTask:0000006c $d
+C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s:661    .bss.user_HR_timecount:00000000 user_HR_timecount
+C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s:261    .text.SensorDataUpdateTask:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s:267    .text.SensorDataUpdateTask:00000000 SensorDataUpdateTask
+C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s:640    .text.SensorDataUpdateTask:00000240 $d
+C:\Users\chen\AppData\Local\Temp\cccoQNAZ.s:658    .bss.user_HR_timecount:00000000 $d
+
+UNDEFINED SYMBOLS
+osDelay
+MPU_isHorizontal
+Page_Get_NowPage
+osMessageQueuePut
+HWInterface
+ui_HomePage
+ui_MenuPage
+ui_SetPage
+Stop_MessageQueue
+EM7028_hrs_Enable
+vTaskSuspendAll
+EM7028_Get_HRS1
+HR_Calculate
+xTaskResumeAll
+ui_HRPage
+IdleBreak_MessageQueue
+osMessageQueueGet
+LSM303DLH_Wakeup
+Altitude_Calculate
+LSM303_ReadAcceleration
+LSM303_ReadMagnetic
+Azimuth_Calculate
+HomeUpdata_MessageQueue
+DataSave_MessageQueue
+ui_SPO2Page
+ui_EnvPage
+ui_CompassPage

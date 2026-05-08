@@ -1,0 +1,244 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"BL24C02.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "BSP/BL24C02/BL24C02.c"
+  20              		.section	.text.BL24C02_Write,"ax",%progbits
+  21              		.align	1
+  22              		.global	BL24C02_Write
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	BL24C02_Write:
+  28              	.LVL0:
+  29              	.LFB216:
+   1:BSP/BL24C02/BL24C02.c **** #include "BL24C02.h"
+   2:BSP/BL24C02/BL24C02.c **** 
+   3:BSP/BL24C02/BL24C02.c **** #define BL_CLK_ENABLE __HAL_RCC_GPIOA_CLK_ENABLE()
+   4:BSP/BL24C02/BL24C02.c **** 
+   5:BSP/BL24C02/BL24C02.c **** iic_bus_t BL_bus = 
+   6:BSP/BL24C02/BL24C02.c **** {
+   7:BSP/BL24C02/BL24C02.c **** 	.IIC_SDA_PORT = GPIOA,
+   8:BSP/BL24C02/BL24C02.c **** 	.IIC_SCL_PORT = GPIOA,
+   9:BSP/BL24C02/BL24C02.c **** 	.IIC_SDA_PIN  = GPIO_PIN_11,
+  10:BSP/BL24C02/BL24C02.c **** 	.IIC_SCL_PIN  = GPIO_PIN_12,
+  11:BSP/BL24C02/BL24C02.c **** };
+  12:BSP/BL24C02/BL24C02.c **** 
+  13:BSP/BL24C02/BL24C02.c **** 
+  14:BSP/BL24C02/BL24C02.c **** void BL24C02_Write(uint8_t addr,uint8_t length,uint8_t buff[])
+  15:BSP/BL24C02/BL24C02.c **** {
+  30              		.loc 1 15 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 15 1 is_stmt 0 view .LVU1
+  35 0000 00B5     		push	{lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 4
+  38              		.cfi_offset 14, -4
+  39 0002 83B0     		sub	sp, sp, #12
+  40              	.LCFI1:
+  41              		.cfi_def_cfa_offset 16
+  42 0004 0B46     		mov	r3, r1
+  16:BSP/BL24C02/BL24C02.c **** 	IIC_Write_Multi_Byte(&BL_bus, BL_ADDRESS, addr, length, buff);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s 			page 2
+
+
+  43              		.loc 1 16 2 is_stmt 1 view .LVU2
+  44 0006 0092     		str	r2, [sp]
+  45 0008 0246     		mov	r2, r0
+  46              	.LVL1:
+  47              		.loc 1 16 2 is_stmt 0 view .LVU3
+  48 000a 5021     		movs	r1, #80
+  49              	.LVL2:
+  50              		.loc 1 16 2 view .LVU4
+  51 000c 0248     		ldr	r0, .L3
+  52              	.LVL3:
+  53              		.loc 1 16 2 view .LVU5
+  54 000e FFF7FEFF 		bl	IIC_Write_Multi_Byte
+  55              	.LVL4:
+  17:BSP/BL24C02/BL24C02.c **** }
+  56              		.loc 1 17 1 view .LVU6
+  57 0012 03B0     		add	sp, sp, #12
+  58              	.LCFI2:
+  59              		.cfi_def_cfa_offset 4
+  60              		@ sp needed
+  61 0014 5DF804FB 		ldr	pc, [sp], #4
+  62              	.L4:
+  63              		.align	2
+  64              	.L3:
+  65 0018 00000000 		.word	BL_bus
+  66              		.cfi_endproc
+  67              	.LFE216:
+  69              		.section	.text.BL24C02_Read,"ax",%progbits
+  70              		.align	1
+  71              		.global	BL24C02_Read
+  72              		.syntax unified
+  73              		.thumb
+  74              		.thumb_func
+  76              	BL24C02_Read:
+  77              	.LVL5:
+  78              	.LFB217:
+  18:BSP/BL24C02/BL24C02.c **** 
+  19:BSP/BL24C02/BL24C02.c **** 
+  20:BSP/BL24C02/BL24C02.c **** void BL24C02_Read(uint8_t addr, uint8_t length, uint8_t buff[])
+  21:BSP/BL24C02/BL24C02.c **** {
+  79              		.loc 1 21 1 is_stmt 1 view -0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 0
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83              		.loc 1 21 1 is_stmt 0 view .LVU8
+  84 0000 00B5     		push	{lr}
+  85              	.LCFI3:
+  86              		.cfi_def_cfa_offset 4
+  87              		.cfi_offset 14, -4
+  88 0002 83B0     		sub	sp, sp, #12
+  89              	.LCFI4:
+  90              		.cfi_def_cfa_offset 16
+  91 0004 0B46     		mov	r3, r1
+  22:BSP/BL24C02/BL24C02.c **** 	IIC_Read_Multi_Byte(&BL_bus, BL_ADDRESS, addr, length, buff);
+  92              		.loc 1 22 2 is_stmt 1 view .LVU9
+  93 0006 0092     		str	r2, [sp]
+  94 0008 0246     		mov	r2, r0
+  95              	.LVL6:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s 			page 3
+
+
+  96              		.loc 1 22 2 is_stmt 0 view .LVU10
+  97 000a 5021     		movs	r1, #80
+  98              	.LVL7:
+  99              		.loc 1 22 2 view .LVU11
+ 100 000c 0248     		ldr	r0, .L7
+ 101              	.LVL8:
+ 102              		.loc 1 22 2 view .LVU12
+ 103 000e FFF7FEFF 		bl	IIC_Read_Multi_Byte
+ 104              	.LVL9:
+  23:BSP/BL24C02/BL24C02.c **** }
+ 105              		.loc 1 23 1 view .LVU13
+ 106 0012 03B0     		add	sp, sp, #12
+ 107              	.LCFI5:
+ 108              		.cfi_def_cfa_offset 4
+ 109              		@ sp needed
+ 110 0014 5DF804FB 		ldr	pc, [sp], #4
+ 111              	.L8:
+ 112              		.align	2
+ 113              	.L7:
+ 114 0018 00000000 		.word	BL_bus
+ 115              		.cfi_endproc
+ 116              	.LFE217:
+ 118              		.section	.text.BL24C02_Init,"ax",%progbits
+ 119              		.align	1
+ 120              		.global	BL24C02_Init
+ 121              		.syntax unified
+ 122              		.thumb
+ 123              		.thumb_func
+ 125              	BL24C02_Init:
+ 126              	.LFB218:
+  24:BSP/BL24C02/BL24C02.c **** 
+  25:BSP/BL24C02/BL24C02.c **** 
+  26:BSP/BL24C02/BL24C02.c **** void BL24C02_Init(void)
+  27:BSP/BL24C02/BL24C02.c **** {
+ 127              		.loc 1 27 1 is_stmt 1 view -0
+ 128              		.cfi_startproc
+ 129              		@ args = 0, pretend = 0, frame = 8
+ 130              		@ frame_needed = 0, uses_anonymous_args = 0
+ 131 0000 00B5     		push	{lr}
+ 132              	.LCFI6:
+ 133              		.cfi_def_cfa_offset 4
+ 134              		.cfi_offset 14, -4
+ 135 0002 83B0     		sub	sp, sp, #12
+ 136              	.LCFI7:
+ 137              		.cfi_def_cfa_offset 16
+  28:BSP/BL24C02/BL24C02.c **** 	BL_CLK_ENABLE;
+ 138              		.loc 1 28 2 view .LVU15
+ 139              	.LBB2:
+ 140              		.loc 1 28 2 view .LVU16
+ 141 0004 0023     		movs	r3, #0
+ 142 0006 0193     		str	r3, [sp, #4]
+ 143              		.loc 1 28 2 view .LVU17
+ 144 0008 074B     		ldr	r3, .L11
+ 145 000a 1A6B     		ldr	r2, [r3, #48]
+ 146 000c 42F00102 		orr	r2, r2, #1
+ 147 0010 1A63     		str	r2, [r3, #48]
+ 148              		.loc 1 28 2 view .LVU18
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s 			page 4
+
+
+ 149 0012 1B6B     		ldr	r3, [r3, #48]
+ 150 0014 03F00103 		and	r3, r3, #1
+ 151 0018 0193     		str	r3, [sp, #4]
+ 152              		.loc 1 28 2 view .LVU19
+ 153 001a 019B     		ldr	r3, [sp, #4]
+ 154              	.LBE2:
+ 155              		.loc 1 28 2 view .LVU20
+  29:BSP/BL24C02/BL24C02.c **** 	IICInit(&BL_bus);
+ 156              		.loc 1 29 2 view .LVU21
+ 157 001c 0348     		ldr	r0, .L11+4
+ 158 001e FFF7FEFF 		bl	IICInit
+ 159              	.LVL10:
+  30:BSP/BL24C02/BL24C02.c **** }
+ 160              		.loc 1 30 1 is_stmt 0 view .LVU22
+ 161 0022 03B0     		add	sp, sp, #12
+ 162              	.LCFI8:
+ 163              		.cfi_def_cfa_offset 4
+ 164              		@ sp needed
+ 165 0024 5DF804FB 		ldr	pc, [sp], #4
+ 166              	.L12:
+ 167              		.align	2
+ 168              	.L11:
+ 169 0028 00380240 		.word	1073887232
+ 170 002c 00000000 		.word	BL_bus
+ 171              		.cfi_endproc
+ 172              	.LFE218:
+ 174              		.global	BL_bus
+ 175              		.section	.data.BL_bus,"aw"
+ 176              		.align	2
+ 179              	BL_bus:
+ 180 0000 00000240 		.word	1073872896
+ 181 0004 00000240 		.word	1073872896
+ 182 0008 0008     		.short	2048
+ 183 000a 0010     		.short	4096
+ 184              		.text
+ 185              	.Letext0:
+ 186              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 187              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 188              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 189              		.file 5 "BSP/IIC/iic_hal.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 BL24C02.c
+C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s:21     .text.BL24C02_Write:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s:27     .text.BL24C02_Write:00000000 BL24C02_Write
+C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s:65     .text.BL24C02_Write:00000018 $d
+C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s:179    .data.BL_bus:00000000 BL_bus
+C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s:70     .text.BL24C02_Read:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s:76     .text.BL24C02_Read:00000000 BL24C02_Read
+C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s:114    .text.BL24C02_Read:00000018 $d
+C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s:119    .text.BL24C02_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s:125    .text.BL24C02_Init:00000000 BL24C02_Init
+C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s:169    .text.BL24C02_Init:00000028 $d
+C:\Users\chen\AppData\Local\Temp\ccuDA9xx.s:176    .data.BL_bus:00000000 $d
+
+UNDEFINED SYMBOLS
+IIC_Write_Multi_Byte
+IIC_Read_Multi_Byte
+IICInit

@@ -1,0 +1,362 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cchz0oeC.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"user_DataSaveTask.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/Tasks/Src/user_DataSaveTask.c"
+  20              		.section	.text.DataSaveTask,"ax",%progbits
+  21              		.align	1
+  22              		.global	DataSaveTask
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	DataSaveTask:
+  28              	.LFB416:
+   1:User/Tasks/Src/user_DataSaveTask.c **** /* Private includes -----------------------------------------------------------*/
+   2:User/Tasks/Src/user_DataSaveTask.c **** //includes
+   3:User/Tasks/Src/user_DataSaveTask.c **** #include "user_DataSaveTask.h"
+   4:User/Tasks/Src/user_DataSaveTask.c **** //APP SYS setting
+   5:User/Tasks/Src/user_DataSaveTask.c **** #include "ui_DateTimeSetPage.h"
+   6:User/Tasks/Src/user_DataSaveTask.c **** #include "ui_HomePage.h"
+   7:User/Tasks/Src/user_DataSaveTask.c **** 
+   8:User/Tasks/Src/user_DataSaveTask.c **** #include "main.h"
+   9:User/Tasks/Src/user_DataSaveTask.c **** #include "rtc.h"
+  10:User/Tasks/Src/user_DataSaveTask.c **** #include "DataSave.h"
+  11:User/Tasks/Src/user_DataSaveTask.c **** #include "inv_mpu_dmp_motion_driver.h"
+  12:User/Tasks/Src/user_DataSaveTask.c **** 
+  13:User/Tasks/Src/user_DataSaveTask.c **** #include "HWDataAccess.h"
+  14:User/Tasks/Src/user_DataSaveTask.c **** 
+  15:User/Tasks/Src/user_DataSaveTask.c **** /* Private typedef -----------------------------------------------------------*/
+  16:User/Tasks/Src/user_DataSaveTask.c **** 
+  17:User/Tasks/Src/user_DataSaveTask.c **** /* Private define ------------------------------------------------------------*/
+  18:User/Tasks/Src/user_DataSaveTask.c **** 
+  19:User/Tasks/Src/user_DataSaveTask.c **** /* Private variables ---------------------------------------------------------*/
+  20:User/Tasks/Src/user_DataSaveTask.c **** 
+  21:User/Tasks/Src/user_DataSaveTask.c **** /******************************************
+  22:User/Tasks/Src/user_DataSaveTask.c **** EEPROM Data description:
+  23:User/Tasks/Src/user_DataSaveTask.c **** [0x00]:0x55 for check
+  24:User/Tasks/Src/user_DataSaveTask.c **** [0x01]:0xAA for check
+  25:User/Tasks/Src/user_DataSaveTask.c **** 
+  26:User/Tasks/Src/user_DataSaveTask.c **** [0x10]:user wrist setting, HWInterface.IMU.wrist_is_enabled
+  27:User/Tasks/Src/user_DataSaveTask.c **** [0x11]:user ui_APPSy_EN setting
+  28:User/Tasks/Src/user_DataSaveTask.c **** 
+  29:User/Tasks/Src/user_DataSaveTask.c **** [0x20]:Last Save Day(0-31)
+  30:User/Tasks/Src/user_DataSaveTask.c **** [0x21]:Day Steps
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cchz0oeC.s 			page 2
+
+
+  31:User/Tasks/Src/user_DataSaveTask.c **** 
+  32:User/Tasks/Src/user_DataSaveTask.c **** *******************************************/
+  33:User/Tasks/Src/user_DataSaveTask.c **** 
+  34:User/Tasks/Src/user_DataSaveTask.c **** 
+  35:User/Tasks/Src/user_DataSaveTask.c **** /* Private function prototypes -----------------------------------------------*/
+  36:User/Tasks/Src/user_DataSaveTask.c **** 
+  37:User/Tasks/Src/user_DataSaveTask.c **** /* Tasks ---------------------------------------------------------------------*/
+  38:User/Tasks/Src/user_DataSaveTask.c **** 
+  39:User/Tasks/Src/user_DataSaveTask.c **** /**
+  40:User/Tasks/Src/user_DataSaveTask.c ****   * @brief  Data Save in the EEPROM
+  41:User/Tasks/Src/user_DataSaveTask.c ****   * @param  argument: Not used
+  42:User/Tasks/Src/user_DataSaveTask.c ****   * @retval None
+  43:User/Tasks/Src/user_DataSaveTask.c ****   */
+  44:User/Tasks/Src/user_DataSaveTask.c **** void DataSaveTask(void *argument)
+  45:User/Tasks/Src/user_DataSaveTask.c **** {
+  29              		.loc 1 45 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 16
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              	.LVL0:
+  34              		.loc 1 45 1 is_stmt 0 view .LVU1
+  35 0000 00B5     		push	{lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 4
+  38              		.cfi_offset 14, -4
+  39 0002 85B0     		sub	sp, sp, #20
+  40              	.LCFI1:
+  41              		.cfi_def_cfa_offset 24
+  42 0004 10E0     		b	.L6
+  43              	.LVL1:
+  44              	.L4:
+  45              	.LBB2:
+  46              	.LBB3:
+  46:User/Tasks/Src/user_DataSaveTask.c **** 
+  47:User/Tasks/Src/user_DataSaveTask.c **** 	while(1)
+  48:User/Tasks/Src/user_DataSaveTask.c **** 	{
+  49:User/Tasks/Src/user_DataSaveTask.c **** 		uint8_t Datastr=0;
+  50:User/Tasks/Src/user_DataSaveTask.c **** 		if(osMessageQueueGet(DataSave_MessageQueue,&Datastr,NULL,1)==osOK)
+  51:User/Tasks/Src/user_DataSaveTask.c **** 		{
+  52:User/Tasks/Src/user_DataSaveTask.c **** 			/****************
+  53:User/Tasks/Src/user_DataSaveTask.c **** 			Setting change
+  54:User/Tasks/Src/user_DataSaveTask.c **** 			date change
+  55:User/Tasks/Src/user_DataSaveTask.c **** 			Step change
+  56:User/Tasks/Src/user_DataSaveTask.c **** 			****************/
+  57:User/Tasks/Src/user_DataSaveTask.c **** 			uint8_t dat[3];
+  58:User/Tasks/Src/user_DataSaveTask.c **** 			dat[0] = HWInterface.IMU.wrist_is_enabled;
+  59:User/Tasks/Src/user_DataSaveTask.c **** 			dat[1] = ui_APPSy_EN;
+  60:User/Tasks/Src/user_DataSaveTask.c **** 			SettingSave(dat,0x10,2);
+  61:User/Tasks/Src/user_DataSaveTask.c **** 
+  62:User/Tasks/Src/user_DataSaveTask.c **** 			RTC_DateTypeDef nowdate;
+  63:User/Tasks/Src/user_DataSaveTask.c **** 			HAL_RTC_GetDate(&hrtc,&nowdate,RTC_FORMAT_BIN);
+  64:User/Tasks/Src/user_DataSaveTask.c **** 
+  65:User/Tasks/Src/user_DataSaveTask.c **** 			SettingGet(dat,0x20,3);
+  66:User/Tasks/Src/user_DataSaveTask.c **** 			if(dat[0] != nowdate.Date)
+  67:User/Tasks/Src/user_DataSaveTask.c **** 			{
+  68:User/Tasks/Src/user_DataSaveTask.c **** 				if(!HWInterface.IMU.ConnectionError)
+  69:User/Tasks/Src/user_DataSaveTask.c **** 					HWInterface.IMU.SetSteps(0);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cchz0oeC.s 			page 3
+
+
+  70:User/Tasks/Src/user_DataSaveTask.c **** 
+  71:User/Tasks/Src/user_DataSaveTask.c **** 				dat[0] = nowdate.Date;
+  47              		.loc 1 71 5 is_stmt 1 view .LVU2
+  48              		.loc 1 71 21 is_stmt 0 view .LVU3
+  49 0006 9DF80E30 		ldrb	r3, [sp, #14]	@ zero_extendqisi2
+  50              		.loc 1 71 12 view .LVU4
+  51 000a 8DF80830 		strb	r3, [sp, #8]
+  72:User/Tasks/Src/user_DataSaveTask.c **** 				dat[2] = 0;
+  52              		.loc 1 72 5 is_stmt 1 view .LVU5
+  53              		.loc 1 72 12 is_stmt 0 view .LVU6
+  54 000e 0023     		movs	r3, #0
+  55 0010 8DF80A30 		strb	r3, [sp, #10]
+  73:User/Tasks/Src/user_DataSaveTask.c **** 				dat[1] = 0;
+  56              		.loc 1 73 5 is_stmt 1 view .LVU7
+  57              		.loc 1 73 12 is_stmt 0 view .LVU8
+  58 0014 8DF80930 		strb	r3, [sp, #9]
+  74:User/Tasks/Src/user_DataSaveTask.c **** 				SettingSave(dat,0x20,3);
+  59              		.loc 1 74 5 is_stmt 1 view .LVU9
+  60 0018 0322     		movs	r2, #3
+  61 001a 2021     		movs	r1, #32
+  62 001c 02A8     		add	r0, sp, #8
+  63 001e FFF7FEFF 		bl	SettingSave
+  64              	.LVL2:
+  65              	.L2:
+  66              	.LBE3:
+  75:User/Tasks/Src/user_DataSaveTask.c **** 			}
+  76:User/Tasks/Src/user_DataSaveTask.c **** 			else
+  77:User/Tasks/Src/user_DataSaveTask.c **** 			{
+  78:User/Tasks/Src/user_DataSaveTask.c **** 				uint16_t temp = HWInterface.IMU.GetSteps();
+  79:User/Tasks/Src/user_DataSaveTask.c **** 				dat[0] = nowdate.Date;
+  80:User/Tasks/Src/user_DataSaveTask.c **** 				dat[2] = temp & 0xff;
+  81:User/Tasks/Src/user_DataSaveTask.c **** 				dat[1] = temp>>8 & 0xff;
+  82:User/Tasks/Src/user_DataSaveTask.c **** 				SettingSave(dat,0x20,3);
+  83:User/Tasks/Src/user_DataSaveTask.c **** 			}
+  84:User/Tasks/Src/user_DataSaveTask.c **** 
+  85:User/Tasks/Src/user_DataSaveTask.c **** 		}
+  86:User/Tasks/Src/user_DataSaveTask.c **** 		osDelay(100);
+  67              		.loc 1 86 3 view .LVU10
+  68 0022 6420     		movs	r0, #100
+  69 0024 FFF7FEFF 		bl	osDelay
+  70              	.LVL3:
+  71              	.LBE2:
+  47:User/Tasks/Src/user_DataSaveTask.c **** 	{
+  72              		.loc 1 47 7 view .LVU11
+  73              	.L6:
+  47:User/Tasks/Src/user_DataSaveTask.c **** 	{
+  74              		.loc 1 47 2 view .LVU12
+  75              	.LBB6:
+  49:User/Tasks/Src/user_DataSaveTask.c **** 		if(osMessageQueueGet(DataSave_MessageQueue,&Datastr,NULL,1)==osOK)
+  76              		.loc 1 49 3 view .LVU13
+  49:User/Tasks/Src/user_DataSaveTask.c **** 		if(osMessageQueueGet(DataSave_MessageQueue,&Datastr,NULL,1)==osOK)
+  77              		.loc 1 49 11 is_stmt 0 view .LVU14
+  78 0028 0022     		movs	r2, #0
+  79 002a 8DF80720 		strb	r2, [sp, #7]
+  50:User/Tasks/Src/user_DataSaveTask.c **** 		{
+  80              		.loc 1 50 3 is_stmt 1 view .LVU15
+  50:User/Tasks/Src/user_DataSaveTask.c **** 		{
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cchz0oeC.s 			page 4
+
+
+  81              		.loc 1 50 6 is_stmt 0 view .LVU16
+  82 002e 0123     		movs	r3, #1
+  83 0030 0DF10701 		add	r1, sp, #7
+  84 0034 1F48     		ldr	r0, .L8
+  85 0036 0068     		ldr	r0, [r0]
+  86 0038 FFF7FEFF 		bl	osMessageQueueGet
+  87              	.LVL4:
+  50:User/Tasks/Src/user_DataSaveTask.c **** 		{
+  88              		.loc 1 50 5 discriminator 1 view .LVU17
+  89 003c 0028     		cmp	r0, #0
+  90 003e F0D1     		bne	.L2
+  91              	.LBB5:
+  57:User/Tasks/Src/user_DataSaveTask.c **** 			dat[0] = HWInterface.IMU.wrist_is_enabled;
+  92              		.loc 1 57 4 is_stmt 1 view .LVU18
+  58:User/Tasks/Src/user_DataSaveTask.c **** 			dat[1] = ui_APPSy_EN;
+  93              		.loc 1 58 4 view .LVU19
+  58:User/Tasks/Src/user_DataSaveTask.c **** 			dat[1] = ui_APPSy_EN;
+  94              		.loc 1 58 28 is_stmt 0 view .LVU20
+  95 0040 1D4B     		ldr	r3, .L8+4
+  96 0042 93F83530 		ldrb	r3, [r3, #53]	@ zero_extendqisi2
+  58:User/Tasks/Src/user_DataSaveTask.c **** 			dat[1] = ui_APPSy_EN;
+  97              		.loc 1 58 11 view .LVU21
+  98 0046 8DF80830 		strb	r3, [sp, #8]
+  59:User/Tasks/Src/user_DataSaveTask.c **** 			SettingSave(dat,0x10,2);
+  99              		.loc 1 59 4 is_stmt 1 view .LVU22
+  59:User/Tasks/Src/user_DataSaveTask.c **** 			SettingSave(dat,0x10,2);
+ 100              		.loc 1 59 11 is_stmt 0 view .LVU23
+ 101 004a 1C4B     		ldr	r3, .L8+8
+ 102 004c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 103 004e 8DF80930 		strb	r3, [sp, #9]
+  60:User/Tasks/Src/user_DataSaveTask.c **** 
+ 104              		.loc 1 60 4 is_stmt 1 view .LVU24
+ 105 0052 0222     		movs	r2, #2
+ 106 0054 1021     		movs	r1, #16
+ 107 0056 02A8     		add	r0, sp, #8
+ 108 0058 FFF7FEFF 		bl	SettingSave
+ 109              	.LVL5:
+  62:User/Tasks/Src/user_DataSaveTask.c **** 			HAL_RTC_GetDate(&hrtc,&nowdate,RTC_FORMAT_BIN);
+ 110              		.loc 1 62 4 view .LVU25
+  63:User/Tasks/Src/user_DataSaveTask.c **** 
+ 111              		.loc 1 63 4 view .LVU26
+ 112 005c 0022     		movs	r2, #0
+ 113 005e 03A9     		add	r1, sp, #12
+ 114 0060 1748     		ldr	r0, .L8+12
+ 115 0062 FFF7FEFF 		bl	HAL_RTC_GetDate
+ 116              	.LVL6:
+  65:User/Tasks/Src/user_DataSaveTask.c **** 			if(dat[0] != nowdate.Date)
+ 117              		.loc 1 65 4 view .LVU27
+ 118 0066 0322     		movs	r2, #3
+ 119 0068 2021     		movs	r1, #32
+ 120 006a 02A8     		add	r0, sp, #8
+ 121 006c FFF7FEFF 		bl	SettingGet
+ 122              	.LVL7:
+  66:User/Tasks/Src/user_DataSaveTask.c **** 			{
+ 123              		.loc 1 66 4 view .LVU28
+  66:User/Tasks/Src/user_DataSaveTask.c **** 			{
+ 124              		.loc 1 66 10 is_stmt 0 view .LVU29
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cchz0oeC.s 			page 5
+
+
+ 125 0070 9DF80820 		ldrb	r2, [sp, #8]	@ zero_extendqisi2
+  66:User/Tasks/Src/user_DataSaveTask.c **** 			{
+ 126              		.loc 1 66 24 view .LVU30
+ 127 0074 9DF80E30 		ldrb	r3, [sp, #14]	@ zero_extendqisi2
+  66:User/Tasks/Src/user_DataSaveTask.c **** 			{
+ 128              		.loc 1 66 6 view .LVU31
+ 129 0078 9A42     		cmp	r2, r3
+ 130 007a 09D0     		beq	.L3
+  68:User/Tasks/Src/user_DataSaveTask.c **** 					HWInterface.IMU.SetSteps(0);
+ 131              		.loc 1 68 5 is_stmt 1 view .LVU32
+  68:User/Tasks/Src/user_DataSaveTask.c **** 					HWInterface.IMU.SetSteps(0);
+ 132              		.loc 1 68 24 is_stmt 0 view .LVU33
+ 133 007c 0E4B     		ldr	r3, .L8+4
+ 134 007e 93F83030 		ldrb	r3, [r3, #48]	@ zero_extendqisi2
+  68:User/Tasks/Src/user_DataSaveTask.c **** 					HWInterface.IMU.SetSteps(0);
+ 135              		.loc 1 68 7 view .LVU34
+ 136 0082 002B     		cmp	r3, #0
+ 137 0084 BFD1     		bne	.L4
+  69:User/Tasks/Src/user_DataSaveTask.c **** 
+ 138              		.loc 1 69 6 is_stmt 1 view .LVU35
+  69:User/Tasks/Src/user_DataSaveTask.c **** 
+ 139              		.loc 1 69 21 is_stmt 0 view .LVU36
+ 140 0086 0C4B     		ldr	r3, .L8+4
+ 141 0088 9B6C     		ldr	r3, [r3, #72]
+  69:User/Tasks/Src/user_DataSaveTask.c **** 
+ 142              		.loc 1 69 6 view .LVU37
+ 143 008a 0020     		movs	r0, #0
+ 144 008c 9847     		blx	r3
+ 145              	.LVL8:
+ 146 008e BAE7     		b	.L4
+ 147              	.L3:
+ 148              	.LBB4:
+  78:User/Tasks/Src/user_DataSaveTask.c **** 				dat[0] = nowdate.Date;
+ 149              		.loc 1 78 5 is_stmt 1 view .LVU38
+  78:User/Tasks/Src/user_DataSaveTask.c **** 				dat[0] = nowdate.Date;
+ 150              		.loc 1 78 36 is_stmt 0 view .LVU39
+ 151 0090 094B     		ldr	r3, .L8+4
+ 152 0092 5B6C     		ldr	r3, [r3, #68]
+  78:User/Tasks/Src/user_DataSaveTask.c **** 				dat[0] = nowdate.Date;
+ 153              		.loc 1 78 21 view .LVU40
+ 154 0094 9847     		blx	r3
+ 155              	.LVL9:
+  79:User/Tasks/Src/user_DataSaveTask.c **** 				dat[2] = temp & 0xff;
+ 156              		.loc 1 79 5 is_stmt 1 view .LVU41
+  79:User/Tasks/Src/user_DataSaveTask.c **** 				dat[2] = temp & 0xff;
+ 157              		.loc 1 79 21 is_stmt 0 view .LVU42
+ 158 0096 9DF80E30 		ldrb	r3, [sp, #14]	@ zero_extendqisi2
+  79:User/Tasks/Src/user_DataSaveTask.c **** 				dat[2] = temp & 0xff;
+ 159              		.loc 1 79 12 view .LVU43
+ 160 009a 8DF80830 		strb	r3, [sp, #8]
+  80:User/Tasks/Src/user_DataSaveTask.c **** 				dat[1] = temp>>8 & 0xff;
+ 161              		.loc 1 80 5 is_stmt 1 view .LVU44
+  80:User/Tasks/Src/user_DataSaveTask.c **** 				dat[1] = temp>>8 & 0xff;
+ 162              		.loc 1 80 12 is_stmt 0 view .LVU45
+ 163 009e 8DF80A00 		strb	r0, [sp, #10]
+  81:User/Tasks/Src/user_DataSaveTask.c **** 				SettingSave(dat,0x20,3);
+ 164              		.loc 1 81 5 is_stmt 1 view .LVU46
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cchz0oeC.s 			page 6
+
+
+  81:User/Tasks/Src/user_DataSaveTask.c **** 				SettingSave(dat,0x20,3);
+ 165              		.loc 1 81 12 is_stmt 0 view .LVU47
+ 166 00a2 000A     		lsrs	r0, r0, #8
+ 167              	.LVL10:
+  81:User/Tasks/Src/user_DataSaveTask.c **** 				SettingSave(dat,0x20,3);
+ 168              		.loc 1 81 12 view .LVU48
+ 169 00a4 8DF80900 		strb	r0, [sp, #9]
+  82:User/Tasks/Src/user_DataSaveTask.c **** 			}
+ 170              		.loc 1 82 5 is_stmt 1 view .LVU49
+ 171 00a8 0322     		movs	r2, #3
+ 172 00aa 2021     		movs	r1, #32
+ 173 00ac 02A8     		add	r0, sp, #8
+ 174 00ae FFF7FEFF 		bl	SettingSave
+ 175              	.LVL11:
+ 176 00b2 B6E7     		b	.L2
+ 177              	.L9:
+ 178              		.align	2
+ 179              	.L8:
+ 180 00b4 00000000 		.word	DataSave_MessageQueue
+ 181 00b8 00000000 		.word	HWInterface
+ 182 00bc 00000000 		.word	ui_APPSy_EN
+ 183 00c0 00000000 		.word	hrtc
+ 184              	.LBE4:
+ 185              	.LBE5:
+ 186              	.LBE6:
+ 187              		.cfi_endproc
+ 188              	.LFE416:
+ 190              		.text
+ 191              	.Letext0:
+ 192              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 193              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 194              		.file 4 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ 195              		.file 5 "User/Tasks/Inc/user_TasksInit.h"
+ 196              		.file 6 "User/GUI_App/Screens/Inc/ui_DateTimeSetPage.h"
+ 197              		.file 7 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 198              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 199              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h"
+ 200              		.file 10 "Core/Inc/rtc.h"
+ 201              		.file 11 "User/Func/Inc/HWDataAccess.h"
+ 202              		.file 12 "BSP/BL24C02/DataSave.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cchz0oeC.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 user_DataSaveTask.c
+C:\Users\chen\AppData\Local\Temp\cchz0oeC.s:21     .text.DataSaveTask:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cchz0oeC.s:27     .text.DataSaveTask:00000000 DataSaveTask
+C:\Users\chen\AppData\Local\Temp\cchz0oeC.s:180    .text.DataSaveTask:000000b4 $d
+
+UNDEFINED SYMBOLS
+SettingSave
+osDelay
+osMessageQueueGet
+HAL_RTC_GetDate
+SettingGet
+DataSave_MessageQueue
+HWInterface
+ui_APPSy_EN
+hrtc

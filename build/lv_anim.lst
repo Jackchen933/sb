@@ -1,0 +1,3077 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"lv_anim.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c"
+  20              		.section	.text.anim_mark_list_change,"ax",%progbits
+  21              		.align	1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	anim_mark_list_change:
+  27              	.LFB62:
+   1:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** /**
+   2:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  * @file lv_anim.c
+   3:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  *
+   4:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  */
+   5:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+   6:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** /*********************
+   7:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  *      INCLUDES
+   8:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  *********************/
+   9:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** #include "lv_anim.h"
+  10:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  11:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** #include "../hal/lv_hal_tick.h"
+  12:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** #include "lv_assert.h"
+  13:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** #include "lv_timer.h"
+  14:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** #include "lv_math.h"
+  15:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** #include "lv_mem.h"
+  16:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** #include "lv_gc.h"
+  17:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  18:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** /*********************
+  19:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  *      DEFINES
+  20:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  *********************/
+  21:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** #define LV_ANIM_RESOLUTION 1024
+  22:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** #define LV_ANIM_RES_SHIFT 10
+  23:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  24:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** /**********************
+  25:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  *      TYPEDEFS
+  26:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  **********************/
+  27:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  28:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** /**********************
+  29:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  *  STATIC PROTOTYPES
+  30:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  **********************/
+  31:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** static void anim_timer(lv_timer_t * param);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 2
+
+
+  32:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** static void anim_mark_list_change(void);
+  33:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** static void anim_ready_handler(lv_anim_t * a);
+  34:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  35:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** /**********************
+  36:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  *  STATIC VARIABLES
+  37:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  **********************/
+  38:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** static uint32_t last_timer_run;
+  39:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** static bool anim_list_changed;
+  40:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** static bool anim_run_round;
+  41:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** static lv_timer_t * _lv_anim_tmr;
+  42:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  43:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** /**********************
+  44:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  *      MACROS
+  45:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  **********************/
+  46:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** #if LV_LOG_TRACE_ANIM
+  47:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     #define TRACE_ANIM(...) LV_LOG_TRACE(__VA_ARGS__)
+  48:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** #else
+  49:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     #define TRACE_ANIM(...)
+  50:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** #endif
+  51:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  52:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  53:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** /**********************
+  54:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  *   GLOBAL FUNCTIONS
+  55:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  **********************/
+  56:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  57:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** void _lv_anim_core_init(void)
+  58:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+  59:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     _lv_ll_init(&LV_GC_ROOT(_lv_anim_ll), sizeof(lv_anim_t));
+  60:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     _lv_anim_tmr = lv_timer_create(anim_timer, LV_DISP_DEF_REFR_PERIOD, NULL);
+  61:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     anim_mark_list_change(); /*Turn off the animation timer*/
+  62:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     anim_list_changed = false;
+  63:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+  64:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  65:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** void lv_anim_init(lv_anim_t * a)
+  66:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+  67:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_memset_00(a, sizeof(lv_anim_t));
+  68:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->time = 500;
+  69:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->start_value = 0;
+  70:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->end_value = 100;
+  71:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->repeat_cnt = 1;
+  72:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->path_cb = lv_anim_path_linear;
+  73:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->early_apply = 1;
+  74:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+  75:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  76:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** lv_anim_t * lv_anim_start(const lv_anim_t * a)
+  77:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+  78:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     TRACE_ANIM("begin");
+  79:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  80:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Do not let two animations for the same 'var' with the same 'exec_cb'*/
+  81:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->exec_cb != NULL) lv_anim_del(a->var, a->exec_cb); /*exec_cb == NULL would delete all anim
+  82:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  83:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*If the list is empty the anim timer was suspended and it's last run measure is invalid*/
+  84:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(_lv_ll_is_empty(&LV_GC_ROOT(_lv_anim_ll))) {
+  85:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         last_timer_run = lv_tick_get();
+  86:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+  87:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  88:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Add the new animation to the animation linked list*/
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 3
+
+
+  89:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_anim_t * new_anim = _lv_ll_ins_head(&LV_GC_ROOT(_lv_anim_ll));
+  90:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     LV_ASSERT_MALLOC(new_anim);
+  91:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(new_anim == NULL) return NULL;
+  92:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  93:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Initialize the animation descriptor*/
+  94:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_memcpy(new_anim, a, sizeof(lv_anim_t));
+  95:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->var == a) new_anim->var = new_anim;
+  96:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_anim->run_round = anim_run_round;
+  97:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+  98:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Set the start value*/
+  99:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(new_anim->early_apply) {
+ 100:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(new_anim->get_value_cb) {
+ 101:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             int32_t v_ofs = new_anim->get_value_cb(new_anim);
+ 102:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             new_anim->start_value += v_ofs;
+ 103:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             new_anim->end_value += v_ofs;
+ 104:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 105:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 106:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(new_anim->exec_cb && new_anim->var) new_anim->exec_cb(new_anim->var, new_anim->start_val
+ 107:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 108:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 109:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Creating an animation changed the linked list.
+ 110:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****      *It's important if it happens in a ready callback. (see `anim_timer`)*/
+ 111:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     anim_mark_list_change();
+ 112:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 113:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     TRACE_ANIM("finished");
+ 114:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     return new_anim;
+ 115:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 116:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 117:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** uint32_t lv_anim_get_playtime(lv_anim_t * a)
+ 118:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 119:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t playtime = LV_ANIM_PLAYTIME_INFINITE;
+ 120:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 121:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->repeat_cnt == LV_ANIM_REPEAT_INFINITE)
+ 122:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         return playtime;
+ 123:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 124:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     playtime = a->time - a->act_time;
+ 125:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->playback_now == 0)
+ 126:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         playtime += a->playback_delay + a->playback_time;
+ 127:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 128:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->repeat_cnt <= 1)
+ 129:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         return playtime;
+ 130:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 131:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     playtime += (a->repeat_delay + a->time +
+ 132:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                  a->playback_delay + a->playback_time) *
+ 133:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 (a->repeat_cnt - 1);
+ 134:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 135:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     return playtime;
+ 136:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 137:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 138:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** bool lv_anim_del(void * var, lv_anim_exec_xcb_t exec_cb)
+ 139:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 140:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_anim_t * a;
+ 141:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_anim_t * a_next;
+ 142:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     bool del = false;
+ 143:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a        = _lv_ll_get_head(&LV_GC_ROOT(_lv_anim_ll));
+ 144:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     while(a != NULL) {
+ 145:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*'a' might be deleted, so get the next object while 'a' is valid*/
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 4
+
+
+ 146:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         a_next = _lv_ll_get_next(&LV_GC_ROOT(_lv_anim_ll), a);
+ 147:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 148:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if((a->var == var || var == NULL) && (a->exec_cb == exec_cb || exec_cb == NULL)) {
+ 149:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             _lv_ll_remove(&LV_GC_ROOT(_lv_anim_ll), a);
+ 150:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             lv_mem_free(a);
+ 151:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             anim_mark_list_change(); /*Read by `anim_timer`. It need to know if a delete occurred i
+ 152:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                                        the linked list*/
+ 153:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             del = true;
+ 154:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 155:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 156:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         a = a_next;
+ 157:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 158:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 159:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     return del;
+ 160:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 161:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 162:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** void lv_anim_del_all(void)
+ 163:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 164:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     _lv_ll_clear(&LV_GC_ROOT(_lv_anim_ll));
+ 165:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     anim_mark_list_change();
+ 166:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 167:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 168:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** lv_anim_t * lv_anim_get(void * var, lv_anim_exec_xcb_t exec_cb)
+ 169:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 170:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_anim_t * a;
+ 171:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     _LV_LL_READ(&LV_GC_ROOT(_lv_anim_ll), a) {
+ 172:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(a->var == var && (a->exec_cb == exec_cb || exec_cb == NULL)) {
+ 173:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             return a;
+ 174:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 175:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 176:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 177:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     return NULL;
+ 178:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 179:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 180:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** uint16_t lv_anim_count_running(void)
+ 181:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 182:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint16_t cnt = 0;
+ 183:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_anim_t * a;
+ 184:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     _LV_LL_READ(&LV_GC_ROOT(_lv_anim_ll), a) cnt++;
+ 185:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 186:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     return cnt;
+ 187:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 188:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 189:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** uint32_t lv_anim_speed_to_time(uint32_t speed, int32_t start, int32_t end)
+ 190:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 191:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t d    = LV_ABS(start - end);
+ 192:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t time = (d * 1000) / speed;
+ 193:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 194:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(time == 0) {
+ 195:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         time++;
+ 196:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 197:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 198:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     return time;
+ 199:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 200:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 201:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** void lv_anim_refr_now(void)
+ 202:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 5
+
+
+ 203:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     anim_timer(NULL);
+ 204:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 205:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 206:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** int32_t lv_anim_path_linear(const lv_anim_t * a)
+ 207:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 208:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 209:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_map(a->act_time, 0, a->time, 0, LV_ANIM_RESOLUTION);
+ 210:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 211:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Get the new value which will be proportional to `step`
+ 212:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****      *and the `start` and `end` values*/
+ 213:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t new_value;
+ 214:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = step * (a->end_value - a->start_value);
+ 215:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_ANIM_RES_SHIFT;
+ 216:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value += a->start_value;
+ 217:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 218:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     return new_value;
+ 219:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 220:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 221:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** int32_t lv_anim_path_ease_in(const lv_anim_t * a)
+ 222:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 223:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 224:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t t = lv_map(a->act_time, 0, a->time, 0, LV_BEZIER_VAL_MAX);
+ 225:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 50, 100, LV_BEZIER_VAL_MAX);
+ 226:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 227:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t new_value;
+ 228:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = step * (a->end_value - a->start_value);
+ 229:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 230:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value += a->start_value;
+ 231:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 232:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     return new_value;
+ 233:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 234:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 235:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** int32_t lv_anim_path_ease_out(const lv_anim_t * a)
+ 236:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 237:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 238:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t t = lv_map(a->act_time, 0, a->time, 0, LV_BEZIER_VAL_MAX);
+ 239:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 900, 950, LV_BEZIER_VAL_MAX);
+ 240:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 241:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t new_value;
+ 242:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = step * (a->end_value - a->start_value);
+ 243:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 244:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value += a->start_value;
+ 245:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 246:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     return new_value;
+ 247:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 248:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 249:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** int32_t lv_anim_path_ease_in_out(const lv_anim_t * a)
+ 250:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 251:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 252:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t t = lv_map(a->act_time, 0, a->time, 0, LV_BEZIER_VAL_MAX);
+ 253:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 50, 952, LV_BEZIER_VAL_MAX);
+ 254:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 255:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t new_value;
+ 256:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = step * (a->end_value - a->start_value);
+ 257:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 258:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value += a->start_value;
+ 259:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 6
+
+
+ 260:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     return new_value;
+ 261:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 262:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 263:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** int32_t lv_anim_path_overshoot(const lv_anim_t * a)
+ 264:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 265:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 266:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t t = lv_map(a->act_time, 0, a->time, 0, LV_BEZIER_VAL_MAX);
+ 267:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 1000, 1300, LV_BEZIER_VAL_MAX);
+ 268:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 269:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t new_value;
+ 270:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = step * (a->end_value - a->start_value);
+ 271:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 272:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value += a->start_value;
+ 273:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 274:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     return new_value;
+ 275:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 276:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 277:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** int32_t lv_anim_path_bounce(const lv_anim_t * a)
+ 278:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 279:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 280:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t t = lv_map(a->act_time, 0, a->time, 0, LV_BEZIER_VAL_MAX);
+ 281:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t diff = (a->end_value - a->start_value);
+ 282:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 283:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*3 bounces has 5 parts: 3 down and 2 up. One part is t / 5 long*/
+ 284:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 285:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(t < 408) {
+ 286:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Go down*/
+ 287:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t = (t * 2500) >> LV_BEZIER_VAL_SHIFT; /*[0..1024] range*/
+ 288:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 289:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     else if(t >= 408 && t < 614) {
+ 290:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*First bounce back*/
+ 291:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t -= 408;
+ 292:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = t * 5; /*to [0..1024] range*/
+ 293:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = LV_BEZIER_VAL_MAX - t;
+ 294:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         diff = diff / 20;
+ 295:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 296:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     else if(t >= 614 && t < 819) {
+ 297:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Fall back*/
+ 298:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t -= 614;
+ 299:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = t * 5; /*to [0..1024] range*/
+ 300:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         diff = diff / 20;
+ 301:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 302:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     else if(t >= 819 && t < 921) {
+ 303:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Second bounce back*/
+ 304:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t -= 819;
+ 305:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = t * 10; /*to [0..1024] range*/
+ 306:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = LV_BEZIER_VAL_MAX - t;
+ 307:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         diff = diff / 40;
+ 308:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 309:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     else if(t >= 921 && t <= LV_BEZIER_VAL_MAX) {
+ 310:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Fall back*/
+ 311:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t -= 921;
+ 312:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = t * 10; /*to [0..1024] range*/
+ 313:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         diff = diff / 40;
+ 314:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 315:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 316:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(t > LV_BEZIER_VAL_MAX) t = LV_BEZIER_VAL_MAX;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 7
+
+
+ 317:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(t < 0) t = 0;
+ 318:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, LV_BEZIER_VAL_MAX, 800, 500, 0);
+ 319:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 320:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t new_value;
+ 321:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = step * diff;
+ 322:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 323:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = a->end_value - new_value;
+ 324:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 325:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     return new_value;
+ 326:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 327:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 328:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** int32_t lv_anim_path_step(const lv_anim_t * a)
+ 329:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 330:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->act_time >= a->time)
+ 331:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         return a->end_value;
+ 332:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     else
+ 333:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         return a->start_value;
+ 334:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 335:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 336:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** /**********************
+ 337:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  *   STATIC FUNCTIONS
+ 338:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  **********************/
+ 339:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 340:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** /**
+ 341:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  * Periodically handle the animations.
+ 342:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  * @param param unused
+ 343:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  */
+ 344:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** static void anim_timer(lv_timer_t * param)
+ 345:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 346:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     LV_UNUSED(param);
+ 347:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 348:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t elaps = lv_tick_elaps(last_timer_run);
+ 349:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 350:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Flip the run round*/
+ 351:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     anim_run_round = anim_run_round ? false : true;
+ 352:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 353:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_anim_t * a = _lv_ll_get_head(&LV_GC_ROOT(_lv_anim_ll));
+ 354:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 355:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     while(a != NULL) {
+ 356:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*It can be set by `lv_anim_del()` typically in `end_cb`. If set then an animation delete
+ 357:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****          * happened in `anim_ready_handler` which could make this linked list reading corrupt
+ 358:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****          * because the list is changed meanwhile
+ 359:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****          */
+ 360:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         anim_list_changed = false;
+ 361:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 362:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(a->run_round != anim_run_round) {
+ 363:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->run_round = anim_run_round; /*The list readying might be reset so need to know which
+ 364:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 365:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             /*The animation will run now for the first time. Call `start_cb`*/
+ 366:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             int32_t new_act_time = a->act_time + elaps;
+ 367:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             if(!a->start_cb_called && a->act_time <= 0 && new_act_time >= 0) {
+ 368:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 if(a->early_apply == 0 && a->get_value_cb) {
+ 369:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     int32_t v_ofs = a->get_value_cb(a);
+ 370:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     a->start_value += v_ofs;
+ 371:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     a->end_value += v_ofs;
+ 372:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 373:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 if(a->start_cb) a->start_cb(a);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 8
+
+
+ 374:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 a->start_cb_called = 1;
+ 375:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             }
+ 376:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->act_time += elaps;
+ 377:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             if(a->act_time >= 0) {
+ 378:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 if(a->act_time > a->time) a->act_time = a->time;
+ 379:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 380:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 int32_t new_value;
+ 381:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 new_value = a->path_cb(a);
+ 382:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 383:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 if(new_value != a->current_value) {
+ 384:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     a->current_value = new_value;
+ 385:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     /*Apply the calculated value*/
+ 386:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     if(a->exec_cb) a->exec_cb(a->var, new_value);
+ 387:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 388:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 389:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 /*If the time is elapsed the animation is ready*/
+ 390:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 if(a->act_time >= a->time) {
+ 391:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     anim_ready_handler(a);
+ 392:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 393:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             }
+ 394:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 395:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 396:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*If the linked list changed due to anim. delete then it's not safe to continue
+ 397:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****          *the reading of the list from here -> start from the head*/
+ 398:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(anim_list_changed)
+ 399:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a = _lv_ll_get_head(&LV_GC_ROOT(_lv_anim_ll));
+ 400:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         else
+ 401:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a = _lv_ll_get_next(&LV_GC_ROOT(_lv_anim_ll), a);
+ 402:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 403:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 404:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     last_timer_run = lv_tick_get();
+ 405:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 406:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 407:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** /**
+ 408:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  * Called when an animation is ready to do the necessary thinks
+ 409:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  * e.g. repeat, play back, delete etc.
+ 410:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  * @param a pointer to an animation descriptor
+ 411:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****  */
+ 412:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** static void anim_ready_handler(lv_anim_t * a)
+ 413:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+ 414:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*In the end of a forward anim decrement repeat cnt.*/
+ 415:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->playback_now == 0 && a->repeat_cnt > 0 && a->repeat_cnt != LV_ANIM_REPEAT_INFINITE) {
+ 416:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         a->repeat_cnt--;
+ 417:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 418:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 419:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Delete the animation if
+ 420:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****      * - no repeat left and no play back (simple one shot animation)
+ 421:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****      * - no repeat, play back is enabled and play back is ready*/
+ 422:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->repeat_cnt == 0 && (a->playback_time == 0 || a->playback_now == 1)) {
+ 423:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 424:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Delete the animation from the list.
+ 425:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****          * This way the `ready_cb` will see the animations like it's animation is ready deleted*/
+ 426:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         _lv_ll_remove(&LV_GC_ROOT(_lv_anim_ll), a);
+ 427:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Flag that the list has changed*/
+ 428:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         anim_mark_list_change();
+ 429:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 430:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Call the callback function at the end*/
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 9
+
+
+ 431:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(a->ready_cb != NULL) a->ready_cb(a);
+ 432:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         lv_mem_free(a);
+ 433:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 434:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*If the animation is not deleted then restart it*/
+ 435:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     else {
+ 436:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         a->act_time = -(int32_t)(a->repeat_delay); /*Restart the animation*/
+ 437:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Swap the start and end values in play back mode*/
+ 438:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(a->playback_time != 0) {
+ 439:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             /*If now turning back use the 'playback_pause*/
+ 440:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             if(a->playback_now == 0) a->act_time = -(int32_t)(a->playback_delay);
+ 441:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 442:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             /*Toggle the play back state*/
+ 443:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->playback_now = a->playback_now == 0 ? 1 : 0;
+ 444:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             /*Swap the start and end values*/
+ 445:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             int32_t tmp    = a->start_value;
+ 446:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->start_value = a->end_value;
+ 447:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->end_value   = tmp;
+ 448:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             /*Swap the time and playback_time*/
+ 449:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             tmp = a->time;
+ 450:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->time = a->playback_time;
+ 451:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->playback_time = tmp;
+ 452:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 453:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 454:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 455:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 456:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** static void anim_mark_list_change(void)
+ 457:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** {
+  28              		.loc 1 457 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+ 458:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     anim_list_changed = true;
+  37              		.loc 1 458 5 view .LVU1
+  38              		.loc 1 458 23 is_stmt 0 view .LVU2
+  39 0002 084B     		ldr	r3, .L6
+  40 0004 0122     		movs	r2, #1
+  41 0006 1A70     		strb	r2, [r3]
+ 459:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(_lv_ll_get_head(&LV_GC_ROOT(_lv_anim_ll)) == NULL)
+  42              		.loc 1 459 5 is_stmt 1 view .LVU3
+  43              		.loc 1 459 8 is_stmt 0 view .LVU4
+  44 0008 0748     		ldr	r0, .L6+4
+  45 000a FFF7FEFF 		bl	_lv_ll_get_head
+  46              	.LVL0:
+  47              		.loc 1 459 7 discriminator 1 view .LVU5
+  48 000e 20B1     		cbz	r0, .L5
+ 460:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         lv_timer_pause(_lv_anim_tmr);
+ 461:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     else
+ 462:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         lv_timer_resume(_lv_anim_tmr);
+  49              		.loc 1 462 9 is_stmt 1 view .LVU6
+  50 0010 064B     		ldr	r3, .L6+8
+  51 0012 1868     		ldr	r0, [r3]
+  52 0014 FFF7FEFF 		bl	lv_timer_resume
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 10
+
+
+  53              	.LVL1:
+  54              	.L1:
+ 463:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+  55              		.loc 1 463 1 is_stmt 0 view .LVU7
+  56 0018 08BD     		pop	{r3, pc}
+  57              	.L5:
+ 460:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         lv_timer_pause(_lv_anim_tmr);
+  58              		.loc 1 460 9 is_stmt 1 view .LVU8
+  59 001a 044B     		ldr	r3, .L6+8
+  60 001c 1868     		ldr	r0, [r3]
+  61 001e FFF7FEFF 		bl	lv_timer_pause
+  62              	.LVL2:
+  63 0022 F9E7     		b	.L1
+  64              	.L7:
+  65              		.align	2
+  66              	.L6:
+  67 0024 00000000 		.word	anim_list_changed
+  68 0028 00000000 		.word	_lv_anim_ll
+  69 002c 00000000 		.word	_lv_anim_tmr
+  70              		.cfi_endproc
+  71              	.LFE62:
+  73              		.section	.text.anim_ready_handler,"ax",%progbits
+  74              		.align	1
+  75              		.syntax unified
+  76              		.thumb
+  77              		.thumb_func
+  79              	anim_ready_handler:
+  80              	.LVL3:
+  81              	.LFB61:
+ 413:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*In the end of a forward anim decrement repeat cnt.*/
+  82              		.loc 1 413 1 view -0
+  83              		.cfi_startproc
+  84              		@ args = 0, pretend = 0, frame = 0
+  85              		@ frame_needed = 0, uses_anonymous_args = 0
+ 413:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*In the end of a forward anim decrement repeat cnt.*/
+  86              		.loc 1 413 1 is_stmt 0 view .LVU10
+  87 0000 10B5     		push	{r4, lr}
+  88              	.LCFI1:
+  89              		.cfi_def_cfa_offset 8
+  90              		.cfi_offset 4, -8
+  91              		.cfi_offset 14, -4
+  92 0002 0446     		mov	r4, r0
+ 415:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         a->repeat_cnt--;
+  93              		.loc 1 415 5 is_stmt 1 view .LVU11
+ 415:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         a->repeat_cnt--;
+  94              		.loc 1 415 24 is_stmt 0 view .LVU12
+  95 0004 90F83E30 		ldrb	r3, [r0, #62]	@ zero_extendqisi2
+ 415:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         a->repeat_cnt--;
+  96              		.loc 1 415 7 view .LVU13
+  97 0008 13F00203 		ands	r3, r3, #2
+  98 000c 07D1     		bne	.L9
+ 415:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         a->repeat_cnt--;
+  99              		.loc 1 415 33 discriminator 1 view .LVU14
+ 100 000e 828F     		ldrh	r2, [r0, #60]
+ 415:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         a->repeat_cnt--;
+ 101              		.loc 1 415 29 discriminator 1 view .LVU15
+ 102 0010 2AB1     		cbz	r2, .L9
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 11
+
+
+ 415:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         a->repeat_cnt--;
+ 103              		.loc 1 415 50 discriminator 2 view .LVU16
+ 104 0012 4FF6FF71 		movw	r1, #65535
+ 105 0016 8A42     		cmp	r2, r1
+ 106 0018 01D0     		beq	.L9
+ 416:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 107              		.loc 1 416 9 is_stmt 1 view .LVU17
+ 416:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 108              		.loc 1 416 22 is_stmt 0 view .LVU18
+ 109 001a 013A     		subs	r2, r2, #1
+ 110 001c 8287     		strh	r2, [r0, #60]	@ movhi
+ 111              	.L9:
+ 422:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 112              		.loc 1 422 5 is_stmt 1 view .LVU19
+ 422:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 113              		.loc 1 422 9 is_stmt 0 view .LVU20
+ 114 001e A28F     		ldrh	r2, [r4, #60]
+ 422:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 115              		.loc 1 422 7 view .LVU21
+ 116 0020 82B9     		cbnz	r2, .L10
+ 422:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 117              		.loc 1 422 32 discriminator 1 view .LVU22
+ 118 0022 626B     		ldr	r2, [r4, #52]
+ 422:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 119              		.loc 1 422 27 discriminator 1 view .LVU23
+ 120 0024 02B1     		cbz	r2, .L11
+ 422:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 121              		.loc 1 422 53 discriminator 2 view .LVU24
+ 122 0026 6BB1     		cbz	r3, .L10
+ 123              	.L11:
+ 426:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Flag that the list has changed*/
+ 124              		.loc 1 426 9 is_stmt 1 view .LVU25
+ 125 0028 2146     		mov	r1, r4
+ 126 002a 1348     		ldr	r0, .L16
+ 127              	.LVL4:
+ 426:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Flag that the list has changed*/
+ 128              		.loc 1 426 9 is_stmt 0 view .LVU26
+ 129 002c FFF7FEFF 		bl	_lv_ll_remove
+ 130              	.LVL5:
+ 428:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 131              		.loc 1 428 9 is_stmt 1 view .LVU27
+ 132 0030 FFF7FEFF 		bl	anim_mark_list_change
+ 133              	.LVL6:
+ 431:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         lv_mem_free(a);
+ 134              		.loc 1 431 9 view .LVU28
+ 431:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         lv_mem_free(a);
+ 135              		.loc 1 431 13 is_stmt 0 view .LVU29
+ 136 0034 E368     		ldr	r3, [r4, #12]
+ 431:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         lv_mem_free(a);
+ 137              		.loc 1 431 11 view .LVU30
+ 138 0036 0BB1     		cbz	r3, .L12
+ 431:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         lv_mem_free(a);
+ 139              		.loc 1 431 33 is_stmt 1 discriminator 1 view .LVU31
+ 140 0038 2046     		mov	r0, r4
+ 141 003a 9847     		blx	r3
+ 142              	.LVL7:
+ 143              	.L12:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 12
+
+
+ 432:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 144              		.loc 1 432 9 view .LVU32
+ 145 003c 2046     		mov	r0, r4
+ 146 003e FFF7FEFF 		bl	lv_mem_free
+ 147              	.LVL8:
+ 148 0042 18E0     		b	.L8
+ 149              	.LVL9:
+ 150              	.L10:
+ 436:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Swap the start and end values in play back mode*/
+ 151              		.loc 1 436 9 view .LVU33
+ 436:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Swap the start and end values in play back mode*/
+ 152              		.loc 1 436 35 is_stmt 0 view .LVU34
+ 153 0044 A26B     		ldr	r2, [r4, #56]
+ 436:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Swap the start and end values in play back mode*/
+ 154              		.loc 1 436 23 view .LVU35
+ 155 0046 5242     		rsbs	r2, r2, #0
+ 436:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Swap the start and end values in play back mode*/
+ 156              		.loc 1 436 21 view .LVU36
+ 157 0048 E262     		str	r2, [r4, #44]
+ 438:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             /*If now turning back use the 'playback_pause*/
+ 158              		.loc 1 438 9 is_stmt 1 view .LVU37
+ 438:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             /*If now turning back use the 'playback_pause*/
+ 159              		.loc 1 438 13 is_stmt 0 view .LVU38
+ 160 004a 626B     		ldr	r2, [r4, #52]
+ 438:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             /*If now turning back use the 'playback_pause*/
+ 161              		.loc 1 438 11 view .LVU39
+ 162 004c 9AB1     		cbz	r2, .L8
+ 163              	.LBB2:
+ 440:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 164              		.loc 1 440 13 is_stmt 1 view .LVU40
+ 440:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 165              		.loc 1 440 15 is_stmt 0 view .LVU41
+ 166 004e 13B9     		cbnz	r3, .L14
+ 440:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 167              		.loc 1 440 38 is_stmt 1 discriminator 1 view .LVU42
+ 440:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 168              		.loc 1 440 64 is_stmt 0 discriminator 1 view .LVU43
+ 169 0050 216B     		ldr	r1, [r4, #48]
+ 440:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 170              		.loc 1 440 52 discriminator 1 view .LVU44
+ 171 0052 4942     		rsbs	r1, r1, #0
+ 440:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 172              		.loc 1 440 50 discriminator 1 view .LVU45
+ 173 0054 E162     		str	r1, [r4, #44]
+ 174              	.L14:
+ 443:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             /*Swap the start and end values*/
+ 175              		.loc 1 443 13 is_stmt 1 view .LVU46
+ 443:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             /*Swap the start and end values*/
+ 176              		.loc 1 443 56 is_stmt 0 view .LVU47
+ 177 0056 B3FA83F3 		clz	r3, r3
+ 178 005a 5B09     		lsrs	r3, r3, #5
+ 443:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             /*Swap the start and end values*/
+ 179              		.loc 1 443 29 view .LVU48
+ 180 005c 94F83E10 		ldrb	r1, [r4, #62]	@ zero_extendqisi2
+ 181 0060 63F34101 		bfi	r1, r3, #1, #1
+ 182 0064 84F83E10 		strb	r1, [r4, #62]
+ 445:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->start_value = a->end_value;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 13
+
+
+ 183              		.loc 1 445 13 is_stmt 1 view .LVU49
+ 445:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->start_value = a->end_value;
+ 184              		.loc 1 445 21 is_stmt 0 view .LVU50
+ 185 0068 E369     		ldr	r3, [r4, #28]
+ 186              	.LVL10:
+ 446:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->end_value   = tmp;
+ 187              		.loc 1 446 13 is_stmt 1 view .LVU51
+ 446:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->end_value   = tmp;
+ 188              		.loc 1 446 31 is_stmt 0 view .LVU52
+ 189 006a 616A     		ldr	r1, [r4, #36]
+ 446:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->end_value   = tmp;
+ 190              		.loc 1 446 28 view .LVU53
+ 191 006c E161     		str	r1, [r4, #28]
+ 447:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             /*Swap the time and playback_time*/
+ 192              		.loc 1 447 13 is_stmt 1 view .LVU54
+ 447:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             /*Swap the time and playback_time*/
+ 193              		.loc 1 447 28 is_stmt 0 view .LVU55
+ 194 006e 6362     		str	r3, [r4, #36]
+ 449:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->time = a->playback_time;
+ 195              		.loc 1 449 13 is_stmt 1 view .LVU56
+ 449:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->time = a->playback_time;
+ 196              		.loc 1 449 17 is_stmt 0 view .LVU57
+ 197 0070 A36A     		ldr	r3, [r4, #40]
+ 198              	.LVL11:
+ 450:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->playback_time = tmp;
+ 199              		.loc 1 450 13 is_stmt 1 view .LVU58
+ 450:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->playback_time = tmp;
+ 200              		.loc 1 450 21 is_stmt 0 view .LVU59
+ 201 0072 A262     		str	r2, [r4, #40]
+ 451:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 202              		.loc 1 451 13 is_stmt 1 view .LVU60
+ 451:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 203              		.loc 1 451 30 is_stmt 0 view .LVU61
+ 204 0074 6363     		str	r3, [r4, #52]
+ 205              	.LVL12:
+ 206              	.L8:
+ 451:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 207              		.loc 1 451 30 view .LVU62
+ 208              	.LBE2:
+ 454:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 209              		.loc 1 454 1 view .LVU63
+ 210 0076 10BD     		pop	{r4, pc}
+ 211              	.LVL13:
+ 212              	.L17:
+ 454:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 213              		.loc 1 454 1 view .LVU64
+ 214              		.align	2
+ 215              	.L16:
+ 216 0078 00000000 		.word	_lv_anim_ll
+ 217              		.cfi_endproc
+ 218              	.LFE61:
+ 220              		.section	.text.anim_timer,"ax",%progbits
+ 221              		.align	1
+ 222              		.syntax unified
+ 223              		.thumb
+ 224              		.thumb_func
+ 226              	anim_timer:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 14
+
+
+ 227              	.LVL14:
+ 228              	.LFB60:
+ 345:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     LV_UNUSED(param);
+ 229              		.loc 1 345 1 is_stmt 1 view -0
+ 230              		.cfi_startproc
+ 231              		@ args = 0, pretend = 0, frame = 0
+ 232              		@ frame_needed = 0, uses_anonymous_args = 0
+ 345:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     LV_UNUSED(param);
+ 233              		.loc 1 345 1 is_stmt 0 view .LVU66
+ 234 0000 38B5     		push	{r3, r4, r5, lr}
+ 235              	.LCFI2:
+ 236              		.cfi_def_cfa_offset 16
+ 237              		.cfi_offset 3, -16
+ 238              		.cfi_offset 4, -12
+ 239              		.cfi_offset 5, -8
+ 240              		.cfi_offset 14, -4
+ 346:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 241              		.loc 1 346 5 is_stmt 1 view .LVU67
+ 348:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 242              		.loc 1 348 5 view .LVU68
+ 348:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 243              		.loc 1 348 22 is_stmt 0 view .LVU69
+ 244 0002 3B4B     		ldr	r3, .L33
+ 245 0004 1868     		ldr	r0, [r3]
+ 246              	.LVL15:
+ 348:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 247              		.loc 1 348 22 view .LVU70
+ 248 0006 FFF7FEFF 		bl	lv_tick_elaps
+ 249              	.LVL16:
+ 250 000a 0546     		mov	r5, r0
+ 251              	.LVL17:
+ 351:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 252              		.loc 1 351 5 is_stmt 1 view .LVU71
+ 351:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 253              		.loc 1 351 45 is_stmt 0 view .LVU72
+ 254 000c 394A     		ldr	r2, .L33+4
+ 255 000e 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 256 0010 83F00103 		eor	r3, r3, #1
+ 351:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 257              		.loc 1 351 20 view .LVU73
+ 258 0014 1370     		strb	r3, [r2]
+ 353:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 259              		.loc 1 353 5 is_stmt 1 view .LVU74
+ 353:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 260              		.loc 1 353 21 is_stmt 0 view .LVU75
+ 261 0016 3848     		ldr	r0, .L33+8
+ 262              	.LVL18:
+ 353:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 263              		.loc 1 353 21 view .LVU76
+ 264 0018 FFF7FEFF 		bl	_lv_ll_get_head
+ 265              	.LVL19:
+ 266 001c 0446     		mov	r4, r0
+ 267              	.LVL20:
+ 355:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*It can be set by `lv_anim_del()` typically in `end_cb`. If set then an animation delete
+ 268              		.loc 1 355 5 is_stmt 1 view .LVU77
+ 355:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*It can be set by `lv_anim_del()` typically in `end_cb`. If set then an animation delete
+ 269              		.loc 1 355 10 is_stmt 0 view .LVU78
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 15
+
+
+ 270 001e 25E0     		b	.L19
+ 271              	.LVL21:
+ 272              	.L32:
+ 273              	.LBB3:
+ 367:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 if(a->early_apply == 0 && a->get_value_cb) {
+ 274              		.loc 1 367 56 discriminator 2 view .LVU79
+ 275 0020 0029     		cmp	r1, #0
+ 276 0022 3FDB     		blt	.L21
+ 368:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     int32_t v_ofs = a->get_value_cb(a);
+ 277              		.loc 1 368 17 is_stmt 1 view .LVU80
+ 368:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     int32_t v_ofs = a->get_value_cb(a);
+ 278              		.loc 1 368 19 is_stmt 0 view .LVU81
+ 279 0024 12F0010F 		tst	r2, #1
+ 280 0028 09D1     		bne	.L22
+ 368:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     int32_t v_ofs = a->get_value_cb(a);
+ 281              		.loc 1 368 44 discriminator 1 view .LVU82
+ 282 002a 2369     		ldr	r3, [r4, #16]
+ 368:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     int32_t v_ofs = a->get_value_cb(a);
+ 283              		.loc 1 368 40 discriminator 1 view .LVU83
+ 284 002c 3BB1     		cbz	r3, .L22
+ 285              	.LBB4:
+ 369:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     a->start_value += v_ofs;
+ 286              		.loc 1 369 21 is_stmt 1 view .LVU84
+ 369:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     a->start_value += v_ofs;
+ 287              		.loc 1 369 37 is_stmt 0 view .LVU85
+ 288 002e 2046     		mov	r0, r4
+ 369:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     a->start_value += v_ofs;
+ 289              		.loc 1 369 37 view .LVU86
+ 290 0030 9847     		blx	r3
+ 291              	.LVL22:
+ 370:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     a->end_value += v_ofs;
+ 292              		.loc 1 370 21 is_stmt 1 view .LVU87
+ 370:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     a->end_value += v_ofs;
+ 293              		.loc 1 370 22 is_stmt 0 view .LVU88
+ 294 0032 E369     		ldr	r3, [r4, #28]
+ 370:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     a->end_value += v_ofs;
+ 295              		.loc 1 370 36 view .LVU89
+ 296 0034 0344     		add	r3, r3, r0
+ 297 0036 E361     		str	r3, [r4, #28]
+ 371:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 298              		.loc 1 371 21 is_stmt 1 view .LVU90
+ 371:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 299              		.loc 1 371 22 is_stmt 0 view .LVU91
+ 300 0038 636A     		ldr	r3, [r4, #36]
+ 371:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 301              		.loc 1 371 34 view .LVU92
+ 302 003a 0344     		add	r3, r3, r0
+ 303 003c 6362     		str	r3, [r4, #36]
+ 304              	.LVL23:
+ 305              	.L22:
+ 371:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 306              		.loc 1 371 34 view .LVU93
+ 307              	.LBE4:
+ 373:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 a->start_cb_called = 1;
+ 308              		.loc 1 373 17 is_stmt 1 view .LVU94
+ 373:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 a->start_cb_called = 1;
+ 309              		.loc 1 373 21 is_stmt 0 view .LVU95
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 16
+
+
+ 310 003e A368     		ldr	r3, [r4, #8]
+ 373:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 a->start_cb_called = 1;
+ 311              		.loc 1 373 19 view .LVU96
+ 312 0040 0BB1     		cbz	r3, .L23
+ 373:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 a->start_cb_called = 1;
+ 313              		.loc 1 373 33 is_stmt 1 discriminator 1 view .LVU97
+ 314 0042 2046     		mov	r0, r4
+ 315 0044 9847     		blx	r3
+ 316              	.LVL24:
+ 317              	.L23:
+ 374:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             }
+ 318              		.loc 1 374 17 view .LVU98
+ 374:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             }
+ 319              		.loc 1 374 36 is_stmt 0 view .LVU99
+ 320 0046 94F83E30 		ldrb	r3, [r4, #62]	@ zero_extendqisi2
+ 321 004a 43F00803 		orr	r3, r3, #8
+ 322 004e 84F83E30 		strb	r3, [r4, #62]
+ 323 0052 27E0     		b	.L21
+ 324              	.LVL25:
+ 325              	.L25:
+ 326              	.LBB5:
+ 390:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     anim_ready_handler(a);
+ 327              		.loc 1 390 17 is_stmt 1 view .LVU100
+ 390:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     anim_ready_handler(a);
+ 328              		.loc 1 390 21 is_stmt 0 view .LVU101
+ 329 0054 E26A     		ldr	r2, [r4, #44]
+ 390:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     anim_ready_handler(a);
+ 330              		.loc 1 390 36 view .LVU102
+ 331 0056 A36A     		ldr	r3, [r4, #40]
+ 390:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     anim_ready_handler(a);
+ 332              		.loc 1 390 19 view .LVU103
+ 333 0058 9A42     		cmp	r2, r3
+ 334 005a 3ADA     		bge	.L30
+ 335              	.LVL26:
+ 336              	.L20:
+ 390:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     anim_ready_handler(a);
+ 337              		.loc 1 390 19 view .LVU104
+ 338              	.LBE5:
+ 339              	.LBE3:
+ 398:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a = _lv_ll_get_head(&LV_GC_ROOT(_lv_anim_ll));
+ 340              		.loc 1 398 9 is_stmt 1 view .LVU105
+ 398:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a = _lv_ll_get_head(&LV_GC_ROOT(_lv_anim_ll));
+ 341              		.loc 1 398 12 is_stmt 0 view .LVU106
+ 342 005c 274B     		ldr	r3, .L33+12
+ 343 005e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 398:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a = _lv_ll_get_head(&LV_GC_ROOT(_lv_anim_ll));
+ 344              		.loc 1 398 11 view .LVU107
+ 345 0060 002B     		cmp	r3, #0
+ 346 0062 3AD0     		beq	.L26
+ 399:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         else
+ 347              		.loc 1 399 13 is_stmt 1 view .LVU108
+ 399:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         else
+ 348              		.loc 1 399 17 is_stmt 0 view .LVU109
+ 349 0064 2448     		ldr	r0, .L33+8
+ 350 0066 FFF7FEFF 		bl	_lv_ll_get_head
+ 351              	.LVL27:
+ 352 006a 0446     		mov	r4, r0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 17
+
+
+ 353              	.LVL28:
+ 354              	.L19:
+ 355:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*It can be set by `lv_anim_del()` typically in `end_cb`. If set then an animation delete
+ 355              		.loc 1 355 13 is_stmt 1 view .LVU110
+ 356 006c 002C     		cmp	r4, #0
+ 357 006e 3AD0     		beq	.L31
+ 360:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 358              		.loc 1 360 9 view .LVU111
+ 360:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 359              		.loc 1 360 27 is_stmt 0 view .LVU112
+ 360 0070 224B     		ldr	r3, .L33+12
+ 361 0072 0022     		movs	r2, #0
+ 362 0074 1A70     		strb	r2, [r3]
+ 362:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->run_round = anim_run_round; /*The list readying might be reset so need to know which
+ 363              		.loc 1 362 9 is_stmt 1 view .LVU113
+ 362:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->run_round = anim_run_round; /*The list readying might be reset so need to know which
+ 364              		.loc 1 362 13 is_stmt 0 view .LVU114
+ 365 0076 94F83E30 		ldrb	r3, [r4, #62]	@ zero_extendqisi2
+ 366 007a C3F38003 		ubfx	r3, r3, #2, #1
+ 362:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->run_round = anim_run_round; /*The list readying might be reset so need to know which
+ 367              		.loc 1 362 25 view .LVU115
+ 368 007e 1D4A     		ldr	r2, .L33+4
+ 369 0080 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 362:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             a->run_round = anim_run_round; /*The list readying might be reset so need to know which
+ 370              		.loc 1 362 11 view .LVU116
+ 371 0082 9342     		cmp	r3, r2
+ 372 0084 EAD0     		beq	.L20
+ 373              	.LBB7:
+ 363:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 374              		.loc 1 363 13 is_stmt 1 view .LVU117
+ 363:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 375              		.loc 1 363 26 is_stmt 0 view .LVU118
+ 376 0086 94F83E30 		ldrb	r3, [r4, #62]	@ zero_extendqisi2
+ 377 008a 62F38203 		bfi	r3, r2, #2, #1
+ 378 008e 84F83E30 		strb	r3, [r4, #62]
+ 366:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             if(!a->start_cb_called && a->act_time <= 0 && new_act_time >= 0) {
+ 379              		.loc 1 366 13 is_stmt 1 view .LVU119
+ 366:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             if(!a->start_cb_called && a->act_time <= 0 && new_act_time >= 0) {
+ 380              		.loc 1 366 37 is_stmt 0 view .LVU120
+ 381 0092 E36A     		ldr	r3, [r4, #44]
+ 366:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             if(!a->start_cb_called && a->act_time <= 0 && new_act_time >= 0) {
+ 382              		.loc 1 366 48 view .LVU121
+ 383 0094 5919     		adds	r1, r3, r5
+ 384              	.LVL29:
+ 367:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 if(a->early_apply == 0 && a->get_value_cb) {
+ 385              		.loc 1 367 13 is_stmt 1 view .LVU122
+ 367:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 if(a->early_apply == 0 && a->get_value_cb) {
+ 386              		.loc 1 367 16 is_stmt 0 view .LVU123
+ 387 0096 94F83E20 		ldrb	r2, [r4, #62]	@ zero_extendqisi2
+ 367:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 if(a->early_apply == 0 && a->get_value_cb) {
+ 388              		.loc 1 367 15 view .LVU124
+ 389 009a 12F0080F 		tst	r2, #8
+ 390 009e 01D1     		bne	.L21
+ 367:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 if(a->early_apply == 0 && a->get_value_cb) {
+ 391              		.loc 1 367 36 discriminator 1 view .LVU125
+ 392 00a0 002B     		cmp	r3, #0
+ 393 00a2 BDDD     		ble	.L32
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 18
+
+
+ 394              	.LVL30:
+ 395              	.L21:
+ 376:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             if(a->act_time >= 0) {
+ 396              		.loc 1 376 13 is_stmt 1 view .LVU126
+ 376:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             if(a->act_time >= 0) {
+ 397              		.loc 1 376 14 is_stmt 0 view .LVU127
+ 398 00a4 E36A     		ldr	r3, [r4, #44]
+ 376:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             if(a->act_time >= 0) {
+ 399              		.loc 1 376 25 view .LVU128
+ 400 00a6 2B44     		add	r3, r3, r5
+ 401 00a8 E362     		str	r3, [r4, #44]
+ 377:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 if(a->act_time > a->time) a->act_time = a->time;
+ 402              		.loc 1 377 13 is_stmt 1 view .LVU129
+ 377:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 if(a->act_time > a->time) a->act_time = a->time;
+ 403              		.loc 1 377 15 is_stmt 0 view .LVU130
+ 404 00aa 002B     		cmp	r3, #0
+ 405 00ac D6DB     		blt	.L20
+ 406              	.LBB6:
+ 378:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 407              		.loc 1 378 17 is_stmt 1 view .LVU131
+ 378:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 408              		.loc 1 378 35 is_stmt 0 view .LVU132
+ 409 00ae A26A     		ldr	r2, [r4, #40]
+ 378:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 410              		.loc 1 378 19 view .LVU133
+ 411 00b0 9342     		cmp	r3, r2
+ 412 00b2 00DD     		ble	.L24
+ 378:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 413              		.loc 1 378 43 is_stmt 1 discriminator 1 view .LVU134
+ 378:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 414              		.loc 1 378 55 is_stmt 0 discriminator 1 view .LVU135
+ 415 00b4 E262     		str	r2, [r4, #44]
+ 416              	.L24:
+ 380:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 new_value = a->path_cb(a);
+ 417              		.loc 1 380 17 is_stmt 1 view .LVU136
+ 381:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 418              		.loc 1 381 17 view .LVU137
+ 381:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 419              		.loc 1 381 30 is_stmt 0 view .LVU138
+ 420 00b6 A369     		ldr	r3, [r4, #24]
+ 381:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 421              		.loc 1 381 29 view .LVU139
+ 422 00b8 2046     		mov	r0, r4
+ 423 00ba 9847     		blx	r3
+ 424              	.LVL31:
+ 383:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     a->current_value = new_value;
+ 425              		.loc 1 383 17 is_stmt 1 view .LVU140
+ 383:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     a->current_value = new_value;
+ 426              		.loc 1 383 34 is_stmt 0 view .LVU141
+ 427 00bc 236A     		ldr	r3, [r4, #32]
+ 383:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     a->current_value = new_value;
+ 428              		.loc 1 383 19 view .LVU142
+ 429 00be 8342     		cmp	r3, r0
+ 430 00c0 C8D0     		beq	.L25
+ 384:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     /*Apply the calculated value*/
+ 431              		.loc 1 384 21 is_stmt 1 view .LVU143
+ 384:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                     /*Apply the calculated value*/
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 19
+
+
+ 432              		.loc 1 384 38 is_stmt 0 view .LVU144
+ 433 00c2 2062     		str	r0, [r4, #32]
+ 386:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 434              		.loc 1 386 21 is_stmt 1 view .LVU145
+ 386:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 435              		.loc 1 386 25 is_stmt 0 view .LVU146
+ 436 00c4 6368     		ldr	r3, [r4, #4]
+ 386:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 437              		.loc 1 386 23 view .LVU147
+ 438 00c6 002B     		cmp	r3, #0
+ 439 00c8 C4D0     		beq	.L25
+ 386:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 440              		.loc 1 386 36 is_stmt 1 discriminator 1 view .LVU148
+ 441 00ca 0146     		mov	r1, r0
+ 442 00cc 2068     		ldr	r0, [r4]
+ 443              	.LVL32:
+ 386:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 444              		.loc 1 386 36 is_stmt 0 discriminator 1 view .LVU149
+ 445 00ce 9847     		blx	r3
+ 446              	.LVL33:
+ 386:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 447              		.loc 1 386 36 discriminator 1 view .LVU150
+ 448 00d0 C0E7     		b	.L25
+ 449              	.L30:
+ 391:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 450              		.loc 1 391 21 is_stmt 1 view .LVU151
+ 451 00d2 2046     		mov	r0, r4
+ 452 00d4 FFF7FEFF 		bl	anim_ready_handler
+ 453              	.LVL34:
+ 454 00d8 C0E7     		b	.L20
+ 455              	.LVL35:
+ 456              	.L26:
+ 391:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 }
+ 457              		.loc 1 391 21 is_stmt 0 view .LVU152
+ 458              	.LBE6:
+ 459              	.LBE7:
+ 401:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 460              		.loc 1 401 13 is_stmt 1 view .LVU153
+ 401:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 461              		.loc 1 401 17 is_stmt 0 view .LVU154
+ 462 00da 2146     		mov	r1, r4
+ 463 00dc 0648     		ldr	r0, .L33+8
+ 464 00de FFF7FEFF 		bl	_lv_ll_get_next
+ 465              	.LVL36:
+ 466 00e2 0446     		mov	r4, r0
+ 467              	.LVL37:
+ 401:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 468              		.loc 1 401 17 view .LVU155
+ 469 00e4 C2E7     		b	.L19
+ 470              	.L31:
+ 404:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 471              		.loc 1 404 5 is_stmt 1 view .LVU156
+ 404:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 472              		.loc 1 404 22 is_stmt 0 view .LVU157
+ 473 00e6 FFF7FEFF 		bl	lv_tick_get
+ 474              	.LVL38:
+ 404:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 20
+
+
+ 475              		.loc 1 404 20 discriminator 1 view .LVU158
+ 476 00ea 014B     		ldr	r3, .L33
+ 477 00ec 1860     		str	r0, [r3]
+ 405:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 478              		.loc 1 405 1 view .LVU159
+ 479 00ee 38BD     		pop	{r3, r4, r5, pc}
+ 480              	.LVL39:
+ 481              	.L34:
+ 405:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 482              		.loc 1 405 1 view .LVU160
+ 483              		.align	2
+ 484              	.L33:
+ 485 00f0 00000000 		.word	last_timer_run
+ 486 00f4 00000000 		.word	anim_run_round
+ 487 00f8 00000000 		.word	_lv_anim_ll
+ 488 00fc 00000000 		.word	anim_list_changed
+ 489              		.cfi_endproc
+ 490              	.LFE60:
+ 492              		.section	.text.lv_anim_path_linear,"ax",%progbits
+ 493              		.align	1
+ 494              		.global	lv_anim_path_linear
+ 495              		.syntax unified
+ 496              		.thumb
+ 497              		.thumb_func
+ 499              	lv_anim_path_linear:
+ 500              	.LVL40:
+ 501              	.LFB53:
+ 207:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 502              		.loc 1 207 1 is_stmt 1 view -0
+ 503              		.cfi_startproc
+ 504              		@ args = 0, pretend = 0, frame = 0
+ 505              		@ frame_needed = 0, uses_anonymous_args = 0
+ 207:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 506              		.loc 1 207 1 is_stmt 0 view .LVU162
+ 507 0000 10B5     		push	{r4, lr}
+ 508              	.LCFI3:
+ 509              		.cfi_def_cfa_offset 8
+ 510              		.cfi_offset 4, -8
+ 511              		.cfi_offset 14, -4
+ 512 0002 82B0     		sub	sp, sp, #8
+ 513              	.LCFI4:
+ 514              		.cfi_def_cfa_offset 16
+ 515 0004 0446     		mov	r4, r0
+ 209:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 516              		.loc 1 209 5 is_stmt 1 view .LVU163
+ 209:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 517              		.loc 1 209 20 is_stmt 0 view .LVU164
+ 518 0006 4FF48063 		mov	r3, #1024
+ 519 000a 0093     		str	r3, [sp]
+ 520 000c 0023     		movs	r3, #0
+ 521 000e 826A     		ldr	r2, [r0, #40]
+ 522 0010 1946     		mov	r1, r3
+ 523 0012 C06A     		ldr	r0, [r0, #44]
+ 524              	.LVL41:
+ 209:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 525              		.loc 1 209 20 view .LVU165
+ 526 0014 FFF7FEFF 		bl	lv_map
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 21
+
+
+ 527              	.LVL42:
+ 213:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = step * (a->end_value - a->start_value);
+ 528              		.loc 1 213 5 is_stmt 1 view .LVU166
+ 214:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_ANIM_RES_SHIFT;
+ 529              		.loc 1 214 5 view .LVU167
+ 214:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_ANIM_RES_SHIFT;
+ 530              		.loc 1 214 26 is_stmt 0 view .LVU168
+ 531 0018 636A     		ldr	r3, [r4, #36]
+ 214:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_ANIM_RES_SHIFT;
+ 532              		.loc 1 214 41 view .LVU169
+ 533 001a E269     		ldr	r2, [r4, #28]
+ 214:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_ANIM_RES_SHIFT;
+ 534              		.loc 1 214 38 view .LVU170
+ 535 001c 9B1A     		subs	r3, r3, r2
+ 214:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_ANIM_RES_SHIFT;
+ 536              		.loc 1 214 15 view .LVU171
+ 537 001e 03FB00F0 		mul	r0, r3, r0
+ 538              	.LVL43:
+ 215:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value += a->start_value;
+ 539              		.loc 1 215 5 is_stmt 1 view .LVU172
+ 216:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 540              		.loc 1 216 5 view .LVU173
+ 218:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 541              		.loc 1 218 5 view .LVU174
+ 219:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 542              		.loc 1 219 1 is_stmt 0 view .LVU175
+ 543 0022 02EBA020 		add	r0, r2, r0, asr #10
+ 544              	.LVL44:
+ 219:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 545              		.loc 1 219 1 view .LVU176
+ 546 0026 02B0     		add	sp, sp, #8
+ 547              	.LCFI5:
+ 548              		.cfi_def_cfa_offset 8
+ 549              		@ sp needed
+ 550 0028 10BD     		pop	{r4, pc}
+ 219:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 551              		.loc 1 219 1 view .LVU177
+ 552              		.cfi_endproc
+ 553              	.LFE53:
+ 555              		.section	.text._lv_anim_core_init,"ax",%progbits
+ 556              		.align	1
+ 557              		.global	_lv_anim_core_init
+ 558              		.syntax unified
+ 559              		.thumb
+ 560              		.thumb_func
+ 562              	_lv_anim_core_init:
+ 563              	.LFB43:
+  58:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     _lv_ll_init(&LV_GC_ROOT(_lv_anim_ll), sizeof(lv_anim_t));
+ 564              		.loc 1 58 1 is_stmt 1 view -0
+ 565              		.cfi_startproc
+ 566              		@ args = 0, pretend = 0, frame = 0
+ 567              		@ frame_needed = 0, uses_anonymous_args = 0
+ 568 0000 08B5     		push	{r3, lr}
+ 569              	.LCFI6:
+ 570              		.cfi_def_cfa_offset 8
+ 571              		.cfi_offset 3, -8
+ 572              		.cfi_offset 14, -4
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 22
+
+
+  59:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     _lv_anim_tmr = lv_timer_create(anim_timer, LV_DISP_DEF_REFR_PERIOD, NULL);
+ 573              		.loc 1 59 5 view .LVU179
+ 574 0002 4021     		movs	r1, #64
+ 575 0004 0748     		ldr	r0, .L39
+ 576 0006 FFF7FEFF 		bl	_lv_ll_init
+ 577              	.LVL45:
+  60:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     anim_mark_list_change(); /*Turn off the animation timer*/
+ 578              		.loc 1 60 5 view .LVU180
+  60:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     anim_mark_list_change(); /*Turn off the animation timer*/
+ 579              		.loc 1 60 20 is_stmt 0 view .LVU181
+ 580 000a 0022     		movs	r2, #0
+ 581 000c 0A21     		movs	r1, #10
+ 582 000e 0648     		ldr	r0, .L39+4
+ 583 0010 FFF7FEFF 		bl	lv_timer_create
+ 584              	.LVL46:
+  60:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     anim_mark_list_change(); /*Turn off the animation timer*/
+ 585              		.loc 1 60 18 discriminator 1 view .LVU182
+ 586 0014 054B     		ldr	r3, .L39+8
+ 587 0016 1860     		str	r0, [r3]
+  61:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     anim_list_changed = false;
+ 588              		.loc 1 61 5 is_stmt 1 view .LVU183
+ 589 0018 FFF7FEFF 		bl	anim_mark_list_change
+ 590              	.LVL47:
+  62:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 591              		.loc 1 62 5 view .LVU184
+  62:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 592              		.loc 1 62 23 is_stmt 0 view .LVU185
+ 593 001c 044B     		ldr	r3, .L39+12
+ 594 001e 0022     		movs	r2, #0
+ 595 0020 1A70     		strb	r2, [r3]
+  63:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 596              		.loc 1 63 1 view .LVU186
+ 597 0022 08BD     		pop	{r3, pc}
+ 598              	.L40:
+ 599              		.align	2
+ 600              	.L39:
+ 601 0024 00000000 		.word	_lv_anim_ll
+ 602 0028 00000000 		.word	anim_timer
+ 603 002c 00000000 		.word	_lv_anim_tmr
+ 604 0030 00000000 		.word	anim_list_changed
+ 605              		.cfi_endproc
+ 606              	.LFE43:
+ 608              		.section	.text.lv_anim_init,"ax",%progbits
+ 609              		.align	1
+ 610              		.global	lv_anim_init
+ 611              		.syntax unified
+ 612              		.thumb
+ 613              		.thumb_func
+ 615              	lv_anim_init:
+ 616              	.LVL48:
+ 617              	.LFB44:
+  66:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_memset_00(a, sizeof(lv_anim_t));
+ 618              		.loc 1 66 1 is_stmt 1 view -0
+ 619              		.cfi_startproc
+ 620              		@ args = 0, pretend = 0, frame = 0
+ 621              		@ frame_needed = 0, uses_anonymous_args = 0
+  66:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_memset_00(a, sizeof(lv_anim_t));
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 23
+
+
+ 622              		.loc 1 66 1 is_stmt 0 view .LVU188
+ 623 0000 10B5     		push	{r4, lr}
+ 624              	.LCFI7:
+ 625              		.cfi_def_cfa_offset 8
+ 626              		.cfi_offset 4, -8
+ 627              		.cfi_offset 14, -4
+ 628 0002 0446     		mov	r4, r0
+  67:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->time = 500;
+ 629              		.loc 1 67 5 is_stmt 1 view .LVU189
+ 630 0004 4021     		movs	r1, #64
+ 631 0006 FFF7FEFF 		bl	lv_memset_00
+ 632              	.LVL49:
+  68:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->start_value = 0;
+ 633              		.loc 1 68 5 view .LVU190
+  68:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->start_value = 0;
+ 634              		.loc 1 68 13 is_stmt 0 view .LVU191
+ 635 000a 4FF4FA73 		mov	r3, #500
+ 636 000e A362     		str	r3, [r4, #40]
+  69:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->end_value = 100;
+ 637              		.loc 1 69 5 is_stmt 1 view .LVU192
+  69:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->end_value = 100;
+ 638              		.loc 1 69 20 is_stmt 0 view .LVU193
+ 639 0010 0023     		movs	r3, #0
+ 640 0012 E361     		str	r3, [r4, #28]
+  70:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->repeat_cnt = 1;
+ 641              		.loc 1 70 5 is_stmt 1 view .LVU194
+  70:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->repeat_cnt = 1;
+ 642              		.loc 1 70 18 is_stmt 0 view .LVU195
+ 643 0014 6423     		movs	r3, #100
+ 644 0016 6362     		str	r3, [r4, #36]
+  71:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->path_cb = lv_anim_path_linear;
+ 645              		.loc 1 71 5 is_stmt 1 view .LVU196
+  71:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->path_cb = lv_anim_path_linear;
+ 646              		.loc 1 71 19 is_stmt 0 view .LVU197
+ 647 0018 0123     		movs	r3, #1
+ 648 001a A387     		strh	r3, [r4, #60]	@ movhi
+  72:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->early_apply = 1;
+ 649              		.loc 1 72 5 is_stmt 1 view .LVU198
+  72:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a->early_apply = 1;
+ 650              		.loc 1 72 16 is_stmt 0 view .LVU199
+ 651 001c 044B     		ldr	r3, .L43
+ 652 001e A361     		str	r3, [r4, #24]
+  73:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 653              		.loc 1 73 5 is_stmt 1 view .LVU200
+  73:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 654              		.loc 1 73 20 is_stmt 0 view .LVU201
+ 655 0020 94F83E30 		ldrb	r3, [r4, #62]	@ zero_extendqisi2
+ 656 0024 43F00103 		orr	r3, r3, #1
+ 657 0028 84F83E30 		strb	r3, [r4, #62]
+  74:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 658              		.loc 1 74 1 view .LVU202
+ 659 002c 10BD     		pop	{r4, pc}
+ 660              	.LVL50:
+ 661              	.L44:
+  74:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 662              		.loc 1 74 1 view .LVU203
+ 663 002e 00BF     		.align	2
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 24
+
+
+ 664              	.L43:
+ 665 0030 00000000 		.word	lv_anim_path_linear
+ 666              		.cfi_endproc
+ 667              	.LFE44:
+ 669              		.section	.text.lv_anim_get_playtime,"ax",%progbits
+ 670              		.align	1
+ 671              		.global	lv_anim_get_playtime
+ 672              		.syntax unified
+ 673              		.thumb
+ 674              		.thumb_func
+ 676              	lv_anim_get_playtime:
+ 677              	.LVL51:
+ 678              	.LFB46:
+ 118:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t playtime = LV_ANIM_PLAYTIME_INFINITE;
+ 679              		.loc 1 118 1 is_stmt 1 view -0
+ 680              		.cfi_startproc
+ 681              		@ args = 0, pretend = 0, frame = 0
+ 682              		@ frame_needed = 0, uses_anonymous_args = 0
+ 683              		@ link register save eliminated.
+ 119:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 684              		.loc 1 119 5 view .LVU205
+ 121:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         return playtime;
+ 685              		.loc 1 121 5 view .LVU206
+ 121:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         return playtime;
+ 686              		.loc 1 121 9 is_stmt 0 view .LVU207
+ 687 0000 B0F83CC0 		ldrh	ip, [r0, #60]
+ 121:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         return playtime;
+ 688              		.loc 1 121 7 view .LVU208
+ 689 0004 4FF6FF72 		movw	r2, #65535
+ 690 0008 9445     		cmp	ip, r2
+ 691 000a 1DD0     		beq	.L48
+ 118:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t playtime = LV_ANIM_PLAYTIME_INFINITE;
+ 692              		.loc 1 118 1 view .LVU209
+ 693 000c 10B4     		push	{r4}
+ 694              	.LCFI8:
+ 695              		.cfi_def_cfa_offset 4
+ 696              		.cfi_offset 4, -4
+ 697 000e 0346     		mov	r3, r0
+ 124:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->playback_now == 0)
+ 698              		.loc 1 124 5 is_stmt 1 view .LVU210
+ 124:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->playback_now == 0)
+ 699              		.loc 1 124 17 is_stmt 0 view .LVU211
+ 700 0010 816A     		ldr	r1, [r0, #40]
+ 124:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->playback_now == 0)
+ 701              		.loc 1 124 27 view .LVU212
+ 702 0012 C06A     		ldr	r0, [r0, #44]
+ 703              	.LVL52:
+ 124:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->playback_now == 0)
+ 704              		.loc 1 124 24 view .LVU213
+ 705 0014 081A     		subs	r0, r1, r0
+ 706              	.LVL53:
+ 125:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         playtime += a->playback_delay + a->playback_time;
+ 707              		.loc 1 125 5 is_stmt 1 view .LVU214
+ 125:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         playtime += a->playback_delay + a->playback_time;
+ 708              		.loc 1 125 24 is_stmt 0 view .LVU215
+ 709 0016 93F83E20 		ldrb	r2, [r3, #62]	@ zero_extendqisi2
+ 125:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         playtime += a->playback_delay + a->playback_time;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 25
+
+
+ 710              		.loc 1 125 7 view .LVU216
+ 711 001a 12F0020F 		tst	r2, #2
+ 712 001e 03D1     		bne	.L47
+ 126:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 713              		.loc 1 126 9 is_stmt 1 view .LVU217
+ 126:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 714              		.loc 1 126 22 is_stmt 0 view .LVU218
+ 715 0020 1A6B     		ldr	r2, [r3, #48]
+ 126:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 716              		.loc 1 126 39 view .LVU219
+ 717 0022 5C6B     		ldr	r4, [r3, #52]
+ 718 0024 2244     		add	r2, r2, r4
+ 126:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 719              		.loc 1 126 18 view .LVU220
+ 720 0026 1044     		add	r0, r0, r2
+ 721              	.LVL54:
+ 722              	.L47:
+ 128:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         return playtime;
+ 723              		.loc 1 128 5 is_stmt 1 view .LVU221
+ 128:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         return playtime;
+ 724              		.loc 1 128 7 is_stmt 0 view .LVU222
+ 725 0028 BCF1010F 		cmp	ip, #1
+ 726 002c 09D9     		bls	.L45
+ 131:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                  a->playback_delay + a->playback_time) *
+ 727              		.loc 1 131 5 is_stmt 1 view .LVU223
+ 131:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                  a->playback_delay + a->playback_time) *
+ 728              		.loc 1 131 19 is_stmt 0 view .LVU224
+ 729 002e 9A6B     		ldr	r2, [r3, #56]
+ 131:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                  a->playback_delay + a->playback_time) *
+ 730              		.loc 1 131 34 view .LVU225
+ 731 0030 0A44     		add	r2, r2, r1
+ 132:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 (a->repeat_cnt - 1);
+ 732              		.loc 1 132 19 view .LVU226
+ 733 0032 196B     		ldr	r1, [r3, #48]
+ 131:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                  a->playback_delay + a->playback_time) *
+ 734              		.loc 1 131 44 view .LVU227
+ 735 0034 0A44     		add	r2, r2, r1
+ 132:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 (a->repeat_cnt - 1);
+ 736              		.loc 1 132 39 view .LVU228
+ 737 0036 5B6B     		ldr	r3, [r3, #52]
+ 738              	.LVL55:
+ 132:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                 (a->repeat_cnt - 1);
+ 739              		.loc 1 132 36 view .LVU229
+ 740 0038 1A44     		add	r2, r2, r3
+ 133:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 741              		.loc 1 133 32 view .LVU230
+ 742 003a 0CF1FF33 		add	r3, ip, #-1
+ 131:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                  a->playback_delay + a->playback_time) *
+ 743              		.loc 1 131 14 view .LVU231
+ 744 003e 03FB0200 		mla	r0, r3, r2, r0
+ 745              	.LVL56:
+ 135:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 746              		.loc 1 135 5 is_stmt 1 view .LVU232
+ 747              	.L45:
+ 136:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 748              		.loc 1 136 1 is_stmt 0 view .LVU233
+ 749 0042 5DF8044B 		ldr	r4, [sp], #4
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 26
+
+
+ 750              	.LCFI9:
+ 751              		.cfi_restore 4
+ 752              		.cfi_def_cfa_offset 0
+ 753 0046 7047     		bx	lr
+ 754              	.LVL57:
+ 755              	.L48:
+ 122:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 756              		.loc 1 122 16 view .LVU234
+ 757 0048 4FF0FF30 		mov	r0, #-1
+ 758              	.LVL58:
+ 136:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 759              		.loc 1 136 1 view .LVU235
+ 760 004c 7047     		bx	lr
+ 761              		.cfi_endproc
+ 762              	.LFE46:
+ 764              		.section	.text.lv_anim_del,"ax",%progbits
+ 765              		.align	1
+ 766              		.global	lv_anim_del
+ 767              		.syntax unified
+ 768              		.thumb
+ 769              		.thumb_func
+ 771              	lv_anim_del:
+ 772              	.LVL59:
+ 773              	.LFB47:
+ 139:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_anim_t * a;
+ 774              		.loc 1 139 1 is_stmt 1 view -0
+ 775              		.cfi_startproc
+ 776              		@ args = 0, pretend = 0, frame = 0
+ 777              		@ frame_needed = 0, uses_anonymous_args = 0
+ 139:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_anim_t * a;
+ 778              		.loc 1 139 1 is_stmt 0 view .LVU237
+ 779 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 780              	.LCFI10:
+ 781              		.cfi_def_cfa_offset 24
+ 782              		.cfi_offset 4, -24
+ 783              		.cfi_offset 5, -20
+ 784              		.cfi_offset 6, -16
+ 785              		.cfi_offset 7, -12
+ 786              		.cfi_offset 8, -8
+ 787              		.cfi_offset 14, -4
+ 788 0004 0646     		mov	r6, r0
+ 789 0006 0F46     		mov	r7, r1
+ 140:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_anim_t * a_next;
+ 790              		.loc 1 140 5 is_stmt 1 view .LVU238
+ 141:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     bool del = false;
+ 791              		.loc 1 141 5 view .LVU239
+ 142:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a        = _lv_ll_get_head(&LV_GC_ROOT(_lv_anim_ll));
+ 792              		.loc 1 142 5 view .LVU240
+ 793              	.LVL60:
+ 143:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     while(a != NULL) {
+ 794              		.loc 1 143 5 view .LVU241
+ 143:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     while(a != NULL) {
+ 795              		.loc 1 143 16 is_stmt 0 view .LVU242
+ 796 0008 1348     		ldr	r0, .L61
+ 797              	.LVL61:
+ 143:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     while(a != NULL) {
+ 798              		.loc 1 143 16 view .LVU243
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 27
+
+
+ 799 000a FFF7FEFF 		bl	_lv_ll_get_head
+ 800              	.LVL62:
+ 143:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     while(a != NULL) {
+ 801              		.loc 1 143 16 view .LVU244
+ 802 000e 0446     		mov	r4, r0
+ 803              	.LVL63:
+ 144:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*'a' might be deleted, so get the next object while 'a' is valid*/
+ 804              		.loc 1 144 5 is_stmt 1 view .LVU245
+ 142:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     a        = _lv_ll_get_head(&LV_GC_ROOT(_lv_anim_ll));
+ 805              		.loc 1 142 10 is_stmt 0 view .LVU246
+ 806 0010 4FF00008 		mov	r8, #0
+ 144:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*'a' might be deleted, so get the next object while 'a' is valid*/
+ 807              		.loc 1 144 10 view .LVU247
+ 808 0014 04E0     		b	.L54
+ 809              	.LVL64:
+ 810              	.L55:
+ 148:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             _lv_ll_remove(&LV_GC_ROOT(_lv_anim_ll), a);
+ 811              		.loc 1 148 48 discriminator 3 view .LVU248
+ 812 0016 6368     		ldr	r3, [r4, #4]
+ 148:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             _lv_ll_remove(&LV_GC_ROOT(_lv_anim_ll), a);
+ 813              		.loc 1 148 43 discriminator 3 view .LVU249
+ 814 0018 BB42     		cmp	r3, r7
+ 815 001a 0DD0     		beq	.L57
+ 148:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             _lv_ll_remove(&LV_GC_ROOT(_lv_anim_ll), a);
+ 816              		.loc 1 148 69 discriminator 4 view .LVU250
+ 817 001c 67B1     		cbz	r7, .L57
+ 818              	.LVL65:
+ 819              	.L56:
+ 153:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 820              		.loc 1 153 17 view .LVU251
+ 821 001e 2C46     		mov	r4, r5
+ 822              	.LVL66:
+ 823              	.L54:
+ 144:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*'a' might be deleted, so get the next object while 'a' is valid*/
+ 824              		.loc 1 144 13 is_stmt 1 view .LVU252
+ 825 0020 B4B1     		cbz	r4, .L60
+ 146:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 826              		.loc 1 146 9 view .LVU253
+ 146:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 827              		.loc 1 146 18 is_stmt 0 view .LVU254
+ 828 0022 2146     		mov	r1, r4
+ 829 0024 0C48     		ldr	r0, .L61
+ 830 0026 FFF7FEFF 		bl	_lv_ll_get_next
+ 831              	.LVL67:
+ 832 002a 0546     		mov	r5, r0
+ 833              	.LVL68:
+ 148:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             _lv_ll_remove(&LV_GC_ROOT(_lv_anim_ll), a);
+ 834              		.loc 1 148 9 is_stmt 1 view .LVU255
+ 148:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             _lv_ll_remove(&LV_GC_ROOT(_lv_anim_ll), a);
+ 835              		.loc 1 148 14 is_stmt 0 view .LVU256
+ 836 002c 2368     		ldr	r3, [r4]
+ 148:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             _lv_ll_remove(&LV_GC_ROOT(_lv_anim_ll), a);
+ 837              		.loc 1 148 11 view .LVU257
+ 838 002e B342     		cmp	r3, r6
+ 839 0030 F1D0     		beq	.L55
+ 148:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             _lv_ll_remove(&LV_GC_ROOT(_lv_anim_ll), a);
+ 840              		.loc 1 148 27 discriminator 2 view .LVU258
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 28
+
+
+ 841 0032 002E     		cmp	r6, #0
+ 842 0034 F3D1     		bne	.L56
+ 843 0036 EEE7     		b	.L55
+ 844              	.L57:
+ 149:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             lv_mem_free(a);
+ 845              		.loc 1 149 13 is_stmt 1 view .LVU259
+ 846 0038 2146     		mov	r1, r4
+ 847 003a 0748     		ldr	r0, .L61
+ 848              	.LVL69:
+ 149:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             lv_mem_free(a);
+ 849              		.loc 1 149 13 is_stmt 0 view .LVU260
+ 850 003c FFF7FEFF 		bl	_lv_ll_remove
+ 851              	.LVL70:
+ 150:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             anim_mark_list_change(); /*Read by `anim_timer`. It need to know if a delete occurred i
+ 852              		.loc 1 150 13 is_stmt 1 view .LVU261
+ 853 0040 2046     		mov	r0, r4
+ 854 0042 FFF7FEFF 		bl	lv_mem_free
+ 855              	.LVL71:
+ 151:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****                                        the linked list*/
+ 856              		.loc 1 151 13 view .LVU262
+ 857 0046 FFF7FEFF 		bl	anim_mark_list_change
+ 858              	.LVL72:
+ 153:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 859              		.loc 1 153 13 view .LVU263
+ 153:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 860              		.loc 1 153 17 is_stmt 0 view .LVU264
+ 861 004a 4FF00108 		mov	r8, #1
+ 862 004e E6E7     		b	.L56
+ 863              	.LVL73:
+ 864              	.L60:
+ 159:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 865              		.loc 1 159 5 is_stmt 1 view .LVU265
+ 160:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 866              		.loc 1 160 1 is_stmt 0 view .LVU266
+ 867 0050 4046     		mov	r0, r8
+ 868 0052 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 869              	.LVL74:
+ 870              	.L62:
+ 160:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 871              		.loc 1 160 1 view .LVU267
+ 872 0056 00BF     		.align	2
+ 873              	.L61:
+ 874 0058 00000000 		.word	_lv_anim_ll
+ 875              		.cfi_endproc
+ 876              	.LFE47:
+ 878              		.section	.text.lv_anim_start,"ax",%progbits
+ 879              		.align	1
+ 880              		.global	lv_anim_start
+ 881              		.syntax unified
+ 882              		.thumb
+ 883              		.thumb_func
+ 885              	lv_anim_start:
+ 886              	.LVL75:
+ 887              	.LFB45:
+  77:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     TRACE_ANIM("begin");
+ 888              		.loc 1 77 1 is_stmt 1 view -0
+ 889              		.cfi_startproc
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 29
+
+
+ 890              		@ args = 0, pretend = 0, frame = 0
+ 891              		@ frame_needed = 0, uses_anonymous_args = 0
+  77:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     TRACE_ANIM("begin");
+ 892              		.loc 1 77 1 is_stmt 0 view .LVU269
+ 893 0000 38B5     		push	{r3, r4, r5, lr}
+ 894              	.LCFI11:
+ 895              		.cfi_def_cfa_offset 16
+ 896              		.cfi_offset 3, -16
+ 897              		.cfi_offset 4, -12
+ 898              		.cfi_offset 5, -8
+ 899              		.cfi_offset 14, -4
+ 900 0002 0446     		mov	r4, r0
+  78:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 901              		.loc 1 78 24 is_stmt 1 view .LVU270
+  81:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 902              		.loc 1 81 5 view .LVU271
+  81:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 903              		.loc 1 81 9 is_stmt 0 view .LVU272
+ 904 0004 4168     		ldr	r1, [r0, #4]
+  81:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 905              		.loc 1 81 7 view .LVU273
+ 906 0006 11B1     		cbz	r1, .L64
+  81:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 907              		.loc 1 81 28 is_stmt 1 discriminator 1 view .LVU274
+ 908 0008 0068     		ldr	r0, [r0]
+ 909              	.LVL76:
+  81:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 910              		.loc 1 81 28 is_stmt 0 discriminator 1 view .LVU275
+ 911 000a FFF7FEFF 		bl	lv_anim_del
+ 912              	.LVL77:
+ 913              	.L64:
+  84:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         last_timer_run = lv_tick_get();
+ 914              		.loc 1 84 5 is_stmt 1 view .LVU276
+  84:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         last_timer_run = lv_tick_get();
+ 915              		.loc 1 84 8 is_stmt 0 view .LVU277
+ 916 000e 1C48     		ldr	r0, .L74
+ 917 0010 FFF7FEFF 		bl	_lv_ll_is_empty
+ 918              	.LVL78:
+  84:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         last_timer_run = lv_tick_get();
+ 919              		.loc 1 84 7 discriminator 1 view .LVU278
+ 920 0014 58BB     		cbnz	r0, .L72
+ 921              	.L65:
+  89:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     LV_ASSERT_MALLOC(new_anim);
+ 922              		.loc 1 89 5 is_stmt 1 view .LVU279
+  89:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     LV_ASSERT_MALLOC(new_anim);
+ 923              		.loc 1 89 28 is_stmt 0 view .LVU280
+ 924 0016 1A48     		ldr	r0, .L74
+ 925 0018 FFF7FEFF 		bl	_lv_ll_ins_head
+ 926              	.LVL79:
+  90:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(new_anim == NULL) return NULL;
+ 927              		.loc 1 90 5 is_stmt 1 view .LVU281
+  90:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(new_anim == NULL) return NULL;
+ 928              		.loc 1 90 5 view .LVU282
+ 929 001c 0546     		mov	r5, r0
+ 930 001e 58B3     		cbz	r0, .L67
+  90:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(new_anim == NULL) return NULL;
+ 931              		.loc 1 90 5 discriminator 2 view .LVU283
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 30
+
+
+  90:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(new_anim == NULL) return NULL;
+ 932              		.loc 1 90 31 discriminator 2 view .LVU284
+  91:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 933              		.loc 1 91 5 view .LVU285
+  94:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->var == a) new_anim->var = new_anim;
+ 934              		.loc 1 94 5 view .LVU286
+ 935 0020 4022     		movs	r2, #64
+ 936 0022 2146     		mov	r1, r4
+ 937 0024 FFF7FEFF 		bl	lv_memcpy
+ 938              	.LVL80:
+  95:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_anim->run_round = anim_run_round;
+ 939              		.loc 1 95 5 view .LVU287
+  95:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_anim->run_round = anim_run_round;
+ 940              		.loc 1 95 9 is_stmt 0 view .LVU288
+ 941 0028 2368     		ldr	r3, [r4]
+  95:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_anim->run_round = anim_run_round;
+ 942              		.loc 1 95 7 view .LVU289
+ 943 002a A342     		cmp	r3, r4
+ 944 002c 25D0     		beq	.L73
+ 945              	.L68:
+  96:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 946              		.loc 1 96 5 is_stmt 1 view .LVU290
+  96:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 947              		.loc 1 96 25 is_stmt 0 view .LVU291
+ 948 002e 95F83E30 		ldrb	r3, [r5, #62]	@ zero_extendqisi2
+ 949 0032 144A     		ldr	r2, .L74+4
+ 950 0034 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 951 0036 62F38203 		bfi	r3, r2, #2, #1
+ 952 003a 85F83E30 		strb	r3, [r5, #62]
+  99:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(new_anim->get_value_cb) {
+ 953              		.loc 1 99 5 is_stmt 1 view .LVU292
+  99:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(new_anim->get_value_cb) {
+ 954              		.loc 1 99 8 is_stmt 0 view .LVU293
+ 955 003e DBB2     		uxtb	r3, r3
+  99:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(new_anim->get_value_cb) {
+ 956              		.loc 1 99 7 view .LVU294
+ 957 0040 13F0010F 		tst	r3, #1
+ 958 0044 0FD0     		beq	.L69
+ 100:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             int32_t v_ofs = new_anim->get_value_cb(new_anim);
+ 959              		.loc 1 100 9 is_stmt 1 view .LVU295
+ 100:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             int32_t v_ofs = new_anim->get_value_cb(new_anim);
+ 960              		.loc 1 100 20 is_stmt 0 view .LVU296
+ 961 0046 2B69     		ldr	r3, [r5, #16]
+ 100:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             int32_t v_ofs = new_anim->get_value_cb(new_anim);
+ 962              		.loc 1 100 11 view .LVU297
+ 963 0048 3BB1     		cbz	r3, .L70
+ 964              	.LBB8:
+ 101:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             new_anim->start_value += v_ofs;
+ 965              		.loc 1 101 13 is_stmt 1 view .LVU298
+ 101:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             new_anim->start_value += v_ofs;
+ 966              		.loc 1 101 29 is_stmt 0 view .LVU299
+ 967 004a 2846     		mov	r0, r5
+ 968 004c 9847     		blx	r3
+ 969              	.LVL81:
+ 102:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             new_anim->end_value += v_ofs;
+ 970              		.loc 1 102 13 is_stmt 1 view .LVU300
+ 102:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             new_anim->end_value += v_ofs;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 31
+
+
+ 971              		.loc 1 102 21 is_stmt 0 view .LVU301
+ 972 004e EB69     		ldr	r3, [r5, #28]
+ 102:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             new_anim->end_value += v_ofs;
+ 973              		.loc 1 102 35 view .LVU302
+ 974 0050 0344     		add	r3, r3, r0
+ 975 0052 EB61     		str	r3, [r5, #28]
+ 103:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 976              		.loc 1 103 13 is_stmt 1 view .LVU303
+ 103:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 977              		.loc 1 103 21 is_stmt 0 view .LVU304
+ 978 0054 6B6A     		ldr	r3, [r5, #36]
+ 103:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 979              		.loc 1 103 33 view .LVU305
+ 980 0056 0344     		add	r3, r3, r0
+ 981 0058 6B62     		str	r3, [r5, #36]
+ 982              	.LVL82:
+ 983              	.L70:
+ 103:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         }
+ 984              		.loc 1 103 33 view .LVU306
+ 985              	.LBE8:
+ 106:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 986              		.loc 1 106 9 is_stmt 1 view .LVU307
+ 106:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 987              		.loc 1 106 20 is_stmt 0 view .LVU308
+ 988 005a 6B68     		ldr	r3, [r5, #4]
+ 106:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 989              		.loc 1 106 11 view .LVU309
+ 990 005c 1BB1     		cbz	r3, .L69
+ 106:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 991              		.loc 1 106 41 discriminator 1 view .LVU310
+ 992 005e 2868     		ldr	r0, [r5]
+ 106:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 993              		.loc 1 106 30 discriminator 1 view .LVU311
+ 994 0060 08B1     		cbz	r0, .L69
+ 106:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 995              		.loc 1 106 48 is_stmt 1 discriminator 2 view .LVU312
+ 996 0062 E969     		ldr	r1, [r5, #28]
+ 997 0064 9847     		blx	r3
+ 998              	.LVL83:
+ 999              	.L69:
+ 111:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1000              		.loc 1 111 5 view .LVU313
+ 1001 0066 FFF7FEFF 		bl	anim_mark_list_change
+ 1002              	.LVL84:
+ 113:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     return new_anim;
+ 1003              		.loc 1 113 27 view .LVU314
+ 114:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 1004              		.loc 1 114 5 view .LVU315
+ 115:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1005              		.loc 1 115 1 is_stmt 0 view .LVU316
+ 1006 006a 2846     		mov	r0, r5
+ 1007 006c 38BD     		pop	{r3, r4, r5, pc}
+ 1008              	.LVL85:
+ 1009              	.L72:
+  85:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1010              		.loc 1 85 9 is_stmt 1 view .LVU317
+  85:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 32
+
+
+ 1011              		.loc 1 85 26 is_stmt 0 view .LVU318
+ 1012 006e FFF7FEFF 		bl	lv_tick_get
+ 1013              	.LVL86:
+  85:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1014              		.loc 1 85 24 discriminator 1 view .LVU319
+ 1015 0072 054B     		ldr	r3, .L74+8
+ 1016 0074 1860     		str	r0, [r3]
+ 1017 0076 CEE7     		b	.L65
+ 1018              	.LVL87:
+ 1019              	.L67:
+  90:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(new_anim == NULL) return NULL;
+ 1020              		.loc 1 90 5 is_stmt 1 discriminator 1 view .LVU320
+  90:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(new_anim == NULL) return NULL;
+ 1021              		.loc 1 90 5 discriminator 1 view .LVU321
+  90:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(new_anim == NULL) return NULL;
+ 1022              		.loc 1 90 5 discriminator 1 view .LVU322
+  90:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(new_anim == NULL) return NULL;
+ 1023              		.loc 1 90 5 discriminator 1 view .LVU323
+  90:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(new_anim == NULL) return NULL;
+ 1024              		.loc 1 90 5 discriminator 1 view .LVU324
+ 1025 0078 FEE7     		b	.L67
+ 1026              	.LVL88:
+ 1027              	.L73:
+  95:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_anim->run_round = anim_run_round;
+ 1028              		.loc 1 95 21 discriminator 1 view .LVU325
+  95:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_anim->run_round = anim_run_round;
+ 1029              		.loc 1 95 35 is_stmt 0 discriminator 1 view .LVU326
+ 1030 007a 2D60     		str	r5, [r5]
+ 1031 007c D7E7     		b	.L68
+ 1032              	.L75:
+ 1033 007e 00BF     		.align	2
+ 1034              	.L74:
+ 1035 0080 00000000 		.word	_lv_anim_ll
+ 1036 0084 00000000 		.word	anim_run_round
+ 1037 0088 00000000 		.word	last_timer_run
+ 1038              		.cfi_endproc
+ 1039              	.LFE45:
+ 1041              		.section	.text.lv_anim_del_all,"ax",%progbits
+ 1042              		.align	1
+ 1043              		.global	lv_anim_del_all
+ 1044              		.syntax unified
+ 1045              		.thumb
+ 1046              		.thumb_func
+ 1048              	lv_anim_del_all:
+ 1049              	.LFB48:
+ 163:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     _lv_ll_clear(&LV_GC_ROOT(_lv_anim_ll));
+ 1050              		.loc 1 163 1 is_stmt 1 view -0
+ 1051              		.cfi_startproc
+ 1052              		@ args = 0, pretend = 0, frame = 0
+ 1053              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1054 0000 08B5     		push	{r3, lr}
+ 1055              	.LCFI12:
+ 1056              		.cfi_def_cfa_offset 8
+ 1057              		.cfi_offset 3, -8
+ 1058              		.cfi_offset 14, -4
+ 164:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     anim_mark_list_change();
+ 1059              		.loc 1 164 5 view .LVU328
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 33
+
+
+ 1060 0002 0348     		ldr	r0, .L78
+ 1061 0004 FFF7FEFF 		bl	_lv_ll_clear
+ 1062              	.LVL89:
+ 165:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 1063              		.loc 1 165 5 view .LVU329
+ 1064 0008 FFF7FEFF 		bl	anim_mark_list_change
+ 1065              	.LVL90:
+ 166:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1066              		.loc 1 166 1 is_stmt 0 view .LVU330
+ 1067 000c 08BD     		pop	{r3, pc}
+ 1068              	.L79:
+ 1069 000e 00BF     		.align	2
+ 1070              	.L78:
+ 1071 0010 00000000 		.word	_lv_anim_ll
+ 1072              		.cfi_endproc
+ 1073              	.LFE48:
+ 1075              		.section	.text.lv_anim_get,"ax",%progbits
+ 1076              		.align	1
+ 1077              		.global	lv_anim_get
+ 1078              		.syntax unified
+ 1079              		.thumb
+ 1080              		.thumb_func
+ 1082              	lv_anim_get:
+ 1083              	.LVL91:
+ 1084              	.LFB49:
+ 169:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_anim_t * a;
+ 1085              		.loc 1 169 1 is_stmt 1 view -0
+ 1086              		.cfi_startproc
+ 1087              		@ args = 0, pretend = 0, frame = 0
+ 1088              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_anim_t * a;
+ 1089              		.loc 1 169 1 is_stmt 0 view .LVU332
+ 1090 0000 38B5     		push	{r3, r4, r5, lr}
+ 1091              	.LCFI13:
+ 1092              		.cfi_def_cfa_offset 16
+ 1093              		.cfi_offset 3, -16
+ 1094              		.cfi_offset 4, -12
+ 1095              		.cfi_offset 5, -8
+ 1096              		.cfi_offset 14, -4
+ 1097 0002 0446     		mov	r4, r0
+ 1098 0004 0D46     		mov	r5, r1
+ 170:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     _LV_LL_READ(&LV_GC_ROOT(_lv_anim_ll), a) {
+ 1099              		.loc 1 170 5 is_stmt 1 view .LVU333
+ 171:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(a->var == var && (a->exec_cb == exec_cb || exec_cb == NULL)) {
+ 1100              		.loc 1 171 5 view .LVU334
+ 1101 0006 0A48     		ldr	r0, .L86
+ 1102              	.LVL92:
+ 171:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(a->var == var && (a->exec_cb == exec_cb || exec_cb == NULL)) {
+ 1103              		.loc 1 171 5 is_stmt 0 view .LVU335
+ 1104 0008 FFF7FEFF 		bl	_lv_ll_get_head
+ 1105              	.LVL93:
+ 171:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(a->var == var && (a->exec_cb == exec_cb || exec_cb == NULL)) {
+ 1106              		.loc 1 171 5 view .LVU336
+ 1107 000c 0146     		mov	r1, r0
+ 1108              	.LVL94:
+ 171:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(a->var == var && (a->exec_cb == exec_cb || exec_cb == NULL)) {
+ 1109              		.loc 1 171 5 view .LVU337
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 34
+
+
+ 1110 000e 03E0     		b	.L81
+ 1111              	.L82:
+ 171:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(a->var == var && (a->exec_cb == exec_cb || exec_cb == NULL)) {
+ 1112              		.loc 1 171 5 is_stmt 1 discriminator 2 view .LVU338
+ 1113 0010 0748     		ldr	r0, .L86
+ 1114              	.LVL95:
+ 171:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(a->var == var && (a->exec_cb == exec_cb || exec_cb == NULL)) {
+ 1115              		.loc 1 171 5 is_stmt 0 discriminator 2 view .LVU339
+ 1116 0012 FFF7FEFF 		bl	_lv_ll_get_next
+ 1117              	.LVL96:
+ 171:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(a->var == var && (a->exec_cb == exec_cb || exec_cb == NULL)) {
+ 1118              		.loc 1 171 5 discriminator 2 view .LVU340
+ 1119 0016 0146     		mov	r1, r0
+ 1120              	.LVL97:
+ 1121              	.L81:
+ 171:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         if(a->var == var && (a->exec_cb == exec_cb || exec_cb == NULL)) {
+ 1122              		.loc 1 171 5 is_stmt 1 discriminator 1 view .LVU341
+ 1123 0018 39B1     		cbz	r1, .L80
+ 172:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             return a;
+ 1124              		.loc 1 172 9 view .LVU342
+ 172:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             return a;
+ 1125              		.loc 1 172 13 is_stmt 0 view .LVU343
+ 1126 001a 0B68     		ldr	r3, [r1]
+ 172:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             return a;
+ 1127              		.loc 1 172 11 view .LVU344
+ 1128 001c A342     		cmp	r3, r4
+ 1129 001e F7D1     		bne	.L82
+ 172:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             return a;
+ 1130              		.loc 1 172 31 discriminator 1 view .LVU345
+ 1131 0020 4B68     		ldr	r3, [r1, #4]
+ 172:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             return a;
+ 1132              		.loc 1 172 26 discriminator 1 view .LVU346
+ 1133 0022 AB42     		cmp	r3, r5
+ 1134 0024 01D0     		beq	.L80
+ 172:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****             return a;
+ 1135              		.loc 1 172 52 discriminator 2 view .LVU347
+ 1136 0026 002D     		cmp	r5, #0
+ 1137 0028 F2D1     		bne	.L82
+ 1138              	.L80:
+ 178:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1139              		.loc 1 178 1 view .LVU348
+ 1140 002a 0846     		mov	r0, r1
+ 1141              	.LVL98:
+ 178:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1142              		.loc 1 178 1 view .LVU349
+ 1143 002c 38BD     		pop	{r3, r4, r5, pc}
+ 1144              	.LVL99:
+ 1145              	.L87:
+ 178:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1146              		.loc 1 178 1 view .LVU350
+ 1147 002e 00BF     		.align	2
+ 1148              	.L86:
+ 1149 0030 00000000 		.word	_lv_anim_ll
+ 1150              		.cfi_endproc
+ 1151              	.LFE49:
+ 1153              		.section	.text.lv_anim_count_running,"ax",%progbits
+ 1154              		.align	1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 35
+
+
+ 1155              		.global	lv_anim_count_running
+ 1156              		.syntax unified
+ 1157              		.thumb
+ 1158              		.thumb_func
+ 1160              	lv_anim_count_running:
+ 1161              	.LFB50:
+ 181:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint16_t cnt = 0;
+ 1162              		.loc 1 181 1 is_stmt 1 view -0
+ 1163              		.cfi_startproc
+ 1164              		@ args = 0, pretend = 0, frame = 0
+ 1165              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1166 0000 10B5     		push	{r4, lr}
+ 1167              	.LCFI14:
+ 1168              		.cfi_def_cfa_offset 8
+ 1169              		.cfi_offset 4, -8
+ 1170              		.cfi_offset 14, -4
+ 182:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_anim_t * a;
+ 1171              		.loc 1 182 5 view .LVU352
+ 1172              	.LVL100:
+ 183:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     _LV_LL_READ(&LV_GC_ROOT(_lv_anim_ll), a) cnt++;
+ 1173              		.loc 1 183 5 view .LVU353
+ 184:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1174              		.loc 1 184 5 view .LVU354
+ 1175 0002 0848     		ldr	r0, .L92
+ 1176 0004 FFF7FEFF 		bl	_lv_ll_get_head
+ 1177              	.LVL101:
+ 1178 0008 0146     		mov	r1, r0
+ 1179              	.LVL102:
+ 182:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     lv_anim_t * a;
+ 1180              		.loc 1 182 14 is_stmt 0 view .LVU355
+ 1181 000a 0024     		movs	r4, #0
+ 184:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1182              		.loc 1 184 5 view .LVU356
+ 1183 000c 05E0     		b	.L89
+ 1184              	.LVL103:
+ 1185              	.L90:
+ 184:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1186              		.loc 1 184 46 is_stmt 1 discriminator 3 view .LVU357
+ 184:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1187              		.loc 1 184 49 is_stmt 0 discriminator 3 view .LVU358
+ 1188 000e 0134     		adds	r4, r4, #1
+ 1189              	.LVL104:
+ 184:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1190              		.loc 1 184 49 discriminator 3 view .LVU359
+ 1191 0010 A4B2     		uxth	r4, r4
+ 1192              	.LVL105:
+ 184:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1193              		.loc 1 184 5 is_stmt 1 discriminator 3 view .LVU360
+ 1194 0012 0448     		ldr	r0, .L92
+ 1195              	.LVL106:
+ 184:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1196              		.loc 1 184 5 is_stmt 0 discriminator 3 view .LVU361
+ 1197 0014 FFF7FEFF 		bl	_lv_ll_get_next
+ 1198              	.LVL107:
+ 184:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1199              		.loc 1 184 5 discriminator 3 view .LVU362
+ 1200 0018 0146     		mov	r1, r0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 36
+
+
+ 1201              	.LVL108:
+ 1202              	.L89:
+ 184:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1203              		.loc 1 184 5 is_stmt 1 discriminator 1 view .LVU363
+ 1204 001a 0029     		cmp	r1, #0
+ 1205 001c F7D1     		bne	.L90
+ 186:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 1206              		.loc 1 186 5 view .LVU364
+ 187:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1207              		.loc 1 187 1 is_stmt 0 view .LVU365
+ 1208 001e 2046     		mov	r0, r4
+ 1209              	.LVL109:
+ 187:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1210              		.loc 1 187 1 view .LVU366
+ 1211 0020 10BD     		pop	{r4, pc}
+ 1212              	.LVL110:
+ 1213              	.L93:
+ 187:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1214              		.loc 1 187 1 view .LVU367
+ 1215 0022 00BF     		.align	2
+ 1216              	.L92:
+ 1217 0024 00000000 		.word	_lv_anim_ll
+ 1218              		.cfi_endproc
+ 1219              	.LFE50:
+ 1221              		.section	.text.lv_anim_speed_to_time,"ax",%progbits
+ 1222              		.align	1
+ 1223              		.global	lv_anim_speed_to_time
+ 1224              		.syntax unified
+ 1225              		.thumb
+ 1226              		.thumb_func
+ 1228              	lv_anim_speed_to_time:
+ 1229              	.LVL111:
+ 1230              	.LFB51:
+ 190:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t d    = LV_ABS(start - end);
+ 1231              		.loc 1 190 1 is_stmt 1 view -0
+ 1232              		.cfi_startproc
+ 1233              		@ args = 0, pretend = 0, frame = 0
+ 1234              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1235              		@ link register save eliminated.
+ 190:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t d    = LV_ABS(start - end);
+ 1236              		.loc 1 190 1 is_stmt 0 view .LVU369
+ 1237 0000 0346     		mov	r3, r0
+ 191:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t time = (d * 1000) / speed;
+ 1238              		.loc 1 191 5 is_stmt 1 view .LVU370
+ 191:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t time = (d * 1000) / speed;
+ 1239              		.loc 1 191 21 is_stmt 0 view .LVU371
+ 1240 0002 891A     		subs	r1, r1, r2
+ 1241              	.LVL112:
+ 191:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     uint32_t time = (d * 1000) / speed;
+ 1242              		.loc 1 191 21 view .LVU372
+ 1243 0004 0029     		cmp	r1, #0
+ 1244 0006 B8BF     		it	lt
+ 1245 0008 4942     		rsblt	r1, r1, #0
+ 1246              	.LVL113:
+ 192:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1247              		.loc 1 192 5 is_stmt 1 view .LVU373
+ 192:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 37
+
+
+ 1248              		.loc 1 192 24 is_stmt 0 view .LVU374
+ 1249 000a 4FF47A72 		mov	r2, #1000
+ 1250              	.LVL114:
+ 192:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1251              		.loc 1 192 24 view .LVU375
+ 1252 000e 02FB01F1 		mul	r1, r2, r1
+ 1253              	.LVL115:
+ 192:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1254              		.loc 1 192 14 view .LVU376
+ 1255 0012 B1FBF0F0 		udiv	r0, r1, r0
+ 1256              	.LVL116:
+ 194:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         time++;
+ 1257              		.loc 1 194 5 is_stmt 1 view .LVU377
+ 194:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         time++;
+ 1258              		.loc 1 194 7 is_stmt 0 view .LVU378
+ 1259 0016 9942     		cmp	r1, r3
+ 1260              	.LVL117:
+ 194:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         time++;
+ 1261              		.loc 1 194 7 view .LVU379
+ 1262 0018 00D2     		bcs	.L94
+ 195:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1263              		.loc 1 195 9 is_stmt 1 view .LVU380
+ 195:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1264              		.loc 1 195 13 is_stmt 0 view .LVU381
+ 1265 001a 0130     		adds	r0, r0, #1
+ 1266              	.LVL118:
+ 198:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 1267              		.loc 1 198 5 is_stmt 1 view .LVU382
+ 1268              	.L94:
+ 199:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1269              		.loc 1 199 1 is_stmt 0 view .LVU383
+ 1270 001c 7047     		bx	lr
+ 1271              		.cfi_endproc
+ 1272              	.LFE51:
+ 1274              		.section	.text.lv_anim_refr_now,"ax",%progbits
+ 1275              		.align	1
+ 1276              		.global	lv_anim_refr_now
+ 1277              		.syntax unified
+ 1278              		.thumb
+ 1279              		.thumb_func
+ 1281              	lv_anim_refr_now:
+ 1282              	.LFB52:
+ 202:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     anim_timer(NULL);
+ 1283              		.loc 1 202 1 is_stmt 1 view -0
+ 1284              		.cfi_startproc
+ 1285              		@ args = 0, pretend = 0, frame = 0
+ 1286              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1287 0000 08B5     		push	{r3, lr}
+ 1288              	.LCFI15:
+ 1289              		.cfi_def_cfa_offset 8
+ 1290              		.cfi_offset 3, -8
+ 1291              		.cfi_offset 14, -4
+ 203:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 1292              		.loc 1 203 5 view .LVU385
+ 1293 0002 0020     		movs	r0, #0
+ 1294 0004 FFF7FEFF 		bl	anim_timer
+ 1295              	.LVL119:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 38
+
+
+ 204:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1296              		.loc 1 204 1 is_stmt 0 view .LVU386
+ 1297 0008 08BD     		pop	{r3, pc}
+ 1298              		.cfi_endproc
+ 1299              	.LFE52:
+ 1301              		.section	.text.lv_anim_path_ease_in,"ax",%progbits
+ 1302              		.align	1
+ 1303              		.global	lv_anim_path_ease_in
+ 1304              		.syntax unified
+ 1305              		.thumb
+ 1306              		.thumb_func
+ 1308              	lv_anim_path_ease_in:
+ 1309              	.LVL120:
+ 1310              	.LFB54:
+ 222:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 1311              		.loc 1 222 1 is_stmt 1 view -0
+ 1312              		.cfi_startproc
+ 1313              		@ args = 0, pretend = 0, frame = 0
+ 1314              		@ frame_needed = 0, uses_anonymous_args = 0
+ 222:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 1315              		.loc 1 222 1 is_stmt 0 view .LVU388
+ 1316 0000 30B5     		push	{r4, r5, lr}
+ 1317              	.LCFI16:
+ 1318              		.cfi_def_cfa_offset 12
+ 1319              		.cfi_offset 4, -12
+ 1320              		.cfi_offset 5, -8
+ 1321              		.cfi_offset 14, -4
+ 1322 0002 83B0     		sub	sp, sp, #12
+ 1323              	.LCFI17:
+ 1324              		.cfi_def_cfa_offset 24
+ 1325 0004 0446     		mov	r4, r0
+ 224:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 50, 100, LV_BEZIER_VAL_MAX);
+ 1326              		.loc 1 224 5 is_stmt 1 view .LVU389
+ 224:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 50, 100, LV_BEZIER_VAL_MAX);
+ 1327              		.loc 1 224 18 is_stmt 0 view .LVU390
+ 1328 0006 4FF48065 		mov	r5, #1024
+ 1329 000a 0095     		str	r5, [sp]
+ 1330 000c 0023     		movs	r3, #0
+ 1331 000e 826A     		ldr	r2, [r0, #40]
+ 1332 0010 1946     		mov	r1, r3
+ 1333 0012 C06A     		ldr	r0, [r0, #44]
+ 1334              	.LVL121:
+ 224:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 50, 100, LV_BEZIER_VAL_MAX);
+ 1335              		.loc 1 224 18 view .LVU391
+ 1336 0014 FFF7FEFF 		bl	lv_map
+ 1337              	.LVL122:
+ 225:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1338              		.loc 1 225 5 is_stmt 1 view .LVU392
+ 225:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1339              		.loc 1 225 20 is_stmt 0 view .LVU393
+ 1340 0018 0095     		str	r5, [sp]
+ 1341 001a 6423     		movs	r3, #100
+ 1342 001c 3222     		movs	r2, #50
+ 1343 001e 0021     		movs	r1, #0
+ 1344 0020 FFF7FEFF 		bl	lv_bezier3
+ 1345              	.LVL123:
+ 227:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = step * (a->end_value - a->start_value);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 39
+
+
+ 1346              		.loc 1 227 5 is_stmt 1 view .LVU394
+ 228:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1347              		.loc 1 228 5 view .LVU395
+ 228:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1348              		.loc 1 228 26 is_stmt 0 view .LVU396
+ 1349 0024 636A     		ldr	r3, [r4, #36]
+ 228:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1350              		.loc 1 228 41 view .LVU397
+ 1351 0026 E269     		ldr	r2, [r4, #28]
+ 228:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1352              		.loc 1 228 38 view .LVU398
+ 1353 0028 9B1A     		subs	r3, r3, r2
+ 228:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1354              		.loc 1 228 15 view .LVU399
+ 1355 002a 03FB00F0 		mul	r0, r3, r0
+ 1356              	.LVL124:
+ 229:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value += a->start_value;
+ 1357              		.loc 1 229 5 is_stmt 1 view .LVU400
+ 230:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1358              		.loc 1 230 5 view .LVU401
+ 232:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 1359              		.loc 1 232 5 view .LVU402
+ 233:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1360              		.loc 1 233 1 is_stmt 0 view .LVU403
+ 1361 002e 02EBA020 		add	r0, r2, r0, asr #10
+ 1362              	.LVL125:
+ 233:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1363              		.loc 1 233 1 view .LVU404
+ 1364 0032 03B0     		add	sp, sp, #12
+ 1365              	.LCFI18:
+ 1366              		.cfi_def_cfa_offset 12
+ 1367              		@ sp needed
+ 1368 0034 30BD     		pop	{r4, r5, pc}
+ 233:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1369              		.loc 1 233 1 view .LVU405
+ 1370              		.cfi_endproc
+ 1371              	.LFE54:
+ 1373              		.section	.text.lv_anim_path_ease_out,"ax",%progbits
+ 1374              		.align	1
+ 1375              		.global	lv_anim_path_ease_out
+ 1376              		.syntax unified
+ 1377              		.thumb
+ 1378              		.thumb_func
+ 1380              	lv_anim_path_ease_out:
+ 1381              	.LVL126:
+ 1382              	.LFB55:
+ 236:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 1383              		.loc 1 236 1 is_stmt 1 view -0
+ 1384              		.cfi_startproc
+ 1385              		@ args = 0, pretend = 0, frame = 0
+ 1386              		@ frame_needed = 0, uses_anonymous_args = 0
+ 236:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 1387              		.loc 1 236 1 is_stmt 0 view .LVU407
+ 1388 0000 30B5     		push	{r4, r5, lr}
+ 1389              	.LCFI19:
+ 1390              		.cfi_def_cfa_offset 12
+ 1391              		.cfi_offset 4, -12
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 40
+
+
+ 1392              		.cfi_offset 5, -8
+ 1393              		.cfi_offset 14, -4
+ 1394 0002 83B0     		sub	sp, sp, #12
+ 1395              	.LCFI20:
+ 1396              		.cfi_def_cfa_offset 24
+ 1397 0004 0446     		mov	r4, r0
+ 238:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 900, 950, LV_BEZIER_VAL_MAX);
+ 1398              		.loc 1 238 5 is_stmt 1 view .LVU408
+ 238:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 900, 950, LV_BEZIER_VAL_MAX);
+ 1399              		.loc 1 238 18 is_stmt 0 view .LVU409
+ 1400 0006 4FF48065 		mov	r5, #1024
+ 1401 000a 0095     		str	r5, [sp]
+ 1402 000c 0023     		movs	r3, #0
+ 1403 000e 826A     		ldr	r2, [r0, #40]
+ 1404 0010 1946     		mov	r1, r3
+ 1405 0012 C06A     		ldr	r0, [r0, #44]
+ 1406              	.LVL127:
+ 238:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 900, 950, LV_BEZIER_VAL_MAX);
+ 1407              		.loc 1 238 18 view .LVU410
+ 1408 0014 FFF7FEFF 		bl	lv_map
+ 1409              	.LVL128:
+ 239:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1410              		.loc 1 239 5 is_stmt 1 view .LVU411
+ 239:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1411              		.loc 1 239 20 is_stmt 0 view .LVU412
+ 1412 0018 0095     		str	r5, [sp]
+ 1413 001a 40F2B633 		movw	r3, #950
+ 1414 001e 4FF46172 		mov	r2, #900
+ 1415 0022 0021     		movs	r1, #0
+ 1416 0024 FFF7FEFF 		bl	lv_bezier3
+ 1417              	.LVL129:
+ 241:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = step * (a->end_value - a->start_value);
+ 1418              		.loc 1 241 5 is_stmt 1 view .LVU413
+ 242:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1419              		.loc 1 242 5 view .LVU414
+ 242:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1420              		.loc 1 242 26 is_stmt 0 view .LVU415
+ 1421 0028 636A     		ldr	r3, [r4, #36]
+ 242:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1422              		.loc 1 242 41 view .LVU416
+ 1423 002a E269     		ldr	r2, [r4, #28]
+ 242:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1424              		.loc 1 242 38 view .LVU417
+ 1425 002c 9B1A     		subs	r3, r3, r2
+ 242:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1426              		.loc 1 242 15 view .LVU418
+ 1427 002e 03FB00F0 		mul	r0, r3, r0
+ 1428              	.LVL130:
+ 243:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value += a->start_value;
+ 1429              		.loc 1 243 5 is_stmt 1 view .LVU419
+ 244:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1430              		.loc 1 244 5 view .LVU420
+ 246:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 1431              		.loc 1 246 5 view .LVU421
+ 247:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1432              		.loc 1 247 1 is_stmt 0 view .LVU422
+ 1433 0032 02EBA020 		add	r0, r2, r0, asr #10
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 41
+
+
+ 1434              	.LVL131:
+ 247:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1435              		.loc 1 247 1 view .LVU423
+ 1436 0036 03B0     		add	sp, sp, #12
+ 1437              	.LCFI21:
+ 1438              		.cfi_def_cfa_offset 12
+ 1439              		@ sp needed
+ 1440 0038 30BD     		pop	{r4, r5, pc}
+ 247:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1441              		.loc 1 247 1 view .LVU424
+ 1442              		.cfi_endproc
+ 1443              	.LFE55:
+ 1445              		.section	.text.lv_anim_path_ease_in_out,"ax",%progbits
+ 1446              		.align	1
+ 1447              		.global	lv_anim_path_ease_in_out
+ 1448              		.syntax unified
+ 1449              		.thumb
+ 1450              		.thumb_func
+ 1452              	lv_anim_path_ease_in_out:
+ 1453              	.LVL132:
+ 1454              	.LFB56:
+ 250:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 1455              		.loc 1 250 1 is_stmt 1 view -0
+ 1456              		.cfi_startproc
+ 1457              		@ args = 0, pretend = 0, frame = 0
+ 1458              		@ frame_needed = 0, uses_anonymous_args = 0
+ 250:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 1459              		.loc 1 250 1 is_stmt 0 view .LVU426
+ 1460 0000 30B5     		push	{r4, r5, lr}
+ 1461              	.LCFI22:
+ 1462              		.cfi_def_cfa_offset 12
+ 1463              		.cfi_offset 4, -12
+ 1464              		.cfi_offset 5, -8
+ 1465              		.cfi_offset 14, -4
+ 1466 0002 83B0     		sub	sp, sp, #12
+ 1467              	.LCFI23:
+ 1468              		.cfi_def_cfa_offset 24
+ 1469 0004 0446     		mov	r4, r0
+ 252:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 50, 952, LV_BEZIER_VAL_MAX);
+ 1470              		.loc 1 252 5 is_stmt 1 view .LVU427
+ 252:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 50, 952, LV_BEZIER_VAL_MAX);
+ 1471              		.loc 1 252 18 is_stmt 0 view .LVU428
+ 1472 0006 4FF48065 		mov	r5, #1024
+ 1473 000a 0095     		str	r5, [sp]
+ 1474 000c 0023     		movs	r3, #0
+ 1475 000e 826A     		ldr	r2, [r0, #40]
+ 1476 0010 1946     		mov	r1, r3
+ 1477 0012 C06A     		ldr	r0, [r0, #44]
+ 1478              	.LVL133:
+ 252:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 50, 952, LV_BEZIER_VAL_MAX);
+ 1479              		.loc 1 252 18 view .LVU429
+ 1480 0014 FFF7FEFF 		bl	lv_map
+ 1481              	.LVL134:
+ 253:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1482              		.loc 1 253 5 is_stmt 1 view .LVU430
+ 253:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1483              		.loc 1 253 20 is_stmt 0 view .LVU431
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 42
+
+
+ 1484 0018 0095     		str	r5, [sp]
+ 1485 001a 4FF46E73 		mov	r3, #952
+ 1486 001e 3222     		movs	r2, #50
+ 1487 0020 0021     		movs	r1, #0
+ 1488 0022 FFF7FEFF 		bl	lv_bezier3
+ 1489              	.LVL135:
+ 255:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = step * (a->end_value - a->start_value);
+ 1490              		.loc 1 255 5 is_stmt 1 view .LVU432
+ 256:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1491              		.loc 1 256 5 view .LVU433
+ 256:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1492              		.loc 1 256 26 is_stmt 0 view .LVU434
+ 1493 0026 636A     		ldr	r3, [r4, #36]
+ 256:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1494              		.loc 1 256 41 view .LVU435
+ 1495 0028 E269     		ldr	r2, [r4, #28]
+ 256:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1496              		.loc 1 256 38 view .LVU436
+ 1497 002a 9B1A     		subs	r3, r3, r2
+ 256:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1498              		.loc 1 256 15 view .LVU437
+ 1499 002c 03FB00F0 		mul	r0, r3, r0
+ 1500              	.LVL136:
+ 257:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value += a->start_value;
+ 1501              		.loc 1 257 5 is_stmt 1 view .LVU438
+ 258:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1502              		.loc 1 258 5 view .LVU439
+ 260:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 1503              		.loc 1 260 5 view .LVU440
+ 261:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1504              		.loc 1 261 1 is_stmt 0 view .LVU441
+ 1505 0030 02EBA020 		add	r0, r2, r0, asr #10
+ 1506              	.LVL137:
+ 261:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1507              		.loc 1 261 1 view .LVU442
+ 1508 0034 03B0     		add	sp, sp, #12
+ 1509              	.LCFI24:
+ 1510              		.cfi_def_cfa_offset 12
+ 1511              		@ sp needed
+ 1512 0036 30BD     		pop	{r4, r5, pc}
+ 261:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1513              		.loc 1 261 1 view .LVU443
+ 1514              		.cfi_endproc
+ 1515              	.LFE56:
+ 1517              		.section	.text.lv_anim_path_overshoot,"ax",%progbits
+ 1518              		.align	1
+ 1519              		.global	lv_anim_path_overshoot
+ 1520              		.syntax unified
+ 1521              		.thumb
+ 1522              		.thumb_func
+ 1524              	lv_anim_path_overshoot:
+ 1525              	.LVL138:
+ 1526              	.LFB57:
+ 264:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 1527              		.loc 1 264 1 is_stmt 1 view -0
+ 1528              		.cfi_startproc
+ 1529              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 43
+
+
+ 1530              		@ frame_needed = 0, uses_anonymous_args = 0
+ 264:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 1531              		.loc 1 264 1 is_stmt 0 view .LVU445
+ 1532 0000 30B5     		push	{r4, r5, lr}
+ 1533              	.LCFI25:
+ 1534              		.cfi_def_cfa_offset 12
+ 1535              		.cfi_offset 4, -12
+ 1536              		.cfi_offset 5, -8
+ 1537              		.cfi_offset 14, -4
+ 1538 0002 83B0     		sub	sp, sp, #12
+ 1539              	.LCFI26:
+ 1540              		.cfi_def_cfa_offset 24
+ 1541 0004 0446     		mov	r4, r0
+ 266:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 1000, 1300, LV_BEZIER_VAL_MAX);
+ 1542              		.loc 1 266 5 is_stmt 1 view .LVU446
+ 266:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 1000, 1300, LV_BEZIER_VAL_MAX);
+ 1543              		.loc 1 266 18 is_stmt 0 view .LVU447
+ 1544 0006 4FF48065 		mov	r5, #1024
+ 1545 000a 0095     		str	r5, [sp]
+ 1546 000c 0023     		movs	r3, #0
+ 1547 000e 826A     		ldr	r2, [r0, #40]
+ 1548 0010 1946     		mov	r1, r3
+ 1549 0012 C06A     		ldr	r0, [r0, #44]
+ 1550              	.LVL139:
+ 266:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 1000, 1300, LV_BEZIER_VAL_MAX);
+ 1551              		.loc 1 266 18 view .LVU448
+ 1552 0014 FFF7FEFF 		bl	lv_map
+ 1553              	.LVL140:
+ 267:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1554              		.loc 1 267 5 is_stmt 1 view .LVU449
+ 267:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1555              		.loc 1 267 20 is_stmt 0 view .LVU450
+ 1556 0018 0095     		str	r5, [sp]
+ 1557 001a 40F21453 		movw	r3, #1300
+ 1558 001e 4FF47A72 		mov	r2, #1000
+ 1559 0022 0021     		movs	r1, #0
+ 1560 0024 FFF7FEFF 		bl	lv_bezier3
+ 1561              	.LVL141:
+ 269:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = step * (a->end_value - a->start_value);
+ 1562              		.loc 1 269 5 is_stmt 1 view .LVU451
+ 270:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1563              		.loc 1 270 5 view .LVU452
+ 270:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1564              		.loc 1 270 26 is_stmt 0 view .LVU453
+ 1565 0028 636A     		ldr	r3, [r4, #36]
+ 270:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1566              		.loc 1 270 41 view .LVU454
+ 1567 002a E269     		ldr	r2, [r4, #28]
+ 270:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1568              		.loc 1 270 38 view .LVU455
+ 1569 002c 9B1A     		subs	r3, r3, r2
+ 270:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1570              		.loc 1 270 15 view .LVU456
+ 1571 002e 03FB00F0 		mul	r0, r3, r0
+ 1572              	.LVL142:
+ 271:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value += a->start_value;
+ 1573              		.loc 1 271 5 is_stmt 1 view .LVU457
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 44
+
+
+ 272:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1574              		.loc 1 272 5 view .LVU458
+ 274:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 1575              		.loc 1 274 5 view .LVU459
+ 275:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1576              		.loc 1 275 1 is_stmt 0 view .LVU460
+ 1577 0032 02EBA020 		add	r0, r2, r0, asr #10
+ 1578              	.LVL143:
+ 275:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1579              		.loc 1 275 1 view .LVU461
+ 1580 0036 03B0     		add	sp, sp, #12
+ 1581              	.LCFI27:
+ 1582              		.cfi_def_cfa_offset 12
+ 1583              		@ sp needed
+ 1584 0038 30BD     		pop	{r4, r5, pc}
+ 275:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1585              		.loc 1 275 1 view .LVU462
+ 1586              		.cfi_endproc
+ 1587              	.LFE57:
+ 1589              		.section	.text.lv_anim_path_bounce,"ax",%progbits
+ 1590              		.align	1
+ 1591              		.global	lv_anim_path_bounce
+ 1592              		.syntax unified
+ 1593              		.thumb
+ 1594              		.thumb_func
+ 1596              	lv_anim_path_bounce:
+ 1597              	.LVL144:
+ 1598              	.LFB58:
+ 278:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 1599              		.loc 1 278 1 is_stmt 1 view -0
+ 1600              		.cfi_startproc
+ 1601              		@ args = 0, pretend = 0, frame = 0
+ 1602              		@ frame_needed = 0, uses_anonymous_args = 0
+ 278:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     /*Calculate the current step*/
+ 1603              		.loc 1 278 1 is_stmt 0 view .LVU464
+ 1604 0000 30B5     		push	{r4, r5, lr}
+ 1605              	.LCFI28:
+ 1606              		.cfi_def_cfa_offset 12
+ 1607              		.cfi_offset 4, -12
+ 1608              		.cfi_offset 5, -8
+ 1609              		.cfi_offset 14, -4
+ 1610 0002 83B0     		sub	sp, sp, #12
+ 1611              	.LCFI29:
+ 1612              		.cfi_def_cfa_offset 24
+ 1613 0004 0446     		mov	r4, r0
+ 280:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t diff = (a->end_value - a->start_value);
+ 1614              		.loc 1 280 5 is_stmt 1 view .LVU465
+ 280:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t diff = (a->end_value - a->start_value);
+ 1615              		.loc 1 280 17 is_stmt 0 view .LVU466
+ 1616 0006 4FF48063 		mov	r3, #1024
+ 1617 000a 0093     		str	r3, [sp]
+ 1618 000c 0023     		movs	r3, #0
+ 1619 000e 826A     		ldr	r2, [r0, #40]
+ 1620 0010 1946     		mov	r1, r3
+ 1621 0012 C06A     		ldr	r0, [r0, #44]
+ 1622              	.LVL145:
+ 280:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t diff = (a->end_value - a->start_value);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 45
+
+
+ 1623              		.loc 1 280 17 view .LVU467
+ 1624 0014 FFF7FEFF 		bl	lv_map
+ 1625              	.LVL146:
+ 281:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1626              		.loc 1 281 5 is_stmt 1 view .LVU468
+ 281:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1627              		.loc 1 281 22 is_stmt 0 view .LVU469
+ 1628 0018 636A     		ldr	r3, [r4, #36]
+ 281:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1629              		.loc 1 281 37 view .LVU470
+ 1630 001a E269     		ldr	r2, [r4, #28]
+ 281:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1631              		.loc 1 281 13 view .LVU471
+ 1632 001c 9D1A     		subs	r5, r3, r2
+ 1633              	.LVL147:
+ 285:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Go down*/
+ 1634              		.loc 1 285 5 is_stmt 1 view .LVU472
+ 285:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Go down*/
+ 1635              		.loc 1 285 7 is_stmt 0 view .LVU473
+ 1636 001e B0F5CC7F 		cmp	r0, #408
+ 1637 0022 0BDA     		bge	.L107
+ 287:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1638              		.loc 1 287 9 is_stmt 1 view .LVU474
+ 287:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1639              		.loc 1 287 16 is_stmt 0 view .LVU475
+ 1640 0024 40F6C413 		movw	r3, #2500
+ 1641 0028 00FB03F3 		mul	r3, r0, r3
+ 287:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1642              		.loc 1 287 11 view .LVU476
+ 1643 002c 9812     		asrs	r0, r3, #10
+ 1644              	.LVL148:
+ 1645              	.L108:
+ 316:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(t < 0) t = 0;
+ 1646              		.loc 1 316 5 is_stmt 1 view .LVU477
+ 316:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(t < 0) t = 0;
+ 1647              		.loc 1 316 7 is_stmt 0 view .LVU478
+ 1648 002e B0F5806F 		cmp	r0, #1024
+ 1649 0032 41DC     		bgt	.L113
+ 317:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, LV_BEZIER_VAL_MAX, 800, 500, 0);
+ 1650              		.loc 1 317 5 is_stmt 1 view .LVU479
+ 317:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, LV_BEZIER_VAL_MAX, 800, 500, 0);
+ 1651              		.loc 1 317 7 is_stmt 0 view .LVU480
+ 1652 0034 0028     		cmp	r0, #0
+ 1653 0036 41DA     		bge	.L112
+ 317:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, LV_BEZIER_VAL_MAX, 800, 500, 0);
+ 1654              		.loc 1 317 17 discriminator 1 view .LVU481
+ 1655 0038 0020     		movs	r0, #0
+ 1656              	.LVL149:
+ 317:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     int32_t step = lv_bezier3(t, LV_BEZIER_VAL_MAX, 800, 500, 0);
+ 1657              		.loc 1 317 17 discriminator 1 view .LVU482
+ 1658 003a 3FE0     		b	.L112
+ 1659              	.LVL150:
+ 1660              	.L107:
+ 289:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*First bounce back*/
+ 1661              		.loc 1 289 10 is_stmt 1 view .LVU483
+ 289:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*First bounce back*/
+ 1662              		.loc 1 289 22 is_stmt 0 view .LVU484
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 46
+
+
+ 1663 003c A0F5CC73 		sub	r3, r0, #408
+ 289:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*First bounce back*/
+ 1664              		.loc 1 289 12 view .LVU485
+ 1665 0040 CD2B     		cmp	r3, #205
+ 1666 0042 0AD8     		bhi	.L109
+ 291:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = t * 5; /*to [0..1024] range*/
+ 1667              		.loc 1 291 9 is_stmt 1 view .LVU486
+ 1668              	.LVL151:
+ 292:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = LV_BEZIER_VAL_MAX - t;
+ 1669              		.loc 1 292 9 view .LVU487
+ 292:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = LV_BEZIER_VAL_MAX - t;
+ 1670              		.loc 1 292 14 is_stmt 0 view .LVU488
+ 1671 0044 03EB8300 		add	r0, r3, r3, lsl #2
+ 1672              	.LVL152:
+ 293:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         diff = diff / 20;
+ 1673              		.loc 1 293 9 is_stmt 1 view .LVU489
+ 293:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         diff = diff / 20;
+ 1674              		.loc 1 293 14 is_stmt 0 view .LVU490
+ 1675 0048 C0F58060 		rsb	r0, r0, #1024
+ 1676              	.LVL153:
+ 294:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1677              		.loc 1 294 9 is_stmt 1 view .LVU491
+ 294:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1678              		.loc 1 294 14 is_stmt 0 view .LVU492
+ 1679 004c 244A     		ldr	r2, .L116
+ 1680 004e 82FB0532 		smull	r3, r2, r2, r5
+ 1681 0052 EB17     		asrs	r3, r5, #31
+ 1682 0054 C3EBE205 		rsb	r5, r3, r2, asr #3
+ 1683              	.LVL154:
+ 294:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1684              		.loc 1 294 14 view .LVU493
+ 1685 0058 E9E7     		b	.L108
+ 1686              	.L109:
+ 296:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Fall back*/
+ 1687              		.loc 1 296 10 is_stmt 1 view .LVU494
+ 296:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Fall back*/
+ 1688              		.loc 1 296 22 is_stmt 0 view .LVU495
+ 1689 005a A0F26623 		subw	r3, r0, #614
+ 296:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Fall back*/
+ 1690              		.loc 1 296 12 view .LVU496
+ 1691 005e CC2B     		cmp	r3, #204
+ 1692 0060 08D8     		bhi	.L110
+ 298:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = t * 5; /*to [0..1024] range*/
+ 1693              		.loc 1 298 9 is_stmt 1 view .LVU497
+ 1694              	.LVL155:
+ 299:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         diff = diff / 20;
+ 1695              		.loc 1 299 9 view .LVU498
+ 299:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         diff = diff / 20;
+ 1696              		.loc 1 299 14 is_stmt 0 view .LVU499
+ 1697 0062 03EB8300 		add	r0, r3, r3, lsl #2
+ 1698              	.LVL156:
+ 300:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1699              		.loc 1 300 9 is_stmt 1 view .LVU500
+ 300:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1700              		.loc 1 300 14 is_stmt 0 view .LVU501
+ 1701 0066 1E4A     		ldr	r2, .L116
+ 1702 0068 82FB0532 		smull	r3, r2, r2, r5
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 47
+
+
+ 1703 006c EB17     		asrs	r3, r5, #31
+ 1704 006e C3EBE205 		rsb	r5, r3, r2, asr #3
+ 1705              	.LVL157:
+ 300:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1706              		.loc 1 300 14 view .LVU502
+ 1707 0072 DCE7     		b	.L108
+ 1708              	.L110:
+ 302:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Second bounce back*/
+ 1709              		.loc 1 302 10 is_stmt 1 view .LVU503
+ 302:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Second bounce back*/
+ 1710              		.loc 1 302 22 is_stmt 0 view .LVU504
+ 1711 0074 A0F23333 		subw	r3, r0, #819
+ 302:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Second bounce back*/
+ 1712              		.loc 1 302 12 view .LVU505
+ 1713 0078 652B     		cmp	r3, #101
+ 1714 007a 0DD8     		bhi	.L111
+ 304:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = t * 10; /*to [0..1024] range*/
+ 1715              		.loc 1 304 9 is_stmt 1 view .LVU506
+ 304:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = t * 10; /*to [0..1024] range*/
+ 1716              		.loc 1 304 11 is_stmt 0 view .LVU507
+ 1717 007c A0F23330 		subw	r0, r0, #819
+ 1718              	.LVL158:
+ 305:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = LV_BEZIER_VAL_MAX - t;
+ 1719              		.loc 1 305 9 is_stmt 1 view .LVU508
+ 305:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = LV_BEZIER_VAL_MAX - t;
+ 1720              		.loc 1 305 14 is_stmt 0 view .LVU509
+ 1721 0080 00EB8000 		add	r0, r0, r0, lsl #2
+ 1722              	.LVL159:
+ 305:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = LV_BEZIER_VAL_MAX - t;
+ 1723              		.loc 1 305 14 view .LVU510
+ 1724 0084 4000     		lsls	r0, r0, #1
+ 1725              	.LVL160:
+ 306:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         diff = diff / 40;
+ 1726              		.loc 1 306 9 is_stmt 1 view .LVU511
+ 306:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         diff = diff / 40;
+ 1727              		.loc 1 306 14 is_stmt 0 view .LVU512
+ 1728 0086 C0F58060 		rsb	r0, r0, #1024
+ 1729              	.LVL161:
+ 307:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1730              		.loc 1 307 9 is_stmt 1 view .LVU513
+ 307:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1731              		.loc 1 307 14 is_stmt 0 view .LVU514
+ 1732 008a 154A     		ldr	r2, .L116
+ 1733 008c 82FB0532 		smull	r3, r2, r2, r5
+ 1734 0090 EB17     		asrs	r3, r5, #31
+ 1735 0092 C3EB2215 		rsb	r5, r3, r2, asr #4
+ 1736              	.LVL162:
+ 307:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1737              		.loc 1 307 14 view .LVU515
+ 1738 0096 CAE7     		b	.L108
+ 1739              	.L111:
+ 309:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Fall back*/
+ 1740              		.loc 1 309 10 is_stmt 1 view .LVU516
+ 309:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Fall back*/
+ 1741              		.loc 1 309 22 is_stmt 0 view .LVU517
+ 1742 0098 A0F29932 		subw	r2, r0, #921
+ 309:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         /*Fall back*/
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 48
+
+
+ 1743              		.loc 1 309 12 view .LVU518
+ 1744 009c 672A     		cmp	r2, #103
+ 1745 009e C6D8     		bhi	.L108
+ 311:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = t * 10; /*to [0..1024] range*/
+ 1746              		.loc 1 311 9 is_stmt 1 view .LVU519
+ 311:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         t    = t * 10; /*to [0..1024] range*/
+ 1747              		.loc 1 311 11 is_stmt 0 view .LVU520
+ 1748 00a0 A0F29930 		subw	r0, r0, #921
+ 1749              	.LVL163:
+ 312:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         diff = diff / 40;
+ 1750              		.loc 1 312 9 is_stmt 1 view .LVU521
+ 312:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         diff = diff / 40;
+ 1751              		.loc 1 312 14 is_stmt 0 view .LVU522
+ 1752 00a4 00EB8000 		add	r0, r0, r0, lsl #2
+ 1753              	.LVL164:
+ 312:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         diff = diff / 40;
+ 1754              		.loc 1 312 14 view .LVU523
+ 1755 00a8 4000     		lsls	r0, r0, #1
+ 1756              	.LVL165:
+ 313:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1757              		.loc 1 313 9 is_stmt 1 view .LVU524
+ 313:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1758              		.loc 1 313 14 is_stmt 0 view .LVU525
+ 1759 00aa 0D4A     		ldr	r2, .L116
+ 1760 00ac 82FB0532 		smull	r3, r2, r2, r5
+ 1761 00b0 EB17     		asrs	r3, r5, #31
+ 1762 00b2 C3EB2215 		rsb	r5, r3, r2, asr #4
+ 1763              	.LVL166:
+ 313:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     }
+ 1764              		.loc 1 313 14 view .LVU526
+ 1765 00b6 BAE7     		b	.L108
+ 1766              	.L113:
+ 316:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(t < 0) t = 0;
+ 1767              		.loc 1 316 33 discriminator 1 view .LVU527
+ 1768 00b8 4FF48060 		mov	r0, #1024
+ 1769              	.LVL167:
+ 1770              	.L112:
+ 318:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1771              		.loc 1 318 5 is_stmt 1 view .LVU528
+ 318:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1772              		.loc 1 318 20 is_stmt 0 view .LVU529
+ 1773 00bc 0023     		movs	r3, #0
+ 1774 00be 0093     		str	r3, [sp]
+ 1775 00c0 4FF4FA73 		mov	r3, #500
+ 1776 00c4 4FF44872 		mov	r2, #800
+ 1777 00c8 4FF48061 		mov	r1, #1024
+ 1778 00cc FFF7FEFF 		bl	lv_bezier3
+ 1779              	.LVL168:
+ 320:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = step * diff;
+ 1780              		.loc 1 320 5 is_stmt 1 view .LVU530
+ 321:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1781              		.loc 1 321 5 view .LVU531
+ 321:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = new_value >> LV_BEZIER_VAL_SHIFT;
+ 1782              		.loc 1 321 15 is_stmt 0 view .LVU532
+ 1783 00d0 00FB05F5 		mul	r5, r0, r5
+ 1784              	.LVL169:
+ 322:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     new_value = a->end_value - new_value;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 49
+
+
+ 1785              		.loc 1 322 5 is_stmt 1 view .LVU533
+ 323:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1786              		.loc 1 323 5 view .LVU534
+ 323:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1787              		.loc 1 323 18 is_stmt 0 view .LVU535
+ 1788 00d4 606A     		ldr	r0, [r4, #36]
+ 1789              	.LVL170:
+ 325:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 1790              		.loc 1 325 5 is_stmt 1 view .LVU536
+ 326:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1791              		.loc 1 326 1 is_stmt 0 view .LVU537
+ 1792 00d6 A0EBA520 		sub	r0, r0, r5, asr #10
+ 1793              	.LVL171:
+ 326:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1794              		.loc 1 326 1 view .LVU538
+ 1795 00da 03B0     		add	sp, sp, #12
+ 1796              	.LCFI30:
+ 1797              		.cfi_def_cfa_offset 12
+ 1798              		@ sp needed
+ 1799 00dc 30BD     		pop	{r4, r5, pc}
+ 1800              	.LVL172:
+ 1801              	.L117:
+ 326:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1802              		.loc 1 326 1 view .LVU539
+ 1803 00de 00BF     		.align	2
+ 1804              	.L116:
+ 1805 00e0 67666666 		.word	1717986919
+ 1806              		.cfi_endproc
+ 1807              	.LFE58:
+ 1809              		.section	.text.lv_anim_path_step,"ax",%progbits
+ 1810              		.align	1
+ 1811              		.global	lv_anim_path_step
+ 1812              		.syntax unified
+ 1813              		.thumb
+ 1814              		.thumb_func
+ 1816              	lv_anim_path_step:
+ 1817              	.LVL173:
+ 1818              	.LFB59:
+ 329:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     if(a->act_time >= a->time)
+ 1819              		.loc 1 329 1 is_stmt 1 view -0
+ 1820              		.cfi_startproc
+ 1821              		@ args = 0, pretend = 0, frame = 0
+ 1822              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1823              		@ link register save eliminated.
+ 330:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         return a->end_value;
+ 1824              		.loc 1 330 5 view .LVU541
+ 330:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         return a->end_value;
+ 1825              		.loc 1 330 9 is_stmt 0 view .LVU542
+ 1826 0000 C26A     		ldr	r2, [r0, #44]
+ 330:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         return a->end_value;
+ 1827              		.loc 1 330 24 view .LVU543
+ 1828 0002 836A     		ldr	r3, [r0, #40]
+ 330:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****         return a->end_value;
+ 1829              		.loc 1 330 7 view .LVU544
+ 1830 0004 9A42     		cmp	r2, r3
+ 1831 0006 01DB     		blt	.L119
+ 331:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     else
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 50
+
+
+ 1832              		.loc 1 331 9 is_stmt 1 view .LVU545
+ 331:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     else
+ 1833              		.loc 1 331 17 is_stmt 0 view .LVU546
+ 1834 0008 406A     		ldr	r0, [r0, #36]
+ 1835              	.LVL174:
+ 331:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c ****     else
+ 1836              		.loc 1 331 17 view .LVU547
+ 1837 000a 7047     		bx	lr
+ 1838              	.LVL175:
+ 1839              	.L119:
+ 333:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 1840              		.loc 1 333 9 is_stmt 1 view .LVU548
+ 333:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** }
+ 1841              		.loc 1 333 17 is_stmt 0 view .LVU549
+ 1842 000c C069     		ldr	r0, [r0, #28]
+ 1843              	.LVL176:
+ 334:Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.c **** 
+ 1844              		.loc 1 334 1 view .LVU550
+ 1845 000e 7047     		bx	lr
+ 1846              		.cfi_endproc
+ 1847              	.LFE59:
+ 1849              		.section	.bss._lv_anim_tmr,"aw",%nobits
+ 1850              		.align	2
+ 1853              	_lv_anim_tmr:
+ 1854 0000 00000000 		.space	4
+ 1855              		.section	.bss.anim_run_round,"aw",%nobits
+ 1858              	anim_run_round:
+ 1859 0000 00       		.space	1
+ 1860              		.section	.bss.anim_list_changed,"aw",%nobits
+ 1863              	anim_list_changed:
+ 1864 0000 00       		.space	1
+ 1865              		.section	.bss.last_timer_run,"aw",%nobits
+ 1866              		.align	2
+ 1869              	last_timer_run:
+ 1870 0000 00000000 		.space	4
+ 1871              		.text
+ 1872              	.Letext0:
+ 1873              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1874              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1875              		.file 4 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1876              		.file 5 "Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.h"
+ 1877              		.file 6 "Middlewares/LVGL/GUI/lvgl/src/misc/lv_timer.h"
+ 1878              		.file 7 "Middlewares/LVGL/GUI/lvgl/src/misc/lv_ll.h"
+ 1879              		.file 8 "Middlewares/LVGL/GUI/lvgl/src/misc/lv_math.h"
+ 1880              		.file 9 "Middlewares/LVGL/GUI/lvgl/src/misc/lv_mem.h"
+ 1881              		.file 10 "Middlewares/LVGL/GUI/lvgl/src/misc/../hal/lv_hal_tick.h"
+ 1882              		.file 11 "Middlewares/LVGL/GUI/lvgl/src/misc/lv_gc.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 51
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_anim.c
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:21     .text.anim_mark_list_change:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:26     .text.anim_mark_list_change:00000000 anim_mark_list_change
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:67     .text.anim_mark_list_change:00000024 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1863   .bss.anim_list_changed:00000000 anim_list_changed
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1853   .bss._lv_anim_tmr:00000000 _lv_anim_tmr
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:74     .text.anim_ready_handler:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:79     .text.anim_ready_handler:00000000 anim_ready_handler
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:216    .text.anim_ready_handler:00000078 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:221    .text.anim_timer:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:226    .text.anim_timer:00000000 anim_timer
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:485    .text.anim_timer:000000f0 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1869   .bss.last_timer_run:00000000 last_timer_run
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1858   .bss.anim_run_round:00000000 anim_run_round
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:493    .text.lv_anim_path_linear:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:499    .text.lv_anim_path_linear:00000000 lv_anim_path_linear
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:556    .text._lv_anim_core_init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:562    .text._lv_anim_core_init:00000000 _lv_anim_core_init
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:601    .text._lv_anim_core_init:00000024 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:609    .text.lv_anim_init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:615    .text.lv_anim_init:00000000 lv_anim_init
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:665    .text.lv_anim_init:00000030 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:670    .text.lv_anim_get_playtime:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:676    .text.lv_anim_get_playtime:00000000 lv_anim_get_playtime
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:765    .text.lv_anim_del:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:771    .text.lv_anim_del:00000000 lv_anim_del
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:874    .text.lv_anim_del:00000058 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:879    .text.lv_anim_start:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:885    .text.lv_anim_start:00000000 lv_anim_start
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1035   .text.lv_anim_start:00000080 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1042   .text.lv_anim_del_all:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1048   .text.lv_anim_del_all:00000000 lv_anim_del_all
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1071   .text.lv_anim_del_all:00000010 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1076   .text.lv_anim_get:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1082   .text.lv_anim_get:00000000 lv_anim_get
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1149   .text.lv_anim_get:00000030 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1154   .text.lv_anim_count_running:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1160   .text.lv_anim_count_running:00000000 lv_anim_count_running
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1217   .text.lv_anim_count_running:00000024 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1222   .text.lv_anim_speed_to_time:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1228   .text.lv_anim_speed_to_time:00000000 lv_anim_speed_to_time
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1275   .text.lv_anim_refr_now:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1281   .text.lv_anim_refr_now:00000000 lv_anim_refr_now
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1302   .text.lv_anim_path_ease_in:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1308   .text.lv_anim_path_ease_in:00000000 lv_anim_path_ease_in
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1374   .text.lv_anim_path_ease_out:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1380   .text.lv_anim_path_ease_out:00000000 lv_anim_path_ease_out
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1446   .text.lv_anim_path_ease_in_out:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1452   .text.lv_anim_path_ease_in_out:00000000 lv_anim_path_ease_in_out
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1518   .text.lv_anim_path_overshoot:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1524   .text.lv_anim_path_overshoot:00000000 lv_anim_path_overshoot
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1590   .text.lv_anim_path_bounce:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1596   .text.lv_anim_path_bounce:00000000 lv_anim_path_bounce
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1805   .text.lv_anim_path_bounce:000000e0 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1810   .text.lv_anim_path_step:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1816   .text.lv_anim_path_step:00000000 lv_anim_path_step
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s 			page 52
+
+
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1850   .bss._lv_anim_tmr:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1859   .bss.anim_run_round:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1864   .bss.anim_list_changed:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccXbo4UB.s:1866   .bss.last_timer_run:00000000 $d
+
+UNDEFINED SYMBOLS
+_lv_ll_get_head
+lv_timer_resume
+lv_timer_pause
+_lv_anim_ll
+_lv_ll_remove
+lv_mem_free
+lv_tick_elaps
+_lv_ll_get_next
+lv_tick_get
+lv_map
+_lv_ll_init
+lv_timer_create
+lv_memset_00
+_lv_ll_is_empty
+_lv_ll_ins_head
+lv_memcpy
+_lv_ll_clear
+lv_bezier3

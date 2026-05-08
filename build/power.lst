@@ -1,0 +1,1015 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"power.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "BSP/POWER/power.c"
+  20              		.section	.text.Power_Pins_Init,"ax",%progbits
+  21              		.align	1
+  22              		.global	Power_Pins_Init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	Power_Pins_Init:
+  28              	.LFB216:
+   1:BSP/POWER/power.c **** #include "power.h"
+   2:BSP/POWER/power.c **** #include "adc.h"
+   3:BSP/POWER/power.c **** #include "delay.h"
+   4:BSP/POWER/power.c **** 
+   5:BSP/POWER/power.c **** #define INTERNAL_RES 0.128
+   6:BSP/POWER/power.c **** #define CHARGING_CUR 1
+   7:BSP/POWER/power.c **** 
+   8:BSP/POWER/power.c **** void Power_Pins_Init()
+   9:BSP/POWER/power.c **** {
+  29              		.loc 1 9 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 24
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 70B5     		push	{r4, r5, r6, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+  39              		.cfi_offset 14, -4
+  40 0002 86B0     		sub	sp, sp, #24
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_offset 40
+  10:BSP/POWER/power.c **** 	GPIO_InitTypeDef GPIO_InitStruct = {0};
+  43              		.loc 1 10 2 view .LVU1
+  44              		.loc 1 10 19 is_stmt 0 view .LVU2
+  45 0004 0024     		movs	r4, #0
+  46 0006 0194     		str	r4, [sp, #4]
+  47 0008 0294     		str	r4, [sp, #8]
+  48 000a 0394     		str	r4, [sp, #12]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 2
+
+
+  49 000c 0494     		str	r4, [sp, #16]
+  50 000e 0594     		str	r4, [sp, #20]
+  11:BSP/POWER/power.c **** 
+  12:BSP/POWER/power.c ****   /* GPIO Ports Clock Enable */
+  13:BSP/POWER/power.c ****   __HAL_RCC_GPIOA_CLK_ENABLE();
+  51              		.loc 1 13 3 is_stmt 1 view .LVU3
+  52              	.LBB2:
+  53              		.loc 1 13 3 view .LVU4
+  54 0010 0094     		str	r4, [sp]
+  55              		.loc 1 13 3 view .LVU5
+  56 0012 174B     		ldr	r3, .L3
+  57 0014 1A6B     		ldr	r2, [r3, #48]
+  58 0016 42F00102 		orr	r2, r2, #1
+  59 001a 1A63     		str	r2, [r3, #48]
+  60              		.loc 1 13 3 view .LVU6
+  61 001c 1B6B     		ldr	r3, [r3, #48]
+  62 001e 03F00103 		and	r3, r3, #1
+  63 0022 0093     		str	r3, [sp]
+  64              		.loc 1 13 3 view .LVU7
+  65 0024 009B     		ldr	r3, [sp]
+  66              	.LBE2:
+  67              		.loc 1 13 3 view .LVU8
+  14:BSP/POWER/power.c **** 
+  15:BSP/POWER/power.c ****   /*Configure GPIO pin Output Level */
+  16:BSP/POWER/power.c ****   HAL_GPIO_WritePin(POWER_PORT, POWER_PIN, GPIO_PIN_RESET);
+  68              		.loc 1 16 3 view .LVU9
+  69 0026 134E     		ldr	r6, .L3+4
+  70 0028 2246     		mov	r2, r4
+  71 002a 0821     		movs	r1, #8
+  72 002c 3046     		mov	r0, r6
+  73 002e FFF7FEFF 		bl	HAL_GPIO_WritePin
+  74              	.LVL0:
+  17:BSP/POWER/power.c **** 
+  18:BSP/POWER/power.c ****   /*Configure GPIO pin : PA3 */
+  19:BSP/POWER/power.c ****   GPIO_InitStruct.Pin = POWER_PIN;
+  75              		.loc 1 19 3 view .LVU10
+  76              		.loc 1 19 23 is_stmt 0 view .LVU11
+  77 0032 0825     		movs	r5, #8
+  78 0034 0195     		str	r5, [sp, #4]
+  20:BSP/POWER/power.c ****   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  79              		.loc 1 20 3 is_stmt 1 view .LVU12
+  80              		.loc 1 20 24 is_stmt 0 view .LVU13
+  81 0036 0123     		movs	r3, #1
+  82 0038 0293     		str	r3, [sp, #8]
+  21:BSP/POWER/power.c ****   GPIO_InitStruct.Pull = GPIO_NOPULL;
+  83              		.loc 1 21 3 is_stmt 1 view .LVU14
+  84              		.loc 1 21 24 is_stmt 0 view .LVU15
+  85 003a 0394     		str	r4, [sp, #12]
+  22:BSP/POWER/power.c ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  86              		.loc 1 22 3 is_stmt 1 view .LVU16
+  87              		.loc 1 22 25 is_stmt 0 view .LVU17
+  88 003c 0494     		str	r4, [sp, #16]
+  23:BSP/POWER/power.c ****   HAL_GPIO_Init(POWER_PORT, &GPIO_InitStruct);
+  89              		.loc 1 23 3 is_stmt 1 view .LVU18
+  90 003e 01A9     		add	r1, sp, #4
+  91 0040 3046     		mov	r0, r6
+  92 0042 FFF7FEFF 		bl	HAL_GPIO_Init
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 3
+
+
+  93              	.LVL1:
+  24:BSP/POWER/power.c **** 
+  25:BSP/POWER/power.c ****   /*Configure GPIO pin : PA2 */
+  26:BSP/POWER/power.c ****   GPIO_InitStruct.Pin = CHARGE_PIN;
+  94              		.loc 1 26 3 view .LVU19
+  95              		.loc 1 26 23 is_stmt 0 view .LVU20
+  96 0046 0423     		movs	r3, #4
+  97 0048 0193     		str	r3, [sp, #4]
+  27:BSP/POWER/power.c ****   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  98              		.loc 1 27 3 is_stmt 1 view .LVU21
+  99              		.loc 1 27 24 is_stmt 0 view .LVU22
+ 100 004a 4FF44413 		mov	r3, #3211264
+ 101 004e 0293     		str	r3, [sp, #8]
+  28:BSP/POWER/power.c ****   GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 102              		.loc 1 28 3 is_stmt 1 view .LVU23
+ 103              		.loc 1 28 24 is_stmt 0 view .LVU24
+ 104 0050 0394     		str	r4, [sp, #12]
+  29:BSP/POWER/power.c ****   HAL_GPIO_Init(CHARGE_PORT, &GPIO_InitStruct);
+ 105              		.loc 1 29 3 is_stmt 1 view .LVU25
+ 106 0052 01A9     		add	r1, sp, #4
+ 107 0054 3046     		mov	r0, r6
+ 108 0056 FFF7FEFF 		bl	HAL_GPIO_Init
+ 109              	.LVL2:
+  30:BSP/POWER/power.c **** 
+  31:BSP/POWER/power.c ****   HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 0);
+ 110              		.loc 1 31 3 view .LVU26
+ 111 005a 2246     		mov	r2, r4
+ 112 005c 2146     		mov	r1, r4
+ 113 005e 2846     		mov	r0, r5
+ 114 0060 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 115              	.LVL3:
+  32:BSP/POWER/power.c ****   HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+ 116              		.loc 1 32 3 view .LVU27
+ 117 0064 2846     		mov	r0, r5
+ 118 0066 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 119              	.LVL4:
+  33:BSP/POWER/power.c **** 	
+  34:BSP/POWER/power.c **** }
+ 120              		.loc 1 34 1 is_stmt 0 view .LVU28
+ 121 006a 06B0     		add	sp, sp, #24
+ 122              	.LCFI2:
+ 123              		.cfi_def_cfa_offset 16
+ 124              		@ sp needed
+ 125 006c 70BD     		pop	{r4, r5, r6, pc}
+ 126              	.L4:
+ 127 006e 00BF     		.align	2
+ 128              	.L3:
+ 129 0070 00380240 		.word	1073887232
+ 130 0074 00000240 		.word	1073872896
+ 131              		.cfi_endproc
+ 132              	.LFE216:
+ 134              		.section	.text.Power_Enable,"ax",%progbits
+ 135              		.align	1
+ 136              		.global	Power_Enable
+ 137              		.syntax unified
+ 138              		.thumb
+ 139              		.thumb_func
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 4
+
+
+ 141              	Power_Enable:
+ 142              	.LFB217:
+  35:BSP/POWER/power.c **** 
+  36:BSP/POWER/power.c **** void Power_Enable()
+  37:BSP/POWER/power.c **** {
+ 143              		.loc 1 37 1 is_stmt 1 view -0
+ 144              		.cfi_startproc
+ 145              		@ args = 0, pretend = 0, frame = 0
+ 146              		@ frame_needed = 0, uses_anonymous_args = 0
+ 147 0000 08B5     		push	{r3, lr}
+ 148              	.LCFI3:
+ 149              		.cfi_def_cfa_offset 8
+ 150              		.cfi_offset 3, -8
+ 151              		.cfi_offset 14, -4
+  38:BSP/POWER/power.c **** 	HAL_GPIO_WritePin(POWER_PORT,POWER_PIN,GPIO_PIN_SET);
+ 152              		.loc 1 38 2 view .LVU30
+ 153 0002 0122     		movs	r2, #1
+ 154 0004 0821     		movs	r1, #8
+ 155 0006 0248     		ldr	r0, .L7
+ 156 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 157              	.LVL5:
+  39:BSP/POWER/power.c **** }
+ 158              		.loc 1 39 1 is_stmt 0 view .LVU31
+ 159 000c 08BD     		pop	{r3, pc}
+ 160              	.L8:
+ 161 000e 00BF     		.align	2
+ 162              	.L7:
+ 163 0010 00000240 		.word	1073872896
+ 164              		.cfi_endproc
+ 165              	.LFE217:
+ 167              		.section	.text.Power_DisEnable,"ax",%progbits
+ 168              		.align	1
+ 169              		.global	Power_DisEnable
+ 170              		.syntax unified
+ 171              		.thumb
+ 172              		.thumb_func
+ 174              	Power_DisEnable:
+ 175              	.LFB218:
+  40:BSP/POWER/power.c **** 
+  41:BSP/POWER/power.c **** void Power_DisEnable()
+  42:BSP/POWER/power.c **** {
+ 176              		.loc 1 42 1 is_stmt 1 view -0
+ 177              		.cfi_startproc
+ 178              		@ args = 0, pretend = 0, frame = 0
+ 179              		@ frame_needed = 0, uses_anonymous_args = 0
+ 180 0000 08B5     		push	{r3, lr}
+ 181              	.LCFI4:
+ 182              		.cfi_def_cfa_offset 8
+ 183              		.cfi_offset 3, -8
+ 184              		.cfi_offset 14, -4
+  43:BSP/POWER/power.c **** 	HAL_GPIO_WritePin(POWER_PORT,POWER_PIN,GPIO_PIN_RESET);
+ 185              		.loc 1 43 2 view .LVU33
+ 186 0002 0022     		movs	r2, #0
+ 187 0004 0821     		movs	r1, #8
+ 188 0006 0248     		ldr	r0, .L11
+ 189 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 190              	.LVL6:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 5
+
+
+  44:BSP/POWER/power.c **** }
+ 191              		.loc 1 44 1 is_stmt 0 view .LVU34
+ 192 000c 08BD     		pop	{r3, pc}
+ 193              	.L12:
+ 194 000e 00BF     		.align	2
+ 195              	.L11:
+ 196 0010 00000240 		.word	1073872896
+ 197              		.cfi_endproc
+ 198              	.LFE218:
+ 200              		.section	.text.ChargeCheck,"ax",%progbits
+ 201              		.align	1
+ 202              		.global	ChargeCheck
+ 203              		.syntax unified
+ 204              		.thumb
+ 205              		.thumb_func
+ 207              	ChargeCheck:
+ 208              	.LFB219:
+  45:BSP/POWER/power.c **** 
+  46:BSP/POWER/power.c **** uint8_t ChargeCheck()//1:charging
+  47:BSP/POWER/power.c **** {
+ 209              		.loc 1 47 1 is_stmt 1 view -0
+ 210              		.cfi_startproc
+ 211              		@ args = 0, pretend = 0, frame = 0
+ 212              		@ frame_needed = 0, uses_anonymous_args = 0
+ 213 0000 08B5     		push	{r3, lr}
+ 214              	.LCFI5:
+ 215              		.cfi_def_cfa_offset 8
+ 216              		.cfi_offset 3, -8
+ 217              		.cfi_offset 14, -4
+  48:BSP/POWER/power.c **** 	return HAL_GPIO_ReadPin(CHARGE_PORT,CHARGE_PIN);
+ 218              		.loc 1 48 2 view .LVU36
+ 219              		.loc 1 48 9 is_stmt 0 view .LVU37
+ 220 0002 0421     		movs	r1, #4
+ 221 0004 0148     		ldr	r0, .L15
+ 222 0006 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 223              	.LVL7:
+  49:BSP/POWER/power.c **** }
+ 224              		.loc 1 49 1 view .LVU38
+ 225 000a 08BD     		pop	{r3, pc}
+ 226              	.L16:
+ 227              		.align	2
+ 228              	.L15:
+ 229 000c 00000240 		.word	1073872896
+ 230              		.cfi_endproc
+ 231              	.LFE219:
+ 233              		.global	__aeabi_i2d
+ 234              		.global	__aeabi_dmul
+ 235              		.global	__aeabi_d2f
+ 236              		.section	.text.BatCheck,"ax",%progbits
+ 237              		.align	1
+ 238              		.global	BatCheck
+ 239              		.syntax unified
+ 240              		.thumb
+ 241              		.thumb_func
+ 243              	BatCheck:
+ 244              	.LFB220:
+  50:BSP/POWER/power.c **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 6
+
+
+  51:BSP/POWER/power.c **** float BatCheck()
+  52:BSP/POWER/power.c **** {
+ 245              		.loc 1 52 1 is_stmt 1 view -0
+ 246              		.cfi_startproc
+ 247              		@ args = 0, pretend = 0, frame = 0
+ 248              		@ frame_needed = 0, uses_anonymous_args = 0
+ 249 0000 38B5     		push	{r3, r4, r5, lr}
+ 250              	.LCFI6:
+ 251              		.cfi_def_cfa_offset 16
+ 252              		.cfi_offset 3, -16
+ 253              		.cfi_offset 4, -12
+ 254              		.cfi_offset 5, -8
+ 255              		.cfi_offset 14, -4
+  53:BSP/POWER/power.c **** 	uint16_t dat;
+ 256              		.loc 1 53 2 view .LVU40
+  54:BSP/POWER/power.c **** 	float BatVoltage;
+ 257              		.loc 1 54 2 view .LVU41
+  55:BSP/POWER/power.c **** 	HAL_ADC_Start(&hadc1);
+ 258              		.loc 1 55 2 view .LVU42
+ 259 0002 134D     		ldr	r5, .L19+8
+ 260 0004 2846     		mov	r0, r5
+ 261 0006 FFF7FEFF 		bl	HAL_ADC_Start
+ 262              	.LVL8:
+  56:BSP/POWER/power.c **** 	HAL_ADC_PollForConversion(&hadc1,5);
+ 263              		.loc 1 56 2 view .LVU43
+ 264 000a 0521     		movs	r1, #5
+ 265 000c 2846     		mov	r0, r5
+ 266 000e FFF7FEFF 		bl	HAL_ADC_PollForConversion
+ 267              	.LVL9:
+  57:BSP/POWER/power.c **** 	dat = HAL_ADC_GetValue(&hadc1);
+ 268              		.loc 1 57 2 view .LVU44
+ 269              		.loc 1 57 8 is_stmt 0 view .LVU45
+ 270 0012 2846     		mov	r0, r5
+ 271 0014 FFF7FEFF 		bl	HAL_ADC_GetValue
+ 272              	.LVL10:
+ 273 0018 0446     		mov	r4, r0
+ 274              	.LVL11:
+  58:BSP/POWER/power.c **** 	HAL_ADC_Stop(&hadc1);
+ 275              		.loc 1 58 2 is_stmt 1 view .LVU46
+ 276 001a 2846     		mov	r0, r5
+ 277 001c FFF7FEFF 		bl	HAL_ADC_Stop
+ 278              	.LVL12:
+  59:BSP/POWER/power.c **** 	BatVoltage = dat *2 *3.3 /4096;
+ 279              		.loc 1 59 2 view .LVU47
+ 280              		.loc 1 59 19 is_stmt 0 view .LVU48
+ 281 0020 A0B2     		uxth	r0, r4
+ 282              		.loc 1 59 22 view .LVU49
+ 283 0022 4000     		lsls	r0, r0, #1
+ 284 0024 FFF7FEFF 		bl	__aeabi_i2d
+ 285              	.LVL13:
+ 286 0028 07A3     		adr	r3, .L19
+ 287 002a D3E90023 		ldrd	r2, [r3]
+ 288 002e FFF7FEFF 		bl	__aeabi_dmul
+ 289              	.LVL14:
+ 290              		.loc 1 59 27 view .LVU50
+ 291 0032 0022     		movs	r2, #0
+ 292 0034 074B     		ldr	r3, .L19+12
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 7
+
+
+ 293 0036 FFF7FEFF 		bl	__aeabi_dmul
+ 294              	.LVL15:
+ 295              		.loc 1 59 13 view .LVU51
+ 296 003a FFF7FEFF 		bl	__aeabi_d2f
+ 297              	.LVL16:
+  60:BSP/POWER/power.c **** 	return BatVoltage;
+ 298              		.loc 1 60 2 is_stmt 1 view .LVU52
+  61:BSP/POWER/power.c **** }
+ 299              		.loc 1 61 1 is_stmt 0 view .LVU53
+ 300 003e 00EE100A 		vmov	s0, r0
+ 301 0042 38BD     		pop	{r3, r4, r5, pc}
+ 302              	.LVL17:
+ 303              	.L20:
+ 304              		.loc 1 61 1 view .LVU54
+ 305 0044 AFF30080 		.align	3
+ 306              	.L19:
+ 307 0048 66666666 		.word	1717986918
+ 308 004c 66660A40 		.word	1074423398
+ 309 0050 00000000 		.word	hadc1
+ 310 0054 0000303F 		.word	1060110336
+ 311              		.cfi_endproc
+ 312              	.LFE220:
+ 314              		.global	__aeabi_ui2d
+ 315              		.section	.text.BatCheck_8times,"ax",%progbits
+ 316              		.align	1
+ 317              		.global	BatCheck_8times
+ 318              		.syntax unified
+ 319              		.thumb
+ 320              		.thumb_func
+ 322              	BatCheck_8times:
+ 323              	.LFB221:
+  62:BSP/POWER/power.c **** 
+  63:BSP/POWER/power.c **** float BatCheck_8times()
+  64:BSP/POWER/power.c **** {
+ 324              		.loc 1 64 1 is_stmt 1 view -0
+ 325              		.cfi_startproc
+ 326              		@ args = 0, pretend = 0, frame = 0
+ 327              		@ frame_needed = 0, uses_anonymous_args = 0
+ 328 0000 70B5     		push	{r4, r5, r6, lr}
+ 329              	.LCFI7:
+ 330              		.cfi_def_cfa_offset 16
+ 331              		.cfi_offset 4, -16
+ 332              		.cfi_offset 5, -12
+ 333              		.cfi_offset 6, -8
+ 334              		.cfi_offset 14, -4
+  65:BSP/POWER/power.c **** 	uint32_t dat=0;
+ 335              		.loc 1 65 2 view .LVU56
+ 336              	.LVL18:
+  66:BSP/POWER/power.c **** 	uint8_t i;
+ 337              		.loc 1 66 2 view .LVU57
+  67:BSP/POWER/power.c **** 	float BatVoltage;
+ 338              		.loc 1 67 2 view .LVU58
+  68:BSP/POWER/power.c **** 	for(i=0;i<8;i++)
+ 339              		.loc 1 68 2 view .LVU59
+ 340              		.loc 1 68 7 is_stmt 0 view .LVU60
+ 341 0002 0024     		movs	r4, #0
+  65:BSP/POWER/power.c **** 	uint8_t i;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 8
+
+
+ 342              		.loc 1 65 11 view .LVU61
+ 343 0004 2646     		mov	r6, r4
+ 344              		.loc 1 68 2 view .LVU62
+ 345 0006 13E0     		b	.L22
+ 346              	.LVL19:
+ 347              	.L23:
+  69:BSP/POWER/power.c **** 	{
+  70:BSP/POWER/power.c **** 		HAL_ADC_Start(&hadc1);
+ 348              		.loc 1 70 3 is_stmt 1 view .LVU63
+ 349 0008 154D     		ldr	r5, .L25+8
+ 350 000a 2846     		mov	r0, r5
+ 351 000c FFF7FEFF 		bl	HAL_ADC_Start
+ 352              	.LVL20:
+  71:BSP/POWER/power.c **** 		HAL_ADC_PollForConversion(&hadc1,5);
+ 353              		.loc 1 71 3 view .LVU64
+ 354 0010 0521     		movs	r1, #5
+ 355 0012 2846     		mov	r0, r5
+ 356 0014 FFF7FEFF 		bl	HAL_ADC_PollForConversion
+ 357              	.LVL21:
+  72:BSP/POWER/power.c **** 		dat += HAL_ADC_GetValue(&hadc1);
+ 358              		.loc 1 72 3 view .LVU65
+ 359              		.loc 1 72 10 is_stmt 0 view .LVU66
+ 360 0018 2846     		mov	r0, r5
+ 361 001a FFF7FEFF 		bl	HAL_ADC_GetValue
+ 362              	.LVL22:
+ 363              		.loc 1 72 7 discriminator 1 view .LVU67
+ 364 001e 0644     		add	r6, r6, r0
+ 365              	.LVL23:
+  73:BSP/POWER/power.c **** 		HAL_ADC_Stop(&hadc1);
+ 366              		.loc 1 73 3 is_stmt 1 view .LVU68
+ 367 0020 2846     		mov	r0, r5
+ 368 0022 FFF7FEFF 		bl	HAL_ADC_Stop
+ 369              	.LVL24:
+  74:BSP/POWER/power.c **** 		delay_ms(1);
+ 370              		.loc 1 74 3 view .LVU69
+ 371 0026 0120     		movs	r0, #1
+ 372 0028 FFF7FEFF 		bl	delay_ms
+ 373              	.LVL25:
+  68:BSP/POWER/power.c **** 	{
+ 374              		.loc 1 68 15 discriminator 3 view .LVU70
+ 375 002c 0134     		adds	r4, r4, #1
+ 376              	.LVL26:
+  68:BSP/POWER/power.c **** 	{
+ 377              		.loc 1 68 15 is_stmt 0 discriminator 3 view .LVU71
+ 378 002e E4B2     		uxtb	r4, r4
+ 379              	.LVL27:
+ 380              	.L22:
+  68:BSP/POWER/power.c **** 	{
+ 381              		.loc 1 68 11 is_stmt 1 discriminator 1 view .LVU72
+ 382 0030 072C     		cmp	r4, #7
+ 383 0032 E9D9     		bls	.L23
+  75:BSP/POWER/power.c **** 	}
+  76:BSP/POWER/power.c **** 	dat = dat>>3;
+ 384              		.loc 1 76 2 view .LVU73
+ 385              		.loc 1 76 6 is_stmt 0 view .LVU74
+ 386 0034 F008     		lsrs	r0, r6, #3
+ 387              	.LVL28:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 9
+
+
+  77:BSP/POWER/power.c **** 	BatVoltage = dat *2 *3.3 /4096;
+ 388              		.loc 1 77 2 is_stmt 1 view .LVU75
+ 389              		.loc 1 77 22 is_stmt 0 view .LVU76
+ 390 0036 4000     		lsls	r0, r0, #1
+ 391              	.LVL29:
+ 392              		.loc 1 77 22 view .LVU77
+ 393 0038 FFF7FEFF 		bl	__aeabi_ui2d
+ 394              	.LVL30:
+ 395 003c 06A3     		adr	r3, .L25
+ 396 003e D3E90023 		ldrd	r2, [r3]
+ 397 0042 FFF7FEFF 		bl	__aeabi_dmul
+ 398              	.LVL31:
+ 399              		.loc 1 77 27 view .LVU78
+ 400 0046 0022     		movs	r2, #0
+ 401 0048 064B     		ldr	r3, .L25+12
+ 402 004a FFF7FEFF 		bl	__aeabi_dmul
+ 403              	.LVL32:
+ 404              		.loc 1 77 13 view .LVU79
+ 405 004e FFF7FEFF 		bl	__aeabi_d2f
+ 406              	.LVL33:
+  78:BSP/POWER/power.c **** 	return BatVoltage;
+ 407              		.loc 1 78 2 is_stmt 1 view .LVU80
+  79:BSP/POWER/power.c **** }
+ 408              		.loc 1 79 1 is_stmt 0 view .LVU81
+ 409 0052 00EE100A 		vmov	s0, r0
+ 410 0056 70BD     		pop	{r4, r5, r6, pc}
+ 411              	.LVL34:
+ 412              	.L26:
+ 413              		.loc 1 79 1 view .LVU82
+ 414              		.align	3
+ 415              	.L25:
+ 416 0058 66666666 		.word	1717986918
+ 417 005c 66660A40 		.word	1074423398
+ 418 0060 00000000 		.word	hadc1
+ 419 0064 0000303F 		.word	1060110336
+ 420              		.cfi_endproc
+ 421              	.LFE221:
+ 423              		.global	__aeabi_f2d
+ 424              		.global	__aeabi_dsub
+ 425              		.global	__aeabi_dcmpge
+ 426              		.global	__aeabi_dcmplt
+ 427              		.section	.text.PowerCalculate,"ax",%progbits
+ 428              		.align	1
+ 429              		.global	PowerCalculate
+ 430              		.syntax unified
+ 431              		.thumb
+ 432              		.thumb_func
+ 434              	PowerCalculate:
+ 435              	.LFB222:
+  80:BSP/POWER/power.c **** 
+  81:BSP/POWER/power.c **** uint8_t PowerCalculate()
+  82:BSP/POWER/power.c **** {
+ 436              		.loc 1 82 1 is_stmt 1 view -0
+ 437              		.cfi_startproc
+ 438              		@ args = 0, pretend = 0, frame = 0
+ 439              		@ frame_needed = 0, uses_anonymous_args = 0
+ 440 0000 70B5     		push	{r4, r5, r6, lr}
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 10
+
+
+ 441              	.LCFI8:
+ 442              		.cfi_def_cfa_offset 16
+ 443              		.cfi_offset 4, -16
+ 444              		.cfi_offset 5, -12
+ 445              		.cfi_offset 6, -8
+ 446              		.cfi_offset 14, -4
+  83:BSP/POWER/power.c **** 	uint8_t power;
+ 447              		.loc 1 83 2 view .LVU84
+  84:BSP/POWER/power.c **** 	float voltage;
+ 448              		.loc 1 84 2 view .LVU85
+  85:BSP/POWER/power.c **** 	voltage = BatCheck_8times();
+ 449              		.loc 1 85 2 view .LVU86
+ 450              		.loc 1 85 12 is_stmt 0 view .LVU87
+ 451 0002 FFF7FEFF 		bl	BatCheck_8times
+ 452              	.LVL35:
+ 453 0006 10EE104A 		vmov	r4, s0
+ 454              	.LVL36:
+  86:BSP/POWER/power.c **** 	
+  87:BSP/POWER/power.c **** 	if(ChargeCheck())
+ 455              		.loc 1 87 2 is_stmt 1 view .LVU88
+ 456              		.loc 1 87 5 is_stmt 0 view .LVU89
+ 457 000a FFF7FEFF 		bl	ChargeCheck
+ 458              	.LVL37:
+ 459              		.loc 1 87 4 discriminator 1 view .LVU90
+ 460 000e 50B1     		cbz	r0, .L28
+  88:BSP/POWER/power.c **** 	{voltage -= INTERNAL_RES * CHARGING_CUR;}
+ 461              		.loc 1 88 3 is_stmt 1 view .LVU91
+ 462              		.loc 1 88 11 is_stmt 0 view .LVU92
+ 463 0010 2046     		mov	r0, r4	@ float
+ 464 0012 FFF7FEFF 		bl	__aeabi_f2d
+ 465              	.LVL38:
+ 466 0016 6AA3     		adr	r3, .L71
+ 467 0018 D3E90023 		ldrd	r2, [r3]
+ 468 001c FFF7FEFF 		bl	__aeabi_dsub
+ 469              	.LVL39:
+ 470 0020 FFF7FEFF 		bl	__aeabi_d2f
+ 471              	.LVL40:
+ 472 0024 0446     		mov	r4, r0	@ float
+ 473              	.LVL41:
+ 474              	.L28:
+  89:BSP/POWER/power.c **** 	
+  90:BSP/POWER/power.c **** 	if((voltage >= 4.2))
+ 475              		.loc 1 90 2 is_stmt 1 view .LVU93
+ 476              		.loc 1 90 14 is_stmt 0 view .LVU94
+ 477 0026 2046     		mov	r0, r4	@ float
+ 478 0028 FFF7FEFF 		bl	__aeabi_f2d
+ 479              	.LVL42:
+ 480 002c 0446     		mov	r4, r0
+ 481              	.LVL43:
+ 482              		.loc 1 90 14 view .LVU95
+ 483 002e 0D46     		mov	r5, r1
+ 484              		.loc 1 90 4 view .LVU96
+ 485 0030 65A3     		adr	r3, .L71+8
+ 486 0032 D3E90023 		ldrd	r2, [r3]
+ 487 0036 FFF7FEFF 		bl	__aeabi_dcmpge
+ 488              	.LVL44:
+ 489 003a 0028     		cmp	r0, #0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 11
+
+
+ 490 003c 40F0AB80 		bne	.L49
+  91:BSP/POWER/power.c **** 	{power = 100;}
+  92:BSP/POWER/power.c **** 	else if(voltage >= 4.06 && voltage <4.2)
+ 491              		.loc 1 92 7 is_stmt 1 view .LVU97
+ 492              		.loc 1 92 9 is_stmt 0 view .LVU98
+ 493 0040 63A3     		adr	r3, .L71+16
+ 494 0042 D3E90023 		ldrd	r2, [r3]
+ 495 0046 2046     		mov	r0, r4
+ 496 0048 2946     		mov	r1, r5
+ 497 004a FFF7FEFF 		bl	__aeabi_dcmpge
+ 498              	.LVL45:
+ 499 004e 48B1     		cbz	r0, .L30
+ 500              		.loc 1 92 26 discriminator 1 view .LVU99
+ 501 0050 5DA3     		adr	r3, .L71+8
+ 502 0052 D3E90023 		ldrd	r2, [r3]
+ 503 0056 2046     		mov	r0, r4
+ 504 0058 2946     		mov	r1, r5
+ 505 005a FFF7FEFF 		bl	__aeabi_dcmplt
+ 506              	.LVL46:
+ 507 005e 0028     		cmp	r0, #0
+ 508 0060 40F09C80 		bne	.L50
+ 509              	.L30:
+  93:BSP/POWER/power.c **** 	{power = 90;}
+  94:BSP/POWER/power.c **** 	else if(voltage >= 3.98 && voltage <4.06)
+ 510              		.loc 1 94 7 is_stmt 1 view .LVU100
+ 511              		.loc 1 94 9 is_stmt 0 view .LVU101
+ 512 0064 5CA3     		adr	r3, .L71+24
+ 513 0066 D3E90023 		ldrd	r2, [r3]
+ 514 006a 2046     		mov	r0, r4
+ 515 006c 2946     		mov	r1, r5
+ 516 006e FFF7FEFF 		bl	__aeabi_dcmpge
+ 517              	.LVL47:
+ 518 0072 48B1     		cbz	r0, .L32
+ 519              		.loc 1 94 26 discriminator 1 view .LVU102
+ 520 0074 56A3     		adr	r3, .L71+16
+ 521 0076 D3E90023 		ldrd	r2, [r3]
+ 522 007a 2046     		mov	r0, r4
+ 523 007c 2946     		mov	r1, r5
+ 524 007e FFF7FEFF 		bl	__aeabi_dcmplt
+ 525              	.LVL48:
+ 526 0082 0028     		cmp	r0, #0
+ 527 0084 40F08C80 		bne	.L51
+ 528              	.L32:
+  95:BSP/POWER/power.c **** 	{power = 80;}
+  96:BSP/POWER/power.c **** 	else if(voltage >= 3.92 && voltage <3.98)
+ 529              		.loc 1 96 7 is_stmt 1 view .LVU103
+ 530              		.loc 1 96 9 is_stmt 0 view .LVU104
+ 531 0088 55A3     		adr	r3, .L71+32
+ 532 008a D3E90023 		ldrd	r2, [r3]
+ 533 008e 2046     		mov	r0, r4
+ 534 0090 2946     		mov	r1, r5
+ 535 0092 FFF7FEFF 		bl	__aeabi_dcmpge
+ 536              	.LVL49:
+ 537 0096 40B1     		cbz	r0, .L34
+ 538              		.loc 1 96 26 discriminator 1 view .LVU105
+ 539 0098 4FA3     		adr	r3, .L71+24
+ 540 009a D3E90023 		ldrd	r2, [r3]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 12
+
+
+ 541 009e 2046     		mov	r0, r4
+ 542 00a0 2946     		mov	r1, r5
+ 543 00a2 FFF7FEFF 		bl	__aeabi_dcmplt
+ 544              	.LVL50:
+ 545 00a6 0028     		cmp	r0, #0
+ 546 00a8 7CD1     		bne	.L52
+ 547              	.L34:
+  97:BSP/POWER/power.c **** 	{power = 70;}
+  98:BSP/POWER/power.c **** 	else if(voltage >= 3.87 && voltage <3.92)
+ 548              		.loc 1 98 7 is_stmt 1 view .LVU106
+ 549              		.loc 1 98 9 is_stmt 0 view .LVU107
+ 550 00aa 4FA3     		adr	r3, .L71+40
+ 551 00ac D3E90023 		ldrd	r2, [r3]
+ 552 00b0 2046     		mov	r0, r4
+ 553 00b2 2946     		mov	r1, r5
+ 554 00b4 FFF7FEFF 		bl	__aeabi_dcmpge
+ 555              	.LVL51:
+ 556 00b8 40B1     		cbz	r0, .L36
+ 557              		.loc 1 98 26 discriminator 1 view .LVU108
+ 558 00ba 49A3     		adr	r3, .L71+32
+ 559 00bc D3E90023 		ldrd	r2, [r3]
+ 560 00c0 2046     		mov	r0, r4
+ 561 00c2 2946     		mov	r1, r5
+ 562 00c4 FFF7FEFF 		bl	__aeabi_dcmplt
+ 563              	.LVL52:
+ 564 00c8 0028     		cmp	r0, #0
+ 565 00ca 6DD1     		bne	.L53
+ 566              	.L36:
+  99:BSP/POWER/power.c **** 	{power = 60;}
+ 100:BSP/POWER/power.c **** 	else if(voltage >= 3.82 && voltage <3.87)
+ 567              		.loc 1 100 7 is_stmt 1 view .LVU109
+ 568              		.loc 1 100 9 is_stmt 0 view .LVU110
+ 569 00cc 48A3     		adr	r3, .L71+48
+ 570 00ce D3E90023 		ldrd	r2, [r3]
+ 571 00d2 2046     		mov	r0, r4
+ 572 00d4 2946     		mov	r1, r5
+ 573 00d6 FFF7FEFF 		bl	__aeabi_dcmpge
+ 574              	.LVL53:
+ 575 00da 40B1     		cbz	r0, .L38
+ 576              		.loc 1 100 26 discriminator 1 view .LVU111
+ 577 00dc 42A3     		adr	r3, .L71+40
+ 578 00de D3E90023 		ldrd	r2, [r3]
+ 579 00e2 2046     		mov	r0, r4
+ 580 00e4 2946     		mov	r1, r5
+ 581 00e6 FFF7FEFF 		bl	__aeabi_dcmplt
+ 582              	.LVL54:
+ 583 00ea 0028     		cmp	r0, #0
+ 584 00ec 5ED1     		bne	.L54
+ 585              	.L38:
+ 101:BSP/POWER/power.c **** 	{power = 50;}
+ 102:BSP/POWER/power.c **** 	else if(voltage >= 3.79 && voltage <3.82)
+ 586              		.loc 1 102 7 is_stmt 1 view .LVU112
+ 587              		.loc 1 102 9 is_stmt 0 view .LVU113
+ 588 00ee 42A3     		adr	r3, .L71+56
+ 589 00f0 D3E90023 		ldrd	r2, [r3]
+ 590 00f4 2046     		mov	r0, r4
+ 591 00f6 2946     		mov	r1, r5
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 13
+
+
+ 592 00f8 FFF7FEFF 		bl	__aeabi_dcmpge
+ 593              	.LVL55:
+ 594 00fc 40B1     		cbz	r0, .L40
+ 595              		.loc 1 102 26 discriminator 1 view .LVU114
+ 596 00fe 3CA3     		adr	r3, .L71+48
+ 597 0100 D3E90023 		ldrd	r2, [r3]
+ 598 0104 2046     		mov	r0, r4
+ 599 0106 2946     		mov	r1, r5
+ 600 0108 FFF7FEFF 		bl	__aeabi_dcmplt
+ 601              	.LVL56:
+ 602 010c 0028     		cmp	r0, #0
+ 603 010e 4FD1     		bne	.L55
+ 604              	.L40:
+ 103:BSP/POWER/power.c **** 	{power = 40;}
+ 104:BSP/POWER/power.c **** 	else if(voltage >= 3.77 && voltage <3.79)
+ 605              		.loc 1 104 7 is_stmt 1 view .LVU115
+ 606              		.loc 1 104 9 is_stmt 0 view .LVU116
+ 607 0110 3BA3     		adr	r3, .L71+64
+ 608 0112 D3E90023 		ldrd	r2, [r3]
+ 609 0116 2046     		mov	r0, r4
+ 610 0118 2946     		mov	r1, r5
+ 611 011a FFF7FEFF 		bl	__aeabi_dcmpge
+ 612              	.LVL57:
+ 613 011e 40B1     		cbz	r0, .L42
+ 614              		.loc 1 104 26 discriminator 1 view .LVU117
+ 615 0120 35A3     		adr	r3, .L71+56
+ 616 0122 D3E90023 		ldrd	r2, [r3]
+ 617 0126 2046     		mov	r0, r4
+ 618 0128 2946     		mov	r1, r5
+ 619 012a FFF7FEFF 		bl	__aeabi_dcmplt
+ 620              	.LVL58:
+ 621 012e 0028     		cmp	r0, #0
+ 622 0130 40D1     		bne	.L56
+ 623              	.L42:
+ 105:BSP/POWER/power.c **** 	{power = 30;}
+ 106:BSP/POWER/power.c **** 	else if(voltage >= 3.74 && voltage <3.77)
+ 624              		.loc 1 106 7 is_stmt 1 view .LVU118
+ 625              		.loc 1 106 9 is_stmt 0 view .LVU119
+ 626 0132 35A3     		adr	r3, .L71+72
+ 627 0134 D3E90023 		ldrd	r2, [r3]
+ 628 0138 2046     		mov	r0, r4
+ 629 013a 2946     		mov	r1, r5
+ 630 013c FFF7FEFF 		bl	__aeabi_dcmpge
+ 631              	.LVL59:
+ 632 0140 38B1     		cbz	r0, .L44
+ 633              		.loc 1 106 26 discriminator 1 view .LVU120
+ 634 0142 2FA3     		adr	r3, .L71+64
+ 635 0144 D3E90023 		ldrd	r2, [r3]
+ 636 0148 2046     		mov	r0, r4
+ 637 014a 2946     		mov	r1, r5
+ 638 014c FFF7FEFF 		bl	__aeabi_dcmplt
+ 639              	.LVL60:
+ 640 0150 90BB     		cbnz	r0, .L57
+ 641              	.L44:
+ 107:BSP/POWER/power.c **** 	{power = 20;}
+ 108:BSP/POWER/power.c **** 	else if(voltage >= 3.68 && voltage <3.74)
+ 642              		.loc 1 108 7 is_stmt 1 view .LVU121
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 14
+
+
+ 643              		.loc 1 108 9 is_stmt 0 view .LVU122
+ 644 0152 2FA3     		adr	r3, .L71+80
+ 645 0154 D3E90023 		ldrd	r2, [r3]
+ 646 0158 2046     		mov	r0, r4
+ 647 015a 2946     		mov	r1, r5
+ 648 015c FFF7FEFF 		bl	__aeabi_dcmpge
+ 649              	.LVL61:
+ 650 0160 38B1     		cbz	r0, .L46
+ 651              		.loc 1 108 26 discriminator 1 view .LVU123
+ 652 0162 29A3     		adr	r3, .L71+72
+ 653 0164 D3E90023 		ldrd	r2, [r3]
+ 654 0168 2046     		mov	r0, r4
+ 655 016a 2946     		mov	r1, r5
+ 656 016c FFF7FEFF 		bl	__aeabi_dcmplt
+ 657              	.LVL62:
+ 658 0170 20BB     		cbnz	r0, .L58
+ 659              	.L46:
+ 109:BSP/POWER/power.c **** 	{power = 10;}
+ 110:BSP/POWER/power.c **** 	else if(voltage >= 3.45 && voltage <3.68)
+ 660              		.loc 1 110 7 is_stmt 1 view .LVU124
+ 661              		.loc 1 110 9 is_stmt 0 view .LVU125
+ 662 0172 29A3     		adr	r3, .L71+88
+ 663 0174 D3E90023 		ldrd	r2, [r3]
+ 664 0178 2046     		mov	r0, r4
+ 665 017a 2946     		mov	r1, r5
+ 666 017c FFF7FEFF 		bl	__aeabi_dcmpge
+ 667              	.LVL63:
+ 668 0180 50B1     		cbz	r0, .L29
+ 669              		.loc 1 110 26 discriminator 1 view .LVU126
+ 670 0182 23A3     		adr	r3, .L71+80
+ 671 0184 D3E90023 		ldrd	r2, [r3]
+ 672 0188 2046     		mov	r0, r4
+ 673 018a 2946     		mov	r1, r5
+ 674 018c FFF7FEFF 		bl	__aeabi_dcmplt
+ 675              	.LVL64:
+ 676 0190 10B1     		cbz	r0, .L29
+ 111:BSP/POWER/power.c **** 	{power = 5;}
+ 677              		.loc 1 111 9 view .LVU127
+ 678 0192 0526     		movs	r6, #5
+ 679 0194 00E0     		b	.L29
+ 680              	.L49:
+  91:BSP/POWER/power.c **** 	else if(voltage >= 4.06 && voltage <4.2)
+ 681              		.loc 1 91 9 view .LVU128
+ 682 0196 6426     		movs	r6, #100
+ 683              	.L29:
+ 684              	.LVL65:
+ 112:BSP/POWER/power.c **** 	return power;
+ 685              		.loc 1 112 2 is_stmt 1 view .LVU129
+ 113:BSP/POWER/power.c **** }
+ 686              		.loc 1 113 1 is_stmt 0 view .LVU130
+ 687 0198 3046     		mov	r0, r6
+ 688 019a 70BD     		pop	{r4, r5, r6, pc}
+ 689              	.LVL66:
+ 690              	.L50:
+  93:BSP/POWER/power.c **** 	else if(voltage >= 3.98 && voltage <4.06)
+ 691              		.loc 1 93 9 view .LVU131
+ 692 019c 5A26     		movs	r6, #90
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 15
+
+
+ 693 019e FBE7     		b	.L29
+ 694              	.L51:
+  95:BSP/POWER/power.c **** 	else if(voltage >= 3.92 && voltage <3.98)
+ 695              		.loc 1 95 9 view .LVU132
+ 696 01a0 5026     		movs	r6, #80
+ 697 01a2 F9E7     		b	.L29
+ 698              	.L52:
+  97:BSP/POWER/power.c **** 	else if(voltage >= 3.87 && voltage <3.92)
+ 699              		.loc 1 97 9 view .LVU133
+ 700 01a4 4626     		movs	r6, #70
+ 701 01a6 F7E7     		b	.L29
+ 702              	.L53:
+  99:BSP/POWER/power.c **** 	else if(voltage >= 3.82 && voltage <3.87)
+ 703              		.loc 1 99 9 view .LVU134
+ 704 01a8 3C26     		movs	r6, #60
+ 705 01aa F5E7     		b	.L29
+ 706              	.L54:
+ 101:BSP/POWER/power.c **** 	else if(voltage >= 3.79 && voltage <3.82)
+ 707              		.loc 1 101 9 view .LVU135
+ 708 01ac 3226     		movs	r6, #50
+ 709 01ae F3E7     		b	.L29
+ 710              	.L55:
+ 103:BSP/POWER/power.c **** 	else if(voltage >= 3.77 && voltage <3.79)
+ 711              		.loc 1 103 9 view .LVU136
+ 712 01b0 2826     		movs	r6, #40
+ 713 01b2 F1E7     		b	.L29
+ 714              	.L56:
+ 105:BSP/POWER/power.c **** 	else if(voltage >= 3.74 && voltage <3.77)
+ 715              		.loc 1 105 9 view .LVU137
+ 716 01b4 1E26     		movs	r6, #30
+ 717 01b6 EFE7     		b	.L29
+ 718              	.L57:
+ 107:BSP/POWER/power.c **** 	else if(voltage >= 3.68 && voltage <3.74)
+ 719              		.loc 1 107 9 view .LVU138
+ 720 01b8 1426     		movs	r6, #20
+ 721 01ba EDE7     		b	.L29
+ 722              	.L58:
+ 109:BSP/POWER/power.c **** 	else if(voltage >= 3.45 && voltage <3.68)
+ 723              		.loc 1 109 9 view .LVU139
+ 724 01bc 0A26     		movs	r6, #10
+ 725 01be EBE7     		b	.L29
+ 726              	.L72:
+ 727              		.align	3
+ 728              	.L71:
+ 729 01c0 FCA9F1D2 		.word	-755914244
+ 730 01c4 4D62C03F 		.word	1069572685
+ 731 01c8 CDCCCCCC 		.word	-858993459
+ 732 01cc CCCC1040 		.word	1074842828
+ 733 01d0 3D0AD7A3 		.word	-1546188227
+ 734 01d4 703D1040 		.word	1074806128
+ 735 01d8 D7A3703D 		.word	1030792151
+ 736 01dc 0AD70F40 		.word	1074779914
+ 737 01e0 5C8FC2F5 		.word	-171798692
+ 738 01e4 285C0F40 		.word	1074748456
+ 739 01e8 F6285C8F 		.word	-1889785610
+ 740 01ec C2F50E40 		.word	1074722242
+ 741 01f0 8FC2F528 		.word	687194767
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 16
+
+
+ 742 01f4 5C8F0E40 		.word	1074696028
+ 743 01f8 52B81E85 		.word	-2061584302
+ 744 01fc EB510E40 		.word	1074680299
+ 745 0200 295C8FC2 		.word	-1030792151
+ 746 0204 F5280E40 		.word	1074669813
+ 747 0208 EC51B81E 		.word	515396076
+ 748 020c 85EB0D40 		.word	1074654085
+ 749 0210 713D0AD7 		.word	-687194767
+ 750 0214 A3700D40 		.word	1074622627
+ 751 0218 9A999999 		.word	-1717986918
+ 752 021c 99990B40 		.word	1074502041
+ 753              		.cfi_endproc
+ 754              	.LFE222:
+ 756              		.section	.text.Power_Init,"ax",%progbits
+ 757              		.align	1
+ 758              		.global	Power_Init
+ 759              		.syntax unified
+ 760              		.thumb
+ 761              		.thumb_func
+ 763              	Power_Init:
+ 764              	.LFB223:
+ 114:BSP/POWER/power.c **** 
+ 115:BSP/POWER/power.c **** void Power_Init(void)
+ 116:BSP/POWER/power.c **** {
+ 765              		.loc 1 116 1 is_stmt 1 view -0
+ 766              		.cfi_startproc
+ 767              		@ args = 0, pretend = 0, frame = 0
+ 768              		@ frame_needed = 0, uses_anonymous_args = 0
+ 769 0000 08B5     		push	{r3, lr}
+ 770              	.LCFI9:
+ 771              		.cfi_def_cfa_offset 8
+ 772              		.cfi_offset 3, -8
+ 773              		.cfi_offset 14, -4
+ 117:BSP/POWER/power.c **** 	Power_Pins_Init();
+ 774              		.loc 1 117 2 view .LVU141
+ 775 0002 FFF7FEFF 		bl	Power_Pins_Init
+ 776              	.LVL67:
+ 118:BSP/POWER/power.c **** 	Power_Enable();
+ 777              		.loc 1 118 2 view .LVU142
+ 778 0006 FFF7FEFF 		bl	Power_Enable
+ 779              	.LVL68:
+ 119:BSP/POWER/power.c **** }
+ 780              		.loc 1 119 1 is_stmt 0 view .LVU143
+ 781 000a 08BD     		pop	{r3, pc}
+ 782              		.cfi_endproc
+ 783              	.LFE223:
+ 785              		.text
+ 786              	.Letext0:
+ 787              		.file 2 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 788              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 789              		.file 4 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 790              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 791              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 792              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 793              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 794              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h"
+ 795              		.file 10 "SYSTEM/delay.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 17
+
+
+ 796              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h"
+ 797              		.file 12 "Core/Inc/adc.h"
+ 798              		.file 13 "SYSTEM/sys.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc099yyx.s 			page 18
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 power.c
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:21     .text.Power_Pins_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:27     .text.Power_Pins_Init:00000000 Power_Pins_Init
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:129    .text.Power_Pins_Init:00000070 $d
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:135    .text.Power_Enable:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:141    .text.Power_Enable:00000000 Power_Enable
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:163    .text.Power_Enable:00000010 $d
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:168    .text.Power_DisEnable:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:174    .text.Power_DisEnable:00000000 Power_DisEnable
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:196    .text.Power_DisEnable:00000010 $d
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:201    .text.ChargeCheck:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:207    .text.ChargeCheck:00000000 ChargeCheck
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:229    .text.ChargeCheck:0000000c $d
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:237    .text.BatCheck:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:243    .text.BatCheck:00000000 BatCheck
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:307    .text.BatCheck:00000048 $d
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:316    .text.BatCheck_8times:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:322    .text.BatCheck_8times:00000000 BatCheck_8times
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:416    .text.BatCheck_8times:00000058 $d
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:428    .text.PowerCalculate:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:434    .text.PowerCalculate:00000000 PowerCalculate
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:729    .text.PowerCalculate:000001c0 $d
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:757    .text.Power_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc099yyx.s:763    .text.Power_Init:00000000 Power_Init
+
+UNDEFINED SYMBOLS
+HAL_GPIO_WritePin
+HAL_GPIO_Init
+HAL_NVIC_SetPriority
+HAL_NVIC_EnableIRQ
+HAL_GPIO_ReadPin
+__aeabi_i2d
+__aeabi_dmul
+__aeabi_d2f
+HAL_ADC_Start
+HAL_ADC_PollForConversion
+HAL_ADC_GetValue
+HAL_ADC_Stop
+hadc1
+__aeabi_ui2d
+delay_ms
+__aeabi_f2d
+__aeabi_dsub
+__aeabi_dcmpge
+__aeabi_dcmplt

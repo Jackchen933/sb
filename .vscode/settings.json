@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.h": "c",
+        "*.c": "c"
+    },
+    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+    "cortex-debug.openocdPath": "openocd",
+    "cortex-debug.armToolchainPath": "",
+    "editor.formatOnSave": false
+}

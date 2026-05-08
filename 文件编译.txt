@@ -1,0 +1,43 @@
+powershell
+
+mimax
+set HTTP_PROXY= http://127.0.0.1:7897  
+set HTTPS_PROXY= http://127.0.0.1:7897
+$env:ANTHROPIC_BASE_URL = "  https://api.minimaxi.com/anthropic  "
+$env:ANTHROPIC_AUTH_TOKEN = "sk-cp-5CAnmC2dv0LoNJLHXNrBUgVy2SD6fXQc6ekQC5jwp89DY8NyLkc3DZWlLLfYqqK59TwDJERvwkubYhBPtzoidFWJnBa67celB6xCOKXhS4hnOTSwFM57kBM"
+
+glm
+set HTTP_PROXY= http://127.0.0.1:7897  
+set HTTPS_PROXY= http://127.0.0.1:7897
+$env:ANTHROPIC_BASE_URL = "  https://open.bigmodel.cn/api/anthropic  "
+$env:ANTHROPIC_AUTH_TOKEN = "3d2e078b089047cdbe38dc9ab46192c2.bvFdV5oCn0rmXWpm"
+
+my-glm
+set HTTP_PROXY= http://127.0.0.1:7897  
+set HTTPS_PROXY= http://127.0.0.1:7897
+$env:ANTHROPIC_BASE_URL = "  https://open.bigmodel.cn/api/anthropic  "
+$env:ANTHROPIC_AUTH_TOKEN = "56fd0dc89f9042638b9da7863ec303cf.l3DhASJFVUI1fOk3"
+
+
+claude -c --dangerously-skip-permissions
+claude -r --dangerously-skip-permissions
+claude --dangerously-skip-permissions
+
+ESP-IDF: Build your project
+ESP-IDF: Flash your device
+
+cd "D:/xm1sbiao/OV-Watch-main/Software/OV_Watch"
+make clean
+make -j4
+openocd -f interface/stlink.cfg -f target/stm32f4x.cfg -c "program build/OV_Watch.bin 0x08000000 verify reset exit"
+
+set HTTP_PROXY= http://127.0.0.1:7897  
+set HTTPS_PROXY= http://127.0.0.1:7897
+$env:ANTHROPIC_BASE_URL = "  https://main.codesuc.top/api  "
+$env:ANTHROPIC_AUTH_TOKEN = "cr_439bc6a08628faf5ce1b609724b9a9fd39873d5c683690cacda7e5fb51ce1790"
+
+
+set HTTP_PROXY= http://127.0.0.1:7897  
+set HTTPS_PROXY= http://127.0.0.1:7897
+$env:ANTHROPIC_BASE_URL = "  https://main-new.codesuc.top  "
+$env:ANTHROPIC_AUTH_TOKEN = "sk-3Bx78EqkHsrbTCzxAQYTGspAh3jhuth0GhJFxEy1TV9cZKWG"

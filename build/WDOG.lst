@@ -1,0 +1,284 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"WDOG.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "BSP/OWDG/WDOG.c"
+  20              		.section	.text.WDOG_Port_Init,"ax",%progbits
+  21              		.align	1
+  22              		.global	WDOG_Port_Init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	WDOG_Port_Init:
+  28              	.LFB216:
+   1:BSP/OWDG/WDOG.c **** #include "WDOG.h"
+   2:BSP/OWDG/WDOG.c **** #include "main.h"
+   3:BSP/OWDG/WDOG.c **** 
+   4:BSP/OWDG/WDOG.c **** //WDOG_EN
+   5:BSP/OWDG/WDOG.c **** #define WDOG_EN_PORT	GPIOB
+   6:BSP/OWDG/WDOG.c **** #define WDOG_EN_PIN		GPIO_PIN_1
+   7:BSP/OWDG/WDOG.c **** //WDI
+   8:BSP/OWDG/WDOG.c **** #define WDI_PORT	GPIOB
+   9:BSP/OWDG/WDOG.c **** #define WDI_PIN		GPIO_PIN_2
+  10:BSP/OWDG/WDOG.c **** 
+  11:BSP/OWDG/WDOG.c **** void WDOG_Port_Init(void)
+  12:BSP/OWDG/WDOG.c **** {
+  29              		.loc 1 12 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 24
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 30B5     		push	{r4, r5, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 12
+  36              		.cfi_offset 4, -12
+  37              		.cfi_offset 5, -8
+  38              		.cfi_offset 14, -4
+  39 0002 87B0     		sub	sp, sp, #28
+  40              	.LCFI1:
+  41              		.cfi_def_cfa_offset 40
+  13:BSP/OWDG/WDOG.c ****   GPIO_InitTypeDef GPIO_InitStructure = {0};
+  42              		.loc 1 13 3 view .LVU1
+  43              		.loc 1 13 20 is_stmt 0 view .LVU2
+  44 0004 0023     		movs	r3, #0
+  45 0006 0193     		str	r3, [sp, #4]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s 			page 2
+
+
+  46 0008 0293     		str	r3, [sp, #8]
+  47 000a 0393     		str	r3, [sp, #12]
+  48 000c 0493     		str	r3, [sp, #16]
+  49 000e 0593     		str	r3, [sp, #20]
+  14:BSP/OWDG/WDOG.c **** 
+  15:BSP/OWDG/WDOG.c ****   /* GPIO Ports Clock Enable */
+  16:BSP/OWDG/WDOG.c ****   __HAL_RCC_GPIOB_CLK_ENABLE();
+  50              		.loc 1 16 3 is_stmt 1 view .LVU3
+  51              	.LBB2:
+  52              		.loc 1 16 3 view .LVU4
+  53 0010 0093     		str	r3, [sp]
+  54              		.loc 1 16 3 view .LVU5
+  55 0012 0F4B     		ldr	r3, .L3
+  56 0014 1A6B     		ldr	r2, [r3, #48]
+  57 0016 42F00202 		orr	r2, r2, #2
+  58 001a 1A63     		str	r2, [r3, #48]
+  59              		.loc 1 16 3 view .LVU6
+  60 001c 1B6B     		ldr	r3, [r3, #48]
+  61 001e 03F00203 		and	r3, r3, #2
+  62 0022 0093     		str	r3, [sp]
+  63              		.loc 1 16 3 view .LVU7
+  64 0024 009B     		ldr	r3, [sp]
+  65              	.LBE2:
+  66              		.loc 1 16 3 view .LVU8
+  17:BSP/OWDG/WDOG.c **** 
+  18:BSP/OWDG/WDOG.c ****   GPIO_InitStructure.Pin = WDOG_EN_PIN;
+  67              		.loc 1 18 3 view .LVU9
+  68              		.loc 1 18 26 is_stmt 0 view .LVU10
+  69 0026 0225     		movs	r5, #2
+  70 0028 0195     		str	r5, [sp, #4]
+  19:BSP/OWDG/WDOG.c ****   GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+  71              		.loc 1 19 3 is_stmt 1 view .LVU11
+  72              		.loc 1 19 27 is_stmt 0 view .LVU12
+  73 002a 0123     		movs	r3, #1
+  74 002c 0293     		str	r3, [sp, #8]
+  20:BSP/OWDG/WDOG.c ****   GPIO_InitStructure.Pull = GPIO_PULLUP;
+  75              		.loc 1 20 3 is_stmt 1 view .LVU13
+  76              		.loc 1 20 27 is_stmt 0 view .LVU14
+  77 002e 0393     		str	r3, [sp, #12]
+  21:BSP/OWDG/WDOG.c ****   GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_LOW;
+  78              		.loc 1 21 3 is_stmt 1 view .LVU15
+  22:BSP/OWDG/WDOG.c ****   HAL_GPIO_Init(WDOG_EN_PORT, &GPIO_InitStructure);
+  79              		.loc 1 22 3 view .LVU16
+  80 0030 084C     		ldr	r4, .L3+4
+  81 0032 01A9     		add	r1, sp, #4
+  82 0034 2046     		mov	r0, r4
+  83 0036 FFF7FEFF 		bl	HAL_GPIO_Init
+  84              	.LVL0:
+  23:BSP/OWDG/WDOG.c ****   GPIO_InitStructure.Pin = WDI_PIN;
+  85              		.loc 1 23 3 view .LVU17
+  86              		.loc 1 23 26 is_stmt 0 view .LVU18
+  87 003a 0423     		movs	r3, #4
+  88 003c 0193     		str	r3, [sp, #4]
+  24:BSP/OWDG/WDOG.c ****   GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
+  89              		.loc 1 24 3 is_stmt 1 view .LVU19
+  90              		.loc 1 24 28 is_stmt 0 view .LVU20
+  91 003e 0495     		str	r5, [sp, #16]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s 			page 3
+
+
+  25:BSP/OWDG/WDOG.c ****   HAL_GPIO_Init(WDI_PORT, &GPIO_InitStructure);
+  92              		.loc 1 25 3 is_stmt 1 view .LVU21
+  93 0040 0DEB0301 		add	r1, sp, r3
+  94 0044 2046     		mov	r0, r4
+  95 0046 FFF7FEFF 		bl	HAL_GPIO_Init
+  96              	.LVL1:
+  26:BSP/OWDG/WDOG.c **** }
+  97              		.loc 1 26 1 is_stmt 0 view .LVU22
+  98 004a 07B0     		add	sp, sp, #28
+  99              	.LCFI2:
+ 100              		.cfi_def_cfa_offset 12
+ 101              		@ sp needed
+ 102 004c 30BD     		pop	{r4, r5, pc}
+ 103              	.L4:
+ 104 004e 00BF     		.align	2
+ 105              	.L3:
+ 106 0050 00380240 		.word	1073887232
+ 107 0054 00040240 		.word	1073873920
+ 108              		.cfi_endproc
+ 109              	.LFE216:
+ 111              		.section	.text.WDOG_Enable,"ax",%progbits
+ 112              		.align	1
+ 113              		.global	WDOG_Enable
+ 114              		.syntax unified
+ 115              		.thumb
+ 116              		.thumb_func
+ 118              	WDOG_Enable:
+ 119              	.LFB217:
+  27:BSP/OWDG/WDOG.c **** 
+  28:BSP/OWDG/WDOG.c **** void WDOG_Enable(void)
+  29:BSP/OWDG/WDOG.c **** {
+ 120              		.loc 1 29 1 is_stmt 1 view -0
+ 121              		.cfi_startproc
+ 122              		@ args = 0, pretend = 0, frame = 0
+ 123              		@ frame_needed = 0, uses_anonymous_args = 0
+ 124 0000 08B5     		push	{r3, lr}
+ 125              	.LCFI3:
+ 126              		.cfi_def_cfa_offset 8
+ 127              		.cfi_offset 3, -8
+ 128              		.cfi_offset 14, -4
+  30:BSP/OWDG/WDOG.c ****   HAL_GPIO_WritePin(WDOG_EN_PORT,WDOG_EN_PIN,GPIO_PIN_RESET);
+ 129              		.loc 1 30 3 view .LVU24
+ 130 0002 0022     		movs	r2, #0
+ 131 0004 0221     		movs	r1, #2
+ 132 0006 0248     		ldr	r0, .L7
+ 133 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 134              	.LVL2:
+  31:BSP/OWDG/WDOG.c **** }
+ 135              		.loc 1 31 1 is_stmt 0 view .LVU25
+ 136 000c 08BD     		pop	{r3, pc}
+ 137              	.L8:
+ 138 000e 00BF     		.align	2
+ 139              	.L7:
+ 140 0010 00040240 		.word	1073873920
+ 141              		.cfi_endproc
+ 142              	.LFE217:
+ 144              		.section	.text.WDOG_Disnable,"ax",%progbits
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s 			page 4
+
+
+ 145              		.align	1
+ 146              		.global	WDOG_Disnable
+ 147              		.syntax unified
+ 148              		.thumb
+ 149              		.thumb_func
+ 151              	WDOG_Disnable:
+ 152              	.LFB218:
+  32:BSP/OWDG/WDOG.c **** 
+  33:BSP/OWDG/WDOG.c **** void WDOG_Disnable(void)
+  34:BSP/OWDG/WDOG.c **** {
+ 153              		.loc 1 34 1 is_stmt 1 view -0
+ 154              		.cfi_startproc
+ 155              		@ args = 0, pretend = 0, frame = 0
+ 156              		@ frame_needed = 0, uses_anonymous_args = 0
+ 157 0000 08B5     		push	{r3, lr}
+ 158              	.LCFI4:
+ 159              		.cfi_def_cfa_offset 8
+ 160              		.cfi_offset 3, -8
+ 161              		.cfi_offset 14, -4
+  35:BSP/OWDG/WDOG.c ****   HAL_GPIO_WritePin(WDOG_EN_PORT,WDOG_EN_PIN,GPIO_PIN_SET);
+ 162              		.loc 1 35 3 view .LVU27
+ 163 0002 0122     		movs	r2, #1
+ 164 0004 0221     		movs	r1, #2
+ 165 0006 0248     		ldr	r0, .L11
+ 166 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 167              	.LVL3:
+  36:BSP/OWDG/WDOG.c **** }
+ 168              		.loc 1 36 1 is_stmt 0 view .LVU28
+ 169 000c 08BD     		pop	{r3, pc}
+ 170              	.L12:
+ 171 000e 00BF     		.align	2
+ 172              	.L11:
+ 173 0010 00040240 		.word	1073873920
+ 174              		.cfi_endproc
+ 175              	.LFE218:
+ 177              		.section	.text.WDOG_Feed,"ax",%progbits
+ 178              		.align	1
+ 179              		.global	WDOG_Feed
+ 180              		.syntax unified
+ 181              		.thumb
+ 182              		.thumb_func
+ 184              	WDOG_Feed:
+ 185              	.LFB219:
+  37:BSP/OWDG/WDOG.c **** 
+  38:BSP/OWDG/WDOG.c **** void WDOG_Feed(void)
+  39:BSP/OWDG/WDOG.c **** {
+ 186              		.loc 1 39 1 is_stmt 1 view -0
+ 187              		.cfi_startproc
+ 188              		@ args = 0, pretend = 0, frame = 0
+ 189              		@ frame_needed = 0, uses_anonymous_args = 0
+ 190 0000 08B5     		push	{r3, lr}
+ 191              	.LCFI5:
+ 192              		.cfi_def_cfa_offset 8
+ 193              		.cfi_offset 3, -8
+ 194              		.cfi_offset 14, -4
+  40:BSP/OWDG/WDOG.c ****   HAL_GPIO_TogglePin(WDI_PORT,WDI_PIN);
+ 195              		.loc 1 40 3 view .LVU30
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s 			page 5
+
+
+ 196 0002 0421     		movs	r1, #4
+ 197 0004 0148     		ldr	r0, .L15
+ 198 0006 FFF7FEFF 		bl	HAL_GPIO_TogglePin
+ 199              	.LVL4:
+  41:BSP/OWDG/WDOG.c **** }
+ 200              		.loc 1 41 1 is_stmt 0 view .LVU31
+ 201 000a 08BD     		pop	{r3, pc}
+ 202              	.L16:
+ 203              		.align	2
+ 204              	.L15:
+ 205 000c 00040240 		.word	1073873920
+ 206              		.cfi_endproc
+ 207              	.LFE219:
+ 209              		.text
+ 210              	.Letext0:
+ 211              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 212              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 213              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 214              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 WDOG.c
+C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s:21     .text.WDOG_Port_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s:27     .text.WDOG_Port_Init:00000000 WDOG_Port_Init
+C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s:106    .text.WDOG_Port_Init:00000050 $d
+C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s:112    .text.WDOG_Enable:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s:118    .text.WDOG_Enable:00000000 WDOG_Enable
+C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s:140    .text.WDOG_Enable:00000010 $d
+C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s:145    .text.WDOG_Disnable:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s:151    .text.WDOG_Disnable:00000000 WDOG_Disnable
+C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s:173    .text.WDOG_Disnable:00000010 $d
+C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s:178    .text.WDOG_Feed:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s:184    .text.WDOG_Feed:00000000 WDOG_Feed
+C:\Users\chen\AppData\Local\Temp\ccTsdFLJ.s:205    .text.WDOG_Feed:0000000c $d
+
+UNDEFINED SYMBOLS
+HAL_GPIO_Init
+HAL_GPIO_WritePin
+HAL_GPIO_TogglePin

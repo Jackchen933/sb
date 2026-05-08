@@ -1,0 +1,222 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc3jGgv5.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"ui.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/GUI_App/ui.c"
+  20              		.section	.text.main_timer,"ax",%progbits
+  21              		.align	1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	main_timer:
+  27              	.LVL0:
+  28              	.LFB195:
+   1:User/GUI_App/ui.c **** // LVGL VERSION: 8.2.0
+   2:User/GUI_App/ui.c **** 
+   3:User/GUI_App/ui.c **** #include "ui.h"
+   4:User/GUI_App/ui.c **** #include "./Screens/Inc/ui_HomePage.h"
+   5:User/GUI_App/ui.c **** #include "./Screens/Inc/ui_MenuPage.h"
+   6:User/GUI_App/ui.c **** #include "./Screens/Inc/ui_WatchFacePage.h"
+   7:User/GUI_App/ui.c **** #include "./Screens/Inc/ui_QuickAppsPage.h"
+   8:User/GUI_App/ui.c **** #include "./Screens/Inc/ui_FitnessPage.h"
+   9:User/GUI_App/ui.c **** #include "./Screens/Inc/ui_WatchFacePicker.h"
+  10:User/GUI_App/ui.c **** #include "ui_helpers.h"
+  11:User/GUI_App/ui.c **** 
+  12:User/GUI_App/ui.c **** ///////////////////// TEST LVGL SETTINGS ////////////////////
+  13:User/GUI_App/ui.c **** #if LV_COLOR_DEPTH != 16
+  14:User/GUI_App/ui.c ****     #error "LV_COLOR_DEPTH should be 16bit to match SquareLine Studio's settings"
+  15:User/GUI_App/ui.c **** #endif
+  16:User/GUI_App/ui.c **** #if LV_COLOR_16_SWAP !=0
+  17:User/GUI_App/ui.c ****     #error "LV_COLOR_16_SWAP should be 0 to match SquareLine Studio's settings"
+  18:User/GUI_App/ui.c **** #endif
+  19:User/GUI_App/ui.c **** 
+  20:User/GUI_App/ui.c **** /////////////////////// Timer //////////////////////
+  21:User/GUI_App/ui.c **** /**
+  22:User/GUI_App/ui.c ****  * Main timer for Refreshing the screens
+  23:User/GUI_App/ui.c ****  */
+  24:User/GUI_App/ui.c **** static void main_timer(lv_timer_t * timer)
+  25:User/GUI_App/ui.c **** {
+  29              		.loc 1 25 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc3jGgv5.s 			page 2
+
+
+  26:User/GUI_App/ui.c ****     // printf("timer\r\n");
+  27:User/GUI_App/ui.c **** 
+  28:User/GUI_App/ui.c **** }
+  34              		.loc 1 28 1 view .LVU1
+  35 0000 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE195:
+  39              		.section	.text.ui_init,"ax",%progbits
+  40              		.align	1
+  41              		.global	ui_init
+  42              		.syntax unified
+  43              		.thumb
+  44              		.thumb_func
+  46              	ui_init:
+  47              	.LFB196:
+  29:User/GUI_App/ui.c **** 
+  30:User/GUI_App/ui.c **** 
+  31:User/GUI_App/ui.c **** /////////////////////// ui_initialize //////////////////////
+  32:User/GUI_App/ui.c **** void ui_init(void)
+  33:User/GUI_App/ui.c **** {
+  48              		.loc 1 33 1 view -0
+  49              		.cfi_startproc
+  50              		@ args = 0, pretend = 0, frame = 0
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52 0000 30B5     		push	{r4, r5, lr}
+  53              	.LCFI0:
+  54              		.cfi_def_cfa_offset 12
+  55              		.cfi_offset 4, -12
+  56              		.cfi_offset 5, -8
+  57              		.cfi_offset 14, -4
+  58 0002 83B0     		sub	sp, sp, #12
+  59              	.LCFI1:
+  60              		.cfi_def_cfa_offset 24
+  34:User/GUI_App/ui.c **** 
+  35:User/GUI_App/ui.c ****     lv_disp_t * dispp = lv_disp_get_default();
+  61              		.loc 1 35 5 view .LVU3
+  62              		.loc 1 35 25 is_stmt 0 view .LVU4
+  63 0004 FFF7FEFF 		bl	lv_disp_get_default
+  64              	.LVL1:
+  65 0008 0446     		mov	r4, r0
+  66              	.LVL2:
+  36:User/GUI_App/ui.c ****     lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_
+  67              		.loc 1 36 5 is_stmt 1 view .LVU5
+  68              		.loc 1 36 26 is_stmt 0 view .LVU6
+  69 000a 0520     		movs	r0, #5
+  70              	.LVL3:
+  71              		.loc 1 36 26 view .LVU7
+  72 000c FFF7FEFF 		bl	lv_palette_main
+  73              	.LVL4:
+  74 0010 0546     		mov	r5, r0	@ movhi
+  75              		.loc 1 36 26 discriminator 1 view .LVU8
+  76 0012 0020     		movs	r0, #0
+  77 0014 FFF7FEFF 		bl	lv_palette_main
+  78              	.LVL5:
+  79 0018 0246     		mov	r2, r0	@ movhi
+  80              		.loc 1 36 26 discriminator 2 view .LVU9
+  81 001a 0A4B     		ldr	r3, .L4
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc3jGgv5.s 			page 3
+
+
+  82 001c 0093     		str	r3, [sp]
+  83 001e 0123     		movs	r3, #1
+  84 0020 2946     		mov	r1, r5	@ movhi
+  85 0022 2046     		mov	r0, r4
+  86 0024 FFF7FEFF 		bl	lv_theme_default_init
+  87              	.LVL6:
+  88 0028 0146     		mov	r1, r0
+  89              	.LVL7:
+  37:User/GUI_App/ui.c ****                                                true, LV_FONT_DEFAULT);
+  38:User/GUI_App/ui.c ****     lv_disp_set_theme(dispp, theme);
+  90              		.loc 1 38 5 is_stmt 1 view .LVU10
+  91 002a 2046     		mov	r0, r4
+  92              	.LVL8:
+  93              		.loc 1 38 5 is_stmt 0 view .LVU11
+  94 002c FFF7FEFF 		bl	lv_disp_set_theme
+  95              	.LVL9:
+  39:User/GUI_App/ui.c ****     Pages_init();
+  96              		.loc 1 39 5 is_stmt 1 view .LVU12
+  97 0030 FFF7FEFF 		bl	Pages_init
+  98              	.LVL10:
+  40:User/GUI_App/ui.c ****     //timer
+  41:User/GUI_App/ui.c ****     lv_timer_t * ui_MainTimer = lv_timer_create(main_timer, 1000,  NULL);
+  99              		.loc 1 41 5 view .LVU13
+ 100              		.loc 1 41 33 is_stmt 0 view .LVU14
+ 101 0034 0022     		movs	r2, #0
+ 102 0036 4FF47A71 		mov	r1, #1000
+ 103 003a 0348     		ldr	r0, .L4+4
+ 104 003c FFF7FEFF 		bl	lv_timer_create
+ 105              	.LVL11:
+  42:User/GUI_App/ui.c **** }
+ 106              		.loc 1 42 1 view .LVU15
+ 107 0040 03B0     		add	sp, sp, #12
+ 108              	.LCFI2:
+ 109              		.cfi_def_cfa_offset 12
+ 110              		@ sp needed
+ 111 0042 30BD     		pop	{r4, r5, pc}
+ 112              	.LVL12:
+ 113              	.L5:
+ 114              		.loc 1 42 1 view .LVU16
+ 115              		.align	2
+ 116              	.L4:
+ 117 0044 00000000 		.word	lv_font_montserrat_14
+ 118 0048 00000000 		.word	main_timer
+ 119              		.cfi_endproc
+ 120              	.LFE196:
+ 122              		.text
+ 123              	.Letext0:
+ 124              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 125              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 126              		.file 4 "Middlewares/LVGL/GUI/lvgl/src/misc/lv_types.h"
+ 127              		.file 5 "Middlewares/LVGL/GUI/lvgl/src/misc/lv_timer.h"
+ 128              		.file 6 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 129              		.file 7 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/../font/../misc/lv_area.h"
+ 130              		.file 8 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/../font/lv_font.h"
+ 131              		.file 9 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h"
+ 132              		.file 10 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_txt.h"
+ 133              		.file 11 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_bidi.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc3jGgv5.s 			page 4
+
+
+ 134              		.file 12 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_style.h"
+ 135              		.file 13 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/lv_img_buf.h"
+ 136              		.file 14 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj.h"
+ 137              		.file 15 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/lv_draw_rect.h"
+ 138              		.file 16 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/lv_draw_label.h"
+ 139              		.file 17 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/lv_draw_img.h"
+ 140              		.file 18 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/lv_draw_line.h"
+ 141              		.file 19 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/lv_draw_arc.h"
+ 142              		.file 20 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/lv_draw.h"
+ 143              		.file 21 "Middlewares/LVGL/GUI/lvgl/src/hal/../misc/lv_ll.h"
+ 144              		.file 22 "Middlewares/LVGL/GUI/lvgl/src/hal/lv_hal_disp.h"
+ 145              		.file 23 "Middlewares/LVGL/GUI/lvgl/src/core/lv_theme.h"
+ 146              		.file 24 "Middlewares/LVGL/GUI/lvgl/src/core/lv_group.h"
+ 147              		.file 25 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_scroll.h"
+ 148              		.file 26 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style.h"
+ 149              		.file 27 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_class.h"
+ 150              		.file 28 "Middlewares/LVGL/GUI/lvgl/src/core/lv_event.h"
+ 151              		.file 29 "Middlewares/LVGL/GUI/lvgl/src/extra/themes/default/lv_theme_default.h"
+ 152              		.file 30 "User/GUI_App/../Func/Inc/PageManager.h"
+ 153              		.file 31 "Middlewares/LVGL/GUI/lvgl/src/core/lv_disp.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc3jGgv5.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ui.c
+C:\Users\chen\AppData\Local\Temp\cc3jGgv5.s:21     .text.main_timer:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc3jGgv5.s:26     .text.main_timer:00000000 main_timer
+C:\Users\chen\AppData\Local\Temp\cc3jGgv5.s:40     .text.ui_init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc3jGgv5.s:46     .text.ui_init:00000000 ui_init
+C:\Users\chen\AppData\Local\Temp\cc3jGgv5.s:117    .text.ui_init:00000044 $d
+
+UNDEFINED SYMBOLS
+lv_disp_get_default
+lv_palette_main
+lv_theme_default_init
+lv_disp_set_theme
+Pages_init
+lv_timer_create
+lv_font_montserrat_14

@@ -1,0 +1,1169 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"lcd_init.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "BSP/LCD/lcd_init.c"
+  20              		.section	.text.LCD_GPIO_Init,"ax",%progbits
+  21              		.align	1
+  22              		.global	LCD_GPIO_Init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	LCD_GPIO_Init:
+  28              	.LFB216:
+   1:BSP/LCD/lcd_init.c **** #include "lcd_init.h"
+   2:BSP/LCD/lcd_init.c **** #include "delay.h"
+   3:BSP/LCD/lcd_init.c **** #include "spi.h"
+   4:BSP/LCD/lcd_init.c **** #include "tim.h"
+   5:BSP/LCD/lcd_init.c **** 
+   6:BSP/LCD/lcd_init.c **** /******************************************************************************
+   7:BSP/LCD/lcd_init.c ****       函数说明：LCD端口初始化
+   8:BSP/LCD/lcd_init.c ****       入口数据：无
+   9:BSP/LCD/lcd_init.c ****       返回值：  无
+  10:BSP/LCD/lcd_init.c **** ******************************************************************************/
+  11:BSP/LCD/lcd_init.c **** void LCD_GPIO_Init(void)
+  12:BSP/LCD/lcd_init.c **** {
+  29              		.loc 1 12 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 24
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 70B5     		push	{r4, r5, r6, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+  39              		.cfi_offset 14, -4
+  40 0002 86B0     		sub	sp, sp, #24
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_offset 40
+  13:BSP/LCD/lcd_init.c **** 	GPIO_InitTypeDef  GPIO_InitStructure = {0};
+  43              		.loc 1 13 2 view .LVU1
+  44              		.loc 1 13 20 is_stmt 0 view .LVU2
+  45 0004 0023     		movs	r3, #0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 2
+
+
+  46 0006 0193     		str	r3, [sp, #4]
+  47 0008 0293     		str	r3, [sp, #8]
+  48 000a 0393     		str	r3, [sp, #12]
+  49 000c 0493     		str	r3, [sp, #16]
+  50 000e 0593     		str	r3, [sp, #20]
+  14:BSP/LCD/lcd_init.c **** 	
+  15:BSP/LCD/lcd_init.c ****  	__HAL_RCC_GPIOB_CLK_ENABLE();
+  51              		.loc 1 15 3 is_stmt 1 view .LVU3
+  52              	.LBB2:
+  53              		.loc 1 15 3 view .LVU4
+  54 0010 0093     		str	r3, [sp]
+  55              		.loc 1 15 3 view .LVU5
+  56 0012 0E4B     		ldr	r3, .L3
+  57 0014 1A6B     		ldr	r2, [r3, #48]
+  58 0016 42F00202 		orr	r2, r2, #2
+  59 001a 1A63     		str	r2, [r3, #48]
+  60              		.loc 1 15 3 view .LVU6
+  61 001c 1B6B     		ldr	r3, [r3, #48]
+  62 001e 03F00203 		and	r3, r3, #2
+  63 0022 0093     		str	r3, [sp]
+  64              		.loc 1 15 3 view .LVU7
+  65 0024 009B     		ldr	r3, [sp]
+  66              	.LBE2:
+  67              		.loc 1 15 3 view .LVU8
+  16:BSP/LCD/lcd_init.c **** 	
+  17:BSP/LCD/lcd_init.c **** 	GPIO_InitStructure.Pin = RES_PIN|CS_PIN|DC_PIN;	 
+  68              		.loc 1 17 2 view .LVU9
+  69              		.loc 1 17 25 is_stmt 0 view .LVU10
+  70 0026 4FF46075 		mov	r5, #896
+  71 002a 0195     		str	r5, [sp, #4]
+  18:BSP/LCD/lcd_init.c ****  	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP; 		 //推挽输出
+  72              		.loc 1 18 3 is_stmt 1 view .LVU11
+  73              		.loc 1 18 27 is_stmt 0 view .LVU12
+  74 002c 0126     		movs	r6, #1
+  75 002e 0296     		str	r6, [sp, #8]
+  19:BSP/LCD/lcd_init.c **** 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;//速度50MHz
+  76              		.loc 1 19 2 is_stmt 1 view .LVU13
+  77              		.loc 1 19 27 is_stmt 0 view .LVU14
+  78 0030 0323     		movs	r3, #3
+  79 0032 0493     		str	r3, [sp, #16]
+  20:BSP/LCD/lcd_init.c ****  	HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);	  //初始化GPIOB
+  80              		.loc 1 20 3 is_stmt 1 view .LVU15
+  81 0034 064C     		ldr	r4, .L3+4
+  82 0036 01A9     		add	r1, sp, #4
+  83 0038 2046     		mov	r0, r4
+  84 003a FFF7FEFF 		bl	HAL_GPIO_Init
+  85              	.LVL0:
+  21:BSP/LCD/lcd_init.c ****  	HAL_GPIO_WritePin(GPIOB, RES_PIN|CS_PIN|DC_PIN, GPIO_PIN_SET);
+  86              		.loc 1 21 3 view .LVU16
+  87 003e 3246     		mov	r2, r6
+  88 0040 2946     		mov	r1, r5
+  89 0042 2046     		mov	r0, r4
+  90 0044 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  91              	.LVL1:
+  22:BSP/LCD/lcd_init.c **** }
+  92              		.loc 1 22 1 is_stmt 0 view .LVU17
+  93 0048 06B0     		add	sp, sp, #24
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 3
+
+
+  94              	.LCFI2:
+  95              		.cfi_def_cfa_offset 16
+  96              		@ sp needed
+  97 004a 70BD     		pop	{r4, r5, r6, pc}
+  98              	.L4:
+  99              		.align	2
+ 100              	.L3:
+ 101 004c 00380240 		.word	1073887232
+ 102 0050 00040240 		.word	1073873920
+ 103              		.cfi_endproc
+ 104              	.LFE216:
+ 106              		.section	.text.LCD_Writ_Bus,"ax",%progbits
+ 107              		.align	1
+ 108              		.global	LCD_Writ_Bus
+ 109              		.syntax unified
+ 110              		.thumb
+ 111              		.thumb_func
+ 113              	LCD_Writ_Bus:
+ 114              	.LVL2:
+ 115              	.LFB217:
+  23:BSP/LCD/lcd_init.c **** 
+  24:BSP/LCD/lcd_init.c **** 
+  25:BSP/LCD/lcd_init.c **** /******************************************************************************
+  26:BSP/LCD/lcd_init.c ****       函数说明：LCD串行数据写入函数(software SPI)
+  27:BSP/LCD/lcd_init.c ****       入口数据：dat  要写入的串行数据
+  28:BSP/LCD/lcd_init.c ****       返回值：  无
+  29:BSP/LCD/lcd_init.c **** ******************************************************************************/
+  30:BSP/LCD/lcd_init.c **** void LCD_Writ_Bus(u8 dat) 
+  31:BSP/LCD/lcd_init.c **** {	
+ 116              		.loc 1 31 1 is_stmt 1 view -0
+ 117              		.cfi_startproc
+ 118              		@ args = 0, pretend = 0, frame = 8
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120              		.loc 1 31 1 is_stmt 0 view .LVU19
+ 121 0000 00B5     		push	{lr}
+ 122              	.LCFI3:
+ 123              		.cfi_def_cfa_offset 4
+ 124              		.cfi_offset 14, -4
+ 125 0002 83B0     		sub	sp, sp, #12
+ 126              	.LCFI4:
+ 127              		.cfi_def_cfa_offset 16
+ 128 0004 8DF80700 		strb	r0, [sp, #7]
+  32:BSP/LCD/lcd_init.c **** 	//hard SPI
+  33:BSP/LCD/lcd_init.c **** 	HAL_SPI_Transmit(&hspi1,&dat,1,1);
+ 129              		.loc 1 33 2 is_stmt 1 view .LVU20
+ 130 0008 0123     		movs	r3, #1
+ 131 000a 1A46     		mov	r2, r3
+ 132 000c 0DF10701 		add	r1, sp, #7
+ 133 0010 0248     		ldr	r0, .L7
+ 134              	.LVL3:
+ 135              		.loc 1 33 2 is_stmt 0 view .LVU21
+ 136 0012 FFF7FEFF 		bl	HAL_SPI_Transmit
+ 137              	.LVL4:
+  34:BSP/LCD/lcd_init.c **** 	
+  35:BSP/LCD/lcd_init.c **** 	//soft SPI
+  36:BSP/LCD/lcd_init.c **** 	/*
+  37:BSP/LCD/lcd_init.c **** 	u8 i;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 4
+
+
+  38:BSP/LCD/lcd_init.c **** 	for(i=0;i<8;i++)
+  39:BSP/LCD/lcd_init.c **** 	{			  
+  40:BSP/LCD/lcd_init.c **** 		LCD_SCLK_Clr();
+  41:BSP/LCD/lcd_init.c **** 		if(dat&0x80)
+  42:BSP/LCD/lcd_init.c **** 		{
+  43:BSP/LCD/lcd_init.c **** 		   LCD_MOSI_Set();
+  44:BSP/LCD/lcd_init.c **** 		}
+  45:BSP/LCD/lcd_init.c **** 		else
+  46:BSP/LCD/lcd_init.c **** 		{
+  47:BSP/LCD/lcd_init.c **** 		   LCD_MOSI_Clr();
+  48:BSP/LCD/lcd_init.c **** 		}
+  49:BSP/LCD/lcd_init.c **** 		LCD_SCLK_Set();
+  50:BSP/LCD/lcd_init.c **** 		dat<<=1;
+  51:BSP/LCD/lcd_init.c **** 	}	
+  52:BSP/LCD/lcd_init.c **** 	*/
+  53:BSP/LCD/lcd_init.c **** }
+ 138              		.loc 1 53 1 view .LVU22
+ 139 0016 03B0     		add	sp, sp, #12
+ 140              	.LCFI5:
+ 141              		.cfi_def_cfa_offset 4
+ 142              		@ sp needed
+ 143 0018 5DF804FB 		ldr	pc, [sp], #4
+ 144              	.L8:
+ 145              		.align	2
+ 146              	.L7:
+ 147 001c 00000000 		.word	hspi1
+ 148              		.cfi_endproc
+ 149              	.LFE217:
+ 151              		.section	.text.LCD_WR_DATA8,"ax",%progbits
+ 152              		.align	1
+ 153              		.global	LCD_WR_DATA8
+ 154              		.syntax unified
+ 155              		.thumb
+ 156              		.thumb_func
+ 158              	LCD_WR_DATA8:
+ 159              	.LVL5:
+ 160              	.LFB218:
+  54:BSP/LCD/lcd_init.c **** 
+  55:BSP/LCD/lcd_init.c **** 
+  56:BSP/LCD/lcd_init.c **** /******************************************************************************
+  57:BSP/LCD/lcd_init.c ****       函数说明：LCD写入数据
+  58:BSP/LCD/lcd_init.c ****       入口数据：dat 写入的数据
+  59:BSP/LCD/lcd_init.c ****       返回值：  无
+  60:BSP/LCD/lcd_init.c **** ******************************************************************************/
+  61:BSP/LCD/lcd_init.c **** void LCD_WR_DATA8(u8 dat)
+  62:BSP/LCD/lcd_init.c **** {
+ 161              		.loc 1 62 1 is_stmt 1 view -0
+ 162              		.cfi_startproc
+ 163              		@ args = 0, pretend = 0, frame = 0
+ 164              		@ frame_needed = 0, uses_anonymous_args = 0
+ 165              		.loc 1 62 1 is_stmt 0 view .LVU24
+ 166 0000 08B5     		push	{r3, lr}
+ 167              	.LCFI6:
+ 168              		.cfi_def_cfa_offset 8
+ 169              		.cfi_offset 3, -8
+ 170              		.cfi_offset 14, -4
+  63:BSP/LCD/lcd_init.c **** 	LCD_Writ_Bus(dat);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 5
+
+
+ 171              		.loc 1 63 2 is_stmt 1 view .LVU25
+ 172 0002 FFF7FEFF 		bl	LCD_Writ_Bus
+ 173              	.LVL6:
+  64:BSP/LCD/lcd_init.c **** }
+ 174              		.loc 1 64 1 is_stmt 0 view .LVU26
+ 175 0006 08BD     		pop	{r3, pc}
+ 176              		.cfi_endproc
+ 177              	.LFE218:
+ 179              		.section	.text.LCD_WR_DATA,"ax",%progbits
+ 180              		.align	1
+ 181              		.global	LCD_WR_DATA
+ 182              		.syntax unified
+ 183              		.thumb
+ 184              		.thumb_func
+ 186              	LCD_WR_DATA:
+ 187              	.LVL7:
+ 188              	.LFB219:
+  65:BSP/LCD/lcd_init.c **** 
+  66:BSP/LCD/lcd_init.c **** 
+  67:BSP/LCD/lcd_init.c **** /******************************************************************************
+  68:BSP/LCD/lcd_init.c ****       函数说明：LCD写入数据
+  69:BSP/LCD/lcd_init.c ****       入口数据：dat 写入的数据
+  70:BSP/LCD/lcd_init.c ****       返回值：  无
+  71:BSP/LCD/lcd_init.c **** ******************************************************************************/
+  72:BSP/LCD/lcd_init.c **** void LCD_WR_DATA(u16 dat)
+  73:BSP/LCD/lcd_init.c **** {
+ 189              		.loc 1 73 1 is_stmt 1 view -0
+ 190              		.cfi_startproc
+ 191              		@ args = 0, pretend = 0, frame = 8
+ 192              		@ frame_needed = 0, uses_anonymous_args = 0
+ 193              		.loc 1 73 1 is_stmt 0 view .LVU28
+ 194 0000 00B5     		push	{lr}
+ 195              	.LCFI7:
+ 196              		.cfi_def_cfa_offset 4
+ 197              		.cfi_offset 14, -4
+ 198 0002 83B0     		sub	sp, sp, #12
+ 199              	.LCFI8:
+ 200              		.cfi_def_cfa_offset 16
+  74:BSP/LCD/lcd_init.c **** //	LCD_Writ_Bus(dat>>8);
+  75:BSP/LCD/lcd_init.c **** //	LCD_Writ_Bus(dat);
+  76:BSP/LCD/lcd_init.c **** 	uint8_t temp[2];
+ 201              		.loc 1 76 2 is_stmt 1 view .LVU29
+  77:BSP/LCD/lcd_init.c **** 	temp[0]=(dat>>8)&0xff;
+ 202              		.loc 1 77 2 view .LVU30
+ 203              		.loc 1 77 9 is_stmt 0 view .LVU31
+ 204 0004 030A     		lsrs	r3, r0, #8
+ 205 0006 8DF80430 		strb	r3, [sp, #4]
+  78:BSP/LCD/lcd_init.c **** 	temp[1]=dat&0xff;
+ 206              		.loc 1 78 2 is_stmt 1 view .LVU32
+ 207              		.loc 1 78 9 is_stmt 0 view .LVU33
+ 208 000a 8DF80500 		strb	r0, [sp, #5]
+  79:BSP/LCD/lcd_init.c **** 	HAL_SPI_Transmit(&hspi1,temp,2,1);
+ 209              		.loc 1 79 2 is_stmt 1 view .LVU34
+ 210 000e 0123     		movs	r3, #1
+ 211 0010 0222     		movs	r2, #2
+ 212 0012 01A9     		add	r1, sp, #4
+ 213 0014 0248     		ldr	r0, .L13
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 6
+
+
+ 214              	.LVL8:
+ 215              		.loc 1 79 2 is_stmt 0 view .LVU35
+ 216 0016 FFF7FEFF 		bl	HAL_SPI_Transmit
+ 217              	.LVL9:
+  80:BSP/LCD/lcd_init.c **** 	
+  81:BSP/LCD/lcd_init.c **** }
+ 218              		.loc 1 81 1 view .LVU36
+ 219 001a 03B0     		add	sp, sp, #12
+ 220              	.LCFI9:
+ 221              		.cfi_def_cfa_offset 4
+ 222              		@ sp needed
+ 223 001c 5DF804FB 		ldr	pc, [sp], #4
+ 224              	.L14:
+ 225              		.align	2
+ 226              	.L13:
+ 227 0020 00000000 		.word	hspi1
+ 228              		.cfi_endproc
+ 229              	.LFE219:
+ 231              		.section	.text.LCD_WR_REG,"ax",%progbits
+ 232              		.align	1
+ 233              		.global	LCD_WR_REG
+ 234              		.syntax unified
+ 235              		.thumb
+ 236              		.thumb_func
+ 238              	LCD_WR_REG:
+ 239              	.LVL10:
+ 240              	.LFB220:
+  82:BSP/LCD/lcd_init.c **** 
+  83:BSP/LCD/lcd_init.c **** 
+  84:BSP/LCD/lcd_init.c **** /******************************************************************************
+  85:BSP/LCD/lcd_init.c ****       函数说明：LCD写入命令
+  86:BSP/LCD/lcd_init.c ****       入口数据：dat 写入的命令
+  87:BSP/LCD/lcd_init.c ****       返回值：  无
+  88:BSP/LCD/lcd_init.c **** ******************************************************************************/
+  89:BSP/LCD/lcd_init.c **** void LCD_WR_REG(u8 dat)
+  90:BSP/LCD/lcd_init.c **** {
+ 241              		.loc 1 90 1 is_stmt 1 view -0
+ 242              		.cfi_startproc
+ 243              		@ args = 0, pretend = 0, frame = 0
+ 244              		@ frame_needed = 0, uses_anonymous_args = 0
+ 245              		.loc 1 90 1 is_stmt 0 view .LVU38
+ 246 0000 38B5     		push	{r3, r4, r5, lr}
+ 247              	.LCFI10:
+ 248              		.cfi_def_cfa_offset 16
+ 249              		.cfi_offset 3, -16
+ 250              		.cfi_offset 4, -12
+ 251              		.cfi_offset 5, -8
+ 252              		.cfi_offset 14, -4
+ 253 0002 0446     		mov	r4, r0
+  91:BSP/LCD/lcd_init.c **** 	LCD_DC_Clr();//写命令
+ 254              		.loc 1 91 2 is_stmt 1 view .LVU39
+ 255 0004 084D     		ldr	r5, .L17
+ 256 0006 0022     		movs	r2, #0
+ 257 0008 4FF40071 		mov	r1, #512
+ 258 000c 2846     		mov	r0, r5
+ 259              	.LVL11:
+ 260              		.loc 1 91 2 is_stmt 0 view .LVU40
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 7
+
+
+ 261 000e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 262              	.LVL12:
+  92:BSP/LCD/lcd_init.c **** 	LCD_Writ_Bus(dat);
+ 263              		.loc 1 92 2 is_stmt 1 view .LVU41
+ 264 0012 2046     		mov	r0, r4
+ 265 0014 FFF7FEFF 		bl	LCD_Writ_Bus
+ 266              	.LVL13:
+  93:BSP/LCD/lcd_init.c **** 	LCD_DC_Set();//写数据
+ 267              		.loc 1 93 2 view .LVU42
+ 268 0018 0122     		movs	r2, #1
+ 269 001a 4FF40071 		mov	r1, #512
+ 270 001e 2846     		mov	r0, r5
+ 271 0020 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 272              	.LVL14:
+  94:BSP/LCD/lcd_init.c **** }
+ 273              		.loc 1 94 1 is_stmt 0 view .LVU43
+ 274 0024 38BD     		pop	{r3, r4, r5, pc}
+ 275              	.LVL15:
+ 276              	.L18:
+ 277              		.loc 1 94 1 view .LVU44
+ 278 0026 00BF     		.align	2
+ 279              	.L17:
+ 280 0028 00040240 		.word	1073873920
+ 281              		.cfi_endproc
+ 282              	.LFE220:
+ 284              		.section	.text.LCD_Address_Set,"ax",%progbits
+ 285              		.align	1
+ 286              		.global	LCD_Address_Set
+ 287              		.syntax unified
+ 288              		.thumb
+ 289              		.thumb_func
+ 291              	LCD_Address_Set:
+ 292              	.LVL16:
+ 293              	.LFB221:
+  95:BSP/LCD/lcd_init.c **** 
+  96:BSP/LCD/lcd_init.c **** 
+  97:BSP/LCD/lcd_init.c **** /******************************************************************************
+  98:BSP/LCD/lcd_init.c ****       函数说明：设置起始和结束地址
+  99:BSP/LCD/lcd_init.c ****       入口数据：x1,x2 设置列的起始和结束地址
+ 100:BSP/LCD/lcd_init.c ****                 y1,y2 设置行的起始和结束地址
+ 101:BSP/LCD/lcd_init.c ****       返回值：  无
+ 102:BSP/LCD/lcd_init.c **** ******************************************************************************/
+ 103:BSP/LCD/lcd_init.c **** void LCD_Address_Set(u16 x1,u16 y1,u16 x2,u16 y2)
+ 104:BSP/LCD/lcd_init.c **** {
+ 294              		.loc 1 104 1 is_stmt 1 view -0
+ 295              		.cfi_startproc
+ 296              		@ args = 0, pretend = 0, frame = 0
+ 297              		@ frame_needed = 0, uses_anonymous_args = 0
+ 298              		.loc 1 104 1 is_stmt 0 view .LVU46
+ 299 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 300              	.LCFI11:
+ 301              		.cfi_def_cfa_offset 24
+ 302              		.cfi_offset 3, -24
+ 303              		.cfi_offset 4, -20
+ 304              		.cfi_offset 5, -16
+ 305              		.cfi_offset 6, -12
+ 306              		.cfi_offset 7, -8
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 8
+
+
+ 307              		.cfi_offset 14, -4
+ 308 0002 0746     		mov	r7, r0
+ 309 0004 0D46     		mov	r5, r1
+ 310 0006 1646     		mov	r6, r2
+ 311 0008 1C46     		mov	r4, r3
+ 105:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0x2a);//列地址设置
+ 312              		.loc 1 105 2 is_stmt 1 view .LVU47
+ 313 000a 2A20     		movs	r0, #42
+ 314              	.LVL17:
+ 315              		.loc 1 105 2 is_stmt 0 view .LVU48
+ 316 000c FFF7FEFF 		bl	LCD_WR_REG
+ 317              	.LVL18:
+ 106:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA(x1);
+ 318              		.loc 1 106 2 is_stmt 1 view .LVU49
+ 319 0010 3846     		mov	r0, r7
+ 320 0012 FFF7FEFF 		bl	LCD_WR_DATA
+ 321              	.LVL19:
+ 107:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA(x2);
+ 322              		.loc 1 107 2 view .LVU50
+ 323 0016 3046     		mov	r0, r6
+ 324 0018 FFF7FEFF 		bl	LCD_WR_DATA
+ 325              	.LVL20:
+ 108:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0x2b);//行地址设置
+ 326              		.loc 1 108 2 view .LVU51
+ 327 001c 2B20     		movs	r0, #43
+ 328 001e FFF7FEFF 		bl	LCD_WR_REG
+ 329              	.LVL21:
+ 109:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA(y1);
+ 330              		.loc 1 109 2 view .LVU52
+ 331 0022 2846     		mov	r0, r5
+ 332 0024 FFF7FEFF 		bl	LCD_WR_DATA
+ 333              	.LVL22:
+ 110:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA(y2);
+ 334              		.loc 1 110 2 view .LVU53
+ 335 0028 2046     		mov	r0, r4
+ 336 002a FFF7FEFF 		bl	LCD_WR_DATA
+ 337              	.LVL23:
+ 111:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0x2c);//储存器写
+ 338              		.loc 1 111 2 view .LVU54
+ 339 002e 2C20     		movs	r0, #44
+ 340 0030 FFF7FEFF 		bl	LCD_WR_REG
+ 341              	.LVL24:
+ 112:BSP/LCD/lcd_init.c **** }
+ 342              		.loc 1 112 1 is_stmt 0 view .LVU55
+ 343 0034 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 344              		.loc 1 112 1 view .LVU56
+ 345              		.cfi_endproc
+ 346              	.LFE221:
+ 348              		.section	.text.LCD_Set_Light,"ax",%progbits
+ 349              		.align	1
+ 350              		.global	LCD_Set_Light
+ 351              		.syntax unified
+ 352              		.thumb
+ 353              		.thumb_func
+ 355              	LCD_Set_Light:
+ 356              	.LVL25:
+ 357              	.LFB222:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 9
+
+
+ 113:BSP/LCD/lcd_init.c **** 
+ 114:BSP/LCD/lcd_init.c **** 
+ 115:BSP/LCD/lcd_init.c **** /******************************************************************************
+ 116:BSP/LCD/lcd_init.c ****       函数说明：LCD调节背光
+ 117:BSP/LCD/lcd_init.c ****       入口数据：dc,占空比,5%~100%
+ 118:BSP/LCD/lcd_init.c ****       返回值：  无
+ 119:BSP/LCD/lcd_init.c **** ******************************************************************************/
+ 120:BSP/LCD/lcd_init.c **** void LCD_Set_Light(uint8_t dc)
+ 121:BSP/LCD/lcd_init.c **** {
+ 358              		.loc 1 121 1 is_stmt 1 view -0
+ 359              		.cfi_startproc
+ 360              		@ args = 0, pretend = 0, frame = 0
+ 361              		@ frame_needed = 0, uses_anonymous_args = 0
+ 362              		@ link register save eliminated.
+ 122:BSP/LCD/lcd_init.c **** 	if(dc>=5 && dc<=100)
+ 363              		.loc 1 122 2 view .LVU58
+ 364              		.loc 1 122 11 is_stmt 0 view .LVU59
+ 365 0000 431F     		subs	r3, r0, #5
+ 366 0002 DBB2     		uxtb	r3, r3
+ 367              		.loc 1 122 4 view .LVU60
+ 368 0004 5F2B     		cmp	r3, #95
+ 369 0006 04D8     		bhi	.L21
+ 123:BSP/LCD/lcd_init.c **** 		__HAL_TIM_SetCompare(&htim3,TIM_CHANNEL_3,dc*PWM_PERIOD/100);
+ 370              		.loc 1 123 3 is_stmt 1 view .LVU61
+ 371 0008 024B     		ldr	r3, .L23
+ 372 000a 1B68     		ldr	r3, [r3]
+ 373 000c 00EB4000 		add	r0, r0, r0, lsl #1
+ 374              	.LVL26:
+ 375              		.loc 1 123 3 is_stmt 0 view .LVU62
+ 376 0010 D863     		str	r0, [r3, #60]
+ 377              	.L21:
+ 124:BSP/LCD/lcd_init.c **** }
+ 378              		.loc 1 124 1 view .LVU63
+ 379 0012 7047     		bx	lr
+ 380              	.L24:
+ 381              		.align	2
+ 382              	.L23:
+ 383 0014 00000000 		.word	htim3
+ 384              		.cfi_endproc
+ 385              	.LFE222:
+ 387              		.section	.text.LCD_Close_Light,"ax",%progbits
+ 388              		.align	1
+ 389              		.global	LCD_Close_Light
+ 390              		.syntax unified
+ 391              		.thumb
+ 392              		.thumb_func
+ 394              	LCD_Close_Light:
+ 395              	.LFB223:
+ 125:BSP/LCD/lcd_init.c **** 
+ 126:BSP/LCD/lcd_init.c **** 
+ 127:BSP/LCD/lcd_init.c **** /******************************************************************************
+ 128:BSP/LCD/lcd_init.c ****       函数说明：LCD关闭背光
+ 129:BSP/LCD/lcd_init.c ****       入口数据：无
+ 130:BSP/LCD/lcd_init.c ****       返回值：  无
+ 131:BSP/LCD/lcd_init.c **** ******************************************************************************/
+ 132:BSP/LCD/lcd_init.c **** void LCD_Close_Light(void)
+ 133:BSP/LCD/lcd_init.c **** {
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 10
+
+
+ 396              		.loc 1 133 1 is_stmt 1 view -0
+ 397              		.cfi_startproc
+ 398              		@ args = 0, pretend = 0, frame = 0
+ 399              		@ frame_needed = 0, uses_anonymous_args = 0
+ 400              		@ link register save eliminated.
+ 134:BSP/LCD/lcd_init.c **** 	__HAL_TIM_SetCompare(&htim3,TIM_CHANNEL_3,0);
+ 401              		.loc 1 134 2 view .LVU65
+ 402 0000 024B     		ldr	r3, .L26
+ 403 0002 1B68     		ldr	r3, [r3]
+ 404 0004 0022     		movs	r2, #0
+ 405 0006 DA63     		str	r2, [r3, #60]
+ 135:BSP/LCD/lcd_init.c **** 	//HAL_TIM_PWM_Stop(&htim3,TIM_CHANNEL_3);
+ 136:BSP/LCD/lcd_init.c **** }
+ 406              		.loc 1 136 1 is_stmt 0 view .LVU66
+ 407 0008 7047     		bx	lr
+ 408              	.L27:
+ 409 000a 00BF     		.align	2
+ 410              	.L26:
+ 411 000c 00000000 		.word	htim3
+ 412              		.cfi_endproc
+ 413              	.LFE223:
+ 415              		.section	.text.LCD_Open_Light,"ax",%progbits
+ 416              		.align	1
+ 417              		.global	LCD_Open_Light
+ 418              		.syntax unified
+ 419              		.thumb
+ 420              		.thumb_func
+ 422              	LCD_Open_Light:
+ 423              	.LFB224:
+ 137:BSP/LCD/lcd_init.c **** 
+ 138:BSP/LCD/lcd_init.c **** 
+ 139:BSP/LCD/lcd_init.c **** /******************************************************************************
+ 140:BSP/LCD/lcd_init.c ****       函数说明：LCD开启背光
+ 141:BSP/LCD/lcd_init.c ****       入口数据：无
+ 142:BSP/LCD/lcd_init.c ****       返回值：  无
+ 143:BSP/LCD/lcd_init.c **** ******************************************************************************/
+ 144:BSP/LCD/lcd_init.c **** void LCD_Open_Light(void)
+ 145:BSP/LCD/lcd_init.c **** {
+ 424              		.loc 1 145 1 is_stmt 1 view -0
+ 425              		.cfi_startproc
+ 426              		@ args = 0, pretend = 0, frame = 0
+ 427              		@ frame_needed = 0, uses_anonymous_args = 0
+ 428 0000 08B5     		push	{r3, lr}
+ 429              	.LCFI12:
+ 430              		.cfi_def_cfa_offset 8
+ 431              		.cfi_offset 3, -8
+ 432              		.cfi_offset 14, -4
+ 146:BSP/LCD/lcd_init.c **** 	HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_3);
+ 433              		.loc 1 146 2 view .LVU68
+ 434 0002 0821     		movs	r1, #8
+ 435 0004 0148     		ldr	r0, .L30
+ 436 0006 FFF7FEFF 		bl	HAL_TIM_PWM_Start
+ 437              	.LVL27:
+ 147:BSP/LCD/lcd_init.c **** }
+ 438              		.loc 1 147 1 is_stmt 0 view .LVU69
+ 439 000a 08BD     		pop	{r3, pc}
+ 440              	.L31:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 11
+
+
+ 441              		.align	2
+ 442              	.L30:
+ 443 000c 00000000 		.word	htim3
+ 444              		.cfi_endproc
+ 445              	.LFE224:
+ 447              		.section	.text.LCD_ST7789_SleepIn,"ax",%progbits
+ 448              		.align	1
+ 449              		.global	LCD_ST7789_SleepIn
+ 450              		.syntax unified
+ 451              		.thumb
+ 452              		.thumb_func
+ 454              	LCD_ST7789_SleepIn:
+ 455              	.LFB225:
+ 148:BSP/LCD/lcd_init.c **** 
+ 149:BSP/LCD/lcd_init.c **** /******************************************************************************
+ 150:BSP/LCD/lcd_init.c ****       函数说明：ST7789 SLEEP IN
+ 151:BSP/LCD/lcd_init.c ****       入口数据：无
+ 152:BSP/LCD/lcd_init.c ****       返回值：  无
+ 153:BSP/LCD/lcd_init.c **** ******************************************************************************/
+ 154:BSP/LCD/lcd_init.c **** void LCD_ST7789_SleepIn(void)
+ 155:BSP/LCD/lcd_init.c **** {
+ 456              		.loc 1 155 1 is_stmt 1 view -0
+ 457              		.cfi_startproc
+ 458              		@ args = 0, pretend = 0, frame = 0
+ 459              		@ frame_needed = 0, uses_anonymous_args = 0
+ 460 0000 08B5     		push	{r3, lr}
+ 461              	.LCFI13:
+ 462              		.cfi_def_cfa_offset 8
+ 463              		.cfi_offset 3, -8
+ 464              		.cfi_offset 14, -4
+ 156:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0x10);
+ 465              		.loc 1 156 2 view .LVU71
+ 466 0002 1020     		movs	r0, #16
+ 467 0004 FFF7FEFF 		bl	LCD_WR_REG
+ 468              	.LVL28:
+ 157:BSP/LCD/lcd_init.c **** 	delay_ms(100);
+ 469              		.loc 1 157 2 view .LVU72
+ 470 0008 6420     		movs	r0, #100
+ 471 000a FFF7FEFF 		bl	delay_ms
+ 472              	.LVL29:
+ 158:BSP/LCD/lcd_init.c **** }
+ 473              		.loc 1 158 1 is_stmt 0 view .LVU73
+ 474 000e 08BD     		pop	{r3, pc}
+ 475              		.cfi_endproc
+ 476              	.LFE225:
+ 478              		.section	.text.LCD_ST7789_SleepOut,"ax",%progbits
+ 479              		.align	1
+ 480              		.global	LCD_ST7789_SleepOut
+ 481              		.syntax unified
+ 482              		.thumb
+ 483              		.thumb_func
+ 485              	LCD_ST7789_SleepOut:
+ 486              	.LFB226:
+ 159:BSP/LCD/lcd_init.c **** 
+ 160:BSP/LCD/lcd_init.c **** 
+ 161:BSP/LCD/lcd_init.c **** /******************************************************************************
+ 162:BSP/LCD/lcd_init.c ****       函数说明：ST7789 SLEEP OUT
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 12
+
+
+ 163:BSP/LCD/lcd_init.c ****       入口数据：无
+ 164:BSP/LCD/lcd_init.c ****       返回值：  无
+ 165:BSP/LCD/lcd_init.c **** ******************************************************************************/
+ 166:BSP/LCD/lcd_init.c **** void LCD_ST7789_SleepOut(void)
+ 167:BSP/LCD/lcd_init.c **** {
+ 487              		.loc 1 167 1 is_stmt 1 view -0
+ 488              		.cfi_startproc
+ 489              		@ args = 0, pretend = 0, frame = 0
+ 490              		@ frame_needed = 0, uses_anonymous_args = 0
+ 491 0000 08B5     		push	{r3, lr}
+ 492              	.LCFI14:
+ 493              		.cfi_def_cfa_offset 8
+ 494              		.cfi_offset 3, -8
+ 495              		.cfi_offset 14, -4
+ 168:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0x11);
+ 496              		.loc 1 168 2 view .LVU75
+ 497 0002 1120     		movs	r0, #17
+ 498 0004 FFF7FEFF 		bl	LCD_WR_REG
+ 499              	.LVL30:
+ 169:BSP/LCD/lcd_init.c **** 	delay_ms(100);
+ 500              		.loc 1 169 2 view .LVU76
+ 501 0008 6420     		movs	r0, #100
+ 502 000a FFF7FEFF 		bl	delay_ms
+ 503              	.LVL31:
+ 170:BSP/LCD/lcd_init.c **** }
+ 504              		.loc 1 170 1 is_stmt 0 view .LVU77
+ 505 000e 08BD     		pop	{r3, pc}
+ 506              		.cfi_endproc
+ 507              	.LFE226:
+ 509              		.section	.text.LCD_Init,"ax",%progbits
+ 510              		.align	1
+ 511              		.global	LCD_Init
+ 512              		.syntax unified
+ 513              		.thumb
+ 514              		.thumb_func
+ 516              	LCD_Init:
+ 517              	.LFB227:
+ 171:BSP/LCD/lcd_init.c **** 
+ 172:BSP/LCD/lcd_init.c **** 
+ 173:BSP/LCD/lcd_init.c **** /******************************************************************************
+ 174:BSP/LCD/lcd_init.c ****       函数说明：LCD初始化
+ 175:BSP/LCD/lcd_init.c ****       入口数据：无
+ 176:BSP/LCD/lcd_init.c ****       返回值：  无
+ 177:BSP/LCD/lcd_init.c **** ******************************************************************************/
+ 178:BSP/LCD/lcd_init.c **** void LCD_Init(void)
+ 179:BSP/LCD/lcd_init.c **** {
+ 518              		.loc 1 179 1 is_stmt 1 view -0
+ 519              		.cfi_startproc
+ 520              		@ args = 0, pretend = 0, frame = 0
+ 521              		@ frame_needed = 0, uses_anonymous_args = 0
+ 522 0000 10B5     		push	{r4, lr}
+ 523              	.LCFI15:
+ 524              		.cfi_def_cfa_offset 8
+ 525              		.cfi_offset 4, -8
+ 526              		.cfi_offset 14, -4
+ 180:BSP/LCD/lcd_init.c **** 	LCD_GPIO_Init();//初始化GPIO
+ 527              		.loc 1 180 2 view .LVU79
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 13
+
+
+ 528 0002 FFF7FEFF 		bl	LCD_GPIO_Init
+ 529              	.LVL32:
+ 181:BSP/LCD/lcd_init.c **** 	LCD_CS_Clr();		//chip select
+ 530              		.loc 1 181 2 view .LVU80
+ 531 0006 674C     		ldr	r4, .L38
+ 532 0008 0022     		movs	r2, #0
+ 533 000a 4FF48071 		mov	r1, #256
+ 534 000e 2046     		mov	r0, r4
+ 535 0010 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 536              	.LVL33:
+ 182:BSP/LCD/lcd_init.c **** 	
+ 183:BSP/LCD/lcd_init.c **** 	LCD_RES_Clr();	//复位
+ 537              		.loc 1 183 2 view .LVU81
+ 538 0014 0022     		movs	r2, #0
+ 539 0016 8021     		movs	r1, #128
+ 540 0018 2046     		mov	r0, r4
+ 541 001a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 542              	.LVL34:
+ 184:BSP/LCD/lcd_init.c **** 	delay_ms(100);
+ 543              		.loc 1 184 2 view .LVU82
+ 544 001e 6420     		movs	r0, #100
+ 545 0020 FFF7FEFF 		bl	delay_ms
+ 546              	.LVL35:
+ 185:BSP/LCD/lcd_init.c **** 	LCD_RES_Set();
+ 547              		.loc 1 185 2 view .LVU83
+ 548 0024 0122     		movs	r2, #1
+ 549 0026 8021     		movs	r1, #128
+ 550 0028 2046     		mov	r0, r4
+ 551 002a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 552              	.LVL36:
+ 186:BSP/LCD/lcd_init.c **** 	delay_ms(100);
+ 553              		.loc 1 186 2 view .LVU84
+ 554 002e 6420     		movs	r0, #100
+ 555 0030 FFF7FEFF 		bl	delay_ms
+ 556              	.LVL37:
+ 187:BSP/LCD/lcd_init.c **** 	
+ 188:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0x11); 
+ 557              		.loc 1 188 2 view .LVU85
+ 558 0034 1120     		movs	r0, #17
+ 559 0036 FFF7FEFF 		bl	LCD_WR_REG
+ 560              	.LVL38:
+ 189:BSP/LCD/lcd_init.c **** 	delay_ms(120); 
+ 561              		.loc 1 189 2 view .LVU86
+ 562 003a 7820     		movs	r0, #120
+ 563 003c FFF7FEFF 		bl	delay_ms
+ 564              	.LVL39:
+ 190:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0x36); 
+ 565              		.loc 1 190 2 view .LVU87
+ 566 0040 3620     		movs	r0, #54
+ 567 0042 FFF7FEFF 		bl	LCD_WR_REG
+ 568              	.LVL40:
+ 191:BSP/LCD/lcd_init.c **** 	if(USE_HORIZONTAL==0)LCD_WR_DATA8(0x00);
+ 569              		.loc 1 191 2 view .LVU88
+ 570              		.loc 1 191 23 discriminator 1 view .LVU89
+ 571 0046 0020     		movs	r0, #0
+ 572 0048 FFF7FEFF 		bl	LCD_WR_DATA8
+ 573              	.LVL41:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 14
+
+
+ 192:BSP/LCD/lcd_init.c **** 	else if(USE_HORIZONTAL==1)LCD_WR_DATA8(0xC0);
+ 193:BSP/LCD/lcd_init.c **** 	else if(USE_HORIZONTAL==2)LCD_WR_DATA8(0x70);
+ 194:BSP/LCD/lcd_init.c **** 	else LCD_WR_DATA8(0xA0);
+ 195:BSP/LCD/lcd_init.c **** 
+ 196:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0x3A);
+ 574              		.loc 1 196 2 view .LVU90
+ 575 004c 3A20     		movs	r0, #58
+ 576 004e FFF7FEFF 		bl	LCD_WR_REG
+ 577              	.LVL42:
+ 197:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x05);
+ 578              		.loc 1 197 2 view .LVU91
+ 579 0052 0520     		movs	r0, #5
+ 580 0054 FFF7FEFF 		bl	LCD_WR_DATA8
+ 581              	.LVL43:
+ 198:BSP/LCD/lcd_init.c **** 
+ 199:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0xB2);
+ 582              		.loc 1 199 2 view .LVU92
+ 583 0058 B220     		movs	r0, #178
+ 584 005a FFF7FEFF 		bl	LCD_WR_REG
+ 585              	.LVL44:
+ 200:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x0C);
+ 586              		.loc 1 200 2 view .LVU93
+ 587 005e 0C20     		movs	r0, #12
+ 588 0060 FFF7FEFF 		bl	LCD_WR_DATA8
+ 589              	.LVL45:
+ 201:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x0C);
+ 590              		.loc 1 201 2 view .LVU94
+ 591 0064 0C20     		movs	r0, #12
+ 592 0066 FFF7FEFF 		bl	LCD_WR_DATA8
+ 593              	.LVL46:
+ 202:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x00);
+ 594              		.loc 1 202 2 view .LVU95
+ 595 006a 0020     		movs	r0, #0
+ 596 006c FFF7FEFF 		bl	LCD_WR_DATA8
+ 597              	.LVL47:
+ 203:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x33);
+ 598              		.loc 1 203 2 view .LVU96
+ 599 0070 3320     		movs	r0, #51
+ 600 0072 FFF7FEFF 		bl	LCD_WR_DATA8
+ 601              	.LVL48:
+ 204:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x33); 
+ 602              		.loc 1 204 2 view .LVU97
+ 603 0076 3320     		movs	r0, #51
+ 604 0078 FFF7FEFF 		bl	LCD_WR_DATA8
+ 605              	.LVL49:
+ 205:BSP/LCD/lcd_init.c **** 
+ 206:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0xB7); 
+ 606              		.loc 1 206 2 view .LVU98
+ 607 007c B720     		movs	r0, #183
+ 608 007e FFF7FEFF 		bl	LCD_WR_REG
+ 609              	.LVL50:
+ 207:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x35);  
+ 610              		.loc 1 207 2 view .LVU99
+ 611 0082 3520     		movs	r0, #53
+ 612 0084 FFF7FEFF 		bl	LCD_WR_DATA8
+ 613              	.LVL51:
+ 208:BSP/LCD/lcd_init.c **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 15
+
+
+ 209:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0xBB);
+ 614              		.loc 1 209 2 view .LVU100
+ 615 0088 BB20     		movs	r0, #187
+ 616 008a FFF7FEFF 		bl	LCD_WR_REG
+ 617              	.LVL52:
+ 210:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x19);
+ 618              		.loc 1 210 2 view .LVU101
+ 619 008e 1920     		movs	r0, #25
+ 620 0090 FFF7FEFF 		bl	LCD_WR_DATA8
+ 621              	.LVL53:
+ 211:BSP/LCD/lcd_init.c **** 
+ 212:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0xC0);
+ 622              		.loc 1 212 2 view .LVU102
+ 623 0094 C020     		movs	r0, #192
+ 624 0096 FFF7FEFF 		bl	LCD_WR_REG
+ 625              	.LVL54:
+ 213:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x2C);
+ 626              		.loc 1 213 2 view .LVU103
+ 627 009a 2C20     		movs	r0, #44
+ 628 009c FFF7FEFF 		bl	LCD_WR_DATA8
+ 629              	.LVL55:
+ 214:BSP/LCD/lcd_init.c **** 
+ 215:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0xC2);
+ 630              		.loc 1 215 2 view .LVU104
+ 631 00a0 C220     		movs	r0, #194
+ 632 00a2 FFF7FEFF 		bl	LCD_WR_REG
+ 633              	.LVL56:
+ 216:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x01);
+ 634              		.loc 1 216 2 view .LVU105
+ 635 00a6 0120     		movs	r0, #1
+ 636 00a8 FFF7FEFF 		bl	LCD_WR_DATA8
+ 637              	.LVL57:
+ 217:BSP/LCD/lcd_init.c **** 
+ 218:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0xC3);
+ 638              		.loc 1 218 2 view .LVU106
+ 639 00ac C320     		movs	r0, #195
+ 640 00ae FFF7FEFF 		bl	LCD_WR_REG
+ 641              	.LVL58:
+ 219:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x12);   
+ 642              		.loc 1 219 2 view .LVU107
+ 643 00b2 1220     		movs	r0, #18
+ 644 00b4 FFF7FEFF 		bl	LCD_WR_DATA8
+ 645              	.LVL59:
+ 220:BSP/LCD/lcd_init.c **** 
+ 221:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0xC4);
+ 646              		.loc 1 221 2 view .LVU108
+ 647 00b8 C420     		movs	r0, #196
+ 648 00ba FFF7FEFF 		bl	LCD_WR_REG
+ 649              	.LVL60:
+ 222:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x20);  
+ 650              		.loc 1 222 2 view .LVU109
+ 651 00be 2020     		movs	r0, #32
+ 652 00c0 FFF7FEFF 		bl	LCD_WR_DATA8
+ 653              	.LVL61:
+ 223:BSP/LCD/lcd_init.c **** 
+ 224:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0xC6); 
+ 654              		.loc 1 224 2 view .LVU110
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 16
+
+
+ 655 00c4 C620     		movs	r0, #198
+ 656 00c6 FFF7FEFF 		bl	LCD_WR_REG
+ 657              	.LVL62:
+ 225:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x0F);    
+ 658              		.loc 1 225 2 view .LVU111
+ 659 00ca 0F20     		movs	r0, #15
+ 660 00cc FFF7FEFF 		bl	LCD_WR_DATA8
+ 661              	.LVL63:
+ 226:BSP/LCD/lcd_init.c **** 
+ 227:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0xD0); 
+ 662              		.loc 1 227 2 view .LVU112
+ 663 00d0 D020     		movs	r0, #208
+ 664 00d2 FFF7FEFF 		bl	LCD_WR_REG
+ 665              	.LVL64:
+ 228:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0xA4);
+ 666              		.loc 1 228 2 view .LVU113
+ 667 00d6 A420     		movs	r0, #164
+ 668 00d8 FFF7FEFF 		bl	LCD_WR_DATA8
+ 669              	.LVL65:
+ 229:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0xA1);
+ 670              		.loc 1 229 2 view .LVU114
+ 671 00dc A120     		movs	r0, #161
+ 672 00de FFF7FEFF 		bl	LCD_WR_DATA8
+ 673              	.LVL66:
+ 230:BSP/LCD/lcd_init.c **** 
+ 231:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0xE0);
+ 674              		.loc 1 231 2 view .LVU115
+ 675 00e2 E020     		movs	r0, #224
+ 676 00e4 FFF7FEFF 		bl	LCD_WR_REG
+ 677              	.LVL67:
+ 232:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0xD0);
+ 678              		.loc 1 232 2 view .LVU116
+ 679 00e8 D020     		movs	r0, #208
+ 680 00ea FFF7FEFF 		bl	LCD_WR_DATA8
+ 681              	.LVL68:
+ 233:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x04);
+ 682              		.loc 1 233 2 view .LVU117
+ 683 00ee 0420     		movs	r0, #4
+ 684 00f0 FFF7FEFF 		bl	LCD_WR_DATA8
+ 685              	.LVL69:
+ 234:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x0D);
+ 686              		.loc 1 234 2 view .LVU118
+ 687 00f4 0D20     		movs	r0, #13
+ 688 00f6 FFF7FEFF 		bl	LCD_WR_DATA8
+ 689              	.LVL70:
+ 235:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x11);
+ 690              		.loc 1 235 2 view .LVU119
+ 691 00fa 1120     		movs	r0, #17
+ 692 00fc FFF7FEFF 		bl	LCD_WR_DATA8
+ 693              	.LVL71:
+ 236:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x13);
+ 694              		.loc 1 236 2 view .LVU120
+ 695 0100 1320     		movs	r0, #19
+ 696 0102 FFF7FEFF 		bl	LCD_WR_DATA8
+ 697              	.LVL72:
+ 237:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x2B);
+ 698              		.loc 1 237 2 view .LVU121
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 17
+
+
+ 699 0106 2B20     		movs	r0, #43
+ 700 0108 FFF7FEFF 		bl	LCD_WR_DATA8
+ 701              	.LVL73:
+ 238:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x3F);
+ 702              		.loc 1 238 2 view .LVU122
+ 703 010c 3F20     		movs	r0, #63
+ 704 010e FFF7FEFF 		bl	LCD_WR_DATA8
+ 705              	.LVL74:
+ 239:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x54);
+ 706              		.loc 1 239 2 view .LVU123
+ 707 0112 5420     		movs	r0, #84
+ 708 0114 FFF7FEFF 		bl	LCD_WR_DATA8
+ 709              	.LVL75:
+ 240:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x4C);
+ 710              		.loc 1 240 2 view .LVU124
+ 711 0118 4C20     		movs	r0, #76
+ 712 011a FFF7FEFF 		bl	LCD_WR_DATA8
+ 713              	.LVL76:
+ 241:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x18);
+ 714              		.loc 1 241 2 view .LVU125
+ 715 011e 1820     		movs	r0, #24
+ 716 0120 FFF7FEFF 		bl	LCD_WR_DATA8
+ 717              	.LVL77:
+ 242:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x0D);
+ 718              		.loc 1 242 2 view .LVU126
+ 719 0124 0D20     		movs	r0, #13
+ 720 0126 FFF7FEFF 		bl	LCD_WR_DATA8
+ 721              	.LVL78:
+ 243:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x0B);
+ 722              		.loc 1 243 2 view .LVU127
+ 723 012a 0B20     		movs	r0, #11
+ 724 012c FFF7FEFF 		bl	LCD_WR_DATA8
+ 725              	.LVL79:
+ 244:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x1F);
+ 726              		.loc 1 244 2 view .LVU128
+ 727 0130 1F20     		movs	r0, #31
+ 728 0132 FFF7FEFF 		bl	LCD_WR_DATA8
+ 729              	.LVL80:
+ 245:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x23);
+ 730              		.loc 1 245 2 view .LVU129
+ 731 0136 2320     		movs	r0, #35
+ 732 0138 FFF7FEFF 		bl	LCD_WR_DATA8
+ 733              	.LVL81:
+ 246:BSP/LCD/lcd_init.c **** 
+ 247:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0xE1);
+ 734              		.loc 1 247 2 view .LVU130
+ 735 013c E120     		movs	r0, #225
+ 736 013e FFF7FEFF 		bl	LCD_WR_REG
+ 737              	.LVL82:
+ 248:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0xD0);
+ 738              		.loc 1 248 2 view .LVU131
+ 739 0142 D020     		movs	r0, #208
+ 740 0144 FFF7FEFF 		bl	LCD_WR_DATA8
+ 741              	.LVL83:
+ 249:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x04);
+ 742              		.loc 1 249 2 view .LVU132
+ 743 0148 0420     		movs	r0, #4
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 18
+
+
+ 744 014a FFF7FEFF 		bl	LCD_WR_DATA8
+ 745              	.LVL84:
+ 250:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x0C);
+ 746              		.loc 1 250 2 view .LVU133
+ 747 014e 0C20     		movs	r0, #12
+ 748 0150 FFF7FEFF 		bl	LCD_WR_DATA8
+ 749              	.LVL85:
+ 251:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x11);
+ 750              		.loc 1 251 2 view .LVU134
+ 751 0154 1120     		movs	r0, #17
+ 752 0156 FFF7FEFF 		bl	LCD_WR_DATA8
+ 753              	.LVL86:
+ 252:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x13);
+ 754              		.loc 1 252 2 view .LVU135
+ 755 015a 1320     		movs	r0, #19
+ 756 015c FFF7FEFF 		bl	LCD_WR_DATA8
+ 757              	.LVL87:
+ 253:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x2C);
+ 758              		.loc 1 253 2 view .LVU136
+ 759 0160 2C20     		movs	r0, #44
+ 760 0162 FFF7FEFF 		bl	LCD_WR_DATA8
+ 761              	.LVL88:
+ 254:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x3F);
+ 762              		.loc 1 254 2 view .LVU137
+ 763 0166 3F20     		movs	r0, #63
+ 764 0168 FFF7FEFF 		bl	LCD_WR_DATA8
+ 765              	.LVL89:
+ 255:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x44);
+ 766              		.loc 1 255 2 view .LVU138
+ 767 016c 4420     		movs	r0, #68
+ 768 016e FFF7FEFF 		bl	LCD_WR_DATA8
+ 769              	.LVL90:
+ 256:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x51);
+ 770              		.loc 1 256 2 view .LVU139
+ 771 0172 5120     		movs	r0, #81
+ 772 0174 FFF7FEFF 		bl	LCD_WR_DATA8
+ 773              	.LVL91:
+ 257:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x2F);
+ 774              		.loc 1 257 2 view .LVU140
+ 775 0178 2F20     		movs	r0, #47
+ 776 017a FFF7FEFF 		bl	LCD_WR_DATA8
+ 777              	.LVL92:
+ 258:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x1F);
+ 778              		.loc 1 258 2 view .LVU141
+ 779 017e 1F20     		movs	r0, #31
+ 780 0180 FFF7FEFF 		bl	LCD_WR_DATA8
+ 781              	.LVL93:
+ 259:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x1F);
+ 782              		.loc 1 259 2 view .LVU142
+ 783 0184 1F20     		movs	r0, #31
+ 784 0186 FFF7FEFF 		bl	LCD_WR_DATA8
+ 785              	.LVL94:
+ 260:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x20);
+ 786              		.loc 1 260 2 view .LVU143
+ 787 018a 2020     		movs	r0, #32
+ 788 018c FFF7FEFF 		bl	LCD_WR_DATA8
+ 789              	.LVL95:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 19
+
+
+ 261:BSP/LCD/lcd_init.c **** 	LCD_WR_DATA8(0x23);
+ 790              		.loc 1 261 2 view .LVU144
+ 791 0190 2320     		movs	r0, #35
+ 792 0192 FFF7FEFF 		bl	LCD_WR_DATA8
+ 793              	.LVL96:
+ 262:BSP/LCD/lcd_init.c **** 
+ 263:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0x21); 
+ 794              		.loc 1 263 2 view .LVU145
+ 795 0196 2120     		movs	r0, #33
+ 796 0198 FFF7FEFF 		bl	LCD_WR_REG
+ 797              	.LVL97:
+ 264:BSP/LCD/lcd_init.c **** 
+ 265:BSP/LCD/lcd_init.c **** 	LCD_WR_REG(0x29); 
+ 798              		.loc 1 265 2 view .LVU146
+ 799 019c 2920     		movs	r0, #41
+ 800 019e FFF7FEFF 		bl	LCD_WR_REG
+ 801              	.LVL98:
+ 266:BSP/LCD/lcd_init.c **** }
+ 802              		.loc 1 266 1 is_stmt 0 view .LVU147
+ 803 01a2 10BD     		pop	{r4, pc}
+ 804              	.L39:
+ 805              		.align	2
+ 806              	.L38:
+ 807 01a4 00040240 		.word	1073873920
+ 808              		.cfi_endproc
+ 809              	.LFE227:
+ 811              		.text
+ 812              	.Letext0:
+ 813              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 814              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 815              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 816              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 817              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 818              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 819              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 820              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+ 821              		.file 10 "SYSTEM/sys.h"
+ 822              		.file 11 "Core/Inc/spi.h"
+ 823              		.file 12 "Core/Inc/tim.h"
+ 824              		.file 13 "SYSTEM/delay.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccSc9om0.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lcd_init.c
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:21     .text.LCD_GPIO_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:27     .text.LCD_GPIO_Init:00000000 LCD_GPIO_Init
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:101    .text.LCD_GPIO_Init:0000004c $d
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:107    .text.LCD_Writ_Bus:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:113    .text.LCD_Writ_Bus:00000000 LCD_Writ_Bus
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:147    .text.LCD_Writ_Bus:0000001c $d
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:152    .text.LCD_WR_DATA8:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:158    .text.LCD_WR_DATA8:00000000 LCD_WR_DATA8
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:180    .text.LCD_WR_DATA:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:186    .text.LCD_WR_DATA:00000000 LCD_WR_DATA
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:227    .text.LCD_WR_DATA:00000020 $d
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:232    .text.LCD_WR_REG:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:238    .text.LCD_WR_REG:00000000 LCD_WR_REG
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:280    .text.LCD_WR_REG:00000028 $d
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:285    .text.LCD_Address_Set:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:291    .text.LCD_Address_Set:00000000 LCD_Address_Set
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:349    .text.LCD_Set_Light:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:355    .text.LCD_Set_Light:00000000 LCD_Set_Light
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:383    .text.LCD_Set_Light:00000014 $d
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:388    .text.LCD_Close_Light:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:394    .text.LCD_Close_Light:00000000 LCD_Close_Light
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:411    .text.LCD_Close_Light:0000000c $d
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:416    .text.LCD_Open_Light:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:422    .text.LCD_Open_Light:00000000 LCD_Open_Light
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:443    .text.LCD_Open_Light:0000000c $d
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:448    .text.LCD_ST7789_SleepIn:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:454    .text.LCD_ST7789_SleepIn:00000000 LCD_ST7789_SleepIn
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:479    .text.LCD_ST7789_SleepOut:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:485    .text.LCD_ST7789_SleepOut:00000000 LCD_ST7789_SleepOut
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:510    .text.LCD_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:516    .text.LCD_Init:00000000 LCD_Init
+C:\Users\chen\AppData\Local\Temp\ccSc9om0.s:807    .text.LCD_Init:000001a4 $d
+
+UNDEFINED SYMBOLS
+HAL_GPIO_Init
+HAL_GPIO_WritePin
+HAL_SPI_Transmit
+hspi1
+htim3
+HAL_TIM_PWM_Start
+delay_ms

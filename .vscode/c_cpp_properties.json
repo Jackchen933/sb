@@ -1,0 +1,51 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/Core/Inc",
+                "${workspaceFolder}/Drivers/STM32F4xx_HAL_Driver/Inc",
+                "${workspaceFolder}/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+                "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/include",
+                "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+                "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F",
+                "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+                "${workspaceFolder}/Drivers/CMSIS/Include",
+                "${workspaceFolder}/SYSTEM",
+                "${workspaceFolder}/BSP/LCD",
+                "${workspaceFolder}/BSP/AHT21",
+                "${workspaceFolder}/BSP/BL24C02",
+                "${workspaceFolder}/BSP/IIC",
+                "${workspaceFolder}/BSP/LSM303DLH",
+                "${workspaceFolder}/BSP/MPU6050",
+                "${workspaceFolder}/BSP/OWDG",
+                "${workspaceFolder}/BSP/POWER",
+                "${workspaceFolder}/BSP/SPL06_001",
+                "${workspaceFolder}/BSP/EM7028",
+                "${workspaceFolder}/BSP/TOUCH",
+                "${workspaceFolder}/BSP/KEY",
+                "${workspaceFolder}/BSP/KT6328",
+                "${workspaceFolder}/Middlewares/LVGL/GUI",
+                "${workspaceFolder}/Middlewares/LVGL/GUI/lvgl/src",
+                "${workspaceFolder}/Middlewares/LVGL/GUI/lvgl",
+                "${workspaceFolder}/Middlewares/LVGL/GUI/porting",
+                "${workspaceFolder}/BSP/MPU6050/eMPL",
+                "${workspaceFolder}/User",
+                "${workspaceFolder}/User/GUI_App/Screens/Inc",
+                "${workspaceFolder}/User/Tasks/Inc",
+                "${workspaceFolder}/User/Func/Inc",
+                "${workspaceFolder}/User/GUI_App"
+            ],
+            "defines": [
+                "USE_HAL_DRIVER",
+                "STM32F411xE"
+            ],
+            "compilerPath": "arm-none-eabi-gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}

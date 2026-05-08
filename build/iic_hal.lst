@@ -1,0 +1,1767 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"iic_hal.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "BSP/IIC/iic_hal.c"
+  20              		.section	.text.SDA_Input_Mode,"ax",%progbits
+  21              		.align	1
+  22              		.global	SDA_Input_Mode
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	SDA_Input_Mode:
+  28              	.LVL0:
+  29              	.LFB216:
+   1:BSP/IIC/iic_hal.c **** #include "iic_hal.h"
+   2:BSP/IIC/iic_hal.c **** #include "delay.h"
+   3:BSP/IIC/iic_hal.c **** 
+   4:BSP/IIC/iic_hal.c **** /**
+   5:BSP/IIC/iic_hal.c ****   * @brief SDA线输入模式配置
+   6:BSP/IIC/iic_hal.c ****   * @param None
+   7:BSP/IIC/iic_hal.c ****   * @retval None
+   8:BSP/IIC/iic_hal.c ****   */
+   9:BSP/IIC/iic_hal.c **** void SDA_Input_Mode(iic_bus_t *bus)
+  10:BSP/IIC/iic_hal.c **** {
+  30              		.loc 1 10 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 24
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 10 1 is_stmt 0 view .LVU1
+  35 0000 00B5     		push	{lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 4
+  38              		.cfi_offset 14, -4
+  39 0002 87B0     		sub	sp, sp, #28
+  40              	.LCFI1:
+  41              		.cfi_def_cfa_offset 32
+  11:BSP/IIC/iic_hal.c ****     GPIO_InitTypeDef GPIO_InitStructure = {0};
+  42              		.loc 1 11 5 is_stmt 1 view .LVU2
+  43              		.loc 1 11 22 is_stmt 0 view .LVU3
+  44 0004 0023     		movs	r3, #0
+  45 0006 0193     		str	r3, [sp, #4]
+  46 0008 0293     		str	r3, [sp, #8]
+  47 000a 0393     		str	r3, [sp, #12]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 2
+
+
+  48 000c 0493     		str	r3, [sp, #16]
+  49 000e 0593     		str	r3, [sp, #20]
+  12:BSP/IIC/iic_hal.c **** 
+  13:BSP/IIC/iic_hal.c ****     GPIO_InitStructure.Pin = bus->IIC_SDA_PIN;
+  50              		.loc 1 13 5 is_stmt 1 view .LVU4
+  51              		.loc 1 13 33 is_stmt 0 view .LVU5
+  52 0010 0389     		ldrh	r3, [r0, #8]
+  53              		.loc 1 13 28 view .LVU6
+  54 0012 0193     		str	r3, [sp, #4]
+  14:BSP/IIC/iic_hal.c ****     GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
+  55              		.loc 1 14 5 is_stmt 1 view .LVU7
+  15:BSP/IIC/iic_hal.c ****     GPIO_InitStructure.Pull = GPIO_PULLUP;
+  56              		.loc 1 15 5 view .LVU8
+  57              		.loc 1 15 29 is_stmt 0 view .LVU9
+  58 0014 0123     		movs	r3, #1
+  59 0016 0393     		str	r3, [sp, #12]
+  16:BSP/IIC/iic_hal.c ****     GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
+  60              		.loc 1 16 5 is_stmt 1 view .LVU10
+  61              		.loc 1 16 30 is_stmt 0 view .LVU11
+  62 0018 0223     		movs	r3, #2
+  63 001a 0493     		str	r3, [sp, #16]
+  17:BSP/IIC/iic_hal.c ****     HAL_GPIO_Init(bus->IIC_SDA_PORT, &GPIO_InitStructure);
+  64              		.loc 1 17 5 is_stmt 1 view .LVU12
+  65 001c 01A9     		add	r1, sp, #4
+  66 001e 0068     		ldr	r0, [r0]
+  67              	.LVL1:
+  68              		.loc 1 17 5 is_stmt 0 view .LVU13
+  69 0020 FFF7FEFF 		bl	HAL_GPIO_Init
+  70              	.LVL2:
+  18:BSP/IIC/iic_hal.c **** }
+  71              		.loc 1 18 1 view .LVU14
+  72 0024 07B0     		add	sp, sp, #28
+  73              	.LCFI2:
+  74              		.cfi_def_cfa_offset 4
+  75              		@ sp needed
+  76 0026 5DF804FB 		ldr	pc, [sp], #4
+  77              		.cfi_endproc
+  78              	.LFE216:
+  80              		.section	.text.SDA_Output_Mode,"ax",%progbits
+  81              		.align	1
+  82              		.global	SDA_Output_Mode
+  83              		.syntax unified
+  84              		.thumb
+  85              		.thumb_func
+  87              	SDA_Output_Mode:
+  88              	.LVL3:
+  89              	.LFB217:
+  19:BSP/IIC/iic_hal.c **** 
+  20:BSP/IIC/iic_hal.c **** /**
+  21:BSP/IIC/iic_hal.c ****   * @brief SDA线输出模式配置
+  22:BSP/IIC/iic_hal.c ****   * @param None
+  23:BSP/IIC/iic_hal.c ****   * @retval None
+  24:BSP/IIC/iic_hal.c ****   */
+  25:BSP/IIC/iic_hal.c **** void SDA_Output_Mode(iic_bus_t *bus)
+  26:BSP/IIC/iic_hal.c **** {
+  90              		.loc 1 26 1 is_stmt 1 view -0
+  91              		.cfi_startproc
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 3
+
+
+  92              		@ args = 0, pretend = 0, frame = 24
+  93              		@ frame_needed = 0, uses_anonymous_args = 0
+  94              		.loc 1 26 1 is_stmt 0 view .LVU16
+  95 0000 00B5     		push	{lr}
+  96              	.LCFI3:
+  97              		.cfi_def_cfa_offset 4
+  98              		.cfi_offset 14, -4
+  99 0002 87B0     		sub	sp, sp, #28
+ 100              	.LCFI4:
+ 101              		.cfi_def_cfa_offset 32
+  27:BSP/IIC/iic_hal.c ****     GPIO_InitTypeDef GPIO_InitStructure = {0};
+ 102              		.loc 1 27 5 is_stmt 1 view .LVU17
+ 103              		.loc 1 27 22 is_stmt 0 view .LVU18
+ 104 0004 0023     		movs	r3, #0
+ 105 0006 0193     		str	r3, [sp, #4]
+ 106 0008 0293     		str	r3, [sp, #8]
+ 107 000a 0393     		str	r3, [sp, #12]
+ 108 000c 0493     		str	r3, [sp, #16]
+ 109 000e 0593     		str	r3, [sp, #20]
+  28:BSP/IIC/iic_hal.c **** 
+  29:BSP/IIC/iic_hal.c ****     GPIO_InitStructure.Pin = bus->IIC_SDA_PIN;
+ 110              		.loc 1 29 5 is_stmt 1 view .LVU19
+ 111              		.loc 1 29 33 is_stmt 0 view .LVU20
+ 112 0010 0389     		ldrh	r3, [r0, #8]
+ 113              		.loc 1 29 28 view .LVU21
+ 114 0012 0193     		str	r3, [sp, #4]
+  30:BSP/IIC/iic_hal.c ****     GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_OD;
+ 115              		.loc 1 30 5 is_stmt 1 view .LVU22
+ 116              		.loc 1 30 29 is_stmt 0 view .LVU23
+ 117 0014 1123     		movs	r3, #17
+ 118 0016 0293     		str	r3, [sp, #8]
+  31:BSP/IIC/iic_hal.c ****     GPIO_InitStructure.Pull = GPIO_NOPULL;
+ 119              		.loc 1 31 5 is_stmt 1 view .LVU24
+  32:BSP/IIC/iic_hal.c ****     GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
+ 120              		.loc 1 32 5 view .LVU25
+ 121              		.loc 1 32 30 is_stmt 0 view .LVU26
+ 122 0018 0223     		movs	r3, #2
+ 123 001a 0493     		str	r3, [sp, #16]
+  33:BSP/IIC/iic_hal.c ****     HAL_GPIO_Init(bus->IIC_SDA_PORT, &GPIO_InitStructure);
+ 124              		.loc 1 33 5 is_stmt 1 view .LVU27
+ 125 001c 01A9     		add	r1, sp, #4
+ 126 001e 0068     		ldr	r0, [r0]
+ 127              	.LVL4:
+ 128              		.loc 1 33 5 is_stmt 0 view .LVU28
+ 129 0020 FFF7FEFF 		bl	HAL_GPIO_Init
+ 130              	.LVL5:
+  34:BSP/IIC/iic_hal.c **** }
+ 131              		.loc 1 34 1 view .LVU29
+ 132 0024 07B0     		add	sp, sp, #28
+ 133              	.LCFI5:
+ 134              		.cfi_def_cfa_offset 4
+ 135              		@ sp needed
+ 136 0026 5DF804FB 		ldr	pc, [sp], #4
+ 137              		.cfi_endproc
+ 138              	.LFE217:
+ 140              		.section	.text.SDA_Output,"ax",%progbits
+ 141              		.align	1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 4
+
+
+ 142              		.global	SDA_Output
+ 143              		.syntax unified
+ 144              		.thumb
+ 145              		.thumb_func
+ 147              	SDA_Output:
+ 148              	.LVL6:
+ 149              	.LFB218:
+  35:BSP/IIC/iic_hal.c **** 
+  36:BSP/IIC/iic_hal.c **** /**
+  37:BSP/IIC/iic_hal.c ****   * @brief SDA线输出一个位
+  38:BSP/IIC/iic_hal.c ****   * @param val 输出的数据
+  39:BSP/IIC/iic_hal.c ****   * @retval None
+  40:BSP/IIC/iic_hal.c ****   */
+  41:BSP/IIC/iic_hal.c **** void SDA_Output(iic_bus_t *bus, uint16_t val)
+  42:BSP/IIC/iic_hal.c **** {
+ 150              		.loc 1 42 1 is_stmt 1 view -0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 0
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154              		@ link register save eliminated.
+  43:BSP/IIC/iic_hal.c ****     if ( val )
+ 155              		.loc 1 43 5 view .LVU31
+ 156              		.loc 1 43 8 is_stmt 0 view .LVU32
+ 157 0000 29B1     		cbz	r1, .L6
+  44:BSP/IIC/iic_hal.c ****     {
+  45:BSP/IIC/iic_hal.c ****         bus->IIC_SDA_PORT->BSRR |= bus->IIC_SDA_PIN;
+ 158              		.loc 1 45 9 is_stmt 1 view .LVU33
+ 159              		.loc 1 45 12 is_stmt 0 view .LVU34
+ 160 0002 0268     		ldr	r2, [r0]
+ 161              		.loc 1 45 26 view .LVU35
+ 162 0004 9369     		ldr	r3, [r2, #24]
+ 163              		.loc 1 45 39 view .LVU36
+ 164 0006 0189     		ldrh	r1, [r0, #8]
+ 165              	.LVL7:
+ 166              		.loc 1 45 33 view .LVU37
+ 167 0008 0B43     		orrs	r3, r3, r1
+ 168 000a 9361     		str	r3, [r2, #24]
+ 169 000c 7047     		bx	lr
+ 170              	.LVL8:
+ 171              	.L6:
+  46:BSP/IIC/iic_hal.c ****     }
+  47:BSP/IIC/iic_hal.c ****     else
+  48:BSP/IIC/iic_hal.c ****     {
+  49:BSP/IIC/iic_hal.c ****         bus->IIC_SDA_PORT->BSRR = (uint32_t)bus->IIC_SDA_PIN << 16U;
+ 172              		.loc 1 49 9 is_stmt 1 view .LVU38
+ 173              		.loc 1 49 48 is_stmt 0 view .LVU39
+ 174 000e 0389     		ldrh	r3, [r0, #8]
+ 175              		.loc 1 49 12 view .LVU40
+ 176 0010 0268     		ldr	r2, [r0]
+ 177              		.loc 1 49 62 view .LVU41
+ 178 0012 1B04     		lsls	r3, r3, #16
+ 179              		.loc 1 49 33 view .LVU42
+ 180 0014 9361     		str	r3, [r2, #24]
+  50:BSP/IIC/iic_hal.c ****     }
+  51:BSP/IIC/iic_hal.c **** }
+ 181              		.loc 1 51 1 view .LVU43
+ 182 0016 7047     		bx	lr
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 5
+
+
+ 183              		.cfi_endproc
+ 184              	.LFE218:
+ 186              		.section	.text.SCL_Output,"ax",%progbits
+ 187              		.align	1
+ 188              		.global	SCL_Output
+ 189              		.syntax unified
+ 190              		.thumb
+ 191              		.thumb_func
+ 193              	SCL_Output:
+ 194              	.LVL9:
+ 195              	.LFB219:
+  52:BSP/IIC/iic_hal.c **** 
+  53:BSP/IIC/iic_hal.c **** /**
+  54:BSP/IIC/iic_hal.c ****   * @brief SCL线输出一个位
+  55:BSP/IIC/iic_hal.c ****   * @param val 输出的数据
+  56:BSP/IIC/iic_hal.c ****   * @retval None
+  57:BSP/IIC/iic_hal.c ****   */
+  58:BSP/IIC/iic_hal.c **** void SCL_Output(iic_bus_t *bus, uint16_t val)
+  59:BSP/IIC/iic_hal.c **** {
+ 196              		.loc 1 59 1 is_stmt 1 view -0
+ 197              		.cfi_startproc
+ 198              		@ args = 0, pretend = 0, frame = 0
+ 199              		@ frame_needed = 0, uses_anonymous_args = 0
+ 200              		@ link register save eliminated.
+  60:BSP/IIC/iic_hal.c ****     if ( val )
+ 201              		.loc 1 60 5 view .LVU45
+ 202              		.loc 1 60 8 is_stmt 0 view .LVU46
+ 203 0000 29B1     		cbz	r1, .L9
+  61:BSP/IIC/iic_hal.c ****     {
+  62:BSP/IIC/iic_hal.c ****         bus->IIC_SCL_PORT->BSRR |= bus->IIC_SCL_PIN;
+ 204              		.loc 1 62 9 is_stmt 1 view .LVU47
+ 205              		.loc 1 62 12 is_stmt 0 view .LVU48
+ 206 0002 4268     		ldr	r2, [r0, #4]
+ 207              		.loc 1 62 26 view .LVU49
+ 208 0004 9369     		ldr	r3, [r2, #24]
+ 209              		.loc 1 62 39 view .LVU50
+ 210 0006 4189     		ldrh	r1, [r0, #10]
+ 211              	.LVL10:
+ 212              		.loc 1 62 33 view .LVU51
+ 213 0008 0B43     		orrs	r3, r3, r1
+ 214 000a 9361     		str	r3, [r2, #24]
+ 215 000c 7047     		bx	lr
+ 216              	.LVL11:
+ 217              	.L9:
+  63:BSP/IIC/iic_hal.c ****     }
+  64:BSP/IIC/iic_hal.c ****     else
+  65:BSP/IIC/iic_hal.c ****     {
+  66:BSP/IIC/iic_hal.c ****          bus->IIC_SCL_PORT->BSRR = (uint32_t)bus->IIC_SCL_PIN << 16U;
+ 218              		.loc 1 66 10 is_stmt 1 view .LVU52
+ 219              		.loc 1 66 49 is_stmt 0 view .LVU53
+ 220 000e 4389     		ldrh	r3, [r0, #10]
+ 221              		.loc 1 66 13 view .LVU54
+ 222 0010 4268     		ldr	r2, [r0, #4]
+ 223              		.loc 1 66 63 view .LVU55
+ 224 0012 1B04     		lsls	r3, r3, #16
+ 225              		.loc 1 66 34 view .LVU56
+ 226 0014 9361     		str	r3, [r2, #24]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 6
+
+
+  67:BSP/IIC/iic_hal.c ****     }
+  68:BSP/IIC/iic_hal.c **** }
+ 227              		.loc 1 68 1 view .LVU57
+ 228 0016 7047     		bx	lr
+ 229              		.cfi_endproc
+ 230              	.LFE219:
+ 232              		.section	.text.SDA_Input,"ax",%progbits
+ 233              		.align	1
+ 234              		.global	SDA_Input
+ 235              		.syntax unified
+ 236              		.thumb
+ 237              		.thumb_func
+ 239              	SDA_Input:
+ 240              	.LVL12:
+ 241              	.LFB220:
+  69:BSP/IIC/iic_hal.c **** 
+  70:BSP/IIC/iic_hal.c **** /**
+  71:BSP/IIC/iic_hal.c ****   * @brief SDA输入一位
+  72:BSP/IIC/iic_hal.c ****   * @param None
+  73:BSP/IIC/iic_hal.c ****   * @retval GPIO读入一位
+  74:BSP/IIC/iic_hal.c ****   */
+  75:BSP/IIC/iic_hal.c **** uint8_t SDA_Input(iic_bus_t *bus)
+  76:BSP/IIC/iic_hal.c **** {
+ 242              		.loc 1 76 1 is_stmt 1 view -0
+ 243              		.cfi_startproc
+ 244              		@ args = 0, pretend = 0, frame = 0
+ 245              		@ frame_needed = 0, uses_anonymous_args = 0
+ 246              		.loc 1 76 1 is_stmt 0 view .LVU59
+ 247 0000 08B5     		push	{r3, lr}
+ 248              	.LCFI6:
+ 249              		.cfi_def_cfa_offset 8
+ 250              		.cfi_offset 3, -8
+ 251              		.cfi_offset 14, -4
+  77:BSP/IIC/iic_hal.c **** 	if(HAL_GPIO_ReadPin(bus->IIC_SDA_PORT, bus->IIC_SDA_PIN) == GPIO_PIN_SET){
+ 252              		.loc 1 77 2 is_stmt 1 view .LVU60
+ 253              		.loc 1 77 5 is_stmt 0 view .LVU61
+ 254 0002 0189     		ldrh	r1, [r0, #8]
+ 255 0004 0068     		ldr	r0, [r0]
+ 256              	.LVL13:
+ 257              		.loc 1 77 5 view .LVU62
+ 258 0006 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 259              	.LVL14:
+ 260              		.loc 1 77 4 discriminator 1 view .LVU63
+ 261 000a 0128     		cmp	r0, #1
+ 262 000c 00D0     		beq	.L12
+  78:BSP/IIC/iic_hal.c **** 		return 1;
+  79:BSP/IIC/iic_hal.c **** 	}else{
+  80:BSP/IIC/iic_hal.c **** 		return 0;
+ 263              		.loc 1 80 10 view .LVU64
+ 264 000e 0020     		movs	r0, #0
+ 265              	.L12:
+  81:BSP/IIC/iic_hal.c **** 	}
+  82:BSP/IIC/iic_hal.c **** }
+ 266              		.loc 1 82 1 view .LVU65
+ 267 0010 08BD     		pop	{r3, pc}
+ 268              		.cfi_endproc
+ 269              	.LFE220:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 7
+
+
+ 271              		.section	.text.IICStart,"ax",%progbits
+ 272              		.align	1
+ 273              		.global	IICStart
+ 274              		.syntax unified
+ 275              		.thumb
+ 276              		.thumb_func
+ 278              	IICStart:
+ 279              	.LVL15:
+ 280              	.LFB221:
+  83:BSP/IIC/iic_hal.c **** 
+  84:BSP/IIC/iic_hal.c **** /**
+  85:BSP/IIC/iic_hal.c ****   * @brief IIC起始信号
+  86:BSP/IIC/iic_hal.c ****   * @param None
+  87:BSP/IIC/iic_hal.c ****   * @retval None
+  88:BSP/IIC/iic_hal.c ****   */
+  89:BSP/IIC/iic_hal.c **** void IICStart(iic_bus_t *bus)
+  90:BSP/IIC/iic_hal.c **** {
+ 281              		.loc 1 90 1 is_stmt 1 view -0
+ 282              		.cfi_startproc
+ 283              		@ args = 0, pretend = 0, frame = 0
+ 284              		@ frame_needed = 0, uses_anonymous_args = 0
+ 285              		.loc 1 90 1 is_stmt 0 view .LVU67
+ 286 0000 10B5     		push	{r4, lr}
+ 287              	.LCFI7:
+ 288              		.cfi_def_cfa_offset 8
+ 289              		.cfi_offset 4, -8
+ 290              		.cfi_offset 14, -4
+ 291 0002 0446     		mov	r4, r0
+  91:BSP/IIC/iic_hal.c ****     SDA_Output(bus,1);
+ 292              		.loc 1 91 5 is_stmt 1 view .LVU68
+ 293 0004 0121     		movs	r1, #1
+ 294 0006 FFF7FEFF 		bl	SDA_Output
+ 295              	.LVL16:
+  92:BSP/IIC/iic_hal.c ****     //delay1(DELAY_TIME);
+  93:BSP/IIC/iic_hal.c **** 		delay_us(2);
+ 296              		.loc 1 93 3 view .LVU69
+ 297 000a 0220     		movs	r0, #2
+ 298 000c FFF7FEFF 		bl	delay_us
+ 299              	.LVL17:
+  94:BSP/IIC/iic_hal.c ****     SCL_Output(bus,1);
+ 300              		.loc 1 94 5 view .LVU70
+ 301 0010 0121     		movs	r1, #1
+ 302 0012 2046     		mov	r0, r4
+ 303 0014 FFF7FEFF 		bl	SCL_Output
+ 304              	.LVL18:
+  95:BSP/IIC/iic_hal.c **** 		delay_us(1);
+ 305              		.loc 1 95 3 view .LVU71
+ 306 0018 0120     		movs	r0, #1
+ 307 001a FFF7FEFF 		bl	delay_us
+ 308              	.LVL19:
+  96:BSP/IIC/iic_hal.c ****     SDA_Output(bus,0);
+ 309              		.loc 1 96 5 view .LVU72
+ 310 001e 0021     		movs	r1, #0
+ 311 0020 2046     		mov	r0, r4
+ 312 0022 FFF7FEFF 		bl	SDA_Output
+ 313              	.LVL20:
+  97:BSP/IIC/iic_hal.c **** 		delay_us(1);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 8
+
+
+ 314              		.loc 1 97 3 view .LVU73
+ 315 0026 0120     		movs	r0, #1
+ 316 0028 FFF7FEFF 		bl	delay_us
+ 317              	.LVL21:
+  98:BSP/IIC/iic_hal.c ****     SCL_Output(bus,0);
+ 318              		.loc 1 98 5 view .LVU74
+ 319 002c 0021     		movs	r1, #0
+ 320 002e 2046     		mov	r0, r4
+ 321 0030 FFF7FEFF 		bl	SCL_Output
+ 322              	.LVL22:
+  99:BSP/IIC/iic_hal.c **** 		delay_us(1);
+ 323              		.loc 1 99 3 view .LVU75
+ 324 0034 0120     		movs	r0, #1
+ 325 0036 FFF7FEFF 		bl	delay_us
+ 326              	.LVL23:
+ 100:BSP/IIC/iic_hal.c **** }
+ 327              		.loc 1 100 1 is_stmt 0 view .LVU76
+ 328 003a 10BD     		pop	{r4, pc}
+ 329              		.loc 1 100 1 view .LVU77
+ 330              		.cfi_endproc
+ 331              	.LFE221:
+ 333              		.section	.text.IICStop,"ax",%progbits
+ 334              		.align	1
+ 335              		.global	IICStop
+ 336              		.syntax unified
+ 337              		.thumb
+ 338              		.thumb_func
+ 340              	IICStop:
+ 341              	.LVL24:
+ 342              	.LFB222:
+ 101:BSP/IIC/iic_hal.c **** 
+ 102:BSP/IIC/iic_hal.c **** /**
+ 103:BSP/IIC/iic_hal.c ****   * @brief IIC结束信号
+ 104:BSP/IIC/iic_hal.c ****   * @param None
+ 105:BSP/IIC/iic_hal.c ****   * @retval None
+ 106:BSP/IIC/iic_hal.c ****   */
+ 107:BSP/IIC/iic_hal.c **** void IICStop(iic_bus_t *bus)
+ 108:BSP/IIC/iic_hal.c **** {
+ 343              		.loc 1 108 1 is_stmt 1 view -0
+ 344              		.cfi_startproc
+ 345              		@ args = 0, pretend = 0, frame = 0
+ 346              		@ frame_needed = 0, uses_anonymous_args = 0
+ 347              		.loc 1 108 1 is_stmt 0 view .LVU79
+ 348 0000 10B5     		push	{r4, lr}
+ 349              	.LCFI8:
+ 350              		.cfi_def_cfa_offset 8
+ 351              		.cfi_offset 4, -8
+ 352              		.cfi_offset 14, -4
+ 353 0002 0446     		mov	r4, r0
+ 109:BSP/IIC/iic_hal.c ****     SCL_Output(bus,0);
+ 354              		.loc 1 109 5 is_stmt 1 view .LVU80
+ 355 0004 0021     		movs	r1, #0
+ 356 0006 FFF7FEFF 		bl	SCL_Output
+ 357              	.LVL25:
+ 110:BSP/IIC/iic_hal.c **** 		delay_us(2);
+ 358              		.loc 1 110 3 view .LVU81
+ 359 000a 0220     		movs	r0, #2
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 9
+
+
+ 360 000c FFF7FEFF 		bl	delay_us
+ 361              	.LVL26:
+ 111:BSP/IIC/iic_hal.c ****     SDA_Output(bus,0);
+ 362              		.loc 1 111 5 view .LVU82
+ 363 0010 0021     		movs	r1, #0
+ 364 0012 2046     		mov	r0, r4
+ 365 0014 FFF7FEFF 		bl	SDA_Output
+ 366              	.LVL27:
+ 112:BSP/IIC/iic_hal.c **** 		delay_us(1);
+ 367              		.loc 1 112 3 view .LVU83
+ 368 0018 0120     		movs	r0, #1
+ 369 001a FFF7FEFF 		bl	delay_us
+ 370              	.LVL28:
+ 113:BSP/IIC/iic_hal.c ****     SCL_Output(bus,1);
+ 371              		.loc 1 113 5 view .LVU84
+ 372 001e 0121     		movs	r1, #1
+ 373 0020 2046     		mov	r0, r4
+ 374 0022 FFF7FEFF 		bl	SCL_Output
+ 375              	.LVL29:
+ 114:BSP/IIC/iic_hal.c **** 		delay_us(1);
+ 376              		.loc 1 114 3 view .LVU85
+ 377 0026 0120     		movs	r0, #1
+ 378 0028 FFF7FEFF 		bl	delay_us
+ 379              	.LVL30:
+ 115:BSP/IIC/iic_hal.c ****     SDA_Output(bus,1);
+ 380              		.loc 1 115 5 view .LVU86
+ 381 002c 0121     		movs	r1, #1
+ 382 002e 2046     		mov	r0, r4
+ 383 0030 FFF7FEFF 		bl	SDA_Output
+ 384              	.LVL31:
+ 116:BSP/IIC/iic_hal.c **** 		delay_us(1);
+ 385              		.loc 1 116 3 view .LVU87
+ 386 0034 0120     		movs	r0, #1
+ 387 0036 FFF7FEFF 		bl	delay_us
+ 388              	.LVL32:
+ 117:BSP/IIC/iic_hal.c **** 
+ 118:BSP/IIC/iic_hal.c **** }
+ 389              		.loc 1 118 1 is_stmt 0 view .LVU88
+ 390 003a 10BD     		pop	{r4, pc}
+ 391              		.loc 1 118 1 view .LVU89
+ 392              		.cfi_endproc
+ 393              	.LFE222:
+ 395              		.section	.text.IICWaitAck,"ax",%progbits
+ 396              		.align	1
+ 397              		.global	IICWaitAck
+ 398              		.syntax unified
+ 399              		.thumb
+ 400              		.thumb_func
+ 402              	IICWaitAck:
+ 403              	.LVL33:
+ 404              	.LFB223:
+ 119:BSP/IIC/iic_hal.c **** 
+ 120:BSP/IIC/iic_hal.c **** /**
+ 121:BSP/IIC/iic_hal.c ****   * @brief IIC等待确认信号
+ 122:BSP/IIC/iic_hal.c ****   * @param None
+ 123:BSP/IIC/iic_hal.c ****   * @retval None
+ 124:BSP/IIC/iic_hal.c ****   */
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 10
+
+
+ 125:BSP/IIC/iic_hal.c **** unsigned char IICWaitAck(iic_bus_t *bus)
+ 126:BSP/IIC/iic_hal.c **** {
+ 405              		.loc 1 126 1 is_stmt 1 view -0
+ 406              		.cfi_startproc
+ 407              		@ args = 0, pretend = 0, frame = 0
+ 408              		@ frame_needed = 0, uses_anonymous_args = 0
+ 409              		.loc 1 126 1 is_stmt 0 view .LVU91
+ 410 0000 70B5     		push	{r4, r5, r6, lr}
+ 411              	.LCFI9:
+ 412              		.cfi_def_cfa_offset 16
+ 413              		.cfi_offset 4, -16
+ 414              		.cfi_offset 5, -12
+ 415              		.cfi_offset 6, -8
+ 416              		.cfi_offset 14, -4
+ 417 0002 0546     		mov	r5, r0
+ 127:BSP/IIC/iic_hal.c ****     unsigned short cErrTime = 5;
+ 418              		.loc 1 127 5 is_stmt 1 view .LVU92
+ 419              	.LVL34:
+ 128:BSP/IIC/iic_hal.c ****     SDA_Input_Mode(bus);
+ 420              		.loc 1 128 5 view .LVU93
+ 421 0004 FFF7FEFF 		bl	SDA_Input_Mode
+ 422              	.LVL35:
+ 129:BSP/IIC/iic_hal.c ****     SCL_Output(bus,1);
+ 423              		.loc 1 129 5 view .LVU94
+ 424 0008 0121     		movs	r1, #1
+ 425 000a 2846     		mov	r0, r5
+ 426 000c FFF7FEFF 		bl	SCL_Output
+ 427              	.LVL36:
+ 130:BSP/IIC/iic_hal.c ****     while(SDA_Input(bus))
+ 428              		.loc 1 130 5 view .LVU95
+ 127:BSP/IIC/iic_hal.c ****     SDA_Input_Mode(bus);
+ 429              		.loc 1 127 20 is_stmt 0 view .LVU96
+ 430 0010 0524     		movs	r4, #5
+ 431              	.LVL37:
+ 432              	.L20:
+ 433              		.loc 1 130 11 is_stmt 1 view .LVU97
+ 434 0012 2846     		mov	r0, r5
+ 435 0014 FFF7FEFF 		bl	SDA_Input
+ 436              	.LVL38:
+ 437              		.loc 1 130 11 is_stmt 0 discriminator 1 view .LVU98
+ 438 0018 0646     		mov	r6, r0
+ 439 001a 78B1     		cbz	r0, .L24
+ 131:BSP/IIC/iic_hal.c ****     {
+ 132:BSP/IIC/iic_hal.c ****         cErrTime--;
+ 440              		.loc 1 132 9 is_stmt 1 view .LVU99
+ 441              		.loc 1 132 17 is_stmt 0 view .LVU100
+ 442 001c 013C     		subs	r4, r4, #1
+ 443              	.LVL39:
+ 444              		.loc 1 132 17 view .LVU101
+ 445 001e A4B2     		uxth	r4, r4
+ 446              	.LVL40:
+ 133:BSP/IIC/iic_hal.c **** 				delay_us(1);
+ 447              		.loc 1 133 5 is_stmt 1 view .LVU102
+ 448 0020 0120     		movs	r0, #1
+ 449 0022 FFF7FEFF 		bl	delay_us
+ 450              	.LVL41:
+ 134:BSP/IIC/iic_hal.c ****         if (0 == cErrTime)
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 11
+
+
+ 451              		.loc 1 134 9 view .LVU103
+ 452              		.loc 1 134 12 is_stmt 0 view .LVU104
+ 453 0026 002C     		cmp	r4, #0
+ 454 0028 F3D1     		bne	.L20
+ 135:BSP/IIC/iic_hal.c ****         {
+ 136:BSP/IIC/iic_hal.c ****             SDA_Output_Mode(bus);
+ 455              		.loc 1 136 13 is_stmt 1 view .LVU105
+ 456 002a 2846     		mov	r0, r5
+ 457 002c FFF7FEFF 		bl	SDA_Output_Mode
+ 458              	.LVL42:
+ 137:BSP/IIC/iic_hal.c ****             IICStop(bus);
+ 459              		.loc 1 137 13 view .LVU106
+ 460 0030 2846     		mov	r0, r5
+ 461 0032 FFF7FEFF 		bl	IICStop
+ 462              	.LVL43:
+ 138:BSP/IIC/iic_hal.c ****             return ERROR;
+ 463              		.loc 1 138 13 view .LVU107
+ 464              		.loc 1 138 20 is_stmt 0 view .LVU108
+ 465 0036 0126     		movs	r6, #1
+ 466              	.L21:
+ 139:BSP/IIC/iic_hal.c ****         }
+ 140:BSP/IIC/iic_hal.c ****     }
+ 141:BSP/IIC/iic_hal.c ****     SDA_Output_Mode(bus);
+ 142:BSP/IIC/iic_hal.c ****     SCL_Output(bus,0);
+ 143:BSP/IIC/iic_hal.c **** 		delay_us(2);
+ 144:BSP/IIC/iic_hal.c ****     return SUCCESS;
+ 145:BSP/IIC/iic_hal.c **** }
+ 467              		.loc 1 145 1 view .LVU109
+ 468 0038 3046     		mov	r0, r6
+ 469 003a 70BD     		pop	{r4, r5, r6, pc}
+ 470              	.LVL44:
+ 471              	.L24:
+ 141:BSP/IIC/iic_hal.c ****     SCL_Output(bus,0);
+ 472              		.loc 1 141 5 is_stmt 1 view .LVU110
+ 473 003c 2846     		mov	r0, r5
+ 474 003e FFF7FEFF 		bl	SDA_Output_Mode
+ 475              	.LVL45:
+ 142:BSP/IIC/iic_hal.c **** 		delay_us(2);
+ 476              		.loc 1 142 5 view .LVU111
+ 477 0042 0021     		movs	r1, #0
+ 478 0044 2846     		mov	r0, r5
+ 479 0046 FFF7FEFF 		bl	SCL_Output
+ 480              	.LVL46:
+ 143:BSP/IIC/iic_hal.c ****     return SUCCESS;
+ 481              		.loc 1 143 3 view .LVU112
+ 482 004a 0220     		movs	r0, #2
+ 483 004c FFF7FEFF 		bl	delay_us
+ 484              	.LVL47:
+ 144:BSP/IIC/iic_hal.c **** }
+ 485              		.loc 1 144 5 view .LVU113
+ 144:BSP/IIC/iic_hal.c **** }
+ 486              		.loc 1 144 12 is_stmt 0 view .LVU114
+ 487 0050 F2E7     		b	.L21
+ 488              		.cfi_endproc
+ 489              	.LFE223:
+ 491              		.section	.text.IICSendAck,"ax",%progbits
+ 492              		.align	1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 12
+
+
+ 493              		.global	IICSendAck
+ 494              		.syntax unified
+ 495              		.thumb
+ 496              		.thumb_func
+ 498              	IICSendAck:
+ 499              	.LVL48:
+ 500              	.LFB224:
+ 146:BSP/IIC/iic_hal.c **** 
+ 147:BSP/IIC/iic_hal.c **** /**
+ 148:BSP/IIC/iic_hal.c ****   * @brief IIC发送确认信号
+ 149:BSP/IIC/iic_hal.c ****   * @param None
+ 150:BSP/IIC/iic_hal.c ****   * @retval None
+ 151:BSP/IIC/iic_hal.c ****   */
+ 152:BSP/IIC/iic_hal.c **** void IICSendAck(iic_bus_t *bus)
+ 153:BSP/IIC/iic_hal.c **** {
+ 501              		.loc 1 153 1 is_stmt 1 view -0
+ 502              		.cfi_startproc
+ 503              		@ args = 0, pretend = 0, frame = 0
+ 504              		@ frame_needed = 0, uses_anonymous_args = 0
+ 505              		.loc 1 153 1 is_stmt 0 view .LVU116
+ 506 0000 10B5     		push	{r4, lr}
+ 507              	.LCFI10:
+ 508              		.cfi_def_cfa_offset 8
+ 509              		.cfi_offset 4, -8
+ 510              		.cfi_offset 14, -4
+ 511 0002 0446     		mov	r4, r0
+ 154:BSP/IIC/iic_hal.c ****     SDA_Output(bus,0);
+ 512              		.loc 1 154 5 is_stmt 1 view .LVU117
+ 513 0004 0021     		movs	r1, #0
+ 514 0006 FFF7FEFF 		bl	SDA_Output
+ 515              	.LVL49:
+ 155:BSP/IIC/iic_hal.c **** 		delay_us(1);
+ 516              		.loc 1 155 3 view .LVU118
+ 517 000a 0120     		movs	r0, #1
+ 518 000c FFF7FEFF 		bl	delay_us
+ 519              	.LVL50:
+ 156:BSP/IIC/iic_hal.c ****     SCL_Output(bus,1);
+ 520              		.loc 1 156 5 view .LVU119
+ 521 0010 0121     		movs	r1, #1
+ 522 0012 2046     		mov	r0, r4
+ 523 0014 FFF7FEFF 		bl	SCL_Output
+ 524              	.LVL51:
+ 157:BSP/IIC/iic_hal.c **** 		delay_us(1);
+ 525              		.loc 1 157 3 view .LVU120
+ 526 0018 0120     		movs	r0, #1
+ 527 001a FFF7FEFF 		bl	delay_us
+ 528              	.LVL52:
+ 158:BSP/IIC/iic_hal.c ****     SCL_Output(bus,0);
+ 529              		.loc 1 158 5 view .LVU121
+ 530 001e 0021     		movs	r1, #0
+ 531 0020 2046     		mov	r0, r4
+ 532 0022 FFF7FEFF 		bl	SCL_Output
+ 533              	.LVL53:
+ 159:BSP/IIC/iic_hal.c **** 		delay_us(1);
+ 534              		.loc 1 159 3 view .LVU122
+ 535 0026 0120     		movs	r0, #1
+ 536 0028 FFF7FEFF 		bl	delay_us
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 13
+
+
+ 537              	.LVL54:
+ 160:BSP/IIC/iic_hal.c **** 	
+ 161:BSP/IIC/iic_hal.c **** }
+ 538              		.loc 1 161 1 is_stmt 0 view .LVU123
+ 539 002c 10BD     		pop	{r4, pc}
+ 540              		.loc 1 161 1 view .LVU124
+ 541              		.cfi_endproc
+ 542              	.LFE224:
+ 544              		.section	.text.IICSendNotAck,"ax",%progbits
+ 545              		.align	1
+ 546              		.global	IICSendNotAck
+ 547              		.syntax unified
+ 548              		.thumb
+ 549              		.thumb_func
+ 551              	IICSendNotAck:
+ 552              	.LVL55:
+ 553              	.LFB225:
+ 162:BSP/IIC/iic_hal.c **** 
+ 163:BSP/IIC/iic_hal.c **** /**
+ 164:BSP/IIC/iic_hal.c ****   * @brief IIC发送非确认信号
+ 165:BSP/IIC/iic_hal.c ****   * @param None
+ 166:BSP/IIC/iic_hal.c ****   * @retval None
+ 167:BSP/IIC/iic_hal.c ****   */
+ 168:BSP/IIC/iic_hal.c **** void IICSendNotAck(iic_bus_t *bus)
+ 169:BSP/IIC/iic_hal.c **** {
+ 554              		.loc 1 169 1 is_stmt 1 view -0
+ 555              		.cfi_startproc
+ 556              		@ args = 0, pretend = 0, frame = 0
+ 557              		@ frame_needed = 0, uses_anonymous_args = 0
+ 558              		.loc 1 169 1 is_stmt 0 view .LVU126
+ 559 0000 10B5     		push	{r4, lr}
+ 560              	.LCFI11:
+ 561              		.cfi_def_cfa_offset 8
+ 562              		.cfi_offset 4, -8
+ 563              		.cfi_offset 14, -4
+ 564 0002 0446     		mov	r4, r0
+ 170:BSP/IIC/iic_hal.c ****     SDA_Output(bus,1);
+ 565              		.loc 1 170 5 is_stmt 1 view .LVU127
+ 566 0004 0121     		movs	r1, #1
+ 567 0006 FFF7FEFF 		bl	SDA_Output
+ 568              	.LVL56:
+ 171:BSP/IIC/iic_hal.c **** 		delay_us(1);
+ 569              		.loc 1 171 3 view .LVU128
+ 570 000a 0120     		movs	r0, #1
+ 571 000c FFF7FEFF 		bl	delay_us
+ 572              	.LVL57:
+ 172:BSP/IIC/iic_hal.c ****     SCL_Output(bus,1);
+ 573              		.loc 1 172 5 view .LVU129
+ 574 0010 0121     		movs	r1, #1
+ 575 0012 2046     		mov	r0, r4
+ 576 0014 FFF7FEFF 		bl	SCL_Output
+ 577              	.LVL58:
+ 173:BSP/IIC/iic_hal.c **** 		delay_us(1);
+ 578              		.loc 1 173 3 view .LVU130
+ 579 0018 0120     		movs	r0, #1
+ 580 001a FFF7FEFF 		bl	delay_us
+ 581              	.LVL59:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 14
+
+
+ 174:BSP/IIC/iic_hal.c ****     SCL_Output(bus,0);
+ 582              		.loc 1 174 5 view .LVU131
+ 583 001e 0021     		movs	r1, #0
+ 584 0020 2046     		mov	r0, r4
+ 585 0022 FFF7FEFF 		bl	SCL_Output
+ 586              	.LVL60:
+ 175:BSP/IIC/iic_hal.c **** 		delay_us(2);
+ 587              		.loc 1 175 3 view .LVU132
+ 588 0026 0220     		movs	r0, #2
+ 589 0028 FFF7FEFF 		bl	delay_us
+ 590              	.LVL61:
+ 176:BSP/IIC/iic_hal.c **** 
+ 177:BSP/IIC/iic_hal.c **** }
+ 591              		.loc 1 177 1 is_stmt 0 view .LVU133
+ 592 002c 10BD     		pop	{r4, pc}
+ 593              		.loc 1 177 1 view .LVU134
+ 594              		.cfi_endproc
+ 595              	.LFE225:
+ 597              		.section	.text.IICSendByte,"ax",%progbits
+ 598              		.align	1
+ 599              		.global	IICSendByte
+ 600              		.syntax unified
+ 601              		.thumb
+ 602              		.thumb_func
+ 604              	IICSendByte:
+ 605              	.LVL62:
+ 606              	.LFB226:
+ 178:BSP/IIC/iic_hal.c **** 
+ 179:BSP/IIC/iic_hal.c **** /**
+ 180:BSP/IIC/iic_hal.c ****   * @brief IIC发送一个字节
+ 181:BSP/IIC/iic_hal.c ****   * @param cSendByte 需要发送的字节
+ 182:BSP/IIC/iic_hal.c ****   * @retval None
+ 183:BSP/IIC/iic_hal.c ****   */
+ 184:BSP/IIC/iic_hal.c **** void IICSendByte(iic_bus_t *bus,unsigned char cSendByte)
+ 185:BSP/IIC/iic_hal.c **** {
+ 607              		.loc 1 185 1 is_stmt 1 view -0
+ 608              		.cfi_startproc
+ 609              		@ args = 0, pretend = 0, frame = 0
+ 610              		@ frame_needed = 0, uses_anonymous_args = 0
+ 611              		.loc 1 185 1 is_stmt 0 view .LVU136
+ 612 0000 70B5     		push	{r4, r5, r6, lr}
+ 613              	.LCFI12:
+ 614              		.cfi_def_cfa_offset 16
+ 615              		.cfi_offset 4, -16
+ 616              		.cfi_offset 5, -12
+ 617              		.cfi_offset 6, -8
+ 618              		.cfi_offset 14, -4
+ 619 0002 0646     		mov	r6, r0
+ 620 0004 0C46     		mov	r4, r1
+ 186:BSP/IIC/iic_hal.c ****     unsigned char  i = 8;
+ 621              		.loc 1 186 5 is_stmt 1 view .LVU137
+ 622              	.LVL63:
+ 187:BSP/IIC/iic_hal.c ****     while (i--)
+ 623              		.loc 1 187 5 view .LVU138
+ 186:BSP/IIC/iic_hal.c ****     unsigned char  i = 8;
+ 624              		.loc 1 186 20 is_stmt 0 view .LVU139
+ 625 0006 0822     		movs	r2, #8
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 15
+
+
+ 626              		.loc 1 187 11 view .LVU140
+ 627 0008 1BE0     		b	.L30
+ 628              	.LVL64:
+ 629              	.L31:
+ 188:BSP/IIC/iic_hal.c ****     {
+ 189:BSP/IIC/iic_hal.c ****         SCL_Output(bus,0);
+ 630              		.loc 1 189 9 is_stmt 1 view .LVU141
+ 631 000a 0021     		movs	r1, #0
+ 632 000c 3046     		mov	r0, r6
+ 633 000e FFF7FEFF 		bl	SCL_Output
+ 634              	.LVL65:
+ 190:BSP/IIC/iic_hal.c ****         delay_us(2);
+ 635              		.loc 1 190 9 view .LVU142
+ 636 0012 0220     		movs	r0, #2
+ 637 0014 FFF7FEFF 		bl	delay_us
+ 638              	.LVL66:
+ 191:BSP/IIC/iic_hal.c ****         SDA_Output(bus, cSendByte & 0x80);
+ 639              		.loc 1 191 9 view .LVU143
+ 640 0018 04F08001 		and	r1, r4, #128
+ 641 001c 3046     		mov	r0, r6
+ 642 001e FFF7FEFF 		bl	SDA_Output
+ 643              	.LVL67:
+ 192:BSP/IIC/iic_hal.c **** 				delay_us(1);
+ 644              		.loc 1 192 5 view .LVU144
+ 645 0022 0120     		movs	r0, #1
+ 646 0024 FFF7FEFF 		bl	delay_us
+ 647              	.LVL68:
+ 193:BSP/IIC/iic_hal.c ****         cSendByte += cSendByte;
+ 648              		.loc 1 193 9 view .LVU145
+ 649              		.loc 1 193 19 is_stmt 0 view .LVU146
+ 650 0028 6400     		lsls	r4, r4, #1
+ 651              	.LVL69:
+ 652              		.loc 1 193 19 view .LVU147
+ 653 002a E4B2     		uxtb	r4, r4
+ 654              	.LVL70:
+ 194:BSP/IIC/iic_hal.c **** 				delay_us(1);
+ 655              		.loc 1 194 5 is_stmt 1 view .LVU148
+ 656 002c 0120     		movs	r0, #1
+ 657 002e FFF7FEFF 		bl	delay_us
+ 658              	.LVL71:
+ 195:BSP/IIC/iic_hal.c ****         SCL_Output(bus,1);
+ 659              		.loc 1 195 9 view .LVU149
+ 660 0032 0121     		movs	r1, #1
+ 661 0034 3046     		mov	r0, r6
+ 662 0036 FFF7FEFF 		bl	SCL_Output
+ 663              	.LVL72:
+ 196:BSP/IIC/iic_hal.c **** 				delay_us(1);
+ 664              		.loc 1 196 5 view .LVU150
+ 665 003a 0120     		movs	r0, #1
+ 666 003c FFF7FEFF 		bl	delay_us
+ 667              	.LVL73:
+ 187:BSP/IIC/iic_hal.c ****     {
+ 668              		.loc 1 187 13 is_stmt 0 view .LVU151
+ 669 0040 2A46     		mov	r2, r5
+ 670              	.LVL74:
+ 671              	.L30:
+ 187:BSP/IIC/iic_hal.c ****     {
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 16
+
+
+ 672              		.loc 1 187 12 is_stmt 1 view .LVU152
+ 187:BSP/IIC/iic_hal.c ****     {
+ 673              		.loc 1 187 13 is_stmt 0 view .LVU153
+ 674 0042 531E     		subs	r3, r2, #1
+ 675 0044 DDB2     		uxtb	r5, r3
+ 676              	.LVL75:
+ 187:BSP/IIC/iic_hal.c ****     {
+ 677              		.loc 1 187 12 view .LVU154
+ 678 0046 002A     		cmp	r2, #0
+ 679 0048 DFD1     		bne	.L31
+ 197:BSP/IIC/iic_hal.c ****     }
+ 198:BSP/IIC/iic_hal.c ****     SCL_Output(bus,0);
+ 680              		.loc 1 198 5 is_stmt 1 view .LVU155
+ 681 004a 0021     		movs	r1, #0
+ 682 004c 3046     		mov	r0, r6
+ 683 004e FFF7FEFF 		bl	SCL_Output
+ 684              	.LVL76:
+ 199:BSP/IIC/iic_hal.c **** 		delay_us(2);
+ 685              		.loc 1 199 3 view .LVU156
+ 686 0052 0220     		movs	r0, #2
+ 687 0054 FFF7FEFF 		bl	delay_us
+ 688              	.LVL77:
+ 200:BSP/IIC/iic_hal.c **** }
+ 689              		.loc 1 200 1 is_stmt 0 view .LVU157
+ 690 0058 70BD     		pop	{r4, r5, r6, pc}
+ 691              		.loc 1 200 1 view .LVU158
+ 692              		.cfi_endproc
+ 693              	.LFE226:
+ 695              		.section	.text.IICReceiveByte,"ax",%progbits
+ 696              		.align	1
+ 697              		.global	IICReceiveByte
+ 698              		.syntax unified
+ 699              		.thumb
+ 700              		.thumb_func
+ 702              	IICReceiveByte:
+ 703              	.LVL78:
+ 704              	.LFB227:
+ 201:BSP/IIC/iic_hal.c **** 
+ 202:BSP/IIC/iic_hal.c **** /**
+ 203:BSP/IIC/iic_hal.c ****   * @brief IIC接收一个字节
+ 204:BSP/IIC/iic_hal.c ****   * @param None
+ 205:BSP/IIC/iic_hal.c ****   * @retval 接收到的字节
+ 206:BSP/IIC/iic_hal.c ****   */
+ 207:BSP/IIC/iic_hal.c **** unsigned char IICReceiveByte(iic_bus_t *bus)
+ 208:BSP/IIC/iic_hal.c **** {
+ 705              		.loc 1 208 1 is_stmt 1 view -0
+ 706              		.cfi_startproc
+ 707              		@ args = 0, pretend = 0, frame = 0
+ 708              		@ frame_needed = 0, uses_anonymous_args = 0
+ 709              		.loc 1 208 1 is_stmt 0 view .LVU160
+ 710 0000 70B5     		push	{r4, r5, r6, lr}
+ 711              	.LCFI13:
+ 712              		.cfi_def_cfa_offset 16
+ 713              		.cfi_offset 4, -16
+ 714              		.cfi_offset 5, -12
+ 715              		.cfi_offset 6, -8
+ 716              		.cfi_offset 14, -4
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 17
+
+
+ 717 0002 0646     		mov	r6, r0
+ 209:BSP/IIC/iic_hal.c ****     unsigned char i = 8;
+ 718              		.loc 1 209 5 is_stmt 1 view .LVU161
+ 719              	.LVL79:
+ 210:BSP/IIC/iic_hal.c ****     unsigned char cR_Byte = 0;
+ 720              		.loc 1 210 5 view .LVU162
+ 211:BSP/IIC/iic_hal.c ****     SDA_Input_Mode(bus);
+ 721              		.loc 1 211 5 view .LVU163
+ 722 0004 FFF7FEFF 		bl	SDA_Input_Mode
+ 723              	.LVL80:
+ 212:BSP/IIC/iic_hal.c ****     while (i--)
+ 724              		.loc 1 212 5 view .LVU164
+ 210:BSP/IIC/iic_hal.c ****     unsigned char cR_Byte = 0;
+ 725              		.loc 1 210 19 is_stmt 0 view .LVU165
+ 726 0008 0024     		movs	r4, #0
+ 209:BSP/IIC/iic_hal.c ****     unsigned char cR_Byte = 0;
+ 727              		.loc 1 209 19 view .LVU166
+ 728 000a 0822     		movs	r2, #8
+ 729              		.loc 1 212 11 view .LVU167
+ 730 000c 15E0     		b	.L34
+ 731              	.LVL81:
+ 732              	.L35:
+ 213:BSP/IIC/iic_hal.c ****     {
+ 214:BSP/IIC/iic_hal.c ****         cR_Byte += cR_Byte;
+ 733              		.loc 1 214 9 is_stmt 1 view .LVU168
+ 734              		.loc 1 214 17 is_stmt 0 view .LVU169
+ 735 000e 6400     		lsls	r4, r4, #1
+ 736              	.LVL82:
+ 737              		.loc 1 214 17 view .LVU170
+ 738 0010 E4B2     		uxtb	r4, r4
+ 739              	.LVL83:
+ 215:BSP/IIC/iic_hal.c ****         SCL_Output(bus,0);
+ 740              		.loc 1 215 9 is_stmt 1 view .LVU171
+ 741 0012 0021     		movs	r1, #0
+ 742 0014 3046     		mov	r0, r6
+ 743 0016 FFF7FEFF 		bl	SCL_Output
+ 744              	.LVL84:
+ 216:BSP/IIC/iic_hal.c **** 				delay_us(2);
+ 745              		.loc 1 216 5 view .LVU172
+ 746 001a 0220     		movs	r0, #2
+ 747 001c FFF7FEFF 		bl	delay_us
+ 748              	.LVL85:
+ 217:BSP/IIC/iic_hal.c ****         SCL_Output(bus,1);
+ 749              		.loc 1 217 9 view .LVU173
+ 750 0020 0121     		movs	r1, #1
+ 751 0022 3046     		mov	r0, r6
+ 752 0024 FFF7FEFF 		bl	SCL_Output
+ 753              	.LVL86:
+ 218:BSP/IIC/iic_hal.c **** 				delay_us(1);
+ 754              		.loc 1 218 5 view .LVU174
+ 755 0028 0120     		movs	r0, #1
+ 756 002a FFF7FEFF 		bl	delay_us
+ 757              	.LVL87:
+ 219:BSP/IIC/iic_hal.c ****         cR_Byte |=  SDA_Input(bus);
+ 758              		.loc 1 219 9 view .LVU175
+ 759              		.loc 1 219 21 is_stmt 0 view .LVU176
+ 760 002e 3046     		mov	r0, r6
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 18
+
+
+ 761 0030 FFF7FEFF 		bl	SDA_Input
+ 762              	.LVL88:
+ 763              		.loc 1 219 17 discriminator 1 view .LVU177
+ 764 0034 0443     		orrs	r4, r4, r0
+ 765              	.LVL89:
+ 766              		.loc 1 219 17 discriminator 1 view .LVU178
+ 767 0036 E4B2     		uxtb	r4, r4
+ 768              	.LVL90:
+ 212:BSP/IIC/iic_hal.c ****     {
+ 769              		.loc 1 212 13 view .LVU179
+ 770 0038 2A46     		mov	r2, r5
+ 771              	.LVL91:
+ 772              	.L34:
+ 212:BSP/IIC/iic_hal.c ****     {
+ 773              		.loc 1 212 12 is_stmt 1 view .LVU180
+ 212:BSP/IIC/iic_hal.c ****     {
+ 774              		.loc 1 212 13 is_stmt 0 view .LVU181
+ 775 003a 531E     		subs	r3, r2, #1
+ 776 003c DDB2     		uxtb	r5, r3
+ 777              	.LVL92:
+ 212:BSP/IIC/iic_hal.c ****     {
+ 778              		.loc 1 212 12 view .LVU182
+ 779 003e 002A     		cmp	r2, #0
+ 780 0040 E5D1     		bne	.L35
+ 220:BSP/IIC/iic_hal.c ****     }
+ 221:BSP/IIC/iic_hal.c ****     SCL_Output(bus,0);
+ 781              		.loc 1 221 5 is_stmt 1 view .LVU183
+ 782 0042 0021     		movs	r1, #0
+ 783 0044 3046     		mov	r0, r6
+ 784 0046 FFF7FEFF 		bl	SCL_Output
+ 785              	.LVL93:
+ 222:BSP/IIC/iic_hal.c ****     SDA_Output_Mode(bus);
+ 786              		.loc 1 222 5 view .LVU184
+ 787 004a 3046     		mov	r0, r6
+ 788 004c FFF7FEFF 		bl	SDA_Output_Mode
+ 789              	.LVL94:
+ 223:BSP/IIC/iic_hal.c ****     return cR_Byte;
+ 790              		.loc 1 223 5 view .LVU185
+ 224:BSP/IIC/iic_hal.c **** }
+ 791              		.loc 1 224 1 is_stmt 0 view .LVU186
+ 792 0050 2046     		mov	r0, r4
+ 793 0052 70BD     		pop	{r4, r5, r6, pc}
+ 794              		.loc 1 224 1 view .LVU187
+ 795              		.cfi_endproc
+ 796              	.LFE227:
+ 798              		.section	.text.IIC_Write_One_Byte,"ax",%progbits
+ 799              		.align	1
+ 800              		.global	IIC_Write_One_Byte
+ 801              		.syntax unified
+ 802              		.thumb
+ 803              		.thumb_func
+ 805              	IIC_Write_One_Byte:
+ 806              	.LVL95:
+ 807              	.LFB228:
+ 225:BSP/IIC/iic_hal.c **** 
+ 226:BSP/IIC/iic_hal.c **** uint8_t IIC_Write_One_Byte(iic_bus_t *bus, uint8_t daddr,uint8_t reg,uint8_t data)
+ 227:BSP/IIC/iic_hal.c **** {				   	  	    																 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 19
+
+
+ 808              		.loc 1 227 1 is_stmt 1 view -0
+ 809              		.cfi_startproc
+ 810              		@ args = 0, pretend = 0, frame = 0
+ 811              		@ frame_needed = 0, uses_anonymous_args = 0
+ 812              		.loc 1 227 1 is_stmt 0 view .LVU189
+ 813 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 814              	.LCFI14:
+ 815              		.cfi_def_cfa_offset 24
+ 816              		.cfi_offset 3, -24
+ 817              		.cfi_offset 4, -20
+ 818              		.cfi_offset 5, -16
+ 819              		.cfi_offset 6, -12
+ 820              		.cfi_offset 7, -8
+ 821              		.cfi_offset 14, -4
+ 822 0002 0446     		mov	r4, r0
+ 823 0004 0D46     		mov	r5, r1
+ 824 0006 1746     		mov	r7, r2
+ 825 0008 1E46     		mov	r6, r3
+ 228:BSP/IIC/iic_hal.c ****   IICStart(bus);  
+ 826              		.loc 1 228 3 is_stmt 1 view .LVU190
+ 827 000a FFF7FEFF 		bl	IICStart
+ 828              	.LVL96:
+ 229:BSP/IIC/iic_hal.c **** 	
+ 230:BSP/IIC/iic_hal.c **** 	IICSendByte(bus,daddr<<1);	    
+ 829              		.loc 1 230 2 view .LVU191
+ 830 000e 6D00     		lsls	r5, r5, #1
+ 831              	.LVL97:
+ 832              		.loc 1 230 2 is_stmt 0 view .LVU192
+ 833 0010 05F0FE01 		and	r1, r5, #254
+ 834 0014 2046     		mov	r0, r4
+ 835 0016 FFF7FEFF 		bl	IICSendByte
+ 836              	.LVL98:
+ 231:BSP/IIC/iic_hal.c **** 	if(IICWaitAck(bus))	//等待应答
+ 837              		.loc 1 231 2 is_stmt 1 view .LVU193
+ 838              		.loc 1 231 5 is_stmt 0 view .LVU194
+ 839 001a 2046     		mov	r0, r4
+ 840 001c FFF7FEFF 		bl	IICWaitAck
+ 841              	.LVL99:
+ 842              		.loc 1 231 4 discriminator 1 view .LVU195
+ 843 0020 B0B9     		cbnz	r0, .L41
+ 844 0022 0546     		mov	r5, r0
+ 232:BSP/IIC/iic_hal.c **** 	{
+ 233:BSP/IIC/iic_hal.c **** 		IICStop(bus);		 
+ 234:BSP/IIC/iic_hal.c **** 		return 1;		
+ 235:BSP/IIC/iic_hal.c **** 	}
+ 236:BSP/IIC/iic_hal.c **** 	IICSendByte(bus,reg);
+ 845              		.loc 1 236 2 is_stmt 1 view .LVU196
+ 846 0024 3946     		mov	r1, r7
+ 847 0026 2046     		mov	r0, r4
+ 848 0028 FFF7FEFF 		bl	IICSendByte
+ 849              	.LVL100:
+ 237:BSP/IIC/iic_hal.c **** 	IICWaitAck(bus);	   	 										  		   
+ 850              		.loc 1 237 2 view .LVU197
+ 851 002c 2046     		mov	r0, r4
+ 852 002e FFF7FEFF 		bl	IICWaitAck
+ 853              	.LVL101:
+ 238:BSP/IIC/iic_hal.c **** 	IICSendByte(bus,data);     						   
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 20
+
+
+ 854              		.loc 1 238 2 view .LVU198
+ 855 0032 3146     		mov	r1, r6
+ 856 0034 2046     		mov	r0, r4
+ 857 0036 FFF7FEFF 		bl	IICSendByte
+ 858              	.LVL102:
+ 239:BSP/IIC/iic_hal.c **** 	IICWaitAck(bus);  		    	   
+ 859              		.loc 1 239 2 view .LVU199
+ 860 003a 2046     		mov	r0, r4
+ 861 003c FFF7FEFF 		bl	IICWaitAck
+ 862              	.LVL103:
+ 240:BSP/IIC/iic_hal.c ****   IICStop(bus);
+ 863              		.loc 1 240 3 view .LVU200
+ 864 0040 2046     		mov	r0, r4
+ 865 0042 FFF7FEFF 		bl	IICStop
+ 866              	.LVL104:
+ 241:BSP/IIC/iic_hal.c **** 	delay_us(1);
+ 867              		.loc 1 241 2 view .LVU201
+ 868 0046 0120     		movs	r0, #1
+ 869 0048 FFF7FEFF 		bl	delay_us
+ 870              	.LVL105:
+ 242:BSP/IIC/iic_hal.c **** 	return 0;
+ 871              		.loc 1 242 2 view .LVU202
+ 872              	.L39:
+ 243:BSP/IIC/iic_hal.c **** }
+ 873              		.loc 1 243 1 is_stmt 0 view .LVU203
+ 874 004c 2846     		mov	r0, r5
+ 875 004e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 876              	.LVL106:
+ 877              	.L41:
+ 233:BSP/IIC/iic_hal.c **** 		return 1;		
+ 878              		.loc 1 233 3 is_stmt 1 view .LVU204
+ 879 0050 2046     		mov	r0, r4
+ 880 0052 FFF7FEFF 		bl	IICStop
+ 881              	.LVL107:
+ 234:BSP/IIC/iic_hal.c **** 	}
+ 882              		.loc 1 234 3 view .LVU205
+ 234:BSP/IIC/iic_hal.c **** 	}
+ 883              		.loc 1 234 10 is_stmt 0 view .LVU206
+ 884 0056 0125     		movs	r5, #1
+ 885 0058 F8E7     		b	.L39
+ 886              		.cfi_endproc
+ 887              	.LFE228:
+ 889              		.section	.text.IIC_Write_Multi_Byte,"ax",%progbits
+ 890              		.align	1
+ 891              		.global	IIC_Write_Multi_Byte
+ 892              		.syntax unified
+ 893              		.thumb
+ 894              		.thumb_func
+ 896              	IIC_Write_Multi_Byte:
+ 897              	.LVL108:
+ 898              	.LFB229:
+ 244:BSP/IIC/iic_hal.c **** 
+ 245:BSP/IIC/iic_hal.c **** uint8_t IIC_Write_Multi_Byte(iic_bus_t *bus, uint8_t daddr,uint8_t reg,uint8_t length,uint8_t buff[
+ 246:BSP/IIC/iic_hal.c **** {			
+ 899              		.loc 1 246 1 is_stmt 1 view -0
+ 900              		.cfi_startproc
+ 901              		@ args = 4, pretend = 0, frame = 0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 21
+
+
+ 902              		@ frame_needed = 0, uses_anonymous_args = 0
+ 903              		.loc 1 246 1 is_stmt 0 view .LVU208
+ 904 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 905              	.LCFI15:
+ 906              		.cfi_def_cfa_offset 32
+ 907              		.cfi_offset 3, -32
+ 908              		.cfi_offset 4, -28
+ 909              		.cfi_offset 5, -24
+ 910              		.cfi_offset 6, -20
+ 911              		.cfi_offset 7, -16
+ 912              		.cfi_offset 8, -12
+ 913              		.cfi_offset 9, -8
+ 914              		.cfi_offset 14, -4
+ 915 0004 0546     		mov	r5, r0
+ 916 0006 0C46     		mov	r4, r1
+ 917 0008 9046     		mov	r8, r2
+ 918 000a 1E46     		mov	r6, r3
+ 919 000c 089F     		ldr	r7, [sp, #32]
+ 247:BSP/IIC/iic_hal.c **** 	unsigned char i;	
+ 920              		.loc 1 247 2 is_stmt 1 view .LVU209
+ 248:BSP/IIC/iic_hal.c ****   IICStart(bus);  
+ 921              		.loc 1 248 3 view .LVU210
+ 922 000e FFF7FEFF 		bl	IICStart
+ 923              	.LVL109:
+ 249:BSP/IIC/iic_hal.c **** 	
+ 250:BSP/IIC/iic_hal.c **** 	IICSendByte(bus,daddr<<1);	    
+ 924              		.loc 1 250 2 view .LVU211
+ 925 0012 6100     		lsls	r1, r4, #1
+ 926 0014 01F0FE01 		and	r1, r1, #254
+ 927 0018 2846     		mov	r0, r5
+ 928 001a FFF7FEFF 		bl	IICSendByte
+ 929              	.LVL110:
+ 251:BSP/IIC/iic_hal.c **** 	if(IICWaitAck(bus))
+ 930              		.loc 1 251 2 view .LVU212
+ 931              		.loc 1 251 5 is_stmt 0 view .LVU213
+ 932 001e 2846     		mov	r0, r5
+ 933 0020 FFF7FEFF 		bl	IICWaitAck
+ 934              	.LVL111:
+ 935              		.loc 1 251 4 discriminator 1 view .LVU214
+ 936 0024 48B9     		cbnz	r0, .L48
+ 937 0026 8146     		mov	r9, r0
+ 252:BSP/IIC/iic_hal.c **** 	{
+ 253:BSP/IIC/iic_hal.c **** 		IICStop(bus);
+ 254:BSP/IIC/iic_hal.c **** 		return 1;
+ 255:BSP/IIC/iic_hal.c **** 	}
+ 256:BSP/IIC/iic_hal.c **** 	IICSendByte(bus,reg);
+ 938              		.loc 1 256 2 is_stmt 1 view .LVU215
+ 939 0028 4146     		mov	r1, r8
+ 940 002a 2846     		mov	r0, r5
+ 941 002c FFF7FEFF 		bl	IICSendByte
+ 942              	.LVL112:
+ 257:BSP/IIC/iic_hal.c **** 	IICWaitAck(bus);	
+ 943              		.loc 1 257 2 view .LVU216
+ 944 0030 2846     		mov	r0, r5
+ 945 0032 FFF7FEFF 		bl	IICWaitAck
+ 946              	.LVL113:
+ 258:BSP/IIC/iic_hal.c **** 	for(i=0;i<length;i++)
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 22
+
+
+ 947              		.loc 1 258 2 view .LVU217
+ 948              		.loc 1 258 7 is_stmt 0 view .LVU218
+ 949 0036 4C46     		mov	r4, r9
+ 950              	.LVL114:
+ 951              		.loc 1 258 2 view .LVU219
+ 952 0038 0EE0     		b	.L45
+ 953              	.LVL115:
+ 954              	.L48:
+ 253:BSP/IIC/iic_hal.c **** 		return 1;
+ 955              		.loc 1 253 3 is_stmt 1 view .LVU220
+ 956 003a 2846     		mov	r0, r5
+ 957 003c FFF7FEFF 		bl	IICStop
+ 958              	.LVL116:
+ 254:BSP/IIC/iic_hal.c **** 	}
+ 959              		.loc 1 254 3 view .LVU221
+ 254:BSP/IIC/iic_hal.c **** 	}
+ 960              		.loc 1 254 10 is_stmt 0 view .LVU222
+ 961 0040 4FF00109 		mov	r9, #1
+ 962 0044 10E0     		b	.L44
+ 963              	.LVL117:
+ 964              	.L46:
+ 259:BSP/IIC/iic_hal.c **** 	{
+ 260:BSP/IIC/iic_hal.c **** 		IICSendByte(bus,buff[i]);     						   
+ 965              		.loc 1 260 3 is_stmt 1 view .LVU223
+ 966 0046 395D     		ldrb	r1, [r7, r4]	@ zero_extendqisi2
+ 967 0048 2846     		mov	r0, r5
+ 968 004a FFF7FEFF 		bl	IICSendByte
+ 969              	.LVL118:
+ 261:BSP/IIC/iic_hal.c **** 		IICWaitAck(bus); 
+ 970              		.loc 1 261 3 view .LVU224
+ 971 004e 2846     		mov	r0, r5
+ 972 0050 FFF7FEFF 		bl	IICWaitAck
+ 973              	.LVL119:
+ 258:BSP/IIC/iic_hal.c **** 	{
+ 974              		.loc 1 258 20 discriminator 3 view .LVU225
+ 975 0054 0134     		adds	r4, r4, #1
+ 976              	.LVL120:
+ 258:BSP/IIC/iic_hal.c **** 	{
+ 977              		.loc 1 258 20 is_stmt 0 discriminator 3 view .LVU226
+ 978 0056 E4B2     		uxtb	r4, r4
+ 979              	.LVL121:
+ 980              	.L45:
+ 258:BSP/IIC/iic_hal.c **** 	{
+ 981              		.loc 1 258 11 is_stmt 1 discriminator 1 view .LVU227
+ 982 0058 B442     		cmp	r4, r6
+ 983 005a F4D3     		bcc	.L46
+ 262:BSP/IIC/iic_hal.c **** 	}		    	   
+ 263:BSP/IIC/iic_hal.c ****   IICStop(bus);
+ 984              		.loc 1 263 3 view .LVU228
+ 985 005c 2846     		mov	r0, r5
+ 986 005e FFF7FEFF 		bl	IICStop
+ 987              	.LVL122:
+ 264:BSP/IIC/iic_hal.c **** 	delay_us(1);
+ 988              		.loc 1 264 2 view .LVU229
+ 989 0062 0120     		movs	r0, #1
+ 990 0064 FFF7FEFF 		bl	delay_us
+ 991              	.LVL123:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 23
+
+
+ 265:BSP/IIC/iic_hal.c **** 	return 0;
+ 992              		.loc 1 265 2 view .LVU230
+ 993              	.L44:
+ 266:BSP/IIC/iic_hal.c **** } 
+ 994              		.loc 1 266 1 is_stmt 0 view .LVU231
+ 995 0068 4846     		mov	r0, r9
+ 996 006a BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 997              		.loc 1 266 1 view .LVU232
+ 998              		.cfi_endproc
+ 999              	.LFE229:
+ 1001              		.section	.text.IIC_Read_One_Byte,"ax",%progbits
+ 1002              		.align	1
+ 1003              		.global	IIC_Read_One_Byte
+ 1004              		.syntax unified
+ 1005              		.thumb
+ 1006              		.thumb_func
+ 1008              	IIC_Read_One_Byte:
+ 1009              	.LVL124:
+ 1010              	.LFB230:
+ 267:BSP/IIC/iic_hal.c **** 
+ 268:BSP/IIC/iic_hal.c **** unsigned char IIC_Read_One_Byte(iic_bus_t *bus, uint8_t daddr,uint8_t reg)
+ 269:BSP/IIC/iic_hal.c **** {
+ 1011              		.loc 1 269 1 is_stmt 1 view -0
+ 1012              		.cfi_startproc
+ 1013              		@ args = 0, pretend = 0, frame = 0
+ 1014              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1015              		.loc 1 269 1 is_stmt 0 view .LVU234
+ 1016 0000 70B5     		push	{r4, r5, r6, lr}
+ 1017              	.LCFI16:
+ 1018              		.cfi_def_cfa_offset 16
+ 1019              		.cfi_offset 4, -16
+ 1020              		.cfi_offset 5, -12
+ 1021              		.cfi_offset 6, -8
+ 1022              		.cfi_offset 14, -4
+ 1023 0002 0446     		mov	r4, r0
+ 1024 0004 0D46     		mov	r5, r1
+ 1025 0006 1646     		mov	r6, r2
+ 270:BSP/IIC/iic_hal.c **** 	unsigned char dat;
+ 1026              		.loc 1 270 2 is_stmt 1 view .LVU235
+ 271:BSP/IIC/iic_hal.c **** 	IICStart(bus);
+ 1027              		.loc 1 271 2 view .LVU236
+ 1028 0008 FFF7FEFF 		bl	IICStart
+ 1029              	.LVL125:
+ 272:BSP/IIC/iic_hal.c **** 	IICSendByte(bus,daddr<<1);
+ 1030              		.loc 1 272 2 view .LVU237
+ 1031 000c 6D00     		lsls	r5, r5, #1
+ 1032              	.LVL126:
+ 1033              		.loc 1 272 2 is_stmt 0 view .LVU238
+ 1034 000e EDB2     		uxtb	r5, r5
+ 1035 0010 2946     		mov	r1, r5
+ 1036 0012 2046     		mov	r0, r4
+ 1037 0014 FFF7FEFF 		bl	IICSendByte
+ 1038              	.LVL127:
+ 273:BSP/IIC/iic_hal.c **** 	IICWaitAck(bus);
+ 1039              		.loc 1 273 2 is_stmt 1 view .LVU239
+ 1040 0018 2046     		mov	r0, r4
+ 1041 001a FFF7FEFF 		bl	IICWaitAck
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 24
+
+
+ 1042              	.LVL128:
+ 274:BSP/IIC/iic_hal.c **** 	IICSendByte(bus,reg);
+ 1043              		.loc 1 274 2 view .LVU240
+ 1044 001e 3146     		mov	r1, r6
+ 1045 0020 2046     		mov	r0, r4
+ 1046 0022 FFF7FEFF 		bl	IICSendByte
+ 1047              	.LVL129:
+ 275:BSP/IIC/iic_hal.c **** 	IICWaitAck(bus);
+ 1048              		.loc 1 275 2 view .LVU241
+ 1049 0026 2046     		mov	r0, r4
+ 1050 0028 FFF7FEFF 		bl	IICWaitAck
+ 1051              	.LVL130:
+ 276:BSP/IIC/iic_hal.c **** 	
+ 277:BSP/IIC/iic_hal.c **** 	IICStart(bus);
+ 1052              		.loc 1 277 2 view .LVU242
+ 1053 002c 2046     		mov	r0, r4
+ 1054 002e FFF7FEFF 		bl	IICStart
+ 1055              	.LVL131:
+ 278:BSP/IIC/iic_hal.c **** 	IICSendByte(bus,(daddr<<1)+1);
+ 1056              		.loc 1 278 2 view .LVU243
+ 1057 0032 691C     		adds	r1, r5, #1
+ 1058 0034 C9B2     		uxtb	r1, r1
+ 1059 0036 2046     		mov	r0, r4
+ 1060 0038 FFF7FEFF 		bl	IICSendByte
+ 1061              	.LVL132:
+ 279:BSP/IIC/iic_hal.c **** 	IICWaitAck(bus);
+ 1062              		.loc 1 279 2 view .LVU244
+ 1063 003c 2046     		mov	r0, r4
+ 1064 003e FFF7FEFF 		bl	IICWaitAck
+ 1065              	.LVL133:
+ 280:BSP/IIC/iic_hal.c **** 	dat = IICReceiveByte(bus);
+ 1066              		.loc 1 280 2 view .LVU245
+ 1067              		.loc 1 280 8 is_stmt 0 view .LVU246
+ 1068 0042 2046     		mov	r0, r4
+ 1069 0044 FFF7FEFF 		bl	IICReceiveByte
+ 1070              	.LVL134:
+ 1071 0048 0546     		mov	r5, r0
+ 1072              	.LVL135:
+ 281:BSP/IIC/iic_hal.c **** 	IICSendNotAck(bus);
+ 1073              		.loc 1 281 2 is_stmt 1 view .LVU247
+ 1074 004a 2046     		mov	r0, r4
+ 1075 004c FFF7FEFF 		bl	IICSendNotAck
+ 1076              	.LVL136:
+ 282:BSP/IIC/iic_hal.c **** 	IICStop(bus);
+ 1077              		.loc 1 282 2 view .LVU248
+ 1078 0050 2046     		mov	r0, r4
+ 1079 0052 FFF7FEFF 		bl	IICStop
+ 1080              	.LVL137:
+ 283:BSP/IIC/iic_hal.c **** 	return dat;
+ 1081              		.loc 1 283 2 view .LVU249
+ 284:BSP/IIC/iic_hal.c **** }
+ 1082              		.loc 1 284 1 is_stmt 0 view .LVU250
+ 1083 0056 2846     		mov	r0, r5
+ 1084 0058 70BD     		pop	{r4, r5, r6, pc}
+ 1085              		.loc 1 284 1 view .LVU251
+ 1086              		.cfi_endproc
+ 1087              	.LFE230:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 25
+
+
+ 1089              		.section	.text.IIC_Read_Multi_Byte,"ax",%progbits
+ 1090              		.align	1
+ 1091              		.global	IIC_Read_Multi_Byte
+ 1092              		.syntax unified
+ 1093              		.thumb
+ 1094              		.thumb_func
+ 1096              	IIC_Read_Multi_Byte:
+ 1097              	.LVL138:
+ 1098              	.LFB231:
+ 285:BSP/IIC/iic_hal.c **** 
+ 286:BSP/IIC/iic_hal.c **** 
+ 287:BSP/IIC/iic_hal.c **** uint8_t IIC_Read_Multi_Byte(iic_bus_t *bus, uint8_t daddr, uint8_t reg, uint8_t length, uint8_t buf
+ 288:BSP/IIC/iic_hal.c **** {
+ 1099              		.loc 1 288 1 is_stmt 1 view -0
+ 1100              		.cfi_startproc
+ 1101              		@ args = 4, pretend = 0, frame = 0
+ 1102              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1103              		.loc 1 288 1 is_stmt 0 view .LVU253
+ 1104 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 1105              	.LCFI17:
+ 1106              		.cfi_def_cfa_offset 32
+ 1107              		.cfi_offset 3, -32
+ 1108              		.cfi_offset 4, -28
+ 1109              		.cfi_offset 5, -24
+ 1110              		.cfi_offset 6, -20
+ 1111              		.cfi_offset 7, -16
+ 1112              		.cfi_offset 8, -12
+ 1113              		.cfi_offset 9, -8
+ 1114              		.cfi_offset 14, -4
+ 1115 0004 0546     		mov	r5, r0
+ 1116 0006 0C46     		mov	r4, r1
+ 1117 0008 9146     		mov	r9, r2
+ 1118 000a 1E46     		mov	r6, r3
+ 1119 000c 089F     		ldr	r7, [sp, #32]
+ 289:BSP/IIC/iic_hal.c **** 	unsigned char i;
+ 1120              		.loc 1 289 2 is_stmt 1 view .LVU254
+ 290:BSP/IIC/iic_hal.c **** 	IICStart(bus);
+ 1121              		.loc 1 290 2 view .LVU255
+ 1122 000e FFF7FEFF 		bl	IICStart
+ 1123              	.LVL139:
+ 291:BSP/IIC/iic_hal.c **** 	IICSendByte(bus,daddr<<1);
+ 1124              		.loc 1 291 2 view .LVU256
+ 1125 0012 6400     		lsls	r4, r4, #1
+ 1126              	.LVL140:
+ 1127              		.loc 1 291 2 is_stmt 0 view .LVU257
+ 1128 0014 E4B2     		uxtb	r4, r4
+ 1129 0016 2146     		mov	r1, r4
+ 1130 0018 2846     		mov	r0, r5
+ 1131 001a FFF7FEFF 		bl	IICSendByte
+ 1132              	.LVL141:
+ 292:BSP/IIC/iic_hal.c **** 	if(IICWaitAck(bus))
+ 1133              		.loc 1 292 2 is_stmt 1 view .LVU258
+ 1134              		.loc 1 292 5 is_stmt 0 view .LVU259
+ 1135 001e 2846     		mov	r0, r5
+ 1136 0020 FFF7FEFF 		bl	IICWaitAck
+ 1137              	.LVL142:
+ 1138              		.loc 1 292 4 discriminator 1 view .LVU260
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 26
+
+
+ 1139 0024 A0B9     		cbnz	r0, .L58
+ 1140 0026 8046     		mov	r8, r0
+ 293:BSP/IIC/iic_hal.c **** 	{
+ 294:BSP/IIC/iic_hal.c **** 		IICStop(bus);		 
+ 295:BSP/IIC/iic_hal.c **** 		return 1;		
+ 296:BSP/IIC/iic_hal.c **** 	}
+ 297:BSP/IIC/iic_hal.c **** 	IICSendByte(bus,reg);
+ 1141              		.loc 1 297 2 is_stmt 1 view .LVU261
+ 1142 0028 4946     		mov	r1, r9
+ 1143 002a 2846     		mov	r0, r5
+ 1144 002c FFF7FEFF 		bl	IICSendByte
+ 1145              	.LVL143:
+ 298:BSP/IIC/iic_hal.c **** 	IICWaitAck(bus);
+ 1146              		.loc 1 298 2 view .LVU262
+ 1147 0030 2846     		mov	r0, r5
+ 1148 0032 FFF7FEFF 		bl	IICWaitAck
+ 1149              	.LVL144:
+ 299:BSP/IIC/iic_hal.c **** 	
+ 300:BSP/IIC/iic_hal.c **** 	IICStart(bus);
+ 1150              		.loc 1 300 2 view .LVU263
+ 1151 0036 2846     		mov	r0, r5
+ 1152 0038 FFF7FEFF 		bl	IICStart
+ 1153              	.LVL145:
+ 301:BSP/IIC/iic_hal.c **** 	IICSendByte(bus,(daddr<<1)+1);
+ 1154              		.loc 1 301 2 view .LVU264
+ 1155 003c 611C     		adds	r1, r4, #1
+ 1156 003e C9B2     		uxtb	r1, r1
+ 1157 0040 2846     		mov	r0, r5
+ 1158 0042 FFF7FEFF 		bl	IICSendByte
+ 1159              	.LVL146:
+ 302:BSP/IIC/iic_hal.c **** 	IICWaitAck(bus);
+ 1160              		.loc 1 302 2 view .LVU265
+ 1161 0046 2846     		mov	r0, r5
+ 1162 0048 FFF7FEFF 		bl	IICWaitAck
+ 1163              	.LVL147:
+ 303:BSP/IIC/iic_hal.c **** 	for(i=0;i<length;i++)
+ 1164              		.loc 1 303 2 view .LVU266
+ 1165              		.loc 1 303 7 is_stmt 0 view .LVU267
+ 1166 004c 4446     		mov	r4, r8
+ 1167              		.loc 1 303 2 view .LVU268
+ 1168 004e 07E0     		b	.L54
+ 1169              	.LVL148:
+ 1170              	.L58:
+ 294:BSP/IIC/iic_hal.c **** 		return 1;		
+ 1171              		.loc 1 294 3 is_stmt 1 view .LVU269
+ 1172 0050 2846     		mov	r0, r5
+ 1173 0052 FFF7FEFF 		bl	IICStop
+ 1174              	.LVL149:
+ 295:BSP/IIC/iic_hal.c **** 	}
+ 1175              		.loc 1 295 3 view .LVU270
+ 295:BSP/IIC/iic_hal.c **** 	}
+ 1176              		.loc 1 295 10 is_stmt 0 view .LVU271
+ 1177 0056 4FF00108 		mov	r8, #1
+ 1178 005a 14E0     		b	.L53
+ 1179              	.LVL150:
+ 1180              	.L55:
+ 1181              		.loc 1 303 20 is_stmt 1 discriminator 2 view .LVU272
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 27
+
+
+ 1182 005c 0134     		adds	r4, r4, #1
+ 1183              	.LVL151:
+ 1184              		.loc 1 303 20 is_stmt 0 discriminator 2 view .LVU273
+ 1185 005e E4B2     		uxtb	r4, r4
+ 1186              	.LVL152:
+ 1187              	.L54:
+ 1188              		.loc 1 303 11 is_stmt 1 discriminator 1 view .LVU274
+ 1189 0060 B442     		cmp	r4, r6
+ 1190 0062 0AD2     		bcs	.L59
+ 304:BSP/IIC/iic_hal.c **** 	{
+ 305:BSP/IIC/iic_hal.c **** 		buff[i] = IICReceiveByte(bus);
+ 1191              		.loc 1 305 3 view .LVU275
+ 1192              		.loc 1 305 13 is_stmt 0 view .LVU276
+ 1193 0064 2846     		mov	r0, r5
+ 1194 0066 FFF7FEFF 		bl	IICReceiveByte
+ 1195              	.LVL153:
+ 1196              		.loc 1 305 11 discriminator 1 view .LVU277
+ 1197 006a 3855     		strb	r0, [r7, r4]
+ 306:BSP/IIC/iic_hal.c **** 		if(i<length-1)
+ 1198              		.loc 1 306 3 is_stmt 1 view .LVU278
+ 1199              		.loc 1 306 14 is_stmt 0 view .LVU279
+ 1200 006c 731E     		subs	r3, r6, #1
+ 1201              		.loc 1 306 5 view .LVU280
+ 1202 006e 9C42     		cmp	r4, r3
+ 1203 0070 F4DA     		bge	.L55
+ 307:BSP/IIC/iic_hal.c **** 		{IICSendAck(bus);}
+ 1204              		.loc 1 307 4 is_stmt 1 view .LVU281
+ 1205 0072 2846     		mov	r0, r5
+ 1206 0074 FFF7FEFF 		bl	IICSendAck
+ 1207              	.LVL154:
+ 1208 0078 F0E7     		b	.L55
+ 1209              	.L59:
+ 308:BSP/IIC/iic_hal.c **** 	}
+ 309:BSP/IIC/iic_hal.c **** 	IICSendNotAck(bus);
+ 1210              		.loc 1 309 2 view .LVU282
+ 1211 007a 2846     		mov	r0, r5
+ 1212 007c FFF7FEFF 		bl	IICSendNotAck
+ 1213              	.LVL155:
+ 310:BSP/IIC/iic_hal.c **** 	IICStop(bus);
+ 1214              		.loc 1 310 2 view .LVU283
+ 1215 0080 2846     		mov	r0, r5
+ 1216 0082 FFF7FEFF 		bl	IICStop
+ 1217              	.LVL156:
+ 311:BSP/IIC/iic_hal.c **** 	return 0;
+ 1218              		.loc 1 311 2 view .LVU284
+ 1219              	.L53:
+ 312:BSP/IIC/iic_hal.c **** }
+ 1220              		.loc 1 312 1 is_stmt 0 view .LVU285
+ 1221 0086 4046     		mov	r0, r8
+ 1222 0088 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 1223              		.loc 1 312 1 view .LVU286
+ 1224              		.cfi_endproc
+ 1225              	.LFE231:
+ 1227              		.section	.text.IICInit,"ax",%progbits
+ 1228              		.align	1
+ 1229              		.global	IICInit
+ 1230              		.syntax unified
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 28
+
+
+ 1231              		.thumb
+ 1232              		.thumb_func
+ 1234              	IICInit:
+ 1235              	.LVL157:
+ 1236              	.LFB232:
+ 313:BSP/IIC/iic_hal.c **** 
+ 314:BSP/IIC/iic_hal.c **** 
+ 315:BSP/IIC/iic_hal.c **** //
+ 316:BSP/IIC/iic_hal.c **** void IICInit(iic_bus_t *bus)
+ 317:BSP/IIC/iic_hal.c **** {
+ 1237              		.loc 1 317 1 is_stmt 1 view -0
+ 1238              		.cfi_startproc
+ 1239              		@ args = 0, pretend = 0, frame = 24
+ 1240              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1241              		.loc 1 317 1 is_stmt 0 view .LVU288
+ 1242 0000 10B5     		push	{r4, lr}
+ 1243              	.LCFI18:
+ 1244              		.cfi_def_cfa_offset 8
+ 1245              		.cfi_offset 4, -8
+ 1246              		.cfi_offset 14, -4
+ 1247 0002 86B0     		sub	sp, sp, #24
+ 1248              	.LCFI19:
+ 1249              		.cfi_def_cfa_offset 32
+ 1250 0004 0446     		mov	r4, r0
+ 318:BSP/IIC/iic_hal.c ****     GPIO_InitTypeDef GPIO_InitStructure = {0};
+ 1251              		.loc 1 318 5 is_stmt 1 view .LVU289
+ 1252              		.loc 1 318 22 is_stmt 0 view .LVU290
+ 1253 0006 0023     		movs	r3, #0
+ 1254 0008 0193     		str	r3, [sp, #4]
+ 1255 000a 0293     		str	r3, [sp, #8]
+ 1256 000c 0393     		str	r3, [sp, #12]
+ 1257 000e 0493     		str	r3, [sp, #16]
+ 1258 0010 0593     		str	r3, [sp, #20]
+ 319:BSP/IIC/iic_hal.c **** 
+ 320:BSP/IIC/iic_hal.c **** 		//bus->CLK_ENABLE();
+ 321:BSP/IIC/iic_hal.c **** 		
+ 322:BSP/IIC/iic_hal.c ****     GPIO_InitStructure.Pin = bus->IIC_SDA_PIN ;
+ 1259              		.loc 1 322 5 is_stmt 1 view .LVU291
+ 1260              		.loc 1 322 33 is_stmt 0 view .LVU292
+ 1261 0012 0389     		ldrh	r3, [r0, #8]
+ 1262              		.loc 1 322 28 view .LVU293
+ 1263 0014 0193     		str	r3, [sp, #4]
+ 323:BSP/IIC/iic_hal.c ****     GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+ 1264              		.loc 1 323 5 is_stmt 1 view .LVU294
+ 1265              		.loc 1 323 29 is_stmt 0 view .LVU295
+ 1266 0016 0123     		movs	r3, #1
+ 1267 0018 0293     		str	r3, [sp, #8]
+ 324:BSP/IIC/iic_hal.c ****     GPIO_InitStructure.Pull = GPIO_PULLUP;
+ 1268              		.loc 1 324 5 is_stmt 1 view .LVU296
+ 1269              		.loc 1 324 29 is_stmt 0 view .LVU297
+ 1270 001a 0393     		str	r3, [sp, #12]
+ 325:BSP/IIC/iic_hal.c ****     GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
+ 1271              		.loc 1 325 5 is_stmt 1 view .LVU298
+ 1272              		.loc 1 325 30 is_stmt 0 view .LVU299
+ 1273 001c 0223     		movs	r3, #2
+ 1274 001e 0493     		str	r3, [sp, #16]
+ 326:BSP/IIC/iic_hal.c ****     HAL_GPIO_Init(bus->IIC_SDA_PORT, &GPIO_InitStructure);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 29
+
+
+ 1275              		.loc 1 326 5 is_stmt 1 view .LVU300
+ 1276 0020 01A9     		add	r1, sp, #4
+ 1277 0022 0068     		ldr	r0, [r0]
+ 1278              	.LVL158:
+ 1279              		.loc 1 326 5 is_stmt 0 view .LVU301
+ 1280 0024 FFF7FEFF 		bl	HAL_GPIO_Init
+ 1281              	.LVL159:
+ 327:BSP/IIC/iic_hal.c **** 		
+ 328:BSP/IIC/iic_hal.c **** 		GPIO_InitStructure.Pin = bus->IIC_SCL_PIN ;
+ 1282              		.loc 1 328 3 is_stmt 1 view .LVU302
+ 1283              		.loc 1 328 31 is_stmt 0 view .LVU303
+ 1284 0028 6389     		ldrh	r3, [r4, #10]
+ 1285              		.loc 1 328 26 view .LVU304
+ 1286 002a 0193     		str	r3, [sp, #4]
+ 329:BSP/IIC/iic_hal.c ****     HAL_GPIO_Init(bus->IIC_SCL_PORT, &GPIO_InitStructure);
+ 1287              		.loc 1 329 5 is_stmt 1 view .LVU305
+ 1288 002c 01A9     		add	r1, sp, #4
+ 1289 002e 6068     		ldr	r0, [r4, #4]
+ 1290 0030 FFF7FEFF 		bl	HAL_GPIO_Init
+ 1291              	.LVL160:
+ 330:BSP/IIC/iic_hal.c **** }
+ 1292              		.loc 1 330 1 is_stmt 0 view .LVU306
+ 1293 0034 06B0     		add	sp, sp, #24
+ 1294              	.LCFI20:
+ 1295              		.cfi_def_cfa_offset 8
+ 1296              		@ sp needed
+ 1297 0036 10BD     		pop	{r4, pc}
+ 1298              		.loc 1 330 1 view .LVU307
+ 1299              		.cfi_endproc
+ 1300              	.LFE232:
+ 1302              		.text
+ 1303              	.Letext0:
+ 1304              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1305              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1306              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 1307              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 1308              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 1309              		.file 7 "BSP/IIC/iic_hal.h"
+ 1310              		.file 8 "SYSTEM/delay.h"
+ 1311              		.file 9 "SYSTEM/sys.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc5vi899.s 			page 30
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 iic_hal.c
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:21     .text.SDA_Input_Mode:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:27     .text.SDA_Input_Mode:00000000 SDA_Input_Mode
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:81     .text.SDA_Output_Mode:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:87     .text.SDA_Output_Mode:00000000 SDA_Output_Mode
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:141    .text.SDA_Output:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:147    .text.SDA_Output:00000000 SDA_Output
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:187    .text.SCL_Output:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:193    .text.SCL_Output:00000000 SCL_Output
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:233    .text.SDA_Input:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:239    .text.SDA_Input:00000000 SDA_Input
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:272    .text.IICStart:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:278    .text.IICStart:00000000 IICStart
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:334    .text.IICStop:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:340    .text.IICStop:00000000 IICStop
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:396    .text.IICWaitAck:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:402    .text.IICWaitAck:00000000 IICWaitAck
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:492    .text.IICSendAck:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:498    .text.IICSendAck:00000000 IICSendAck
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:545    .text.IICSendNotAck:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:551    .text.IICSendNotAck:00000000 IICSendNotAck
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:598    .text.IICSendByte:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:604    .text.IICSendByte:00000000 IICSendByte
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:696    .text.IICReceiveByte:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:702    .text.IICReceiveByte:00000000 IICReceiveByte
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:799    .text.IIC_Write_One_Byte:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:805    .text.IIC_Write_One_Byte:00000000 IIC_Write_One_Byte
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:890    .text.IIC_Write_Multi_Byte:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:896    .text.IIC_Write_Multi_Byte:00000000 IIC_Write_Multi_Byte
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:1002   .text.IIC_Read_One_Byte:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:1008   .text.IIC_Read_One_Byte:00000000 IIC_Read_One_Byte
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:1090   .text.IIC_Read_Multi_Byte:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:1096   .text.IIC_Read_Multi_Byte:00000000 IIC_Read_Multi_Byte
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:1228   .text.IICInit:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc5vi899.s:1234   .text.IICInit:00000000 IICInit
+
+UNDEFINED SYMBOLS
+HAL_GPIO_Init
+HAL_GPIO_ReadPin
+delay_us

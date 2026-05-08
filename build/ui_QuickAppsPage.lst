@@ -1,0 +1,2918 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"ui_QuickAppsPage.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/GUI_App/Screens/Src/ui_QuickAppsPage.c"
+  20              		.section	.text.lv_color_hex,"ax",%progbits
+  21              		.align	1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	lv_color_hex:
+  27              	.LVL0:
+  28              	.LFB38:
+  29              		.file 2 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h"
+   1:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /**
+   2:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @file lv_color.h
+   3:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *
+   4:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  */
+   5:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+   6:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #ifndef LV_COLOR_H
+   7:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_H
+   8:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+   9:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #ifdef __cplusplus
+  10:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** extern "C" {
+  11:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+  12:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+  13:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /*********************
+  14:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *      INCLUDES
+  15:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *********************/
+  16:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #include "../lv_conf_internal.h"
+  17:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #include "lv_assert.h"
+  18:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #include "lv_math.h"
+  19:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #include "lv_types.h"
+  20:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+  21:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /*Error checking*/
+  22:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_DEPTH == 24
+  23:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #error "LV_COLOR_DEPTH 24 is deprecated. Use LV_COLOR_DEPTH 32 instead (lv_conf.h)"
+  24:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+  25:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+  26:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_DEPTH != 32 && LV_COLOR_SCREEN_TRANSP != 0
+  27:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #error "LV_COLOR_SCREEN_TRANSP requires LV_COLOR_DEPTH == 32. Set it in lv_conf.h"
+  28:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+  29:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 2
+
+
+  30:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_DEPTH != 16 && LV_COLOR_16_SWAP != 0
+  31:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #error "LV_COLOR_16_SWAP requires LV_COLOR_DEPTH == 16. Set it in lv_conf.h"
+  32:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+  33:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+  34:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #include <stdint.h>
+  35:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+  36:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /*********************
+  37:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *      DEFINES
+  38:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *********************/
+  39:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** LV_EXPORT_CONST_INT(LV_COLOR_DEPTH);
+  40:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** LV_EXPORT_CONST_INT(LV_COLOR_16_SWAP);
+  41:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+  42:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /**
+  43:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * Opacity percentages.
+  44:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  */
+  45:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** enum {
+  46:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_OPA_TRANSP = 0,
+  47:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_OPA_0      = 0,
+  48:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_OPA_10     = 25,
+  49:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_OPA_20     = 51,
+  50:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_OPA_30     = 76,
+  51:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_OPA_40     = 102,
+  52:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_OPA_50     = 127,
+  53:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_OPA_60     = 153,
+  54:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_OPA_70     = 178,
+  55:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_OPA_80     = 204,
+  56:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_OPA_90     = 229,
+  57:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_OPA_100    = 255,
+  58:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_OPA_COVER  = 255,
+  59:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** };
+  60:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+  61:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_OPA_MIN 2    /*Opacities below this will be transparent*/
+  62:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_OPA_MAX 253  /*Opacities above this will fully cover*/
+  63:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+  64:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_DEPTH == 1
+  65:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_SIZE 8
+  66:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 8
+  67:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_SIZE 8
+  68:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 16
+  69:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_SIZE 16
+  70:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+  71:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_SIZE 32
+  72:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+  73:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #error "Invalid LV_COLOR_DEPTH in lv_conf.h! Set it to 1, 8, 16 or 32!"
+  74:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+  75:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+  76:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if defined(__cplusplus) && !defined(_LV_COLOR_HAS_MODERN_CPP)
+  77:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /**
+  78:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** * MSVC compiler's definition of the __cplusplus indicating 199711L regardless to C++ standard versi
+  79:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** * see https://devblogs.microsoft.com/cppblog/msvc-now-correctly-reports-cplusplus
+  80:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** * so we use _MSC_VER macro instead of __cplusplus
+  81:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** */
+  82:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #ifdef _MSC_VER
+  83:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if _MSC_VER >= 1900 /*Visual Studio 2015*/
+  84:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define _LV_COLOR_HAS_MODERN_CPP 1
+  85:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+  86:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 3
+
+
+  87:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if __cplusplus >= 201103L
+  88:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define _LV_COLOR_HAS_MODERN_CPP 1
+  89:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+  90:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+  91:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif /*__cplusplus*/
+  92:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+  93:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #ifndef _LV_COLOR_HAS_MODERN_CPP
+  94:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define _LV_COLOR_HAS_MODERN_CPP 0
+  95:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+  96:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+  97:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if _LV_COLOR_HAS_MODERN_CPP
+  98:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /*Fix msvc compiler error C4576 inside C++ code*/
+  99:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define _LV_COLOR_MAKE_TYPE_HELPER lv_color_t
+ 100:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 101:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define _LV_COLOR_MAKE_TYPE_HELPER (lv_color_t)
+ 102:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 103:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 104:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /*---------------------------------------
+ 105:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * Macros for all existing color depths
+ 106:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * to set/get values of the color channels
+ 107:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *------------------------------------------*/
+ 108:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_R1(c, v) (c).ch.red = (uint8_t)((v) & 0x1)
+ 109:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_G1(c, v) (c).ch.green = (uint8_t)((v) & 0x1)
+ 110:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_B1(c, v) (c).ch.blue = (uint8_t)((v) & 0x1)
+ 111:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_A1(c, v) do {} while(0)
+ 112:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 113:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_R1(c) (c).ch.red
+ 114:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_G1(c) (c).ch.green
+ 115:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_B1(c) (c).ch.blue
+ 116:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_A1(c) 0xFF
+ 117:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 118:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define _LV_COLOR_ZERO_INITIALIZER1 {0x00}
+ 119:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_MAKE1(r8, g8, b8)  {(uint8_t)((b8 >> 7) | (g8 >> 7) | (r8 >> 7))}
+ 120:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 121:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_R8(c, v) (c).ch.red = (uint8_t)((v) & 0x7U)
+ 122:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_G8(c, v) (c).ch.green = (uint8_t)((v) & 0x7U)
+ 123:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_B8(c, v) (c).ch.blue = (uint8_t)((v) & 0x3U)
+ 124:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_A8(c, v) do {} while(0)
+ 125:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 126:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_R8(c) (c).ch.red
+ 127:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_G8(c) (c).ch.green
+ 128:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_B8(c) (c).ch.blue
+ 129:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_A8(c) 0xFF
+ 130:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 131:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define _LV_COLOR_ZERO_INITIALIZER8 {{0x00, 0x00, 0x00}}
+ 132:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_MAKE8(r8, g8, b8) {{(uint8_t)((b8 >> 6) & 0x3U), (uint8_t)((g8 >> 5) & 0x7U), (ui
+ 133:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 134:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_R16(c, v) (c).ch.red = (uint8_t)((v) & 0x1FU)
+ 135:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 136:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_G16(c, v) (c).ch.green = (uint8_t)((v) & 0x3FU)
+ 137:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 138:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_G16(c, v) {(c).ch.green_h = (uint8_t)(((v) >> 3) & 0x7); (c).ch.green_l = (ui
+ 139:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 140:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_B16(c, v) (c).ch.blue = (uint8_t)((v) & 0x1FU)
+ 141:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_A16(c, v) do {} while(0)
+ 142:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 143:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_R16(c) (c).ch.red
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 4
+
+
+ 144:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 145:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_G16(c) (c).ch.green
+ 146:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 147:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_G16(c) (((c).ch.green_h << 3) + (c).ch.green_l)
+ 148:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 149:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_B16(c) (c).ch.blue
+ 150:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_A16(c) 0xFF
+ 151:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 152:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 153:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define _LV_COLOR_ZERO_INITIALIZER16  {{0x00, 0x00, 0x00}}
+ 154:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_MAKE16(r8, g8, b8) {{(uint8_t)((b8 >> 3) & 0x1FU), (uint8_t)((g8 >> 2) & 0x3FU), 
+ 155:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 156:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define _LV_COLOR_ZERO_INITIALIZER16 {{0x00, 0x00, 0x00, 0x00}}
+ 157:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_MAKE16(r8, g8, b8) {{(uint8_t)((g8 >> 5) & 0x7U), (uint8_t)((r8 >> 3) & 0x1FU), (
+ 158:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 159:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 160:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_R32(c, v) (c).ch.red = (uint8_t)((v) & 0xFF)
+ 161:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_G32(c, v) (c).ch.green = (uint8_t)((v) & 0xFF)
+ 162:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_B32(c, v) (c).ch.blue = (uint8_t)((v) & 0xFF)
+ 163:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_SET_A32(c, v) (c).ch.alpha = (uint8_t)((v) & 0xFF)
+ 164:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 165:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_R32(c) (c).ch.red
+ 166:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_G32(c) (c).ch.green
+ 167:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_B32(c) (c).ch.blue
+ 168:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_GET_A32(c) (c).ch.alpha
+ 169:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 170:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define _LV_COLOR_ZERO_INITIALIZER32  {{0x00, 0x00, 0x00, 0x00}}
+ 171:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** # define LV_COLOR_MAKE32(r8, g8, b8) {{b8, g8, r8, 0xff}} /*Fix 0xff alpha*/
+ 172:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 173:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /*---------------------------------------
+ 174:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * Macros for the current color depth
+ 175:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * to set/get values of the color channels
+ 176:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *------------------------------------------*/
+ 177:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_SET_R(c, v) LV_CONCAT(LV_COLOR_SET_R, LV_COLOR_DEPTH)(c, v)
+ 178:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_SET_G(c, v) LV_CONCAT(LV_COLOR_SET_G, LV_COLOR_DEPTH)(c, v)
+ 179:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_SET_B(c, v) LV_CONCAT(LV_COLOR_SET_B, LV_COLOR_DEPTH)(c, v)
+ 180:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_SET_A(c, v) LV_CONCAT(LV_COLOR_SET_A, LV_COLOR_DEPTH)(c, v)
+ 181:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 182:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_GET_R(c) LV_CONCAT(LV_COLOR_GET_R, LV_COLOR_DEPTH)(c)
+ 183:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_GET_G(c) LV_CONCAT(LV_COLOR_GET_G, LV_COLOR_DEPTH)(c)
+ 184:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_GET_B(c) LV_CONCAT(LV_COLOR_GET_B, LV_COLOR_DEPTH)(c)
+ 185:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_GET_A(c) LV_CONCAT(LV_COLOR_GET_A, LV_COLOR_DEPTH)(c)
+ 186:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 187:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define _LV_COLOR_ZERO_INITIALIZER LV_CONCAT(_LV_COLOR_ZERO_INITIALIZER, LV_COLOR_DEPTH)
+ 188:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #define LV_COLOR_MAKE(r8, g8, b8) LV_CONCAT(LV_COLOR_MAKE, LV_COLOR_DEPTH)(r8, g8, b8)
+ 189:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 190:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /**********************
+ 191:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *      TYPEDEFS
+ 192:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  **********************/
+ 193:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 194:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** typedef union {
+ 195:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     uint8_t full; /*must be declared first to set all bits of byte via initializer list*/
+ 196:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     union {
+ 197:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint8_t blue : 1;
+ 198:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint8_t green : 1;
+ 199:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint8_t red : 1;
+ 200:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     } ch;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 5
+
+
+ 201:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** } lv_color1_t;
+ 202:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 203:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** typedef union {
+ 204:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     struct {
+ 205:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint8_t blue : 2;
+ 206:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint8_t green : 3;
+ 207:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint8_t red : 3;
+ 208:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     } ch;
+ 209:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     uint8_t full;
+ 210:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** } lv_color8_t;
+ 211:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 212:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** typedef union {
+ 213:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     struct {
+ 214:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 215:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint16_t blue : 5;
+ 216:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint16_t green : 6;
+ 217:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint16_t red : 5;
+ 218:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 219:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint16_t green_h : 3;
+ 220:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint16_t red : 5;
+ 221:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint16_t blue : 5;
+ 222:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint16_t green_l : 3;
+ 223:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 224:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     } ch;
+ 225:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     uint16_t full;
+ 226:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** } lv_color16_t;
+ 227:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 228:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** typedef union {
+ 229:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     struct {
+ 230:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint8_t blue;
+ 231:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint8_t green;
+ 232:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint8_t red;
+ 233:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         uint8_t alpha;
+ 234:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     } ch;
+ 235:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     uint32_t full;
+ 236:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** } lv_color32_t;
+ 237:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 238:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** typedef LV_CONCAT3(uint, LV_COLOR_SIZE, _t) lv_color_int_t;
+ 239:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** typedef LV_CONCAT3(lv_color, LV_COLOR_DEPTH, _t) lv_color_t;
+ 240:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 241:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** typedef struct {
+ 242:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     uint16_t h;
+ 243:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     uint8_t s;
+ 244:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     uint8_t v;
+ 245:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** } lv_color_hsv_t;
+ 246:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 247:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** //! @cond Doxygen_Suppress
+ 248:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /*No idea where the guard is required but else throws warnings in the docs*/
+ 249:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** typedef uint8_t lv_opa_t;
+ 250:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** //! @endcond
+ 251:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 252:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** struct _lv_color_filter_dsc_t;
+ 253:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 254:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** typedef lv_color_t (*lv_color_filter_cb_t)(const struct _lv_color_filter_dsc_t *, lv_color_t, lv_op
+ 255:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 256:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** typedef struct _lv_color_filter_dsc_t {
+ 257:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     lv_color_filter_cb_t filter_cb;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 6
+
+
+ 258:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     void * user_data;
+ 259:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** } lv_color_filter_dsc_t;
+ 260:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 261:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 262:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** typedef enum {
+ 263:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_RED,
+ 264:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_PINK,
+ 265:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_PURPLE,
+ 266:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_DEEP_PURPLE,
+ 267:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_INDIGO,
+ 268:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_BLUE,
+ 269:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_LIGHT_BLUE,
+ 270:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_CYAN,
+ 271:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_TEAL,
+ 272:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_GREEN,
+ 273:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_LIGHT_GREEN,
+ 274:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_LIME,
+ 275:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_YELLOW,
+ 276:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_AMBER,
+ 277:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_ORANGE,
+ 278:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_DEEP_ORANGE,
+ 279:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_BROWN,
+ 280:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_BLUE_GREY,
+ 281:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_GREY,
+ 282:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     _LV_PALETTE_LAST,
+ 283:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_PALETTE_NONE = 0xff,
+ 284:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** } lv_palette_t;
+ 285:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 286:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /**********************
+ 287:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * GLOBAL PROTOTYPES
+ 288:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  **********************/
+ 289:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 290:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /*In color conversations:
+ 291:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * - When converting to bigger color type the LSB weight of 1 LSB is calculated
+ 292:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *   E.g. 16 bit Red has 5 bits
+ 293:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *         8 bit Red has 3 bits
+ 294:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *        ----------------------
+ 295:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *        8 bit red LSB = (2^5 - 1) / (2^3 - 1) = 31 / 7 = 4
+ 296:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *
+ 297:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * - When calculating to smaller color type simply shift out the LSBs
+ 298:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *   E.g.  8 bit Red has 3 bits
+ 299:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *        16 bit Red has 5 bits
+ 300:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *        ----------------------
+ 301:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *         Shift right with 5 - 3 = 2
+ 302:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  */
+ 303:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** static inline uint8_t lv_color_to1(lv_color_t color)
+ 304:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 305:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_DEPTH == 1
+ 306:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return color.full;
+ 307:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 8
+ 308:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     if((LV_COLOR_GET_R(color) & 0x4) || (LV_COLOR_GET_G(color) & 0x4) || (LV_COLOR_GET_B(color) & 0
+ 309:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         return 1;
+ 310:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     }
+ 311:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     else {
+ 312:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         return 0;
+ 313:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     }
+ 314:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 16
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 7
+
+
+ 315:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     if((LV_COLOR_GET_R(color) & 0x10) || (LV_COLOR_GET_G(color) & 0x20) || (LV_COLOR_GET_B(color) &
+ 316:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         return 1;
+ 317:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     }
+ 318:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     else {
+ 319:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         return 0;
+ 320:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     }
+ 321:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 322:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     if((LV_COLOR_GET_R(color) & 0x80) || (LV_COLOR_GET_G(color) & 0x80) || (LV_COLOR_GET_B(color) &
+ 323:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         return 1;
+ 324:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     }
+ 325:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     else {
+ 326:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         return 0;
+ 327:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     }
+ 328:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 329:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** }
+ 330:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 331:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** static inline uint8_t lv_color_to8(lv_color_t color)
+ 332:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 333:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_DEPTH == 1
+ 334:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     if(color.full == 0)
+ 335:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         return 0;
+ 336:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     else
+ 337:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         return 0xFF;
+ 338:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 8
+ 339:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return color.full;
+ 340:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 16
+ 341:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     lv_color8_t ret;
+ 342:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_R8(ret, LV_COLOR_GET_R(color) >> 2); /*5 - 3  = 2*/
+ 343:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_G8(ret, LV_COLOR_GET_G(color) >> 3); /*6 - 3  = 3*/
+ 344:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_B8(ret, LV_COLOR_GET_B(color) >> 3); /*5 - 2  = 3*/
+ 345:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return ret.full;
+ 346:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 347:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     lv_color8_t ret;
+ 348:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_R8(ret, LV_COLOR_GET_R(color) >> 5); /*8 - 3  = 5*/
+ 349:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_G8(ret, LV_COLOR_GET_G(color) >> 5); /*8 - 3  = 5*/
+ 350:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_B8(ret, LV_COLOR_GET_B(color) >> 6); /*8 - 2  = 6*/
+ 351:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return ret.full;
+ 352:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 353:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** }
+ 354:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 355:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** static inline uint16_t lv_color_to16(lv_color_t color)
+ 356:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 357:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_DEPTH == 1
+ 358:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     if(color.full == 0)
+ 359:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         return 0;
+ 360:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     else
+ 361:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         return 0xFFFF;
+ 362:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 8
+ 363:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     lv_color16_t ret;
+ 364:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_R16(ret, LV_COLOR_GET_R(color) * 4);  /*(2^5 - 1)/(2^3 - 1) = 31/7 = 4*/
+ 365:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_G16(ret, LV_COLOR_GET_G(color) * 9);  /*(2^6 - 1)/(2^3 - 1) = 63/7 = 9*/
+ 366:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_B16(ret, LV_COLOR_GET_B(color) * 10); /*(2^5 - 1)/(2^2 - 1) = 31/3 = 10*/
+ 367:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return ret.full;
+ 368:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 16
+ 369:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return color.full;
+ 370:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 371:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     lv_color16_t ret;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 8
+
+
+ 372:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_R16(ret, LV_COLOR_GET_R(color) >> 3); /*8 - 5  = 3*/
+ 373:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_G16(ret, LV_COLOR_GET_G(color) >> 2); /*8 - 6  = 2*/
+ 374:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_B16(ret, LV_COLOR_GET_B(color) >> 3); /*8 - 5  = 3*/
+ 375:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return ret.full;
+ 376:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 377:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** }
+ 378:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 379:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** static inline uint32_t lv_color_to32(lv_color_t color)
+ 380:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 381:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_DEPTH == 1
+ 382:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     if(color.full == 0)
+ 383:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         return 0xFF000000;
+ 384:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     else
+ 385:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         return 0xFFFFFFFF;
+ 386:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 8
+ 387:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     lv_color32_t ret;
+ 388:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_R32(ret, LV_COLOR_GET_R(color) * 36); /*(2^8 - 1)/(2^3 - 1) = 255/7 = 36*/
+ 389:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_G32(ret, LV_COLOR_GET_G(color) * 36); /*(2^8 - 1)/(2^3 - 1) = 255/7 = 36*/
+ 390:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_B32(ret, LV_COLOR_GET_B(color) * 85); /*(2^8 - 1)/(2^2 - 1) = 255/3 = 85*/
+ 391:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_A32(ret, 0xFF);
+ 392:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return ret.full;
+ 393:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 16
+ 394:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /**
+ 395:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      * The floating point math for conversion is:
+ 396:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *  valueto = valuefrom * ( (2^bitsto - 1) / (float)(2^bitsfrom - 1) )
+ 397:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      * The faster integer math for conversion is:
+ 398:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *  valueto = ( valuefrom * multiplier + adder ) >> divisor
+ 399:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *   multiplier = FLOOR( ( (2^bitsto - 1) << divisor ) / (float)(2^bitsfrom - 1) )
+ 400:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *
+ 401:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      * Find the first divisor where ( adder >> divisor ) <= 0
+ 402:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *
+ 403:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      * 5-bit to 8-bit: ( 31 * multiplier + adder ) >> divisor = 255
+ 404:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      * divisor  multiplier  adder  min (0)  max (31)
+ 405:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *       0           8      7        7       255
+ 406:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *       1          16     14        7       255
+ 407:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *       2          32     28        7       255
+ 408:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *       3          65     25        3       255
+ 409:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *       4         131     19        1       255
+ 410:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *       5         263      7        0       255
+ 411:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *
+ 412:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      * 6-bit to 8-bit: 255 = ( 63 * multiplier + adder ) >> divisor
+ 413:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      * divisor  multiplier  adder  min (0)  max (63)
+ 414:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *       0           4      3        3       255
+ 415:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *       1           8      6        3       255
+ 416:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *       2          16     12        3       255
+ 417:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *       3          32     24        3       255
+ 418:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *       4          64     48        3       255
+ 419:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *       5         129     33        1       255
+ 420:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      *       6         259      3        0       255
+ 421:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****      */
+ 422:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 423:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     lv_color32_t ret;
+ 424:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_R32(ret, (LV_COLOR_GET_R(color) * 263 + 7) >> 5);
+ 425:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_G32(ret, (LV_COLOR_GET_G(color) * 259 + 3) >> 6);
+ 426:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_B32(ret, (LV_COLOR_GET_B(color) * 263 + 7) >> 5);
+ 427:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_A32(ret, 0xFF);
+ 428:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return ret.full;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 9
+
+
+ 429:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 430:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return color.full;
+ 431:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 432:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** }
+ 433:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 434:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** //! @cond Doxygen_Suppress
+ 435:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 436:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /**
+ 437:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * Mix two colors with a given ratio.
+ 438:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @param c1 the first color to mix (usually the foreground)
+ 439:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @param c2 the second color to mix (usually the background)
+ 440:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @param mix The ratio of the colors. 0: full `c2`, 255: full `c1`, 127: half `c1` and half`c2`
+ 441:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @return the mixed color
+ 442:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  */
+ 443:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** LV_ATTRIBUTE_FAST_MEM static inline lv_color_t lv_color_mix(lv_color_t c1, lv_color_t c2, uint8_t m
+ 444:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 445:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     lv_color_t ret;
+ 446:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 447:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_DEPTH == 16 && LV_COLOR_16_SWAP == 0
+ 448:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /*Source: https://stackoverflow.com/a/50012418/1999969*/
+ 449:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     mix = (mix + 4) >> 3;
+ 450:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     uint32_t bg = (uint32_t)((uint32_t)c2.full | ((uint32_t)c2.full << 16)) &
+ 451:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                   0x7E0F81F; /*0b00000111111000001111100000011111*/
+ 452:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     uint32_t fg = (uint32_t)((uint32_t)c1.full | ((uint32_t)c1.full << 16)) & 0x7E0F81F;
+ 453:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     uint32_t result = ((((fg - bg) * mix) >> 5) + bg) & 0x7E0F81F;
+ 454:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     ret.full = (uint16_t)((result >> 16) | result);
+ 455:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH != 1
+ 456:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /*LV_COLOR_DEPTH == 8, 16 or 32*/
+ 457:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_R(ret, LV_UDIV255((uint16_t)LV_COLOR_GET_R(c1) * mix + LV_COLOR_GET_R(c2) *
+ 458:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                                    (255 - mix) + LV_COLOR_MIX_ROUND_OFS));
+ 459:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_G(ret, LV_UDIV255((uint16_t)LV_COLOR_GET_G(c1) * mix + LV_COLOR_GET_G(c2) *
+ 460:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                                    (255 - mix) + LV_COLOR_MIX_ROUND_OFS));
+ 461:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_B(ret, LV_UDIV255((uint16_t)LV_COLOR_GET_B(c1) * mix + LV_COLOR_GET_B(c2) *
+ 462:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                                    (255 - mix) + LV_COLOR_MIX_ROUND_OFS));
+ 463:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_A(ret, 0xFF);
+ 464:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 465:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /*LV_COLOR_DEPTH == 1*/
+ 466:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     ret.full = mix > LV_OPA_50 ? c1.full : c2.full;
+ 467:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 468:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 469:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return ret;
+ 470:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** }
+ 471:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 472:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** LV_ATTRIBUTE_FAST_MEM static inline void lv_color_premult(lv_color_t c, uint8_t mix, uint16_t * out
+ 473:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 474:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_DEPTH != 1
+ 475:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     out[0] = (uint16_t)LV_COLOR_GET_R(c) * mix;
+ 476:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     out[1] = (uint16_t)LV_COLOR_GET_G(c) * mix;
+ 477:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     out[2] = (uint16_t)LV_COLOR_GET_B(c) * mix;
+ 478:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 479:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     (void) mix;
+ 480:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /*Pre-multiplication can't be used with 1 bpp*/
+ 481:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     out[0] = LV_COLOR_GET_R(c);
+ 482:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     out[1] = LV_COLOR_GET_G(c);
+ 483:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     out[2] = LV_COLOR_GET_B(c);
+ 484:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 485:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 10
+
+
+ 486:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** }
+ 487:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 488:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /**
+ 489:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * Mix two colors with a given ratio. It runs faster then `lv_color_mix` but requires some pre comp
+ 490:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @param premult_c1 The first color. Should be preprocessed with `lv_color_premult(c1)`
+ 491:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @param c2 The second color. As it is no pre computation required on it
+ 492:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @param mix The ratio of the colors. 0: full `c1`, 255: full `c2`, 127: half `c1` and half `c2`.
+ 493:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  *            Should be modified like mix = `255 - mix`
+ 494:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @return the mixed color
+ 495:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @note 255 won't give clearly `c1`.
+ 496:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  */
+ 497:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** LV_ATTRIBUTE_FAST_MEM static inline lv_color_t lv_color_mix_premult(uint16_t * premult_c1, lv_color
+ 498:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 499:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     lv_color_t ret;
+ 500:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_DEPTH != 1
+ 501:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /*LV_COLOR_DEPTH == 8 or 32*/
+ 502:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_R(ret, LV_UDIV255(premult_c1[0] + LV_COLOR_GET_R(c2) * mix + LV_COLOR_MIX_ROUND_OF
+ 503:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_G(ret, LV_UDIV255(premult_c1[1] + LV_COLOR_GET_G(c2) * mix + LV_COLOR_MIX_ROUND_OF
+ 504:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_B(ret, LV_UDIV255(premult_c1[2] + LV_COLOR_GET_B(c2) * mix + LV_COLOR_MIX_ROUND_OF
+ 505:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_A(ret, 0xFF);
+ 506:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 507:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /*LV_COLOR_DEPTH == 1*/
+ 508:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /*Restore color1*/
+ 509:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     lv_color_t c1;
+ 510:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_R(c1, premult_c1[0]);
+ 511:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_G(c1, premult_c1[1]);
+ 512:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     LV_COLOR_SET_B(c1, premult_c1[2]);
+ 513:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     ret.full = mix > LV_OPA_50 ? c2.full : c1.full;
+ 514:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 515:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 516:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return ret;
+ 517:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** }
+ 518:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 519:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /**
+ 520:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * Mix two colors. Both color can have alpha value.
+ 521:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @param bg_color background color
+ 522:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @param bg_opa alpha of the background color
+ 523:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @param fg_color foreground color
+ 524:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @param fg_opa alpha of the foreground color
+ 525:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @param res_color the result color
+ 526:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @param res_opa the result opacity
+ 527:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  */
+ 528:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** LV_ATTRIBUTE_FAST_MEM static inline void lv_color_mix_with_alpha(lv_color_t bg_color, lv_opa_t bg_o
+ 529:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                                                                  lv_color_t fg_color, lv_opa_t fg_o
+ 530:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                                                                  lv_color_t * res_color, lv_opa_t *
+ 531:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 532:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /*Pick the foreground if it's fully opaque or the Background is fully transparent*/
+ 533:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     if(fg_opa >= LV_OPA_MAX || bg_opa <= LV_OPA_MIN) {
+ 534:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         res_color->full = fg_color.full;
+ 535:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         *res_opa = fg_opa;
+ 536:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     }
+ 537:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /*Transparent foreground: use the Background*/
+ 538:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     else if(fg_opa <= LV_OPA_MIN) {
+ 539:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         res_color->full = bg_color.full;
+ 540:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         *res_opa = bg_opa;
+ 541:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     }
+ 542:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /*Opaque background: use simple mix*/
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 11
+
+
+ 543:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     else if(bg_opa >= LV_OPA_MAX) {
+ 544:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         *res_color = lv_color_mix(fg_color, bg_color, fg_opa);
+ 545:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         *res_opa = LV_OPA_COVER;
+ 546:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     }
+ 547:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /*Both colors have alpha. Expensive calculation need to be applied*/
+ 548:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     else {
+ 549:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         /*Save the parameters and the result. If they will be asked again don't compute again*/
+ 550:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         static lv_opa_t fg_opa_save     = 0;
+ 551:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         static lv_opa_t bg_opa_save     = 0;
+ 552:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         static lv_color_t fg_color_save = _LV_COLOR_ZERO_INITIALIZER;
+ 553:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         static lv_color_t bg_color_save = _LV_COLOR_ZERO_INITIALIZER;
+ 554:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         static lv_color_t res_color_saved = _LV_COLOR_ZERO_INITIALIZER;
+ 555:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         static lv_opa_t res_opa_saved = 0;
+ 556:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 557:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         if(fg_opa != fg_opa_save || bg_opa != bg_opa_save || fg_color.full != fg_color_save.full ||
+ 558:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****            bg_color.full != bg_color_save.full) {
+ 559:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****             fg_opa_save        = fg_opa;
+ 560:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****             bg_opa_save        = bg_opa;
+ 561:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****             fg_color_save.full = fg_color.full;
+ 562:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****             bg_color_save.full = bg_color.full;
+ 563:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****             /*Info:
+ 564:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****              * https://en.wikipedia.org/wiki/Alpha_compositing#Analytical_derivation_of_the_over_op
+ 565:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****             res_opa_saved = 255 - ((uint16_t)((uint16_t)(255 - fg_opa) * (255 - bg_opa)) >> 8);
+ 566:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****             LV_ASSERT(res_opa_saved != 0);
+ 567:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****             lv_opa_t ratio = (uint16_t)((uint16_t)fg_opa * 255) / res_opa_saved;
+ 568:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****             res_color_saved = lv_color_mix(fg_color, bg_color, ratio);
+ 569:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 570:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         }
+ 571:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 572:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         res_color->full = res_color_saved.full;
+ 573:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         *res_opa = res_opa_saved;
+ 574:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     }
+ 575:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** }
+ 576:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 577:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** //! @endcond
+ 578:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 579:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** /**
+ 580:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * Get the brightness of a color
+ 581:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @param color a color
+ 582:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  * @return the brightness [0..255]
+ 583:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****  */
+ 584:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** static inline uint8_t lv_color_brightness(lv_color_t color)
+ 585:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 586:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     lv_color32_t c32;
+ 587:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     c32.full        = lv_color_to32(color);
+ 588:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     uint16_t bright = (uint16_t)(3u * LV_COLOR_GET_R32(c32) + LV_COLOR_GET_B32(c32) + 4u * LV_COLOR
+ 589:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return (uint8_t)(bright >> 3);
+ 590:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** }
+ 591:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 592:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** static inline lv_color_t lv_color_make(uint8_t r, uint8_t g, uint8_t b)
+ 593:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 594:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return _LV_COLOR_MAKE_TYPE_HELPER LV_COLOR_MAKE(r, g, b);
+ 595:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** }
+ 596:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 597:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** static inline lv_color_t lv_color_hex(uint32_t c)
+ 598:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+  30              		.loc 2 598 1 view -0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 12
+
+
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+ 599:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_DEPTH == 16
+ 600:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     lv_color_t r;
+  35              		.loc 2 600 5 view .LVU1
+ 601:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 602:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /* Convert a 4 bytes per pixel in format ARGB32 to R5G6B5 format
+ 603:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         naive way (by calling lv_color_make with components):
+ 604:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                     r = ((c & 0xFF0000) >> 19)
+ 605:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                     g = ((c & 0xFF00) >> 10)
+ 606:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                     b = ((c & 0xFF) >> 3)
+ 607:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                     rgb565 = (r << 11) | (g << 5) | b
+ 608:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         That's 3 mask, 5 bitshift and 2 or operations
+ 609:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** 
+ 610:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         A bit better:
+ 611:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                     r = ((c & 0xF80000) >> 8)
+ 612:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                     g = ((c & 0xFC00) >> 5)
+ 613:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                     b = ((c & 0xFF) >> 3)
+ 614:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****                     rgb565 = r | g | b
+ 615:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****         That's 3 mask, 3 bitshifts and 2 or operations */
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     r.full = (uint16_t)(((c & 0xF80000) >> 8) | ((c & 0xFC00) >> 5) | ((c & 0xFF) >> 3));
+  36              		.loc 2 616 5 view .LVU2
+  37              		.loc 2 616 41 is_stmt 0 view .LVU3
+  38 0000 030A     		lsrs	r3, r0, #8
+  39              		.loc 2 616 63 view .LVU4
+  40 0002 4209     		lsrs	r2, r0, #5
+  41              		.loc 2 616 47 view .LVU5
+  42 0004 23F4FF63 		bic	r3, r3, #2040
+  43 0008 23F00703 		bic	r3, r3, #7
+  44 000c 02F4FC62 		and	r2, r2, #2016
+  45 0010 1343     		orrs	r3, r3, r2
+  46 0012 9BB2     		uxth	r3, r3
+  47              		.loc 2 616 14 view .LVU6
+  48 0014 C0F3C400 		ubfx	r0, r0, #3, #5
+  49              	.LVL1:
+ 617:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 618:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     /* We want: rrrr rrrr GGGg gggg bbbb bbbb => gggb bbbb rrrr rGGG */
+ 619:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     r.full = (uint16_t)(((c & 0xF80000) >> 16) | ((c & 0xFC00) >> 13) | ((c & 0x1C00) << 3) | ((c &
+ 620:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return r;
+  50              		.loc 2 621 5 is_stmt 1 view .LVU7
+ 622:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 623:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     lv_color_t r;
+ 624:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     r.full = c | 0xFF000000;
+ 625:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return r;
+ 626:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else /*LV_COLOR_DEPTH == 8*/
+ 627:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h ****     return lv_color_make((uint8_t)((c >> 16) & 0xFF), (uint8_t)((c >> 8) & 0xFF), (uint8_t)(c & 0xF
+ 628:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #endif
+ 629:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** }
+  51              		.loc 2 629 1 is_stmt 0 view .LVU8
+  52 0018 1843     		orrs	r0, r0, r3
+  53 001a 7047     		bx	lr
+  54              		.cfi_endproc
+  55              	.LFE38:
+  57              		.section	.text.ui_event_QA_BackBtn,"ax",%progbits
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 13
+
+
+  58              		.align	1
+  59              		.global	ui_event_QA_BackBtn
+  60              		.syntax unified
+  61              		.thumb
+  62              		.thumb_func
+  64              	ui_event_QA_BackBtn:
+  65              	.LVL2:
+  66              	.LFB412:
+   1:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../../ui.h"
+   2:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../../ui_helpers.h"
+   3:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../Inc/ui_QuickAppsPage.h"
+   4:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../Inc/ui_WatchFacePage.h"
+   5:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../Inc/ui_HRPage.h"
+   6:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../Inc/ui_SPO2Page.h"
+   7:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../Inc/ui_EnvPage.h"
+   8:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../Inc/ui_CalendarPage.h"
+   9:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../Inc/ui_TimerPage.h"
+  10:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../Inc/ui_ComputerPage.h"
+  11:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../Inc/ui_CompassPage.h"
+  12:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../Inc/ui_NFCCardPage.h"
+  13:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../Inc/ui_GameSelectPage.h"
+  14:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** #include "../../../Func/Inc/HWDataAccess.h"
+  15:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+  16:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** ///////////////////// VARIABLES ////////////////////
+  17:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** lv_obj_t * ui_QuickAppsPage;
+  18:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+  19:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** lv_timer_t * ui_QuickAppsPageTimer;
+  20:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+  21:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** // 应用数据
+  22:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** uint8_t ui_QA_HRValue = 72;
+  23:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** uint8_t ui_QA_SPO2Value = 98;
+  24:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** int8_t ui_QA_TempValue = 25;
+  25:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** int8_t ui_QA_HumiValue = 60;
+  26:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+  27:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** ///////////////////// Page Manager //////////////////
+  28:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** Page_t Page_QuickApps = {ui_QuickAppsPage_screen_init, ui_QuickAppsPage_screen_deinit, &ui_QuickApp
+  29:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+  30:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** ///////////////////// TIMER CALLBACK //////////////////
+  31:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** static void QuickAppsPage_timer_cb(lv_timer_t * timer)
+  32:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+  33:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     if(Page_Get_NowPage()->page_obj == &ui_QuickAppsPage)
+  34:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+  35:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         char value_strbuf[16];
+  36:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         HW_DateTimeTypeDef DateTime;
+  37:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         HWInterface.RealTimeClock.GetTimeDate(&DateTime);
+  38:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+  39:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         // 更新心率
+  40:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         if(ui_QA_HRValue != HWInterface.HR_meter.HrRate)
+  41:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+  42:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****             ui_QA_HRValue = HWInterface.HR_meter.HrRate;
+  43:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****             sprintf(value_strbuf, "%d", ui_QA_HRValue);
+  44:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****             // 查找心率标签并更新
+  45:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         }
+  46:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+  47:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         // 更新血氧
+  48:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         if(ui_QA_SPO2Value != HWInterface.HR_meter.SPO2)
+  49:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 14
+
+
+  50:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****             ui_QA_SPO2Value = HWInterface.HR_meter.SPO2;
+  51:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         }
+  52:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+  53:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         // 更新温湿度
+  54:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         if(ui_QA_TempValue != (int8_t)HWInterface.AHT21.temperature)
+  55:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+  56:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****             ui_QA_TempValue = (int8_t)HWInterface.AHT21.temperature;
+  57:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         }
+  58:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+  59:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         if(ui_QA_HumiValue != (int8_t)HWInterface.AHT21.humidity)
+  60:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+  61:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****             ui_QA_HumiValue = (int8_t)HWInterface.AHT21.humidity;
+  62:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         }
+  63:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+  64:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+  65:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+  66:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** ///////////////////// EVENTS ////////////////////
+  67:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** void ui_event_QA_BackBtn(lv_event_t * e)
+  68:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+  67              		.loc 1 68 1 is_stmt 1 view -0
+  68              		.cfi_startproc
+  69              		@ args = 0, pretend = 0, frame = 0
+  70              		@ frame_needed = 0, uses_anonymous_args = 0
+  71              		.loc 1 68 1 is_stmt 0 view .LVU10
+  72 0000 08B5     		push	{r3, lr}
+  73              	.LCFI0:
+  74              		.cfi_def_cfa_offset 8
+  75              		.cfi_offset 3, -8
+  76              		.cfi_offset 14, -4
+  69:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_event_code_t event_code = lv_event_get_code(e);
+  77              		.loc 1 69 5 is_stmt 1 view .LVU11
+  78              		.loc 1 69 34 is_stmt 0 view .LVU12
+  79 0002 FFF7FEFF 		bl	lv_event_get_code
+  80              	.LVL3:
+  70:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     if(event_code == LV_EVENT_CLICKED)
+  81              		.loc 1 70 5 is_stmt 1 view .LVU13
+  82              		.loc 1 70 7 is_stmt 0 view .LVU14
+  83 0006 0728     		cmp	r0, #7
+  84 0008 00D0     		beq	.L5
+  85              	.LVL4:
+  86              	.L2:
+  71:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+  72:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         Page_Back();
+  73:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+  74:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+  87              		.loc 1 74 1 view .LVU15
+  88 000a 08BD     		pop	{r3, pc}
+  89              	.LVL5:
+  90              	.L5:
+  72:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+  91              		.loc 1 72 9 is_stmt 1 view .LVU16
+  92 000c FFF7FEFF 		bl	Page_Back
+  93              	.LVL6:
+  94              		.loc 1 74 1 is_stmt 0 view .LVU17
+  95 0010 FBE7     		b	.L2
+  96              		.cfi_endproc
+  97              	.LFE412:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 15
+
+
+  99              		.section	.text.ui_event_QA_HRBtn,"ax",%progbits
+ 100              		.align	1
+ 101              		.global	ui_event_QA_HRBtn
+ 102              		.syntax unified
+ 103              		.thumb
+ 104              		.thumb_func
+ 106              	ui_event_QA_HRBtn:
+ 107              	.LVL7:
+ 108              	.LFB413:
+  75:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+  76:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** void ui_event_QA_HRBtn(lv_event_t * e)
+  77:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+ 109              		.loc 1 77 1 is_stmt 1 view -0
+ 110              		.cfi_startproc
+ 111              		@ args = 0, pretend = 0, frame = 0
+ 112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 113              		.loc 1 77 1 is_stmt 0 view .LVU19
+ 114 0000 08B5     		push	{r3, lr}
+ 115              	.LCFI1:
+ 116              		.cfi_def_cfa_offset 8
+ 117              		.cfi_offset 3, -8
+ 118              		.cfi_offset 14, -4
+  78:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_event_code_t event_code = lv_event_get_code(e);
+ 119              		.loc 1 78 5 is_stmt 1 view .LVU20
+ 120              		.loc 1 78 34 is_stmt 0 view .LVU21
+ 121 0002 FFF7FEFF 		bl	lv_event_get_code
+ 122              	.LVL8:
+  79:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     if(event_code == LV_EVENT_CLICKED)
+ 123              		.loc 1 79 5 is_stmt 1 view .LVU22
+ 124              		.loc 1 79 7 is_stmt 0 view .LVU23
+ 125 0006 0728     		cmp	r0, #7
+ 126 0008 00D0     		beq	.L9
+ 127              	.LVL9:
+ 128              	.L6:
+  80:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+  81:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         Page_Load(&Page_HR);
+  82:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+  83:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+ 129              		.loc 1 83 1 view .LVU24
+ 130 000a 08BD     		pop	{r3, pc}
+ 131              	.LVL10:
+ 132              	.L9:
+  81:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 133              		.loc 1 81 9 is_stmt 1 view .LVU25
+ 134 000c 0148     		ldr	r0, .L10
+ 135              	.LVL11:
+  81:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 136              		.loc 1 81 9 is_stmt 0 view .LVU26
+ 137 000e FFF7FEFF 		bl	Page_Load
+ 138              	.LVL12:
+ 139              		.loc 1 83 1 view .LVU27
+ 140 0012 FAE7     		b	.L6
+ 141              	.L11:
+ 142              		.align	2
+ 143              	.L10:
+ 144 0014 00000000 		.word	Page_HR
+ 145              		.cfi_endproc
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 16
+
+
+ 146              	.LFE413:
+ 148              		.section	.text.ui_event_QA_SPO2Btn,"ax",%progbits
+ 149              		.align	1
+ 150              		.global	ui_event_QA_SPO2Btn
+ 151              		.syntax unified
+ 152              		.thumb
+ 153              		.thumb_func
+ 155              	ui_event_QA_SPO2Btn:
+ 156              	.LVL13:
+ 157              	.LFB414:
+  84:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+  85:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** void ui_event_QA_SPO2Btn(lv_event_t * e)
+  86:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+ 158              		.loc 1 86 1 is_stmt 1 view -0
+ 159              		.cfi_startproc
+ 160              		@ args = 0, pretend = 0, frame = 0
+ 161              		@ frame_needed = 0, uses_anonymous_args = 0
+ 162              		.loc 1 86 1 is_stmt 0 view .LVU29
+ 163 0000 08B5     		push	{r3, lr}
+ 164              	.LCFI2:
+ 165              		.cfi_def_cfa_offset 8
+ 166              		.cfi_offset 3, -8
+ 167              		.cfi_offset 14, -4
+  87:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_event_code_t event_code = lv_event_get_code(e);
+ 168              		.loc 1 87 5 is_stmt 1 view .LVU30
+ 169              		.loc 1 87 34 is_stmt 0 view .LVU31
+ 170 0002 FFF7FEFF 		bl	lv_event_get_code
+ 171              	.LVL14:
+  88:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     if(event_code == LV_EVENT_CLICKED)
+ 172              		.loc 1 88 5 is_stmt 1 view .LVU32
+ 173              		.loc 1 88 7 is_stmt 0 view .LVU33
+ 174 0006 0728     		cmp	r0, #7
+ 175 0008 00D0     		beq	.L15
+ 176              	.LVL15:
+ 177              	.L12:
+  89:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+  90:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         Page_Load(&Page_SPO2);
+  91:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+  92:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+ 178              		.loc 1 92 1 view .LVU34
+ 179 000a 08BD     		pop	{r3, pc}
+ 180              	.LVL16:
+ 181              	.L15:
+  90:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 182              		.loc 1 90 9 is_stmt 1 view .LVU35
+ 183 000c 0148     		ldr	r0, .L16
+ 184              	.LVL17:
+  90:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 185              		.loc 1 90 9 is_stmt 0 view .LVU36
+ 186 000e FFF7FEFF 		bl	Page_Load
+ 187              	.LVL18:
+ 188              		.loc 1 92 1 view .LVU37
+ 189 0012 FAE7     		b	.L12
+ 190              	.L17:
+ 191              		.align	2
+ 192              	.L16:
+ 193 0014 00000000 		.word	Page_SPO2
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 17
+
+
+ 194              		.cfi_endproc
+ 195              	.LFE414:
+ 197              		.section	.text.ui_event_QA_EnvBtn,"ax",%progbits
+ 198              		.align	1
+ 199              		.global	ui_event_QA_EnvBtn
+ 200              		.syntax unified
+ 201              		.thumb
+ 202              		.thumb_func
+ 204              	ui_event_QA_EnvBtn:
+ 205              	.LVL19:
+ 206              	.LFB415:
+  93:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+  94:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** void ui_event_QA_EnvBtn(lv_event_t * e)
+  95:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+ 207              		.loc 1 95 1 is_stmt 1 view -0
+ 208              		.cfi_startproc
+ 209              		@ args = 0, pretend = 0, frame = 0
+ 210              		@ frame_needed = 0, uses_anonymous_args = 0
+ 211              		.loc 1 95 1 is_stmt 0 view .LVU39
+ 212 0000 08B5     		push	{r3, lr}
+ 213              	.LCFI3:
+ 214              		.cfi_def_cfa_offset 8
+ 215              		.cfi_offset 3, -8
+ 216              		.cfi_offset 14, -4
+  96:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_event_code_t event_code = lv_event_get_code(e);
+ 217              		.loc 1 96 5 is_stmt 1 view .LVU40
+ 218              		.loc 1 96 34 is_stmt 0 view .LVU41
+ 219 0002 FFF7FEFF 		bl	lv_event_get_code
+ 220              	.LVL20:
+  97:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     if(event_code == LV_EVENT_CLICKED)
+ 221              		.loc 1 97 5 is_stmt 1 view .LVU42
+ 222              		.loc 1 97 7 is_stmt 0 view .LVU43
+ 223 0006 0728     		cmp	r0, #7
+ 224 0008 00D0     		beq	.L21
+ 225              	.LVL21:
+ 226              	.L18:
+  98:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+  99:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         Page_Load(&Page_Env);
+ 100:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 101:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+ 227              		.loc 1 101 1 view .LVU44
+ 228 000a 08BD     		pop	{r3, pc}
+ 229              	.LVL22:
+ 230              	.L21:
+  99:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 231              		.loc 1 99 9 is_stmt 1 view .LVU45
+ 232 000c 0148     		ldr	r0, .L22
+ 233              	.LVL23:
+  99:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 234              		.loc 1 99 9 is_stmt 0 view .LVU46
+ 235 000e FFF7FEFF 		bl	Page_Load
+ 236              	.LVL24:
+ 237              		.loc 1 101 1 view .LVU47
+ 238 0012 FAE7     		b	.L18
+ 239              	.L23:
+ 240              		.align	2
+ 241              	.L22:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 18
+
+
+ 242 0014 00000000 		.word	Page_Env
+ 243              		.cfi_endproc
+ 244              	.LFE415:
+ 246              		.section	.text.ui_event_QA_CalendarBtn,"ax",%progbits
+ 247              		.align	1
+ 248              		.global	ui_event_QA_CalendarBtn
+ 249              		.syntax unified
+ 250              		.thumb
+ 251              		.thumb_func
+ 253              	ui_event_QA_CalendarBtn:
+ 254              	.LVL25:
+ 255              	.LFB416:
+ 102:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 103:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** void ui_event_QA_CalendarBtn(lv_event_t * e)
+ 104:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+ 256              		.loc 1 104 1 is_stmt 1 view -0
+ 257              		.cfi_startproc
+ 258              		@ args = 0, pretend = 0, frame = 0
+ 259              		@ frame_needed = 0, uses_anonymous_args = 0
+ 260              		.loc 1 104 1 is_stmt 0 view .LVU49
+ 261 0000 08B5     		push	{r3, lr}
+ 262              	.LCFI4:
+ 263              		.cfi_def_cfa_offset 8
+ 264              		.cfi_offset 3, -8
+ 265              		.cfi_offset 14, -4
+ 105:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_event_code_t event_code = lv_event_get_code(e);
+ 266              		.loc 1 105 5 is_stmt 1 view .LVU50
+ 267              		.loc 1 105 34 is_stmt 0 view .LVU51
+ 268 0002 FFF7FEFF 		bl	lv_event_get_code
+ 269              	.LVL26:
+ 106:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     if(event_code == LV_EVENT_CLICKED)
+ 270              		.loc 1 106 5 is_stmt 1 view .LVU52
+ 271              		.loc 1 106 7 is_stmt 0 view .LVU53
+ 272 0006 0728     		cmp	r0, #7
+ 273 0008 00D0     		beq	.L27
+ 274              	.LVL27:
+ 275              	.L24:
+ 107:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+ 108:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         Page_Load(&Page_Calender);
+ 109:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 110:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+ 276              		.loc 1 110 1 view .LVU54
+ 277 000a 08BD     		pop	{r3, pc}
+ 278              	.LVL28:
+ 279              	.L27:
+ 108:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 280              		.loc 1 108 9 is_stmt 1 view .LVU55
+ 281 000c 0148     		ldr	r0, .L28
+ 282              	.LVL29:
+ 108:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 283              		.loc 1 108 9 is_stmt 0 view .LVU56
+ 284 000e FFF7FEFF 		bl	Page_Load
+ 285              	.LVL30:
+ 286              		.loc 1 110 1 view .LVU57
+ 287 0012 FAE7     		b	.L24
+ 288              	.L29:
+ 289              		.align	2
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 19
+
+
+ 290              	.L28:
+ 291 0014 00000000 		.word	Page_Calender
+ 292              		.cfi_endproc
+ 293              	.LFE416:
+ 295              		.section	.text.ui_event_QA_TimerBtn,"ax",%progbits
+ 296              		.align	1
+ 297              		.global	ui_event_QA_TimerBtn
+ 298              		.syntax unified
+ 299              		.thumb
+ 300              		.thumb_func
+ 302              	ui_event_QA_TimerBtn:
+ 303              	.LVL31:
+ 304              	.LFB417:
+ 111:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 112:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** void ui_event_QA_TimerBtn(lv_event_t * e)
+ 113:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+ 305              		.loc 1 113 1 is_stmt 1 view -0
+ 306              		.cfi_startproc
+ 307              		@ args = 0, pretend = 0, frame = 0
+ 308              		@ frame_needed = 0, uses_anonymous_args = 0
+ 309              		.loc 1 113 1 is_stmt 0 view .LVU59
+ 310 0000 08B5     		push	{r3, lr}
+ 311              	.LCFI5:
+ 312              		.cfi_def_cfa_offset 8
+ 313              		.cfi_offset 3, -8
+ 314              		.cfi_offset 14, -4
+ 114:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_event_code_t event_code = lv_event_get_code(e);
+ 315              		.loc 1 114 5 is_stmt 1 view .LVU60
+ 316              		.loc 1 114 34 is_stmt 0 view .LVU61
+ 317 0002 FFF7FEFF 		bl	lv_event_get_code
+ 318              	.LVL32:
+ 115:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     if(event_code == LV_EVENT_CLICKED)
+ 319              		.loc 1 115 5 is_stmt 1 view .LVU62
+ 320              		.loc 1 115 7 is_stmt 0 view .LVU63
+ 321 0006 0728     		cmp	r0, #7
+ 322 0008 00D0     		beq	.L33
+ 323              	.LVL33:
+ 324              	.L30:
+ 116:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+ 117:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         Page_Load(&Page_Timer);
+ 118:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 119:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+ 325              		.loc 1 119 1 view .LVU64
+ 326 000a 08BD     		pop	{r3, pc}
+ 327              	.LVL34:
+ 328              	.L33:
+ 117:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 329              		.loc 1 117 9 is_stmt 1 view .LVU65
+ 330 000c 0148     		ldr	r0, .L34
+ 331              	.LVL35:
+ 117:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 332              		.loc 1 117 9 is_stmt 0 view .LVU66
+ 333 000e FFF7FEFF 		bl	Page_Load
+ 334              	.LVL36:
+ 335              		.loc 1 119 1 view .LVU67
+ 336 0012 FAE7     		b	.L30
+ 337              	.L35:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 20
+
+
+ 338              		.align	2
+ 339              	.L34:
+ 340 0014 00000000 		.word	Page_Timer
+ 341              		.cfi_endproc
+ 342              	.LFE417:
+ 344              		.section	.text.ui_event_QA_ComputerBtn,"ax",%progbits
+ 345              		.align	1
+ 346              		.global	ui_event_QA_ComputerBtn
+ 347              		.syntax unified
+ 348              		.thumb
+ 349              		.thumb_func
+ 351              	ui_event_QA_ComputerBtn:
+ 352              	.LVL37:
+ 353              	.LFB418:
+ 120:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 121:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** void ui_event_QA_ComputerBtn(lv_event_t * e)
+ 122:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+ 354              		.loc 1 122 1 is_stmt 1 view -0
+ 355              		.cfi_startproc
+ 356              		@ args = 0, pretend = 0, frame = 0
+ 357              		@ frame_needed = 0, uses_anonymous_args = 0
+ 358              		.loc 1 122 1 is_stmt 0 view .LVU69
+ 359 0000 08B5     		push	{r3, lr}
+ 360              	.LCFI6:
+ 361              		.cfi_def_cfa_offset 8
+ 362              		.cfi_offset 3, -8
+ 363              		.cfi_offset 14, -4
+ 123:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_event_code_t event_code = lv_event_get_code(e);
+ 364              		.loc 1 123 5 is_stmt 1 view .LVU70
+ 365              		.loc 1 123 34 is_stmt 0 view .LVU71
+ 366 0002 FFF7FEFF 		bl	lv_event_get_code
+ 367              	.LVL38:
+ 124:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     if(event_code == LV_EVENT_CLICKED)
+ 368              		.loc 1 124 5 is_stmt 1 view .LVU72
+ 369              		.loc 1 124 7 is_stmt 0 view .LVU73
+ 370 0006 0728     		cmp	r0, #7
+ 371 0008 00D0     		beq	.L39
+ 372              	.LVL39:
+ 373              	.L36:
+ 125:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+ 126:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         Page_Load(&Page_Computer);
+ 127:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 128:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+ 374              		.loc 1 128 1 view .LVU74
+ 375 000a 08BD     		pop	{r3, pc}
+ 376              	.LVL40:
+ 377              	.L39:
+ 126:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 378              		.loc 1 126 9 is_stmt 1 view .LVU75
+ 379 000c 0148     		ldr	r0, .L40
+ 380              	.LVL41:
+ 126:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 381              		.loc 1 126 9 is_stmt 0 view .LVU76
+ 382 000e FFF7FEFF 		bl	Page_Load
+ 383              	.LVL42:
+ 384              		.loc 1 128 1 view .LVU77
+ 385 0012 FAE7     		b	.L36
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 21
+
+
+ 386              	.L41:
+ 387              		.align	2
+ 388              	.L40:
+ 389 0014 00000000 		.word	Page_Computer
+ 390              		.cfi_endproc
+ 391              	.LFE418:
+ 393              		.section	.text.ui_event_QA_CompassBtn,"ax",%progbits
+ 394              		.align	1
+ 395              		.global	ui_event_QA_CompassBtn
+ 396              		.syntax unified
+ 397              		.thumb
+ 398              		.thumb_func
+ 400              	ui_event_QA_CompassBtn:
+ 401              	.LVL43:
+ 402              	.LFB419:
+ 129:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 130:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** void ui_event_QA_CompassBtn(lv_event_t * e)
+ 131:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+ 403              		.loc 1 131 1 is_stmt 1 view -0
+ 404              		.cfi_startproc
+ 405              		@ args = 0, pretend = 0, frame = 0
+ 406              		@ frame_needed = 0, uses_anonymous_args = 0
+ 407              		.loc 1 131 1 is_stmt 0 view .LVU79
+ 408 0000 08B5     		push	{r3, lr}
+ 409              	.LCFI7:
+ 410              		.cfi_def_cfa_offset 8
+ 411              		.cfi_offset 3, -8
+ 412              		.cfi_offset 14, -4
+ 132:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_event_code_t event_code = lv_event_get_code(e);
+ 413              		.loc 1 132 5 is_stmt 1 view .LVU80
+ 414              		.loc 1 132 34 is_stmt 0 view .LVU81
+ 415 0002 FFF7FEFF 		bl	lv_event_get_code
+ 416              	.LVL44:
+ 133:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     if(event_code == LV_EVENT_CLICKED)
+ 417              		.loc 1 133 5 is_stmt 1 view .LVU82
+ 418              		.loc 1 133 7 is_stmt 0 view .LVU83
+ 419 0006 0728     		cmp	r0, #7
+ 420 0008 00D0     		beq	.L45
+ 421              	.LVL45:
+ 422              	.L42:
+ 134:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+ 135:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         Page_Load(&Page_Compass);
+ 136:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 137:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+ 423              		.loc 1 137 1 view .LVU84
+ 424 000a 08BD     		pop	{r3, pc}
+ 425              	.LVL46:
+ 426              	.L45:
+ 135:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 427              		.loc 1 135 9 is_stmt 1 view .LVU85
+ 428 000c 0148     		ldr	r0, .L46
+ 429              	.LVL47:
+ 135:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 430              		.loc 1 135 9 is_stmt 0 view .LVU86
+ 431 000e FFF7FEFF 		bl	Page_Load
+ 432              	.LVL48:
+ 433              		.loc 1 137 1 view .LVU87
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 22
+
+
+ 434 0012 FAE7     		b	.L42
+ 435              	.L47:
+ 436              		.align	2
+ 437              	.L46:
+ 438 0014 00000000 		.word	Page_Compass
+ 439              		.cfi_endproc
+ 440              	.LFE419:
+ 442              		.section	.text.ui_event_QA_NFCCardBtn,"ax",%progbits
+ 443              		.align	1
+ 444              		.global	ui_event_QA_NFCCardBtn
+ 445              		.syntax unified
+ 446              		.thumb
+ 447              		.thumb_func
+ 449              	ui_event_QA_NFCCardBtn:
+ 450              	.LVL49:
+ 451              	.LFB420:
+ 138:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 139:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** void ui_event_QA_NFCCardBtn(lv_event_t * e)
+ 140:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+ 452              		.loc 1 140 1 is_stmt 1 view -0
+ 453              		.cfi_startproc
+ 454              		@ args = 0, pretend = 0, frame = 0
+ 455              		@ frame_needed = 0, uses_anonymous_args = 0
+ 456              		.loc 1 140 1 is_stmt 0 view .LVU89
+ 457 0000 08B5     		push	{r3, lr}
+ 458              	.LCFI8:
+ 459              		.cfi_def_cfa_offset 8
+ 460              		.cfi_offset 3, -8
+ 461              		.cfi_offset 14, -4
+ 141:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_event_code_t event_code = lv_event_get_code(e);
+ 462              		.loc 1 141 5 is_stmt 1 view .LVU90
+ 463              		.loc 1 141 34 is_stmt 0 view .LVU91
+ 464 0002 FFF7FEFF 		bl	lv_event_get_code
+ 465              	.LVL50:
+ 142:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     if(event_code == LV_EVENT_CLICKED)
+ 466              		.loc 1 142 5 is_stmt 1 view .LVU92
+ 467              		.loc 1 142 7 is_stmt 0 view .LVU93
+ 468 0006 0728     		cmp	r0, #7
+ 469 0008 00D0     		beq	.L51
+ 470              	.LVL51:
+ 471              	.L48:
+ 143:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+ 144:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         Page_Load(&Page_NFCCard);
+ 145:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 146:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+ 472              		.loc 1 146 1 view .LVU94
+ 473 000a 08BD     		pop	{r3, pc}
+ 474              	.LVL52:
+ 475              	.L51:
+ 144:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 476              		.loc 1 144 9 is_stmt 1 view .LVU95
+ 477 000c 0148     		ldr	r0, .L52
+ 478              	.LVL53:
+ 144:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 479              		.loc 1 144 9 is_stmt 0 view .LVU96
+ 480 000e FFF7FEFF 		bl	Page_Load
+ 481              	.LVL54:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 23
+
+
+ 482              		.loc 1 146 1 view .LVU97
+ 483 0012 FAE7     		b	.L48
+ 484              	.L53:
+ 485              		.align	2
+ 486              	.L52:
+ 487 0014 00000000 		.word	Page_NFCCard
+ 488              		.cfi_endproc
+ 489              	.LFE420:
+ 491              		.section	.text.ui_event_QA_GameBtn,"ax",%progbits
+ 492              		.align	1
+ 493              		.global	ui_event_QA_GameBtn
+ 494              		.syntax unified
+ 495              		.thumb
+ 496              		.thumb_func
+ 498              	ui_event_QA_GameBtn:
+ 499              	.LVL55:
+ 500              	.LFB421:
+ 147:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 148:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** void ui_event_QA_GameBtn(lv_event_t * e)
+ 149:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+ 501              		.loc 1 149 1 is_stmt 1 view -0
+ 502              		.cfi_startproc
+ 503              		@ args = 0, pretend = 0, frame = 0
+ 504              		@ frame_needed = 0, uses_anonymous_args = 0
+ 505              		.loc 1 149 1 is_stmt 0 view .LVU99
+ 506 0000 08B5     		push	{r3, lr}
+ 507              	.LCFI9:
+ 508              		.cfi_def_cfa_offset 8
+ 509              		.cfi_offset 3, -8
+ 510              		.cfi_offset 14, -4
+ 150:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_event_code_t event_code = lv_event_get_code(e);
+ 511              		.loc 1 150 5 is_stmt 1 view .LVU100
+ 512              		.loc 1 150 34 is_stmt 0 view .LVU101
+ 513 0002 FFF7FEFF 		bl	lv_event_get_code
+ 514              	.LVL56:
+ 151:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     if(event_code == LV_EVENT_CLICKED)
+ 515              		.loc 1 151 5 is_stmt 1 view .LVU102
+ 516              		.loc 1 151 7 is_stmt 0 view .LVU103
+ 517 0006 0728     		cmp	r0, #7
+ 518 0008 00D0     		beq	.L57
+ 519              	.LVL57:
+ 520              	.L54:
+ 152:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+ 153:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         Page_Load(&Page_GameSelect);
+ 154:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 155:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+ 521              		.loc 1 155 1 view .LVU104
+ 522 000a 08BD     		pop	{r3, pc}
+ 523              	.LVL58:
+ 524              	.L57:
+ 153:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 525              		.loc 1 153 9 is_stmt 1 view .LVU105
+ 526 000c 0148     		ldr	r0, .L58
+ 527              	.LVL59:
+ 153:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     }
+ 528              		.loc 1 153 9 is_stmt 0 view .LVU106
+ 529 000e FFF7FEFF 		bl	Page_Load
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 24
+
+
+ 530              	.LVL60:
+ 531              		.loc 1 155 1 view .LVU107
+ 532 0012 FAE7     		b	.L54
+ 533              	.L59:
+ 534              		.align	2
+ 535              	.L58:
+ 536 0014 00000000 		.word	Page_GameSelect
+ 537              		.cfi_endproc
+ 538              	.LFE421:
+ 540              		.section	.rodata.QuickAppsPage_timer_cb.str1.4,"aMS",%progbits,1
+ 541              		.align	2
+ 542              	.LC0:
+ 543 0000 256400   		.ascii	"%d\000"
+ 544              		.section	.text.QuickAppsPage_timer_cb,"ax",%progbits
+ 545              		.align	1
+ 546              		.syntax unified
+ 547              		.thumb
+ 548              		.thumb_func
+ 550              	QuickAppsPage_timer_cb:
+ 551              	.LVL61:
+ 552              	.LFB411:
+  32:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     if(Page_Get_NowPage()->page_obj == &ui_QuickAppsPage)
+ 553              		.loc 1 32 1 is_stmt 1 view -0
+ 554              		.cfi_startproc
+ 555              		@ args = 0, pretend = 0, frame = 24
+ 556              		@ frame_needed = 0, uses_anonymous_args = 0
+  32:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     if(Page_Get_NowPage()->page_obj == &ui_QuickAppsPage)
+ 557              		.loc 1 32 1 is_stmt 0 view .LVU109
+ 558 0000 10B5     		push	{r4, lr}
+ 559              	.LCFI10:
+ 560              		.cfi_def_cfa_offset 8
+ 561              		.cfi_offset 4, -8
+ 562              		.cfi_offset 14, -4
+ 563 0002 86B0     		sub	sp, sp, #24
+ 564              	.LCFI11:
+ 565              		.cfi_def_cfa_offset 32
+  33:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+ 566              		.loc 1 33 5 is_stmt 1 view .LVU110
+  33:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+ 567              		.loc 1 33 8 is_stmt 0 view .LVU111
+ 568 0004 FFF7FEFF 		bl	Page_Get_NowPage
+ 569              	.LVL62:
+  33:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+ 570              		.loc 1 33 26 discriminator 1 view .LVU112
+ 571 0008 8268     		ldr	r2, [r0, #8]
+  33:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     {
+ 572              		.loc 1 33 7 discriminator 1 view .LVU113
+ 573 000a 194B     		ldr	r3, .L69
+ 574 000c 9A42     		cmp	r2, r3
+ 575 000e 01D0     		beq	.L67
+ 576              	.L60:
+  64:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 577              		.loc 1 64 1 view .LVU114
+ 578 0010 06B0     		add	sp, sp, #24
+ 579              	.LCFI12:
+ 580              		.cfi_remember_state
+ 581              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 25
+
+
+ 582              		@ sp needed
+ 583 0012 10BD     		pop	{r4, pc}
+ 584              	.L67:
+ 585              	.LCFI13:
+ 586              		.cfi_restore_state
+ 587              	.LBB26:
+  35:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         HW_DateTimeTypeDef DateTime;
+ 588              		.loc 1 35 9 is_stmt 1 view .LVU115
+  36:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         HWInterface.RealTimeClock.GetTimeDate(&DateTime);
+ 589              		.loc 1 36 9 view .LVU116
+  37:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 590              		.loc 1 37 9 view .LVU117
+  37:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 591              		.loc 1 37 34 is_stmt 0 view .LVU118
+ 592 0014 174C     		ldr	r4, .L69+4
+ 593 0016 2368     		ldr	r3, [r4]
+  37:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 594              		.loc 1 37 9 view .LVU119
+ 595 0018 6846     		mov	r0, sp
+ 596 001a 9847     		blx	r3
+ 597              	.LVL63:
+  40:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 598              		.loc 1 40 9 is_stmt 1 view .LVU120
+  40:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 599              		.loc 1 40 49 is_stmt 0 view .LVU121
+ 600 001c 94F86D20 		ldrb	r2, [r4, #109]	@ zero_extendqisi2
+  40:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 601              		.loc 1 40 26 view .LVU122
+ 602 0020 154B     		ldr	r3, .L69+8
+ 603 0022 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  40:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 604              		.loc 1 40 11 view .LVU123
+ 605 0024 9A42     		cmp	r2, r3
+ 606 0026 1BD1     		bne	.L68
+ 607              	.L62:
+  48:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 608              		.loc 1 48 9 is_stmt 1 view .LVU124
+  48:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 609              		.loc 1 48 51 is_stmt 0 view .LVU125
+ 610 0028 124B     		ldr	r3, .L69+4
+ 611 002a 93F86E30 		ldrb	r3, [r3, #110]	@ zero_extendqisi2
+  48:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 612              		.loc 1 48 28 view .LVU126
+ 613 002e 134A     		ldr	r2, .L69+12
+ 614 0030 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+  48:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 615              		.loc 1 48 11 view .LVU127
+ 616 0032 9342     		cmp	r3, r2
+ 617 0034 01D0     		beq	.L63
+  50:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         }
+ 618              		.loc 1 50 13 is_stmt 1 view .LVU128
+  50:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         }
+ 619              		.loc 1 50 29 is_stmt 0 view .LVU129
+ 620 0036 114A     		ldr	r2, .L69+12
+ 621 0038 1370     		strb	r3, [r2]
+ 622              	.L63:
+  54:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 26
+
+
+ 623              		.loc 1 54 9 is_stmt 1 view .LVU130
+  54:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 624              		.loc 1 54 56 is_stmt 0 view .LVU131
+ 625 003a 0E4B     		ldr	r3, .L69+4
+ 626 003c 93F84D30 		ldrb	r3, [r3, #77]	@ zero_extendqisi2
+  54:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 627              		.loc 1 54 28 view .LVU132
+ 628 0040 0F4A     		ldr	r2, .L69+16
+ 629 0042 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+  54:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 630              		.loc 1 54 11 view .LVU133
+ 631 0044 9342     		cmp	r3, r2
+ 632 0046 01D0     		beq	.L64
+  56:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         }
+ 633              		.loc 1 56 13 is_stmt 1 view .LVU134
+  56:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         }
+ 634              		.loc 1 56 29 is_stmt 0 view .LVU135
+ 635 0048 0D4A     		ldr	r2, .L69+16
+ 636 004a 1370     		strb	r3, [r2]
+ 637              	.L64:
+  59:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 638              		.loc 1 59 9 is_stmt 1 view .LVU136
+  59:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 639              		.loc 1 59 56 is_stmt 0 view .LVU137
+ 640 004c 094B     		ldr	r3, .L69+4
+ 641 004e 93F84E30 		ldrb	r3, [r3, #78]	@ zero_extendqisi2
+  59:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 642              		.loc 1 59 28 view .LVU138
+ 643 0052 0C4A     		ldr	r2, .L69+20
+ 644 0054 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+  59:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         {
+ 645              		.loc 1 59 11 view .LVU139
+ 646 0056 9342     		cmp	r3, r2
+ 647 0058 DAD0     		beq	.L60
+  61:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         }
+ 648              		.loc 1 61 13 is_stmt 1 view .LVU140
+  61:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****         }
+ 649              		.loc 1 61 29 is_stmt 0 view .LVU141
+ 650 005a 0A4A     		ldr	r2, .L69+20
+ 651 005c 1370     		strb	r3, [r2]
+ 652              	.LBE26:
+  64:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 653              		.loc 1 64 1 view .LVU142
+ 654 005e D7E7     		b	.L60
+ 655              	.L68:
+ 656              	.LBB27:
+  42:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****             sprintf(value_strbuf, "%d", ui_QA_HRValue);
+ 657              		.loc 1 42 13 is_stmt 1 view .LVU143
+  42:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****             sprintf(value_strbuf, "%d", ui_QA_HRValue);
+ 658              		.loc 1 42 27 is_stmt 0 view .LVU144
+ 659 0060 054B     		ldr	r3, .L69+8
+ 660 0062 1A70     		strb	r2, [r3]
+  43:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****             // 查找心率标签并更新
+ 661              		.loc 1 43 13 is_stmt 1 view .LVU145
+ 662 0064 0849     		ldr	r1, .L69+24
+ 663 0066 02A8     		add	r0, sp, #8
+ 664 0068 FFF7FEFF 		bl	sprintf
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 27
+
+
+ 665              	.LVL64:
+ 666 006c DCE7     		b	.L62
+ 667              	.L70:
+ 668 006e 00BF     		.align	2
+ 669              	.L69:
+ 670 0070 00000000 		.word	ui_QuickAppsPage
+ 671 0074 00000000 		.word	HWInterface
+ 672 0078 00000000 		.word	ui_QA_HRValue
+ 673 007c 00000000 		.word	ui_QA_SPO2Value
+ 674 0080 00000000 		.word	ui_QA_TempValue
+ 675 0084 00000000 		.word	ui_QA_HumiValue
+ 676 0088 00000000 		.word	.LC0
+ 677              	.LBE27:
+ 678              		.cfi_endproc
+ 679              	.LFE411:
+ 681              		.section	.text.create_app_button,"ax",%progbits
+ 682              		.align	1
+ 683              		.syntax unified
+ 684              		.thumb
+ 685              		.thumb_func
+ 687              	create_app_button:
+ 688              	.LVL65:
+ 689              	.LFB422:
+ 156:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 157:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** ///////////////////// HELPER FUNCTIONS ////////////////////
+ 158:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** static lv_obj_t* create_app_button(lv_obj_t * parent, int32_t x, int32_t y,
+ 159:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****                                     const char * icon, const char * label,
+ 160:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****                                     uint32_t icon_color, lv_event_cb_t event_cb)
+ 161:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+ 690              		.loc 1 161 1 view -0
+ 691              		.cfi_startproc
+ 692              		@ args = 12, pretend = 0, frame = 0
+ 693              		@ frame_needed = 0, uses_anonymous_args = 0
+ 694              		.loc 1 161 1 is_stmt 0 view .LVU147
+ 695 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 696              	.LCFI14:
+ 697              		.cfi_def_cfa_offset 24
+ 698              		.cfi_offset 3, -24
+ 699              		.cfi_offset 4, -20
+ 700              		.cfi_offset 5, -16
+ 701              		.cfi_offset 6, -12
+ 702              		.cfi_offset 7, -8
+ 703              		.cfi_offset 14, -4
+ 704 0002 0D46     		mov	r5, r1
+ 705 0004 1746     		mov	r7, r2
+ 706 0006 1E46     		mov	r6, r3
+ 162:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 按钮
+ 163:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * btn = lv_btn_create(parent);
+ 707              		.loc 1 163 5 is_stmt 1 view .LVU148
+ 708              		.loc 1 163 22 is_stmt 0 view .LVU149
+ 709 0008 FFF7FEFF 		bl	lv_btn_create
+ 710              	.LVL66:
+ 711              		.loc 1 163 22 view .LVU150
+ 712 000c 0446     		mov	r4, r0
+ 713              	.LVL67:
+ 164:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_size(btn, 70, 70);
+ 714              		.loc 1 164 5 is_stmt 1 view .LVU151
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 28
+
+
+ 715 000e 4622     		movs	r2, #70
+ 716 0010 1146     		mov	r1, r2
+ 717 0012 FFF7FEFF 		bl	lv_obj_set_size
+ 718              	.LVL68:
+ 165:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_pos(btn, x, y);
+ 719              		.loc 1 165 5 view .LVU152
+ 720 0016 3AB2     		sxth	r2, r7
+ 721 0018 29B2     		sxth	r1, r5
+ 722 001a 2046     		mov	r0, r4
+ 723 001c FFF7FEFF 		bl	lv_obj_set_pos
+ 724              	.LVL69:
+ 166:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_radius(btn, 16, LV_PART_MAIN | LV_STATE_DEFAULT);
+ 725              		.loc 1 166 5 view .LVU153
+ 726 0020 0022     		movs	r2, #0
+ 727 0022 1021     		movs	r1, #16
+ 728 0024 2046     		mov	r0, r4
+ 729 0026 FFF7FEFF 		bl	lv_obj_set_style_radius
+ 730              	.LVL70:
+ 167:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_bg_color(btn, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+ 731              		.loc 1 167 5 view .LVU154
+ 732              	.LBB28:
+ 733              	.LBI28:
+ 597:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 734              		.loc 2 597 26 view .LVU155
+ 735              	.LBB29:
+ 600:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 736              		.loc 2 600 5 view .LVU156
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 737              		.loc 2 616 5 view .LVU157
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 738              		.loc 2 621 5 view .LVU158
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 739              		.loc 2 621 5 is_stmt 0 view .LVU159
+ 740              	.LBE29:
+ 741              	.LBE28:
+ 742              		.loc 1 167 5 discriminator 1 view .LVU160
+ 743 002a 0022     		movs	r2, #0
+ 744 002c 4FF0FF31 		mov	r1, #-1	@ movhi
+ 745 0030 2046     		mov	r0, r4
+ 746 0032 FFF7FEFF 		bl	lv_obj_set_style_bg_color
+ 747              	.LVL71:
+ 168:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_shadow_width(btn, 8, LV_PART_MAIN | LV_STATE_DEFAULT);
+ 748              		.loc 1 168 5 is_stmt 1 view .LVU161
+ 749 0036 0022     		movs	r2, #0
+ 750 0038 0821     		movs	r1, #8
+ 751 003a 2046     		mov	r0, r4
+ 752 003c FFF7FEFF 		bl	lv_obj_set_style_shadow_width
+ 753              	.LVL72:
+ 169:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_shadow_color(btn, lv_color_hex(0xE0E0E0), LV_PART_MAIN | LV_STATE_DEFAULT);
+ 754              		.loc 1 169 5 view .LVU162
+ 755              	.LBB30:
+ 756              	.LBI30:
+ 597:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 757              		.loc 2 597 26 view .LVU163
+ 758              	.LBB31:
+ 600:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 759              		.loc 2 600 5 view .LVU164
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 29
+
+
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 760              		.loc 2 616 5 view .LVU165
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 761              		.loc 2 621 5 view .LVU166
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 762              		.loc 2 621 5 is_stmt 0 view .LVU167
+ 763              	.LBE31:
+ 764              	.LBE30:
+ 765              		.loc 1 169 5 discriminator 1 view .LVU168
+ 766 0040 0022     		movs	r2, #0
+ 767 0042 4EF21C71 		movw	r1, 59164	@ movhi
+ 768 0046 2046     		mov	r0, r4
+ 769 0048 FFF7FEFF 		bl	lv_obj_set_style_shadow_color
+ 770              	.LVL73:
+ 170:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_shadow_opa(btn, 80, LV_PART_MAIN | LV_STATE_DEFAULT);
+ 771              		.loc 1 170 5 is_stmt 1 view .LVU169
+ 772 004c 0022     		movs	r2, #0
+ 773 004e 5021     		movs	r1, #80
+ 774 0050 2046     		mov	r0, r4
+ 775 0052 FFF7FEFF 		bl	lv_obj_set_style_shadow_opa
+ 776              	.LVL74:
+ 171:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_shadow_ofs_y(btn, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
+ 777              		.loc 1 171 5 view .LVU170
+ 778 0056 0022     		movs	r2, #0
+ 779 0058 0221     		movs	r1, #2
+ 780 005a 2046     		mov	r0, r4
+ 781 005c FFF7FEFF 		bl	lv_obj_set_style_shadow_ofs_y
+ 782              	.LVL75:
+ 172:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 173:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 图标
+ 174:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * icon_label = lv_label_create(btn);
+ 783              		.loc 1 174 5 view .LVU171
+ 784              		.loc 1 174 29 is_stmt 0 view .LVU172
+ 785 0060 2046     		mov	r0, r4
+ 786 0062 FFF7FEFF 		bl	lv_label_create
+ 787              	.LVL76:
+ 788 0066 0546     		mov	r5, r0
+ 789              	.LVL77:
+ 175:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_align(icon_label, LV_ALIGN_TOP_MID);
+ 790              		.loc 1 175 5 is_stmt 1 view .LVU173
+ 791 0068 0221     		movs	r1, #2
+ 792 006a FFF7FEFF 		bl	lv_obj_set_align
+ 793              	.LVL78:
+ 176:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_y(icon_label, 8);
+ 794              		.loc 1 176 5 view .LVU174
+ 795 006e 0821     		movs	r1, #8
+ 796 0070 2846     		mov	r0, r5
+ 797 0072 FFF7FEFF 		bl	lv_obj_set_y
+ 798              	.LVL79:
+ 177:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_label_set_text(icon_label, icon);
+ 799              		.loc 1 177 5 view .LVU175
+ 800 0076 3146     		mov	r1, r6
+ 801 0078 2846     		mov	r0, r5
+ 802 007a FFF7FEFF 		bl	lv_label_set_text
+ 803              	.LVL80:
+ 178:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_font(icon_label, &ui_font_iconfont28, LV_PART_MAIN | LV_STATE_DEFAULT);
+ 804              		.loc 1 178 5 view .LVU176
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 30
+
+
+ 805 007e 0022     		movs	r2, #0
+ 806 0080 1749     		ldr	r1, .L73
+ 807 0082 2846     		mov	r0, r5
+ 808 0084 FFF7FEFF 		bl	lv_obj_set_style_text_font
+ 809              	.LVL81:
+ 179:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_color(icon_label, lv_color_hex(icon_color), LV_PART_MAIN | LV_STATE_DEFAU
+ 810              		.loc 1 179 5 view .LVU177
+ 811 0088 0798     		ldr	r0, [sp, #28]
+ 812 008a FFF7FEFF 		bl	lv_color_hex
+ 813              	.LVL82:
+ 814 008e 0146     		mov	r1, r0	@ movhi
+ 815              		.loc 1 179 5 is_stmt 0 discriminator 1 view .LVU178
+ 816 0090 0022     		movs	r2, #0
+ 817 0092 2846     		mov	r0, r5
+ 818 0094 FFF7FEFF 		bl	lv_obj_set_style_text_color
+ 819              	.LVL83:
+ 180:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 181:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 标签
+ 182:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * text_label = lv_label_create(btn);
+ 820              		.loc 1 182 5 is_stmt 1 view .LVU179
+ 821              		.loc 1 182 29 is_stmt 0 view .LVU180
+ 822 0098 2046     		mov	r0, r4
+ 823 009a FFF7FEFF 		bl	lv_label_create
+ 824              	.LVL84:
+ 825 009e 0546     		mov	r5, r0
+ 826              	.LVL85:
+ 183:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_align(text_label, LV_ALIGN_BOTTOM_MID);
+ 827              		.loc 1 183 5 is_stmt 1 view .LVU181
+ 828 00a0 0521     		movs	r1, #5
+ 829 00a2 FFF7FEFF 		bl	lv_obj_set_align
+ 830              	.LVL86:
+ 184:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_y(text_label, -10);
+ 831              		.loc 1 184 5 view .LVU182
+ 832 00a6 6FF00901 		mvn	r1, #9
+ 833 00aa 2846     		mov	r0, r5
+ 834 00ac FFF7FEFF 		bl	lv_obj_set_y
+ 835              	.LVL87:
+ 185:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_label_set_text(text_label, label);
+ 836              		.loc 1 185 5 view .LVU183
+ 837 00b0 0699     		ldr	r1, [sp, #24]
+ 838 00b2 2846     		mov	r0, r5
+ 839 00b4 FFF7FEFF 		bl	lv_label_set_text
+ 840              	.LVL88:
+ 186:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_font(text_label, &ui_font_Cuyuan18, LV_PART_MAIN | LV_STATE_DEFAULT);
+ 841              		.loc 1 186 5 view .LVU184
+ 842 00b8 0022     		movs	r2, #0
+ 843 00ba 0A49     		ldr	r1, .L73+4
+ 844 00bc 2846     		mov	r0, r5
+ 845 00be FFF7FEFF 		bl	lv_obj_set_style_text_font
+ 846              	.LVL89:
+ 187:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_color(text_label, lv_color_hex(0x1A1A1A), LV_PART_MAIN | LV_STATE_DEFAULT
+ 847              		.loc 1 187 5 view .LVU185
+ 848              	.LBB32:
+ 849              	.LBI32:
+ 597:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 850              		.loc 2 597 26 view .LVU186
+ 851              	.LBB33:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 31
+
+
+ 600:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 852              		.loc 2 600 5 view .LVU187
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 853              		.loc 2 616 5 view .LVU188
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 854              		.loc 2 621 5 view .LVU189
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 855              		.loc 2 621 5 is_stmt 0 view .LVU190
+ 856              	.LBE33:
+ 857              	.LBE32:
+ 858              		.loc 1 187 5 discriminator 1 view .LVU191
+ 859 00c2 0022     		movs	r2, #0
+ 860 00c4 41F6C301 		movw	r1, 6339	@ movhi
+ 861 00c8 2846     		mov	r0, r5
+ 862 00ca FFF7FEFF 		bl	lv_obj_set_style_text_color
+ 863              	.LVL90:
+ 188:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 189:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 事件
+ 190:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_add_event_cb(btn, event_cb, LV_EVENT_ALL, NULL);
+ 864              		.loc 1 190 5 is_stmt 1 view .LVU192
+ 865 00ce 0023     		movs	r3, #0
+ 866 00d0 1A46     		mov	r2, r3
+ 867 00d2 0899     		ldr	r1, [sp, #32]
+ 868 00d4 2046     		mov	r0, r4
+ 869 00d6 FFF7FEFF 		bl	lv_obj_add_event_cb
+ 870              	.LVL91:
+ 191:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 192:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     return btn;
+ 871              		.loc 1 192 5 view .LVU193
+ 193:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+ 872              		.loc 1 193 1 is_stmt 0 view .LVU194
+ 873 00da 2046     		mov	r0, r4
+ 874 00dc F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 875              	.LVL92:
+ 876              	.L74:
+ 877              		.loc 1 193 1 view .LVU195
+ 878 00de 00BF     		.align	2
+ 879              	.L73:
+ 880 00e0 00000000 		.word	ui_font_iconfont28
+ 881 00e4 00000000 		.word	ui_font_Cuyuan18
+ 882              		.cfi_endproc
+ 883              	.LFE422:
+ 885              		.section	.rodata.ui_QuickAppsPage_screen_init.str1.4,"aMS",%progbits,1
+ 886              		.align	2
+ 887              	.LC1:
+ 888 0000 3C00     		.ascii	"<\000"
+ 889 0002 0000     		.align	2
+ 890              	.LC2:
+ 891 0004 51756963 		.ascii	"Quick Apps\000"
+ 891      6B204170 
+ 891      707300
+ 892 000f 00       		.align	2
+ 893              	.LC3:
+ 894 0010 2E2E2E00 		.ascii	"...\000"
+ 895              		.align	2
+ 896              	.LC4:
+ 897 0014 48656172 		.ascii	"Heart\000"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 32
+
+
+ 897      7400
+ 898 001a 0000     		.align	2
+ 899              	.LC5:
+ 900 001c 53704F32 		.ascii	"SpO2\000"
+ 900      00
+ 901 0021 000000   		.align	2
+ 902              	.LC6:
+ 903 0024 25642525 		.ascii	"%d%%\000"
+ 903      00
+ 904 0029 000000   		.align	2
+ 905              	.LC7:
+ 906 002c 456E7600 		.ascii	"Env\000"
+ 907              		.align	2
+ 908              	.LC8:
+ 909 0030 25642E2E 		.ascii	"%d...\000"
+ 909      2E00
+ 910 0036 0000     		.align	2
+ 911              	.LC9:
+ 912 0038 43616C65 		.ascii	"Calendar\000"
+ 912      6E646172 
+ 912      00
+ 913 0041 000000   		.align	2
+ 914              	.LC10:
+ 915 0044 54696D65 		.ascii	"Timer\000"
+ 915      7200
+ 916 004a 0000     		.align	2
+ 917              	.LC11:
+ 918 004c 43616C63 		.ascii	"Calc\000"
+ 918      00
+ 919 0051 000000   		.align	2
+ 920              	.LC12:
+ 921 0054 436F6D70 		.ascii	"Compass\000"
+ 921      61737300 
+ 922              		.align	2
+ 923              	.LC13:
+ 924 005c 4E464300 		.ascii	"NFC\000"
+ 925              		.align	2
+ 926              	.LC14:
+ 927 0060 47616D65 		.ascii	"Game\000"
+ 927      00
+ 928              		.section	.text.ui_QuickAppsPage_screen_init,"ax",%progbits
+ 929              		.align	1
+ 930              		.global	ui_QuickAppsPage_screen_init
+ 931              		.syntax unified
+ 932              		.thumb
+ 933              		.thumb_func
+ 935              	ui_QuickAppsPage_screen_init:
+ 936              	.LFB423:
+ 194:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 195:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** ///////////////////// SCREEN init ////////////////////
+ 196:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** void ui_QuickAppsPage_screen_init(void)
+ 197:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+ 937              		.loc 1 197 1 is_stmt 1 view -0
+ 938              		.cfi_startproc
+ 939              		@ args = 0, pretend = 0, frame = 16
+ 940              		@ frame_needed = 0, uses_anonymous_args = 0
+ 941 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 33
+
+
+ 942              	.LCFI15:
+ 943              		.cfi_def_cfa_offset 28
+ 944              		.cfi_offset 4, -28
+ 945              		.cfi_offset 5, -24
+ 946              		.cfi_offset 6, -20
+ 947              		.cfi_offset 7, -16
+ 948              		.cfi_offset 8, -12
+ 949              		.cfi_offset 9, -8
+ 950              		.cfi_offset 14, -4
+ 951 0004 89B0     		sub	sp, sp, #36
+ 952              	.LCFI16:
+ 953              		.cfi_def_cfa_offset 64
+ 198:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     char value_strbuf[16];
+ 954              		.loc 1 198 5 view .LVU197
+ 199:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 200:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 创建页面
+ 201:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     ui_QuickAppsPage = lv_obj_create(NULL);
+ 955              		.loc 1 201 5 view .LVU198
+ 956              		.loc 1 201 24 is_stmt 0 view .LVU199
+ 957 0006 0020     		movs	r0, #0
+ 958 0008 FFF7FEFF 		bl	lv_obj_create
+ 959              	.LVL93:
+ 960              		.loc 1 201 22 discriminator 1 view .LVU200
+ 961 000c AA4F     		ldr	r7, .L77
+ 962 000e 3860     		str	r0, [r7]
+ 202:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_clear_flag(ui_QuickAppsPage, LV_OBJ_FLAG_SCROLLABLE);
+ 963              		.loc 1 202 5 is_stmt 1 view .LVU201
+ 964 0010 1021     		movs	r1, #16
+ 965 0012 FFF7FEFF 		bl	lv_obj_clear_flag
+ 966              	.LVL94:
+ 203:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_bg_color(ui_QuickAppsPage, lv_color_hex(0xF5F5F5), LV_PART_MAIN | LV_STATE_DEF
+ 967              		.loc 1 203 5 view .LVU202
+ 968              	.LBB34:
+ 969              	.LBI34:
+ 597:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 970              		.loc 2 597 26 view .LVU203
+ 971              	.LBB35:
+ 600:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 972              		.loc 2 600 5 view .LVU204
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 973              		.loc 2 616 5 view .LVU205
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 974              		.loc 2 616 12 is_stmt 0 view .LVU206
+ 975 0016 4FF2BE75 		movw	r5, #63422
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 976              		.loc 2 621 5 is_stmt 1 view .LVU207
+ 977              	.LVL95:
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 978              		.loc 2 621 5 is_stmt 0 view .LVU208
+ 979              	.LBE35:
+ 980              	.LBE34:
+ 981              		.loc 1 203 5 discriminator 1 view .LVU209
+ 982 001a 0022     		movs	r2, #0
+ 983 001c 2946     		mov	r1, r5	@ movhi
+ 984 001e 3868     		ldr	r0, [r7]
+ 985 0020 FFF7FEFF 		bl	lv_obj_set_style_bg_color
+ 986              	.LVL96:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 34
+
+
+ 204:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 205:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // ========== 顶部导航栏 ==========
+ 206:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_TopBar = lv_obj_create(ui_QuickAppsPage);
+ 987              		.loc 1 206 5 is_stmt 1 view .LVU210
+ 988              		.loc 1 206 31 is_stmt 0 view .LVU211
+ 989 0024 3868     		ldr	r0, [r7]
+ 990 0026 FFF7FEFF 		bl	lv_obj_create
+ 991              	.LVL97:
+ 992 002a 0446     		mov	r4, r0
+ 993              	.LVL98:
+ 207:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_size(ui_QA_TopBar, 240, 40);
+ 994              		.loc 1 207 5 is_stmt 1 view .LVU212
+ 995 002c 2822     		movs	r2, #40
+ 996 002e F021     		movs	r1, #240
+ 997 0030 FFF7FEFF 		bl	lv_obj_set_size
+ 998              	.LVL99:
+ 208:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_align(ui_QA_TopBar, LV_ALIGN_TOP_MID);
+ 999              		.loc 1 208 5 view .LVU213
+ 1000 0034 0221     		movs	r1, #2
+ 1001 0036 2046     		mov	r0, r4
+ 1002 0038 FFF7FEFF 		bl	lv_obj_set_align
+ 1003              	.LVL100:
+ 209:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_clear_flag(ui_QA_TopBar, LV_OBJ_FLAG_SCROLLABLE);
+ 1004              		.loc 1 209 5 view .LVU214
+ 1005 003c 1021     		movs	r1, #16
+ 1006 003e 2046     		mov	r0, r4
+ 1007 0040 FFF7FEFF 		bl	lv_obj_clear_flag
+ 1008              	.LVL101:
+ 210:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_bg_color(ui_QA_TopBar, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT
+ 1009              		.loc 1 210 5 view .LVU215
+ 1010              	.LBB36:
+ 1011              	.LBI36:
+ 597:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 1012              		.loc 2 597 26 view .LVU216
+ 1013              	.LBB37:
+ 600:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 1014              		.loc 2 600 5 view .LVU217
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 1015              		.loc 2 616 5 view .LVU218
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1016              		.loc 2 621 5 view .LVU219
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1017              		.loc 2 621 5 is_stmt 0 view .LVU220
+ 1018              	.LBE37:
+ 1019              	.LBE36:
+ 1020              		.loc 1 210 5 discriminator 1 view .LVU221
+ 1021 0044 0022     		movs	r2, #0
+ 1022 0046 4FF0FF31 		mov	r1, #-1	@ movhi
+ 1023 004a 2046     		mov	r0, r4
+ 1024 004c FFF7FEFF 		bl	lv_obj_set_style_bg_color
+ 1025              	.LVL102:
+ 211:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 212:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 返回按钮
+ 213:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_BackBtn = lv_btn_create(ui_QA_TopBar);
+ 1026              		.loc 1 213 5 is_stmt 1 view .LVU222
+ 1027              		.loc 1 213 32 is_stmt 0 view .LVU223
+ 1028 0050 2046     		mov	r0, r4
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 35
+
+
+ 1029 0052 FFF7FEFF 		bl	lv_btn_create
+ 1030              	.LVL103:
+ 1031 0056 0646     		mov	r6, r0
+ 1032              	.LVL104:
+ 214:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_size(ui_QA_BackBtn, 30, 30);
+ 1033              		.loc 1 214 5 is_stmt 1 view .LVU224
+ 1034 0058 1E22     		movs	r2, #30
+ 1035 005a 1146     		mov	r1, r2
+ 1036 005c FFF7FEFF 		bl	lv_obj_set_size
+ 1037              	.LVL105:
+ 215:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_align(ui_QA_BackBtn, LV_ALIGN_LEFT_MID);
+ 1038              		.loc 1 215 5 view .LVU225
+ 1039 0060 0721     		movs	r1, #7
+ 1040 0062 3046     		mov	r0, r6
+ 1041 0064 FFF7FEFF 		bl	lv_obj_set_align
+ 1042              	.LVL106:
+ 216:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_x(ui_QA_BackBtn, 5);
+ 1043              		.loc 1 216 5 view .LVU226
+ 1044 0068 0521     		movs	r1, #5
+ 1045 006a 3046     		mov	r0, r6
+ 1046 006c FFF7FEFF 		bl	lv_obj_set_x
+ 1047              	.LVL107:
+ 217:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_radius(ui_QA_BackBtn, 15, LV_PART_MAIN | LV_STATE_DEFAULT);
+ 1048              		.loc 1 217 5 view .LVU227
+ 1049 0070 0022     		movs	r2, #0
+ 1050 0072 0F21     		movs	r1, #15
+ 1051 0074 3046     		mov	r0, r6
+ 1052 0076 FFF7FEFF 		bl	lv_obj_set_style_radius
+ 1053              	.LVL108:
+ 218:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_bg_color(ui_QA_BackBtn, lv_color_hex(0xF0F0F0), LV_PART_MAIN | LV_STATE_DEFAUL
+ 1054              		.loc 1 218 5 view .LVU228
+ 1055              	.LBB38:
+ 1056              	.LBI38:
+ 597:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 1057              		.loc 2 597 26 view .LVU229
+ 1058              	.LBB39:
+ 600:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 1059              		.loc 2 600 5 view .LVU230
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 1060              		.loc 2 616 5 view .LVU231
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1061              		.loc 2 621 5 view .LVU232
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1062              		.loc 2 621 5 is_stmt 0 view .LVU233
+ 1063              	.LBE39:
+ 1064              	.LBE38:
+ 1065              		.loc 1 218 5 discriminator 1 view .LVU234
+ 1066 007a 0022     		movs	r2, #0
+ 1067 007c 4FF29E71 		movw	r1, 63390	@ movhi
+ 1068 0080 3046     		mov	r0, r6
+ 1069 0082 FFF7FEFF 		bl	lv_obj_set_style_bg_color
+ 1070              	.LVL109:
+ 219:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 220:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_BackIcon = lv_label_create(ui_QA_BackBtn);
+ 1071              		.loc 1 220 5 is_stmt 1 view .LVU235
+ 1072              		.loc 1 220 33 is_stmt 0 view .LVU236
+ 1073 0086 3046     		mov	r0, r6
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 36
+
+
+ 1074 0088 FFF7FEFF 		bl	lv_label_create
+ 1075              	.LVL110:
+ 1076 008c 8046     		mov	r8, r0
+ 1077              	.LVL111:
+ 221:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_align(ui_QA_BackIcon, LV_ALIGN_CENTER);
+ 1078              		.loc 1 221 5 is_stmt 1 view .LVU237
+ 1079 008e 0921     		movs	r1, #9
+ 1080 0090 FFF7FEFF 		bl	lv_obj_set_align
+ 1081              	.LVL112:
+ 222:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_label_set_text(ui_QA_BackIcon, "<");
+ 1082              		.loc 1 222 5 view .LVU238
+ 1083 0094 8949     		ldr	r1, .L77+4
+ 1084 0096 4046     		mov	r0, r8
+ 1085 0098 FFF7FEFF 		bl	lv_label_set_text
+ 1086              	.LVL113:
+ 223:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_font(ui_QA_BackIcon, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFA
+ 1087              		.loc 1 223 5 view .LVU239
+ 1088 009c 0022     		movs	r2, #0
+ 1089 009e 8849     		ldr	r1, .L77+8
+ 1090 00a0 4046     		mov	r0, r8
+ 1091 00a2 FFF7FEFF 		bl	lv_obj_set_style_text_font
+ 1092              	.LVL114:
+ 224:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_color(ui_QA_BackIcon, lv_color_hex(0x1A1A1A), LV_PART_MAIN | LV_STATE_DEF
+ 1093              		.loc 1 224 5 view .LVU240
+ 1094              	.LBB40:
+ 1095              	.LBI40:
+ 597:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 1096              		.loc 2 597 26 view .LVU241
+ 1097              	.LBB41:
+ 600:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 1098              		.loc 2 600 5 view .LVU242
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 1099              		.loc 2 616 5 view .LVU243
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 1100              		.loc 2 616 12 is_stmt 0 view .LVU244
+ 1101 00a6 41F6C309 		movw	r9, #6339
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1102              		.loc 2 621 5 is_stmt 1 view .LVU245
+ 1103              	.LVL115:
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1104              		.loc 2 621 5 is_stmt 0 view .LVU246
+ 1105              	.LBE41:
+ 1106              	.LBE40:
+ 1107              		.loc 1 224 5 discriminator 1 view .LVU247
+ 1108 00aa 0022     		movs	r2, #0
+ 1109 00ac 4946     		mov	r1, r9	@ movhi
+ 1110 00ae 4046     		mov	r0, r8
+ 1111 00b0 FFF7FEFF 		bl	lv_obj_set_style_text_color
+ 1112              	.LVL116:
+ 225:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 226:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 标题
+ 227:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_Title = lv_label_create(ui_QA_TopBar);
+ 1113              		.loc 1 227 5 is_stmt 1 view .LVU248
+ 1114              		.loc 1 227 30 is_stmt 0 view .LVU249
+ 1115 00b4 2046     		mov	r0, r4
+ 1116 00b6 FFF7FEFF 		bl	lv_label_create
+ 1117              	.LVL117:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 37
+
+
+ 1118 00ba 0446     		mov	r4, r0
+ 1119              	.LVL118:
+ 228:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_align(ui_QA_Title, LV_ALIGN_CENTER);
+ 1120              		.loc 1 228 5 is_stmt 1 view .LVU250
+ 1121 00bc 0921     		movs	r1, #9
+ 1122 00be FFF7FEFF 		bl	lv_obj_set_align
+ 1123              	.LVL119:
+ 229:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_label_set_text(ui_QA_Title, "Quick Apps");
+ 1124              		.loc 1 229 5 view .LVU251
+ 1125 00c2 8049     		ldr	r1, .L77+12
+ 1126 00c4 2046     		mov	r0, r4
+ 1127 00c6 FFF7FEFF 		bl	lv_label_set_text
+ 1128              	.LVL120:
+ 230:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_font(ui_QA_Title, &ui_font_Cuyuan18, LV_PART_MAIN | LV_STATE_DEFAULT);
+ 1129              		.loc 1 230 5 view .LVU252
+ 1130 00ca DFF88C82 		ldr	r8, .L77+160
+ 1131              	.LVL121:
+ 1132              		.loc 1 230 5 is_stmt 0 view .LVU253
+ 1133 00ce 0022     		movs	r2, #0
+ 1134 00d0 4146     		mov	r1, r8
+ 1135 00d2 2046     		mov	r0, r4
+ 1136 00d4 FFF7FEFF 		bl	lv_obj_set_style_text_font
+ 1137              	.LVL122:
+ 231:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_color(ui_QA_Title, lv_color_hex(0x1A1A1A), LV_PART_MAIN | LV_STATE_DEFAUL
+ 1138              		.loc 1 231 5 is_stmt 1 view .LVU254
+ 1139              	.LBB42:
+ 1140              	.LBI42:
+ 597:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 1141              		.loc 2 597 26 view .LVU255
+ 1142              	.LBB43:
+ 600:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 1143              		.loc 2 600 5 view .LVU256
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 1144              		.loc 2 616 5 view .LVU257
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1145              		.loc 2 621 5 view .LVU258
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1146              		.loc 2 621 5 is_stmt 0 view .LVU259
+ 1147              	.LBE43:
+ 1148              	.LBE42:
+ 1149              		.loc 1 231 5 discriminator 1 view .LVU260
+ 1150 00d8 0022     		movs	r2, #0
+ 1151 00da 4946     		mov	r1, r9	@ movhi
+ 1152 00dc 2046     		mov	r0, r4
+ 1153 00de FFF7FEFF 		bl	lv_obj_set_style_text_color
+ 1154              	.LVL123:
+ 232:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 233:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // ========== 应用网格面板 ==========
+ 234:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_GridPanel = lv_obj_create(ui_QuickAppsPage);
+ 1155              		.loc 1 234 5 is_stmt 1 view .LVU261
+ 1156              		.loc 1 234 34 is_stmt 0 view .LVU262
+ 1157 00e2 3868     		ldr	r0, [r7]
+ 1158 00e4 FFF7FEFF 		bl	lv_obj_create
+ 1159              	.LVL124:
+ 1160 00e8 0446     		mov	r4, r0
+ 1161              	.LVL125:
+ 235:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_size(ui_QA_GridPanel, 240, 280);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 38
+
+
+ 1162              		.loc 1 235 5 is_stmt 1 view .LVU263
+ 1163 00ea 4FF48C72 		mov	r2, #280
+ 1164 00ee F021     		movs	r1, #240
+ 1165 00f0 FFF7FEFF 		bl	lv_obj_set_size
+ 1166              	.LVL126:
+ 236:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_align(ui_QA_GridPanel, LV_ALIGN_CENTER);
+ 1167              		.loc 1 236 5 view .LVU264
+ 1168 00f4 0921     		movs	r1, #9
+ 1169 00f6 2046     		mov	r0, r4
+ 1170 00f8 FFF7FEFF 		bl	lv_obj_set_align
+ 1171              	.LVL127:
+ 237:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_y(ui_QA_GridPanel, 10);
+ 1172              		.loc 1 237 5 view .LVU265
+ 1173 00fc 0A21     		movs	r1, #10
+ 1174 00fe 2046     		mov	r0, r4
+ 1175 0100 FFF7FEFF 		bl	lv_obj_set_y
+ 1176              	.LVL128:
+ 238:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_clear_flag(ui_QA_GridPanel, LV_OBJ_FLAG_SCROLLABLE);
+ 1177              		.loc 1 238 5 view .LVU266
+ 1178 0104 1021     		movs	r1, #16
+ 1179 0106 2046     		mov	r0, r4
+ 1180 0108 FFF7FEFF 		bl	lv_obj_clear_flag
+ 1181              	.LVL129:
+ 239:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_bg_color(ui_QA_GridPanel, lv_color_hex(0xF5F5F5), LV_PART_MAIN | LV_STATE_DEFA
+ 1182              		.loc 1 239 5 view .LVU267
+ 1183              	.LBB44:
+ 1184              	.LBI44:
+ 597:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 1185              		.loc 2 597 26 view .LVU268
+ 1186              	.LBB45:
+ 600:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 1187              		.loc 2 600 5 view .LVU269
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 1188              		.loc 2 616 5 view .LVU270
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1189              		.loc 2 621 5 view .LVU271
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1190              		.loc 2 621 5 is_stmt 0 view .LVU272
+ 1191              	.LBE45:
+ 1192              	.LBE44:
+ 1193              		.loc 1 239 5 discriminator 1 view .LVU273
+ 1194 010c 0022     		movs	r2, #0
+ 1195 010e 2946     		mov	r1, r5	@ movhi
+ 1196 0110 2046     		mov	r0, r4
+ 1197 0112 FFF7FEFF 		bl	lv_obj_set_style_bg_color
+ 1198              	.LVL130:
+ 240:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 241:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // ========== 第一行 ==========
+ 242:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 心率
+ 243:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_HRBtn = create_app_button(ui_QA_GridPanel, 10, 10, "...", "Heart",
+ 1199              		.loc 1 243 5 is_stmt 1 view .LVU274
+ 1200              		.loc 1 243 30 is_stmt 0 view .LVU275
+ 1201 0116 6C4D     		ldr	r5, .L77+16
+ 1202 0118 6C4B     		ldr	r3, .L77+20
+ 1203 011a 0293     		str	r3, [sp, #8]
+ 1204 011c 6C4B     		ldr	r3, .L77+24
+ 1205 011e 0193     		str	r3, [sp, #4]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 39
+
+
+ 1206 0120 6C4B     		ldr	r3, .L77+28
+ 1207 0122 0093     		str	r3, [sp]
+ 1208 0124 2B46     		mov	r3, r5
+ 1209 0126 0A22     		movs	r2, #10
+ 1210 0128 1146     		mov	r1, r2
+ 1211 012a 2046     		mov	r0, r4
+ 1212 012c FFF7FEFF 		bl	create_app_button
+ 1213              	.LVL131:
+ 244:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****                                                  0xE11432, ui_event_QA_HRBtn);
+ 245:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_HRValueLabel = lv_label_create(ui_QA_HRBtn);
+ 1214              		.loc 1 245 5 is_stmt 1 view .LVU276
+ 1215              		.loc 1 245 37 is_stmt 0 view .LVU277
+ 1216 0130 FFF7FEFF 		bl	lv_label_create
+ 1217              	.LVL132:
+ 1218              		.loc 1 245 37 view .LVU278
+ 1219 0134 0746     		mov	r7, r0
+ 1220              	.LVL133:
+ 246:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_align(ui_QA_HRValueLabel, LV_ALIGN_CENTER);
+ 1221              		.loc 1 246 5 is_stmt 1 view .LVU279
+ 1222 0136 0921     		movs	r1, #9
+ 1223 0138 FFF7FEFF 		bl	lv_obj_set_align
+ 1224              	.LVL134:
+ 247:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     sprintf(value_strbuf, "%d", ui_QA_HRValue);
+ 1225              		.loc 1 247 5 view .LVU280
+ 1226 013c 664B     		ldr	r3, .L77+32
+ 1227 013e 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 1228 0140 6649     		ldr	r1, .L77+36
+ 1229 0142 04A8     		add	r0, sp, #16
+ 1230 0144 FFF7FEFF 		bl	sprintf
+ 1231              	.LVL135:
+ 248:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_label_set_text(ui_QA_HRValueLabel, value_strbuf);
+ 1232              		.loc 1 248 5 view .LVU281
+ 1233 0148 04A9     		add	r1, sp, #16
+ 1234 014a 3846     		mov	r0, r7
+ 1235 014c FFF7FEFF 		bl	lv_label_set_text
+ 1236              	.LVL136:
+ 249:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_font(ui_QA_HRValueLabel, &ui_font_Cuyuan18, LV_PART_MAIN | LV_STATE_DEFAU
+ 1237              		.loc 1 249 5 view .LVU282
+ 1238 0150 0022     		movs	r2, #0
+ 1239 0152 4146     		mov	r1, r8
+ 1240 0154 3846     		mov	r0, r7
+ 1241 0156 FFF7FEFF 		bl	lv_obj_set_style_text_font
+ 1242              	.LVL137:
+ 250:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_color(ui_QA_HRValueLabel, lv_color_hex(0xE11432), LV_PART_MAIN | LV_STATE
+ 1243              		.loc 1 250 5 view .LVU283
+ 1244              	.LBB46:
+ 1245              	.LBI46:
+ 597:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 1246              		.loc 2 597 26 view .LVU284
+ 1247              	.LBB47:
+ 600:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 1248              		.loc 2 600 5 view .LVU285
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 1249              		.loc 2 616 5 view .LVU286
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1250              		.loc 2 621 5 view .LVU287
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 40
+
+
+ 1251              		.loc 2 621 5 is_stmt 0 view .LVU288
+ 1252              	.LBE47:
+ 1253              	.LBE46:
+ 1254              		.loc 1 250 5 discriminator 1 view .LVU289
+ 1255 015a 0022     		movs	r2, #0
+ 1256 015c 4EF2A601 		movw	r1, 57510	@ movhi
+ 1257 0160 3846     		mov	r0, r7
+ 1258 0162 FFF7FEFF 		bl	lv_obj_set_style_text_color
+ 1259              	.LVL138:
+ 251:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 252:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 血氧
+ 253:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_SPO2Btn = create_app_button(ui_QA_GridPanel, 85, 10, "...", "SpO2",
+ 1260              		.loc 1 253 5 is_stmt 1 view .LVU290
+ 1261              		.loc 1 253 32 is_stmt 0 view .LVU291
+ 1262 0166 5E4B     		ldr	r3, .L77+40
+ 1263 0168 0293     		str	r3, [sp, #8]
+ 1264 016a 4DF2FF43 		movw	r3, #54527
+ 1265 016e 0193     		str	r3, [sp, #4]
+ 1266 0170 5C4B     		ldr	r3, .L77+44
+ 1267 0172 0093     		str	r3, [sp]
+ 1268 0174 2B46     		mov	r3, r5
+ 1269 0176 0A22     		movs	r2, #10
+ 1270 0178 5521     		movs	r1, #85
+ 1271 017a 2046     		mov	r0, r4
+ 1272 017c FFF7FEFF 		bl	create_app_button
+ 1273              	.LVL139:
+ 254:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****                                                   0x00D4FF, ui_event_QA_SPO2Btn);
+ 255:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_SPO2ValueLabel = lv_label_create(ui_QA_SPO2Btn);
+ 1274              		.loc 1 255 5 is_stmt 1 view .LVU292
+ 1275              		.loc 1 255 39 is_stmt 0 view .LVU293
+ 1276 0180 FFF7FEFF 		bl	lv_label_create
+ 1277              	.LVL140:
+ 1278              		.loc 1 255 39 view .LVU294
+ 1279 0184 0746     		mov	r7, r0
+ 1280              	.LVL141:
+ 256:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_align(ui_QA_SPO2ValueLabel, LV_ALIGN_CENTER);
+ 1281              		.loc 1 256 5 is_stmt 1 view .LVU295
+ 1282 0186 0921     		movs	r1, #9
+ 1283 0188 FFF7FEFF 		bl	lv_obj_set_align
+ 1284              	.LVL142:
+ 257:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     sprintf(value_strbuf, "%d%%", ui_QA_SPO2Value);
+ 1285              		.loc 1 257 5 view .LVU296
+ 1286 018c 564B     		ldr	r3, .L77+48
+ 1287 018e 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 1288 0190 5649     		ldr	r1, .L77+52
+ 1289 0192 04A8     		add	r0, sp, #16
+ 1290 0194 FFF7FEFF 		bl	sprintf
+ 1291              	.LVL143:
+ 258:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_label_set_text(ui_QA_SPO2ValueLabel, value_strbuf);
+ 1292              		.loc 1 258 5 view .LVU297
+ 1293 0198 04A9     		add	r1, sp, #16
+ 1294 019a 3846     		mov	r0, r7
+ 1295 019c FFF7FEFF 		bl	lv_label_set_text
+ 1296              	.LVL144:
+ 259:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_font(ui_QA_SPO2ValueLabel, &ui_font_Cuyuan18, LV_PART_MAIN | LV_STATE_DEF
+ 1297              		.loc 1 259 5 view .LVU298
+ 1298 01a0 0022     		movs	r2, #0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 41
+
+
+ 1299 01a2 4146     		mov	r1, r8
+ 1300 01a4 3846     		mov	r0, r7
+ 1301 01a6 FFF7FEFF 		bl	lv_obj_set_style_text_font
+ 1302              	.LVL145:
+ 260:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_color(ui_QA_SPO2ValueLabel, lv_color_hex(0x00D4FF), LV_PART_MAIN | LV_STA
+ 1303              		.loc 1 260 5 view .LVU299
+ 1304              	.LBB48:
+ 1305              	.LBI48:
+ 597:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 1306              		.loc 2 597 26 view .LVU300
+ 1307              	.LBB49:
+ 600:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 1308              		.loc 2 600 5 view .LVU301
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 1309              		.loc 2 616 5 view .LVU302
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1310              		.loc 2 621 5 view .LVU303
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1311              		.loc 2 621 5 is_stmt 0 view .LVU304
+ 1312              	.LBE49:
+ 1313              	.LBE48:
+ 1314              		.loc 1 260 5 discriminator 1 view .LVU305
+ 1315 01aa 0022     		movs	r2, #0
+ 1316 01ac 40F2BF61 		movw	r1, 1727	@ movhi
+ 1317 01b0 3846     		mov	r0, r7
+ 1318 01b2 FFF7FEFF 		bl	lv_obj_set_style_text_color
+ 1319              	.LVL146:
+ 261:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 262:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 环境
+ 263:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_EnvBtn = create_app_button(ui_QA_GridPanel, 160, 10, "...", "Env",
+ 1320              		.loc 1 263 5 is_stmt 1 view .LVU306
+ 1321              		.loc 1 263 31 is_stmt 0 view .LVU307
+ 1322 01b6 4E4B     		ldr	r3, .L77+56
+ 1323 01b8 0293     		str	r3, [sp, #8]
+ 1324 01ba 4E4B     		ldr	r3, .L77+60
+ 1325 01bc 0193     		str	r3, [sp, #4]
+ 1326 01be 4E4B     		ldr	r3, .L77+64
+ 1327 01c0 0093     		str	r3, [sp]
+ 1328 01c2 2B46     		mov	r3, r5
+ 1329 01c4 0A22     		movs	r2, #10
+ 1330 01c6 A021     		movs	r1, #160
+ 1331 01c8 2046     		mov	r0, r4
+ 1332 01ca FFF7FEFF 		bl	create_app_button
+ 1333              	.LVL147:
+ 264:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****                                                   0x19C819, ui_event_QA_EnvBtn);
+ 265:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_EnvValueLabel = lv_label_create(ui_QA_EnvBtn);
+ 1334              		.loc 1 265 5 is_stmt 1 view .LVU308
+ 1335              		.loc 1 265 38 is_stmt 0 view .LVU309
+ 1336 01ce FFF7FEFF 		bl	lv_label_create
+ 1337              	.LVL148:
+ 1338              		.loc 1 265 38 view .LVU310
+ 1339 01d2 0746     		mov	r7, r0
+ 1340              	.LVL149:
+ 266:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_align(ui_QA_EnvValueLabel, LV_ALIGN_CENTER);
+ 1341              		.loc 1 266 5 is_stmt 1 view .LVU311
+ 1342 01d4 0921     		movs	r1, #9
+ 1343 01d6 FFF7FEFF 		bl	lv_obj_set_align
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 42
+
+
+ 1344              	.LVL150:
+ 267:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     sprintf(value_strbuf, "%d...", ui_QA_TempValue);
+ 1345              		.loc 1 267 5 view .LVU312
+ 1346 01da 484B     		ldr	r3, .L77+68
+ 1347 01dc 93F90020 		ldrsb	r2, [r3]
+ 1348 01e0 4749     		ldr	r1, .L77+72
+ 1349 01e2 04A8     		add	r0, sp, #16
+ 1350 01e4 FFF7FEFF 		bl	sprintf
+ 1351              	.LVL151:
+ 268:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_label_set_text(ui_QA_EnvValueLabel, value_strbuf);
+ 1352              		.loc 1 268 5 view .LVU313
+ 1353 01e8 04A9     		add	r1, sp, #16
+ 1354 01ea 3846     		mov	r0, r7
+ 1355 01ec FFF7FEFF 		bl	lv_label_set_text
+ 1356              	.LVL152:
+ 269:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_font(ui_QA_EnvValueLabel, &ui_font_Cuyuan18, LV_PART_MAIN | LV_STATE_DEFA
+ 1357              		.loc 1 269 5 view .LVU314
+ 1358 01f0 0022     		movs	r2, #0
+ 1359 01f2 4146     		mov	r1, r8
+ 1360 01f4 3846     		mov	r0, r7
+ 1361 01f6 FFF7FEFF 		bl	lv_obj_set_style_text_font
+ 1362              	.LVL153:
+ 270:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_set_style_text_color(ui_QA_EnvValueLabel, lv_color_hex(0xF5A73A), LV_PART_MAIN | LV_STAT
+ 1363              		.loc 1 270 5 view .LVU315
+ 1364              	.LBB50:
+ 1365              	.LBI50:
+ 597:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** {
+ 1366              		.loc 2 597 26 view .LVU316
+ 1367              	.LBB51:
+ 600:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #if LV_COLOR_16_SWAP == 0
+ 1368              		.loc 2 600 5 view .LVU317
+ 616:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #else
+ 1369              		.loc 2 616 5 view .LVU318
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1370              		.loc 2 621 5 view .LVU319
+ 621:Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h **** #elif LV_COLOR_DEPTH == 32
+ 1371              		.loc 2 621 5 is_stmt 0 view .LVU320
+ 1372              	.LBE51:
+ 1373              	.LBE50:
+ 1374              		.loc 1 270 5 discriminator 1 view .LVU321
+ 1375 01fa 0022     		movs	r2, #0
+ 1376 01fc 4FF22751 		movw	r1, 62759	@ movhi
+ 1377 0200 3846     		mov	r0, r7
+ 1378 0202 FFF7FEFF 		bl	lv_obj_set_style_text_color
+ 1379              	.LVL154:
+ 271:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 272:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // ========== 第二行 ==========
+ 273:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 日历
+ 274:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_CalendarBtn = create_app_button(ui_QA_GridPanel, 10, 95, "...", "Calendar",
+ 1380              		.loc 1 274 5 is_stmt 1 view .LVU322
+ 1381              		.loc 1 274 36 is_stmt 0 view .LVU323
+ 1382 0206 3F4B     		ldr	r3, .L77+76
+ 1383 0208 0293     		str	r3, [sp, #8]
+ 1384 020a 3F4B     		ldr	r3, .L77+80
+ 1385 020c 0193     		str	r3, [sp, #4]
+ 1386 020e 3F4B     		ldr	r3, .L77+84
+ 1387 0210 0093     		str	r3, [sp]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 43
+
+
+ 1388 0212 2B46     		mov	r3, r5
+ 1389 0214 5F22     		movs	r2, #95
+ 1390 0216 0A21     		movs	r1, #10
+ 1391 0218 2046     		mov	r0, r4
+ 1392 021a FFF7FEFF 		bl	create_app_button
+ 1393              	.LVL155:
+ 275:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****                                                       0xFF8080, ui_event_QA_CalendarBtn);
+ 276:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 277:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 秒表
+ 278:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_TimerBtn = create_app_button(ui_QA_GridPanel, 85, 95, "...", "Timer",
+ 1394              		.loc 1 278 5 is_stmt 1 view .LVU324
+ 1395              		.loc 1 278 33 is_stmt 0 view .LVU325
+ 1396 021e 3C4B     		ldr	r3, .L77+88
+ 1397 0220 0293     		str	r3, [sp, #8]
+ 1398 0222 3C4B     		ldr	r3, .L77+92
+ 1399 0224 0193     		str	r3, [sp, #4]
+ 1400 0226 3C4B     		ldr	r3, .L77+96
+ 1401 0228 0093     		str	r3, [sp]
+ 1402 022a 2B46     		mov	r3, r5
+ 1403 022c 5F22     		movs	r2, #95
+ 1404 022e 5521     		movs	r1, #85
+ 1405 0230 2046     		mov	r0, r4
+ 1406 0232 FFF7FEFF 		bl	create_app_button
+ 1407              	.LVL156:
+ 279:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****                                                    0xDC80E6, ui_event_QA_TimerBtn);
+ 280:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 281:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 计算器
+ 282:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_ComputerBtn = create_app_button(ui_QA_GridPanel, 160, 95, "...", "Calc",
+ 1408              		.loc 1 282 5 is_stmt 1 view .LVU326
+ 1409              		.loc 1 282 36 is_stmt 0 view .LVU327
+ 1410 0236 394B     		ldr	r3, .L77+100
+ 1411 0238 0293     		str	r3, [sp, #8]
+ 1412 023a 394B     		ldr	r3, .L77+104
+ 1413 023c 0193     		str	r3, [sp, #4]
+ 1414 023e 394B     		ldr	r3, .L77+108
+ 1415 0240 0093     		str	r3, [sp]
+ 1416 0242 2B46     		mov	r3, r5
+ 1417 0244 5F22     		movs	r2, #95
+ 1418 0246 A021     		movs	r1, #160
+ 1419 0248 2046     		mov	r0, r4
+ 1420 024a FFF7FEFF 		bl	create_app_button
+ 1421              	.LVL157:
+ 283:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****                                                       0xC86400, ui_event_QA_ComputerBtn);
+ 284:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 285:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // ========== 第三行 ==========
+ 286:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 指南针
+ 287:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_CompassBtn = create_app_button(ui_QA_GridPanel, 10, 180, "...", "Compass",
+ 1422              		.loc 1 287 5 is_stmt 1 view .LVU328
+ 1423              		.loc 1 287 35 is_stmt 0 view .LVU329
+ 1424 024e 364B     		ldr	r3, .L77+112
+ 1425 0250 0293     		str	r3, [sp, #8]
+ 1426 0252 364B     		ldr	r3, .L77+116
+ 1427 0254 0193     		str	r3, [sp, #4]
+ 1428 0256 364B     		ldr	r3, .L77+120
+ 1429 0258 0093     		str	r3, [sp]
+ 1430 025a 2B46     		mov	r3, r5
+ 1431 025c B422     		movs	r2, #180
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 44
+
+
+ 1432 025e 0A21     		movs	r1, #10
+ 1433 0260 2046     		mov	r0, r4
+ 1434 0262 FFF7FEFF 		bl	create_app_button
+ 1435              	.LVL158:
+ 288:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****                                                      0x9966FF, ui_event_QA_CompassBtn);
+ 289:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 290:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 卡包
+ 291:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_NFCCardBtn = create_app_button(ui_QA_GridPanel, 85, 180, "...", "NFC",
+ 1436              		.loc 1 291 5 is_stmt 1 view .LVU330
+ 1437              		.loc 1 291 35 is_stmt 0 view .LVU331
+ 1438 0266 334B     		ldr	r3, .L77+124
+ 1439 0268 0293     		str	r3, [sp, #8]
+ 1440 026a 334B     		ldr	r3, .L77+128
+ 1441 026c 0193     		str	r3, [sp, #4]
+ 1442 026e 334B     		ldr	r3, .L77+132
+ 1443 0270 0093     		str	r3, [sp]
+ 1444 0272 2B46     		mov	r3, r5
+ 1445 0274 B422     		movs	r2, #180
+ 1446 0276 5521     		movs	r1, #85
+ 1447 0278 2046     		mov	r0, r4
+ 1448 027a FFF7FEFF 		bl	create_app_button
+ 1449              	.LVL159:
+ 292:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****                                                      0x80641E, ui_event_QA_NFCCardBtn);
+ 293:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 294:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // 游戏
+ 295:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_t * ui_QA_GameBtn = create_app_button(ui_QA_GridPanel, 160, 180, "...", "Game",
+ 1450              		.loc 1 295 5 is_stmt 1 view .LVU332
+ 1451              		.loc 1 295 32 is_stmt 0 view .LVU333
+ 1452 027e 304B     		ldr	r3, .L77+136
+ 1453 0280 0293     		str	r3, [sp, #8]
+ 1454 0282 304B     		ldr	r3, .L77+140
+ 1455 0284 0193     		str	r3, [sp, #4]
+ 1456 0286 304B     		ldr	r3, .L77+144
+ 1457 0288 0093     		str	r3, [sp]
+ 1458 028a 2B46     		mov	r3, r5
+ 1459 028c B422     		movs	r2, #180
+ 1460 028e A021     		movs	r1, #160
+ 1461 0290 2046     		mov	r0, r4
+ 1462 0292 FFF7FEFF 		bl	create_app_button
+ 1463              	.LVL160:
+ 296:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****                                                   0xC07010, ui_event_QA_GameBtn);
+ 297:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 298:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // ========== 事件注册 ==========
+ 299:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_obj_add_event_cb(ui_QA_BackBtn, ui_event_QA_BackBtn, LV_EVENT_ALL, NULL);
+ 1464              		.loc 1 299 5 is_stmt 1 view .LVU334
+ 1465 0296 0023     		movs	r3, #0
+ 1466 0298 1A46     		mov	r2, r3
+ 1467 029a 2C49     		ldr	r1, .L77+148
+ 1468 029c 3046     		mov	r0, r6
+ 1469 029e FFF7FEFF 		bl	lv_obj_add_event_cb
+ 1470              	.LVL161:
+ 300:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 301:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     // ========== 定时器 ==========
+ 302:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     ui_QuickAppsPageTimer = lv_timer_create(QuickAppsPage_timer_cb, 1000, NULL);
+ 1471              		.loc 1 302 5 view .LVU335
+ 1472              		.loc 1 302 29 is_stmt 0 view .LVU336
+ 1473 02a2 0022     		movs	r2, #0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 45
+
+
+ 1474 02a4 4FF47A71 		mov	r1, #1000
+ 1475 02a8 2948     		ldr	r0, .L77+152
+ 1476 02aa FFF7FEFF 		bl	lv_timer_create
+ 1477              	.LVL162:
+ 1478              		.loc 1 302 27 discriminator 1 view .LVU337
+ 1479 02ae 294B     		ldr	r3, .L77+156
+ 1480 02b0 1860     		str	r0, [r3]
+ 303:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+ 1481              		.loc 1 303 1 view .LVU338
+ 1482 02b2 09B0     		add	sp, sp, #36
+ 1483              	.LCFI17:
+ 1484              		.cfi_def_cfa_offset 28
+ 1485              		@ sp needed
+ 1486 02b4 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1487              	.LVL163:
+ 1488              	.L78:
+ 1489              		.loc 1 303 1 view .LVU339
+ 1490              		.align	2
+ 1491              	.L77:
+ 1492 02b8 00000000 		.word	ui_QuickAppsPage
+ 1493 02bc 00000000 		.word	.LC1
+ 1494 02c0 00000000 		.word	lv_font_montserrat_18
+ 1495 02c4 04000000 		.word	.LC2
+ 1496 02c8 10000000 		.word	.LC3
+ 1497 02cc 00000000 		.word	ui_event_QA_HRBtn
+ 1498 02d0 3214E100 		.word	14750770
+ 1499 02d4 14000000 		.word	.LC4
+ 1500 02d8 00000000 		.word	ui_QA_HRValue
+ 1501 02dc 00000000 		.word	.LC0
+ 1502 02e0 00000000 		.word	ui_event_QA_SPO2Btn
+ 1503 02e4 1C000000 		.word	.LC5
+ 1504 02e8 00000000 		.word	ui_QA_SPO2Value
+ 1505 02ec 24000000 		.word	.LC6
+ 1506 02f0 00000000 		.word	ui_event_QA_EnvBtn
+ 1507 02f4 19C81900 		.word	1689625
+ 1508 02f8 2C000000 		.word	.LC7
+ 1509 02fc 00000000 		.word	ui_QA_TempValue
+ 1510 0300 30000000 		.word	.LC8
+ 1511 0304 00000000 		.word	ui_event_QA_CalendarBtn
+ 1512 0308 8080FF00 		.word	16744576
+ 1513 030c 38000000 		.word	.LC9
+ 1514 0310 00000000 		.word	ui_event_QA_TimerBtn
+ 1515 0314 E680DC00 		.word	14450918
+ 1516 0318 44000000 		.word	.LC10
+ 1517 031c 00000000 		.word	ui_event_QA_ComputerBtn
+ 1518 0320 0064C800 		.word	13132800
+ 1519 0324 4C000000 		.word	.LC11
+ 1520 0328 00000000 		.word	ui_event_QA_CompassBtn
+ 1521 032c FF669900 		.word	10053375
+ 1522 0330 54000000 		.word	.LC12
+ 1523 0334 00000000 		.word	ui_event_QA_NFCCardBtn
+ 1524 0338 1E648000 		.word	8414238
+ 1525 033c 5C000000 		.word	.LC13
+ 1526 0340 00000000 		.word	ui_event_QA_GameBtn
+ 1527 0344 1070C000 		.word	12611600
+ 1528 0348 60000000 		.word	.LC14
+ 1529 034c 00000000 		.word	ui_event_QA_BackBtn
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 46
+
+
+ 1530 0350 00000000 		.word	QuickAppsPage_timer_cb
+ 1531 0354 00000000 		.word	ui_QuickAppsPageTimer
+ 1532 0358 00000000 		.word	ui_font_Cuyuan18
+ 1533              		.cfi_endproc
+ 1534              	.LFE423:
+ 1536              		.section	.text.ui_QuickAppsPage_screen_deinit,"ax",%progbits
+ 1537              		.align	1
+ 1538              		.global	ui_QuickAppsPage_screen_deinit
+ 1539              		.syntax unified
+ 1540              		.thumb
+ 1541              		.thumb_func
+ 1543              	ui_QuickAppsPage_screen_deinit:
+ 1544              	.LFB424:
+ 304:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** 
+ 305:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** ///////////////////// SCREEN deinit ////////////////////
+ 306:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** void ui_QuickAppsPage_screen_deinit(void)
+ 307:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** {
+ 1545              		.loc 1 307 1 is_stmt 1 view -0
+ 1546              		.cfi_startproc
+ 1547              		@ args = 0, pretend = 0, frame = 0
+ 1548              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1549 0000 08B5     		push	{r3, lr}
+ 1550              	.LCFI18:
+ 1551              		.cfi_def_cfa_offset 8
+ 1552              		.cfi_offset 3, -8
+ 1553              		.cfi_offset 14, -4
+ 308:User/GUI_App/Screens/Src/ui_QuickAppsPage.c ****     lv_timer_del(ui_QuickAppsPageTimer);
+ 1554              		.loc 1 308 5 view .LVU341
+ 1555 0002 024B     		ldr	r3, .L81
+ 1556 0004 1868     		ldr	r0, [r3]
+ 1557 0006 FFF7FEFF 		bl	lv_timer_del
+ 1558              	.LVL164:
+ 309:User/GUI_App/Screens/Src/ui_QuickAppsPage.c **** }
+ 1559              		.loc 1 309 1 is_stmt 0 view .LVU342
+ 1560 000a 08BD     		pop	{r3, pc}
+ 1561              	.L82:
+ 1562              		.align	2
+ 1563              	.L81:
+ 1564 000c 00000000 		.word	ui_QuickAppsPageTimer
+ 1565              		.cfi_endproc
+ 1566              	.LFE424:
+ 1568              		.global	Page_QuickApps
+ 1569              		.section	.data.Page_QuickApps,"aw"
+ 1570              		.align	2
+ 1573              	Page_QuickApps:
+ 1574 0000 00000000 		.word	ui_QuickAppsPage_screen_init
+ 1575 0004 00000000 		.word	ui_QuickAppsPage_screen_deinit
+ 1576 0008 00000000 		.word	ui_QuickAppsPage
+ 1577              		.global	ui_QA_HumiValue
+ 1578              		.section	.data.ui_QA_HumiValue,"aw"
+ 1581              	ui_QA_HumiValue:
+ 1582 0000 3C       		.byte	60
+ 1583              		.global	ui_QA_TempValue
+ 1584              		.section	.data.ui_QA_TempValue,"aw"
+ 1587              	ui_QA_TempValue:
+ 1588 0000 19       		.byte	25
+ 1589              		.global	ui_QA_SPO2Value
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 47
+
+
+ 1590              		.section	.data.ui_QA_SPO2Value,"aw"
+ 1593              	ui_QA_SPO2Value:
+ 1594 0000 62       		.byte	98
+ 1595              		.global	ui_QA_HRValue
+ 1596              		.section	.data.ui_QA_HRValue,"aw"
+ 1599              	ui_QA_HRValue:
+ 1600 0000 48       		.byte	72
+ 1601              		.global	ui_QuickAppsPageTimer
+ 1602              		.section	.bss.ui_QuickAppsPageTimer,"aw",%nobits
+ 1603              		.align	2
+ 1606              	ui_QuickAppsPageTimer:
+ 1607 0000 00000000 		.space	4
+ 1608              		.global	ui_QuickAppsPage
+ 1609              		.section	.bss.ui_QuickAppsPage,"aw",%nobits
+ 1610              		.align	2
+ 1613              	ui_QuickAppsPage:
+ 1614 0000 00000000 		.space	4
+ 1615              		.text
+ 1616              	.Letext0:
+ 1617              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1618              		.file 4 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1619              		.file 5 "Middlewares/LVGL/GUI/lvgl/src/misc/lv_timer.h"
+ 1620              		.file 6 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/../font/../misc/lv_area.h"
+ 1621              		.file 7 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/../font/lv_font.h"
+ 1622              		.file 8 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_style.h"
+ 1623              		.file 9 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj.h"
+ 1624              		.file 10 "Middlewares/LVGL/GUI/lvgl/src/hal/../misc/lv_ll.h"
+ 1625              		.file 11 "Middlewares/LVGL/GUI/lvgl/src/core/lv_group.h"
+ 1626              		.file 12 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_scroll.h"
+ 1627              		.file 13 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style.h"
+ 1628              		.file 14 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_class.h"
+ 1629              		.file 15 "Middlewares/LVGL/GUI/lvgl/src/core/lv_event.h"
+ 1630              		.file 16 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_bar.h"
+ 1631              		.file 17 "User/GUI_App/Screens/Src/../../../Func/Inc/PageManager.h"
+ 1632              		.file 18 "User/GUI_App/Screens/Src/../../ui.h"
+ 1633              		.file 19 "User/GUI_App/Screens/Src/../Inc/ui_QuickAppsPage.h"
+ 1634              		.file 20 "User/GUI_App/Screens/Src/../Inc/ui_HRPage.h"
+ 1635              		.file 21 "User/GUI_App/Screens/Src/../Inc/ui_SPO2Page.h"
+ 1636              		.file 22 "User/GUI_App/Screens/Src/../Inc/ui_EnvPage.h"
+ 1637              		.file 23 "User/GUI_App/Screens/Src/../Inc/ui_CalendarPage.h"
+ 1638              		.file 24 "User/GUI_App/Screens/Src/../Inc/ui_TimerPage.h"
+ 1639              		.file 25 "User/GUI_App/Screens/Src/../Inc/ui_ComputerPage.h"
+ 1640              		.file 26 "User/GUI_App/Screens/Src/../Inc/ui_CompassPage.h"
+ 1641              		.file 27 "User/GUI_App/Screens/Src/../Inc/ui_NFCCardPage.h"
+ 1642              		.file 28 "User/GUI_App/Screens/Src/../Inc/ui_GameSelectPage.h"
+ 1643              		.file 29 "User/GUI_App/Screens/Src/../../../Func/Inc/HWDataAccess.h"
+ 1644              		.file 30 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h"
+ 1645              		.file 31 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/sw/../../core/lv_obj_pos.h"
+ 1646              		.file 32 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3
+ 1647              		.file 33 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_label.h"
+ 1648              		.file 34 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_btn.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 48
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ui_QuickAppsPage.c
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:21     .text.lv_color_hex:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:26     .text.lv_color_hex:00000000 lv_color_hex
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:58     .text.ui_event_QA_BackBtn:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:64     .text.ui_event_QA_BackBtn:00000000 ui_event_QA_BackBtn
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:100    .text.ui_event_QA_HRBtn:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:106    .text.ui_event_QA_HRBtn:00000000 ui_event_QA_HRBtn
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:144    .text.ui_event_QA_HRBtn:00000014 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:149    .text.ui_event_QA_SPO2Btn:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:155    .text.ui_event_QA_SPO2Btn:00000000 ui_event_QA_SPO2Btn
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:193    .text.ui_event_QA_SPO2Btn:00000014 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:198    .text.ui_event_QA_EnvBtn:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:204    .text.ui_event_QA_EnvBtn:00000000 ui_event_QA_EnvBtn
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:242    .text.ui_event_QA_EnvBtn:00000014 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:247    .text.ui_event_QA_CalendarBtn:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:253    .text.ui_event_QA_CalendarBtn:00000000 ui_event_QA_CalendarBtn
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:291    .text.ui_event_QA_CalendarBtn:00000014 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:296    .text.ui_event_QA_TimerBtn:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:302    .text.ui_event_QA_TimerBtn:00000000 ui_event_QA_TimerBtn
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:340    .text.ui_event_QA_TimerBtn:00000014 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:345    .text.ui_event_QA_ComputerBtn:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:351    .text.ui_event_QA_ComputerBtn:00000000 ui_event_QA_ComputerBtn
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:389    .text.ui_event_QA_ComputerBtn:00000014 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:394    .text.ui_event_QA_CompassBtn:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:400    .text.ui_event_QA_CompassBtn:00000000 ui_event_QA_CompassBtn
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:438    .text.ui_event_QA_CompassBtn:00000014 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:443    .text.ui_event_QA_NFCCardBtn:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:449    .text.ui_event_QA_NFCCardBtn:00000000 ui_event_QA_NFCCardBtn
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:487    .text.ui_event_QA_NFCCardBtn:00000014 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:492    .text.ui_event_QA_GameBtn:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:498    .text.ui_event_QA_GameBtn:00000000 ui_event_QA_GameBtn
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:536    .text.ui_event_QA_GameBtn:00000014 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:541    .rodata.QuickAppsPage_timer_cb.str1.4:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:545    .text.QuickAppsPage_timer_cb:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:550    .text.QuickAppsPage_timer_cb:00000000 QuickAppsPage_timer_cb
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:670    .text.QuickAppsPage_timer_cb:00000070 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1613   .bss.ui_QuickAppsPage:00000000 ui_QuickAppsPage
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1599   .data.ui_QA_HRValue:00000000 ui_QA_HRValue
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1593   .data.ui_QA_SPO2Value:00000000 ui_QA_SPO2Value
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1587   .data.ui_QA_TempValue:00000000 ui_QA_TempValue
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1581   .data.ui_QA_HumiValue:00000000 ui_QA_HumiValue
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:682    .text.create_app_button:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:687    .text.create_app_button:00000000 create_app_button
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:880    .text.create_app_button:000000e0 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:886    .rodata.ui_QuickAppsPage_screen_init.str1.4:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:929    .text.ui_QuickAppsPage_screen_init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:935    .text.ui_QuickAppsPage_screen_init:00000000 ui_QuickAppsPage_screen_init
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1492   .text.ui_QuickAppsPage_screen_init:000002b8 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1606   .bss.ui_QuickAppsPageTimer:00000000 ui_QuickAppsPageTimer
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1537   .text.ui_QuickAppsPage_screen_deinit:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1543   .text.ui_QuickAppsPage_screen_deinit:00000000 ui_QuickAppsPage_screen_deinit
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1564   .text.ui_QuickAppsPage_screen_deinit:0000000c $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1573   .data.Page_QuickApps:00000000 Page_QuickApps
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1570   .data.Page_QuickApps:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1603   .bss.ui_QuickAppsPageTimer:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s:1610   .bss.ui_QuickAppsPage:00000000 $d
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLCyQ0T.s 			page 49
+
+
+
+UNDEFINED SYMBOLS
+lv_event_get_code
+Page_Back
+Page_Load
+Page_HR
+Page_SPO2
+Page_Env
+Page_Calender
+Page_Timer
+Page_Computer
+Page_Compass
+Page_NFCCard
+Page_GameSelect
+Page_Get_NowPage
+sprintf
+HWInterface
+lv_btn_create
+lv_obj_set_size
+lv_obj_set_pos
+lv_obj_set_style_radius
+lv_obj_set_style_bg_color
+lv_obj_set_style_shadow_width
+lv_obj_set_style_shadow_color
+lv_obj_set_style_shadow_opa
+lv_obj_set_style_shadow_ofs_y
+lv_label_create
+lv_obj_set_align
+lv_obj_set_y
+lv_label_set_text
+lv_obj_set_style_text_font
+lv_obj_set_style_text_color
+lv_obj_add_event_cb
+ui_font_iconfont28
+ui_font_Cuyuan18
+lv_obj_create
+lv_obj_clear_flag
+lv_obj_set_x
+lv_timer_create
+lv_font_montserrat_18
+lv_timer_del

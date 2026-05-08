@@ -1,0 +1,1971 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"LSM303.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "BSP/LSM303DLH/LSM303.c"
+  20              		.section	.text.LSM303_ReadOneReg,"ax",%progbits
+  21              		.align	1
+  22              		.global	LSM303_ReadOneReg
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	LSM303_ReadOneReg:
+  28              	.LVL0:
+  29              	.LFB216:
+   1:BSP/LSM303DLH/LSM303.c **** #include "LSM303.h"
+   2:BSP/LSM303DLH/LSM303.c **** #include <math.h>
+   3:BSP/LSM303DLH/LSM303.c **** 
+   4:BSP/LSM303DLH/LSM303.c **** #define PI 3.1415926
+   5:BSP/LSM303DLH/LSM303.c **** #define Delayms(X) HAL_Delay(X)
+   6:BSP/LSM303DLH/LSM303.c **** 
+   7:BSP/LSM303DLH/LSM303.c **** #define LSM303_CLK_ENABLE __HAL_RCC_GPIOB_CLK_ENABLE()
+   8:BSP/LSM303DLH/LSM303.c **** iic_bus_t LSM303_bus = 
+   9:BSP/LSM303DLH/LSM303.c **** {
+  10:BSP/LSM303DLH/LSM303.c **** 	.IIC_SDA_PORT = GPIOB,
+  11:BSP/LSM303DLH/LSM303.c **** 	.IIC_SCL_PORT = GPIOB,
+  12:BSP/LSM303DLH/LSM303.c **** 	.IIC_SDA_PIN  = GPIO_PIN_13,
+  13:BSP/LSM303DLH/LSM303.c **** 	.IIC_SCL_PIN  = GPIO_PIN_14,
+  14:BSP/LSM303DLH/LSM303.c **** };
+  15:BSP/LSM303DLH/LSM303.c **** 
+  16:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+  17:BSP/LSM303DLH/LSM303.c **** NOTICE:	the LSM303 can not use mutiple read!
+  18:BSP/LSM303DLH/LSM303.c **** 
+  19:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+  20:BSP/LSM303DLH/LSM303.c **** 
+  21:BSP/LSM303DLH/LSM303.c **** 
+  22:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+  23:BSP/LSM303DLH/LSM303.c **** *function  	:	LSM303_ReadOneReg()
+  24:BSP/LSM303DLH/LSM303.c **** *paraments	: RegAddr
+  25:BSP/LSM303DLH/LSM303.c **** *return     :	data readed
+  26:BSP/LSM303DLH/LSM303.c **** *detail     :	
+  27:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+  28:BSP/LSM303DLH/LSM303.c **** unsigned char LSM303_ReadOneReg(unsigned char RegAddr)
+  29:BSP/LSM303DLH/LSM303.c **** {
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 2
+
+
+  30              		.loc 1 29 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 29 1 is_stmt 0 view .LVU1
+  35 0000 08B5     		push	{r3, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 3, -8
+  39              		.cfi_offset 14, -4
+  40 0002 0246     		mov	r2, r0
+  30:BSP/LSM303DLH/LSM303.c **** 	unsigned char dat;
+  41              		.loc 1 30 2 is_stmt 1 view .LVU2
+  31:BSP/LSM303DLH/LSM303.c **** 	unsigned char SlaveAddr = (RegAddr>0x19)?LSM303_SlaveAddr_A:LSM303_SlaveAddr_M;
+  42              		.loc 1 31 2 view .LVU3
+  43              		.loc 1 31 16 is_stmt 0 view .LVU4
+  44 0004 1928     		cmp	r0, #25
+  45 0006 04D9     		bls	.L3
+  46              		.loc 1 31 16 discriminator 1 view .LVU5
+  47 0008 1921     		movs	r1, #25
+  48              	.L2:
+  49              	.LVL1:
+  32:BSP/LSM303DLH/LSM303.c **** 	dat = IIC_Read_One_Byte(&LSM303_bus, SlaveAddr,RegAddr);
+  50              		.loc 1 32 2 is_stmt 1 view .LVU6
+  51              		.loc 1 32 8 is_stmt 0 view .LVU7
+  52 000a 0348     		ldr	r0, .L5
+  53              	.LVL2:
+  54              		.loc 1 32 8 view .LVU8
+  55 000c FFF7FEFF 		bl	IIC_Read_One_Byte
+  56              	.LVL3:
+  33:BSP/LSM303DLH/LSM303.c **** 	return dat;
+  57              		.loc 1 33 2 is_stmt 1 view .LVU9
+  34:BSP/LSM303DLH/LSM303.c **** }
+  58              		.loc 1 34 1 is_stmt 0 view .LVU10
+  59 0010 08BD     		pop	{r3, pc}
+  60              	.LVL4:
+  61              	.L3:
+  31:BSP/LSM303DLH/LSM303.c **** 	dat = IIC_Read_One_Byte(&LSM303_bus, SlaveAddr,RegAddr);
+  62              		.loc 1 31 16 discriminator 2 view .LVU11
+  63 0012 1E21     		movs	r1, #30
+  64 0014 F9E7     		b	.L2
+  65              	.L6:
+  66 0016 00BF     		.align	2
+  67              	.L5:
+  68 0018 00000000 		.word	LSM303_bus
+  69              		.cfi_endproc
+  70              	.LFE216:
+  72              		.section	.text.LSM303_ReadMultiReg,"ax",%progbits
+  73              		.align	1
+  74              		.global	LSM303_ReadMultiReg
+  75              		.syntax unified
+  76              		.thumb
+  77              		.thumb_func
+  79              	LSM303_ReadMultiReg:
+  80              	.LVL5:
+  81              	.LFB217:
+  35:BSP/LSM303DLH/LSM303.c **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 3
+
+
+  36:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+  37:BSP/LSM303DLH/LSM303.c **** *function  	:	LSM303_ReadMultiReg()
+  38:BSP/LSM303DLH/LSM303.c **** *paraments	: RegAddr, Regnumber, Databuff
+  39:BSP/LSM303DLH/LSM303.c **** *return     :	multiple datas readed
+  40:BSP/LSM303DLH/LSM303.c **** *detail     :	can't use real continue read, we tested the LSM303 is not allowed, so we have to use 
+  41:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+  42:BSP/LSM303DLH/LSM303.c **** void LSM303_ReadMultiReg(unsigned char RegAddr, unsigned char RegNum, unsigned char DataBuff[])
+  43:BSP/LSM303DLH/LSM303.c **** {
+  82              		.loc 1 43 1 is_stmt 1 view -0
+  83              		.cfi_startproc
+  84              		@ args = 0, pretend = 0, frame = 0
+  85              		@ frame_needed = 0, uses_anonymous_args = 0
+  86              		.loc 1 43 1 is_stmt 0 view .LVU13
+  87 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  88              	.LCFI1:
+  89              		.cfi_def_cfa_offset 24
+  90              		.cfi_offset 4, -24
+  91              		.cfi_offset 5, -20
+  92              		.cfi_offset 6, -16
+  93              		.cfi_offset 7, -12
+  94              		.cfi_offset 8, -8
+  95              		.cfi_offset 14, -4
+  96 0004 0546     		mov	r5, r0
+  97 0006 0E46     		mov	r6, r1
+  98 0008 1746     		mov	r7, r2
+  44:BSP/LSM303DLH/LSM303.c **** 	unsigned char i;
+  99              		.loc 1 44 2 is_stmt 1 view .LVU14
+  45:BSP/LSM303DLH/LSM303.c **** 	unsigned char SlaveAddr = (RegAddr>0x19)?LSM303_SlaveAddr_A:LSM303_SlaveAddr_M;
+ 100              		.loc 1 45 2 view .LVU15
+ 101              		.loc 1 45 16 is_stmt 0 view .LVU16
+ 102 000a 1928     		cmp	r0, #25
+ 103 000c 03D9     		bls	.L11
+ 104              		.loc 1 45 16 discriminator 1 view .LVU17
+ 105 000e 4FF01908 		mov	r8, #25
+ 106              	.L8:
+ 107              	.LVL6:
+  46:BSP/LSM303DLH/LSM303.c **** 	//IIC_Read_Multi_Byte(SlaveAddr,RegAddr,RegNum,DataBuff);
+  47:BSP/LSM303DLH/LSM303.c **** 	for(i=0;i<RegNum;i++)
+ 108              		.loc 1 47 2 is_stmt 1 view .LVU18
+ 109              		.loc 1 47 7 is_stmt 0 view .LVU19
+ 110 0012 0024     		movs	r4, #0
+ 111              		.loc 1 47 2 view .LVU20
+ 112 0014 0BE0     		b	.L9
+ 113              	.LVL7:
+ 114              	.L11:
+  45:BSP/LSM303DLH/LSM303.c **** 	unsigned char SlaveAddr = (RegAddr>0x19)?LSM303_SlaveAddr_A:LSM303_SlaveAddr_M;
+ 115              		.loc 1 45 16 discriminator 2 view .LVU21
+ 116 0016 4FF01E08 		mov	r8, #30
+ 117 001a FAE7     		b	.L8
+ 118              	.LVL8:
+ 119              	.L10:
+  48:BSP/LSM303DLH/LSM303.c **** 	{
+  49:BSP/LSM303DLH/LSM303.c **** 		DataBuff[i] = IIC_Read_One_Byte(&LSM303_bus, SlaveAddr,RegAddr+i);
+ 120              		.loc 1 49 3 is_stmt 1 view .LVU22
+ 121              		.loc 1 49 17 is_stmt 0 view .LVU23
+ 122 001c 6219     		adds	r2, r4, r5
+ 123 001e D2B2     		uxtb	r2, r2
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 4
+
+
+ 124 0020 4146     		mov	r1, r8
+ 125 0022 0548     		ldr	r0, .L13
+ 126 0024 FFF7FEFF 		bl	IIC_Read_One_Byte
+ 127              	.LVL9:
+ 128              		.loc 1 49 15 discriminator 1 view .LVU24
+ 129 0028 3855     		strb	r0, [r7, r4]
+  47:BSP/LSM303DLH/LSM303.c **** 	{
+ 130              		.loc 1 47 20 is_stmt 1 discriminator 3 view .LVU25
+ 131 002a 0134     		adds	r4, r4, #1
+ 132              	.LVL10:
+  47:BSP/LSM303DLH/LSM303.c **** 	{
+ 133              		.loc 1 47 20 is_stmt 0 discriminator 3 view .LVU26
+ 134 002c E4B2     		uxtb	r4, r4
+ 135              	.LVL11:
+ 136              	.L9:
+  47:BSP/LSM303DLH/LSM303.c **** 	{
+ 137              		.loc 1 47 11 is_stmt 1 discriminator 1 view .LVU27
+ 138 002e B442     		cmp	r4, r6
+ 139 0030 F4D3     		bcc	.L10
+  50:BSP/LSM303DLH/LSM303.c **** 	}
+  51:BSP/LSM303DLH/LSM303.c **** }
+ 140              		.loc 1 51 1 is_stmt 0 view .LVU28
+ 141 0032 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 142              	.LVL12:
+ 143              	.L14:
+ 144              		.loc 1 51 1 view .LVU29
+ 145 0036 00BF     		.align	2
+ 146              	.L13:
+ 147 0038 00000000 		.word	LSM303_bus
+ 148              		.cfi_endproc
+ 149              	.LFE217:
+ 151              		.section	.text.LSM303_Temp_ReadOneReg,"ax",%progbits
+ 152              		.align	1
+ 153              		.global	LSM303_Temp_ReadOneReg
+ 154              		.syntax unified
+ 155              		.thumb
+ 156              		.thumb_func
+ 158              	LSM303_Temp_ReadOneReg:
+ 159              	.LVL13:
+ 160              	.LFB218:
+  52:BSP/LSM303DLH/LSM303.c **** 
+  53:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+  54:BSP/LSM303DLH/LSM303.c **** *function  	:	LSM303_Temp_ReadOneReg()
+  55:BSP/LSM303DLH/LSM303.c **** *paraments	: RegAddr
+  56:BSP/LSM303DLH/LSM303.c **** *return     : data readed
+  57:BSP/LSM303DLH/LSM303.c **** *detail     :	it's for temperature data read
+  58:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+  59:BSP/LSM303DLH/LSM303.c **** unsigned char LSM303_Temp_ReadOneReg(unsigned char RegAddr)
+  60:BSP/LSM303DLH/LSM303.c **** {
+ 161              		.loc 1 60 1 is_stmt 1 view -0
+ 162              		.cfi_startproc
+ 163              		@ args = 0, pretend = 0, frame = 0
+ 164              		@ frame_needed = 0, uses_anonymous_args = 0
+ 165              		.loc 1 60 1 is_stmt 0 view .LVU31
+ 166 0000 08B5     		push	{r3, lr}
+ 167              	.LCFI2:
+ 168              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 5
+
+
+ 169              		.cfi_offset 3, -8
+ 170              		.cfi_offset 14, -4
+ 171 0002 0246     		mov	r2, r0
+  61:BSP/LSM303DLH/LSM303.c **** 	unsigned char dat;
+ 172              		.loc 1 61 2 is_stmt 1 view .LVU32
+  62:BSP/LSM303DLH/LSM303.c **** 	dat = IIC_Read_One_Byte(&LSM303_bus, LSM303_SlaveAddr_M,RegAddr);
+ 173              		.loc 1 62 2 view .LVU33
+ 174              		.loc 1 62 8 is_stmt 0 view .LVU34
+ 175 0004 1E21     		movs	r1, #30
+ 176 0006 0248     		ldr	r0, .L17
+ 177              	.LVL14:
+ 178              		.loc 1 62 8 view .LVU35
+ 179 0008 FFF7FEFF 		bl	IIC_Read_One_Byte
+ 180              	.LVL15:
+  63:BSP/LSM303DLH/LSM303.c **** 	return dat;
+ 181              		.loc 1 63 2 is_stmt 1 view .LVU36
+  64:BSP/LSM303DLH/LSM303.c **** }
+ 182              		.loc 1 64 1 is_stmt 0 view .LVU37
+ 183 000c 08BD     		pop	{r3, pc}
+ 184              	.L18:
+ 185 000e 00BF     		.align	2
+ 186              	.L17:
+ 187 0010 00000000 		.word	LSM303_bus
+ 188              		.cfi_endproc
+ 189              	.LFE218:
+ 191              		.section	.text.LSM303_WriteOneReg,"ax",%progbits
+ 192              		.align	1
+ 193              		.global	LSM303_WriteOneReg
+ 194              		.syntax unified
+ 195              		.thumb
+ 196              		.thumb_func
+ 198              	LSM303_WriteOneReg:
+ 199              	.LVL16:
+ 200              	.LFB219:
+  65:BSP/LSM303DLH/LSM303.c **** 
+  66:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+  67:BSP/LSM303DLH/LSM303.c **** *function  	:	LSM303_WriteOneReg()
+  68:BSP/LSM303DLH/LSM303.c **** *paraments	: RegAddr, data
+  69:BSP/LSM303DLH/LSM303.c **** *return     : None
+  70:BSP/LSM303DLH/LSM303.c **** *detail     :	
+  71:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+  72:BSP/LSM303DLH/LSM303.c **** void LSM303_WriteOneReg(unsigned char RegAddr, unsigned char dat)
+  73:BSP/LSM303DLH/LSM303.c **** {
+ 201              		.loc 1 73 1 is_stmt 1 view -0
+ 202              		.cfi_startproc
+ 203              		@ args = 0, pretend = 0, frame = 0
+ 204              		@ frame_needed = 0, uses_anonymous_args = 0
+ 205              		.loc 1 73 1 is_stmt 0 view .LVU39
+ 206 0000 08B5     		push	{r3, lr}
+ 207              	.LCFI3:
+ 208              		.cfi_def_cfa_offset 8
+ 209              		.cfi_offset 3, -8
+ 210              		.cfi_offset 14, -4
+ 211 0002 0246     		mov	r2, r0
+ 212 0004 0B46     		mov	r3, r1
+  74:BSP/LSM303DLH/LSM303.c **** 	unsigned char SlaveAddr = (RegAddr>0x19)?LSM303_SlaveAddr_A:LSM303_SlaveAddr_M;
+ 213              		.loc 1 74 2 is_stmt 1 view .LVU40
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 6
+
+
+ 214              		.loc 1 74 16 is_stmt 0 view .LVU41
+ 215 0006 1928     		cmp	r0, #25
+ 216 0008 04D9     		bls	.L21
+ 217              		.loc 1 74 16 discriminator 1 view .LVU42
+ 218 000a 1921     		movs	r1, #25
+ 219              	.LVL17:
+ 220              	.L20:
+  75:BSP/LSM303DLH/LSM303.c **** 	IIC_Write_One_Byte(&LSM303_bus, SlaveAddr,RegAddr,dat);
+ 221              		.loc 1 75 2 is_stmt 1 view .LVU43
+ 222 000c 0248     		ldr	r0, .L23
+ 223              	.LVL18:
+ 224              		.loc 1 75 2 is_stmt 0 view .LVU44
+ 225 000e FFF7FEFF 		bl	IIC_Write_One_Byte
+ 226              	.LVL19:
+  76:BSP/LSM303DLH/LSM303.c **** }
+ 227              		.loc 1 76 1 view .LVU45
+ 228 0012 08BD     		pop	{r3, pc}
+ 229              	.LVL20:
+ 230              	.L21:
+  74:BSP/LSM303DLH/LSM303.c **** 	unsigned char SlaveAddr = (RegAddr>0x19)?LSM303_SlaveAddr_A:LSM303_SlaveAddr_M;
+ 231              		.loc 1 74 16 discriminator 2 view .LVU46
+ 232 0014 1E21     		movs	r1, #30
+ 233              	.LVL21:
+  74:BSP/LSM303DLH/LSM303.c **** 	unsigned char SlaveAddr = (RegAddr>0x19)?LSM303_SlaveAddr_A:LSM303_SlaveAddr_M;
+ 234              		.loc 1 74 16 discriminator 2 view .LVU47
+ 235 0016 F9E7     		b	.L20
+ 236              	.L24:
+ 237              		.align	2
+ 238              	.L23:
+ 239 0018 00000000 		.word	LSM303_bus
+ 240              		.cfi_endproc
+ 241              	.LFE219:
+ 243              		.section	.text.LSM303DLH_Init,"ax",%progbits
+ 244              		.align	1
+ 245              		.global	LSM303DLH_Init
+ 246              		.syntax unified
+ 247              		.thumb
+ 248              		.thumb_func
+ 250              	LSM303DLH_Init:
+ 251              	.LFB220:
+  77:BSP/LSM303DLH/LSM303.c **** 
+  78:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+  79:BSP/LSM303DLH/LSM303.c **** *function  	:	LSM303DLH_Init()
+  80:BSP/LSM303DLH/LSM303.c **** *paraments	: None
+  81:BSP/LSM303DLH/LSM303.c **** *return     : succeed or not
+  82:BSP/LSM303DLH/LSM303.c **** *detail     :	the defalt CTRL_REG4 value is 0x00. FS[5:4], 00: ±2 g, 01: ±4 g, 10: ±8 g, 11: ±1
+  83:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+  84:BSP/LSM303DLH/LSM303.c **** unsigned char LSM303DLH_Init()
+  85:BSP/LSM303DLH/LSM303.c **** {
+ 252              		.loc 1 85 1 is_stmt 1 view -0
+ 253              		.cfi_startproc
+ 254              		@ args = 0, pretend = 0, frame = 8
+ 255              		@ frame_needed = 0, uses_anonymous_args = 0
+ 256 0000 30B5     		push	{r4, r5, lr}
+ 257              	.LCFI4:
+ 258              		.cfi_def_cfa_offset 12
+ 259              		.cfi_offset 4, -12
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 7
+
+
+ 260              		.cfi_offset 5, -8
+ 261              		.cfi_offset 14, -4
+ 262 0002 83B0     		sub	sp, sp, #12
+ 263              	.LCFI5:
+ 264              		.cfi_def_cfa_offset 24
+ 265 0004 0024     		movs	r4, #0
+  86:BSP/LSM303DLH/LSM303.c **** 	unsigned char temp;
+ 266              		.loc 1 86 2 view .LVU49
+  87:BSP/LSM303DLH/LSM303.c **** 	unsigned char retry = 0;
+ 267              		.loc 1 87 2 view .LVU50
+ 268              	.LVL22:
+  88:BSP/LSM303DLH/LSM303.c **** 	
+  89:BSP/LSM303DLH/LSM303.c **** 	LSM303_CLK_ENABLE;
+ 269              		.loc 1 89 2 view .LVU51
+ 270              	.LBB2:
+ 271              		.loc 1 89 2 view .LVU52
+ 272 0006 0194     		str	r4, [sp, #4]
+ 273              		.loc 1 89 2 view .LVU53
+ 274 0008 2C4B     		ldr	r3, .L38
+ 275 000a 1A6B     		ldr	r2, [r3, #48]
+ 276 000c 42F00202 		orr	r2, r2, #2
+ 277 0010 1A63     		str	r2, [r3, #48]
+ 278              		.loc 1 89 2 view .LVU54
+ 279 0012 1B6B     		ldr	r3, [r3, #48]
+ 280 0014 03F00203 		and	r3, r3, #2
+ 281 0018 0193     		str	r3, [sp, #4]
+ 282              		.loc 1 89 2 view .LVU55
+ 283 001a 019B     		ldr	r3, [sp, #4]
+ 284              	.LBE2:
+ 285              		.loc 1 89 2 view .LVU56
+  90:BSP/LSM303DLH/LSM303.c **** 	IICInit(&LSM303_bus);
+ 286              		.loc 1 90 2 view .LVU57
+ 287 001c 2848     		ldr	r0, .L38+4
+ 288 001e FFF7FEFF 		bl	IICInit
+ 289              	.LVL23:
+  91:BSP/LSM303DLH/LSM303.c **** 	
+  92:BSP/LSM303DLH/LSM303.c **** 	for(retry = 0;retry < 3;retry ++)
+ 290              		.loc 1 92 2 view .LVU58
+ 291              		.loc 1 92 12 is_stmt 0 view .LVU59
+ 292 0022 2546     		mov	r5, r4
+ 293              		.loc 1 92 2 view .LVU60
+ 294 0024 04E0     		b	.L26
+ 295              	.LVL24:
+ 296              	.L36:
+  93:BSP/LSM303DLH/LSM303.c **** 	{
+  94:BSP/LSM303DLH/LSM303.c **** 		LSM303_WriteOneReg(LSM303_CTRL_REG4_A, 0x10);		//full scale: +-4g
+  95:BSP/LSM303DLH/LSM303.c **** 		Delayms(1);
+  96:BSP/LSM303DLH/LSM303.c **** 		LSM303_WriteOneReg(LSM303_CTRL_REG1_A, 0x2F);		//low power mode, 10Hz速度
+  97:BSP/LSM303DLH/LSM303.c **** 		Delayms(1);															
+  98:BSP/LSM303DLH/LSM303.c **** 		temp = LSM303_ReadOneReg(LSM303_CTRL_REG1_A);		//读取0x20寄存器，默认值为0x07
+  99:BSP/LSM303DLH/LSM303.c **** 		if(temp != 0x2F)	
+ 100:BSP/LSM303DLH/LSM303.c **** 		{
+ 101:BSP/LSM303DLH/LSM303.c **** 			Delayms(10);	
+ 297              		.loc 1 101 4 is_stmt 1 view .LVU61
+ 298 0026 0A20     		movs	r0, #10
+ 299              	.LVL25:
+ 300              		.loc 1 101 4 is_stmt 0 view .LVU62
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 8
+
+
+ 301 0028 FFF7FEFF 		bl	HAL_Delay
+ 302              	.LVL26:
+  92:BSP/LSM303DLH/LSM303.c **** 	{
+ 303              		.loc 1 92 32 is_stmt 1 discriminator 2 view .LVU63
+ 304 002c 0135     		adds	r5, r5, #1
+ 305              	.LVL27:
+  92:BSP/LSM303DLH/LSM303.c **** 	{
+ 306              		.loc 1 92 32 is_stmt 0 discriminator 2 view .LVU64
+ 307 002e EDB2     		uxtb	r5, r5
+ 308              	.LVL28:
+ 309              	.L26:
+  92:BSP/LSM303DLH/LSM303.c **** 	{
+ 310              		.loc 1 92 22 is_stmt 1 discriminator 1 view .LVU65
+ 311 0030 022D     		cmp	r5, #2
+ 312 0032 13D8     		bhi	.L27
+  94:BSP/LSM303DLH/LSM303.c **** 		Delayms(1);
+ 313              		.loc 1 94 3 view .LVU66
+ 314 0034 1021     		movs	r1, #16
+ 315 0036 2320     		movs	r0, #35
+ 316 0038 FFF7FEFF 		bl	LSM303_WriteOneReg
+ 317              	.LVL29:
+  95:BSP/LSM303DLH/LSM303.c **** 		LSM303_WriteOneReg(LSM303_CTRL_REG1_A, 0x2F);		//low power mode, 10Hz速度
+ 318              		.loc 1 95 3 view .LVU67
+ 319 003c 0120     		movs	r0, #1
+ 320 003e FFF7FEFF 		bl	HAL_Delay
+ 321              	.LVL30:
+  96:BSP/LSM303DLH/LSM303.c **** 		Delayms(1);															
+ 322              		.loc 1 96 3 view .LVU68
+ 323 0042 2F21     		movs	r1, #47
+ 324 0044 2020     		movs	r0, #32
+ 325 0046 FFF7FEFF 		bl	LSM303_WriteOneReg
+ 326              	.LVL31:
+  97:BSP/LSM303DLH/LSM303.c **** 		temp = LSM303_ReadOneReg(LSM303_CTRL_REG1_A);		//读取0x20寄存器，默认值为0x07
+ 327              		.loc 1 97 3 view .LVU69
+ 328 004a 0120     		movs	r0, #1
+ 329 004c FFF7FEFF 		bl	HAL_Delay
+ 330              	.LVL32:
+  98:BSP/LSM303DLH/LSM303.c **** 		if(temp != 0x2F)	
+ 331              		.loc 1 98 3 view .LVU70
+  98:BSP/LSM303DLH/LSM303.c **** 		if(temp != 0x2F)	
+ 332              		.loc 1 98 10 is_stmt 0 view .LVU71
+ 333 0050 2020     		movs	r0, #32
+ 334 0052 FFF7FEFF 		bl	LSM303_ReadOneReg
+ 335              	.LVL33:
+ 336 0056 0446     		mov	r4, r0
+ 337              	.LVL34:
+  99:BSP/LSM303DLH/LSM303.c **** 		{
+ 338              		.loc 1 99 3 is_stmt 1 view .LVU72
+  99:BSP/LSM303DLH/LSM303.c **** 		{
+ 339              		.loc 1 99 5 is_stmt 0 view .LVU73
+ 340 0058 2F28     		cmp	r0, #47
+ 341 005a E4D1     		bne	.L36
+ 342              	.LVL35:
+ 343              	.L27:
+ 102:BSP/LSM303DLH/LSM303.c **** 		}
+ 103:BSP/LSM303DLH/LSM303.c **** 		else break;
+ 104:BSP/LSM303DLH/LSM303.c **** 	}
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 9
+
+
+ 105:BSP/LSM303DLH/LSM303.c **** 	if(temp != 0x2F)
+ 344              		.loc 1 105 2 is_stmt 1 view .LVU74
+ 345              		.loc 1 105 4 is_stmt 0 view .LVU75
+ 346 005c 2F2C     		cmp	r4, #47
+ 347 005e 02D0     		beq	.L37
+ 106:BSP/LSM303DLH/LSM303.c **** 	{
+ 107:BSP/LSM303DLH/LSM303.c **** 		return 1;
+ 348              		.loc 1 107 10 view .LVU76
+ 349 0060 0120     		movs	r0, #1
+ 350              	.L29:
+ 108:BSP/LSM303DLH/LSM303.c **** 	}
+ 109:BSP/LSM303DLH/LSM303.c **** 	Delayms(1);									
+ 110:BSP/LSM303DLH/LSM303.c **** 	for(retry = 0;retry < 3;retry ++)
+ 111:BSP/LSM303DLH/LSM303.c **** 	{
+ 112:BSP/LSM303DLH/LSM303.c **** 		LSM303_WriteOneReg(LSM303_CRA_REG_M, 0x10);		//磁场传感器15Hz,正常测量;关闭温度计
+ 113:BSP/LSM303DLH/LSM303.c **** 		Delayms(1);		
+ 114:BSP/LSM303DLH/LSM303.c **** 		LSM303_WriteOneReg(LSM303_CRB_REG_M, 0x80);		//磁场传感器gain默认为0x80: +-4.0Gauss, 450L
+ 115:BSP/LSM303DLH/LSM303.c **** 		Delayms(1);	
+ 116:BSP/LSM303DLH/LSM303.c **** 		LSM303_WriteOneReg(LSM303_MR_REG_M, 0x00);		//磁场传感器连续转换模式
+ 117:BSP/LSM303DLH/LSM303.c **** 		Delayms(1);										
+ 118:BSP/LSM303DLH/LSM303.c **** 		temp = LSM303_ReadOneReg(LSM303_MR_REG_M);		
+ 119:BSP/LSM303DLH/LSM303.c **** 		if(temp != 0)	
+ 120:BSP/LSM303DLH/LSM303.c **** 		{
+ 121:BSP/LSM303DLH/LSM303.c **** 			Delayms(10);	
+ 122:BSP/LSM303DLH/LSM303.c **** 		}
+ 123:BSP/LSM303DLH/LSM303.c **** 		else break;
+ 124:BSP/LSM303DLH/LSM303.c **** 	}
+ 125:BSP/LSM303DLH/LSM303.c **** 	if(temp != 0)	
+ 126:BSP/LSM303DLH/LSM303.c **** 	{
+ 127:BSP/LSM303DLH/LSM303.c **** 		return 1;	
+ 128:BSP/LSM303DLH/LSM303.c **** 	}
+ 129:BSP/LSM303DLH/LSM303.c **** 	return 0;
+ 130:BSP/LSM303DLH/LSM303.c **** }
+ 351              		.loc 1 130 1 view .LVU77
+ 352 0062 03B0     		add	sp, sp, #12
+ 353              	.LCFI6:
+ 354              		.cfi_remember_state
+ 355              		.cfi_def_cfa_offset 12
+ 356              		@ sp needed
+ 357 0064 30BD     		pop	{r4, r5, pc}
+ 358              	.LVL36:
+ 359              	.L37:
+ 360              	.LCFI7:
+ 361              		.cfi_restore_state
+ 109:BSP/LSM303DLH/LSM303.c **** 	for(retry = 0;retry < 3;retry ++)
+ 362              		.loc 1 109 2 is_stmt 1 view .LVU78
+ 363 0066 0120     		movs	r0, #1
+ 364 0068 FFF7FEFF 		bl	HAL_Delay
+ 365              	.LVL37:
+ 110:BSP/LSM303DLH/LSM303.c **** 	{
+ 366              		.loc 1 110 2 view .LVU79
+ 110:BSP/LSM303DLH/LSM303.c **** 	{
+ 367              		.loc 1 110 12 is_stmt 0 view .LVU80
+ 368 006c 0025     		movs	r5, #0
+ 369              	.LVL38:
+ 370              	.L30:
+ 110:BSP/LSM303DLH/LSM303.c **** 	{
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 10
+
+
+ 371              		.loc 1 110 22 is_stmt 1 discriminator 1 view .LVU81
+ 372 006e 022D     		cmp	r5, #2
+ 373 0070 1FD8     		bhi	.L31
+ 112:BSP/LSM303DLH/LSM303.c **** 		Delayms(1);		
+ 374              		.loc 1 112 3 view .LVU82
+ 375 0072 1021     		movs	r1, #16
+ 376 0074 0020     		movs	r0, #0
+ 377 0076 FFF7FEFF 		bl	LSM303_WriteOneReg
+ 378              	.LVL39:
+ 113:BSP/LSM303DLH/LSM303.c **** 		LSM303_WriteOneReg(LSM303_CRB_REG_M, 0x80);		//磁场传感器gain默认为0x80: +-4.0Gauss, 450L
+ 379              		.loc 1 113 3 view .LVU83
+ 380 007a 0120     		movs	r0, #1
+ 381 007c FFF7FEFF 		bl	HAL_Delay
+ 382              	.LVL40:
+ 114:BSP/LSM303DLH/LSM303.c **** 		Delayms(1);	
+ 383              		.loc 1 114 3 view .LVU84
+ 384 0080 8021     		movs	r1, #128
+ 385 0082 0120     		movs	r0, #1
+ 386 0084 FFF7FEFF 		bl	LSM303_WriteOneReg
+ 387              	.LVL41:
+ 115:BSP/LSM303DLH/LSM303.c **** 		LSM303_WriteOneReg(LSM303_MR_REG_M, 0x00);		//磁场传感器连续转换模式
+ 388              		.loc 1 115 3 view .LVU85
+ 389 0088 0120     		movs	r0, #1
+ 390 008a FFF7FEFF 		bl	HAL_Delay
+ 391              	.LVL42:
+ 116:BSP/LSM303DLH/LSM303.c **** 		Delayms(1);										
+ 392              		.loc 1 116 3 view .LVU86
+ 393 008e 0021     		movs	r1, #0
+ 394 0090 0220     		movs	r0, #2
+ 395 0092 FFF7FEFF 		bl	LSM303_WriteOneReg
+ 396              	.LVL43:
+ 117:BSP/LSM303DLH/LSM303.c **** 		temp = LSM303_ReadOneReg(LSM303_MR_REG_M);		
+ 397              		.loc 1 117 3 view .LVU87
+ 398 0096 0120     		movs	r0, #1
+ 399 0098 FFF7FEFF 		bl	HAL_Delay
+ 400              	.LVL44:
+ 118:BSP/LSM303DLH/LSM303.c **** 		if(temp != 0)	
+ 401              		.loc 1 118 3 view .LVU88
+ 118:BSP/LSM303DLH/LSM303.c **** 		if(temp != 0)	
+ 402              		.loc 1 118 10 is_stmt 0 view .LVU89
+ 403 009c 0220     		movs	r0, #2
+ 404 009e FFF7FEFF 		bl	LSM303_ReadOneReg
+ 405              	.LVL45:
+ 119:BSP/LSM303DLH/LSM303.c **** 		{
+ 406              		.loc 1 119 3 is_stmt 1 view .LVU90
+ 119:BSP/LSM303DLH/LSM303.c **** 		{
+ 407              		.loc 1 119 5 is_stmt 0 view .LVU91
+ 408 00a2 0446     		mov	r4, r0
+ 409 00a4 28B1     		cbz	r0, .L31
+ 121:BSP/LSM303DLH/LSM303.c **** 		}
+ 410              		.loc 1 121 4 is_stmt 1 view .LVU92
+ 411 00a6 0A20     		movs	r0, #10
+ 412              	.LVL46:
+ 121:BSP/LSM303DLH/LSM303.c **** 		}
+ 413              		.loc 1 121 4 is_stmt 0 view .LVU93
+ 414 00a8 FFF7FEFF 		bl	HAL_Delay
+ 415              	.LVL47:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 11
+
+
+ 110:BSP/LSM303DLH/LSM303.c **** 	{
+ 416              		.loc 1 110 32 is_stmt 1 discriminator 2 view .LVU94
+ 417 00ac 0135     		adds	r5, r5, #1
+ 418              	.LVL48:
+ 110:BSP/LSM303DLH/LSM303.c **** 	{
+ 419              		.loc 1 110 32 is_stmt 0 discriminator 2 view .LVU95
+ 420 00ae EDB2     		uxtb	r5, r5
+ 421              	.LVL49:
+ 110:BSP/LSM303DLH/LSM303.c **** 	{
+ 422              		.loc 1 110 32 discriminator 2 view .LVU96
+ 423 00b0 DDE7     		b	.L30
+ 424              	.LVL50:
+ 425              	.L31:
+ 125:BSP/LSM303DLH/LSM303.c **** 	{
+ 426              		.loc 1 125 2 is_stmt 1 view .LVU97
+ 125:BSP/LSM303DLH/LSM303.c **** 	{
+ 427              		.loc 1 125 4 is_stmt 0 view .LVU98
+ 428 00b2 0CB9     		cbnz	r4, .L34
+ 129:BSP/LSM303DLH/LSM303.c **** }
+ 429              		.loc 1 129 9 view .LVU99
+ 430 00b4 2046     		mov	r0, r4
+ 431 00b6 D4E7     		b	.L29
+ 432              	.L34:
+ 127:BSP/LSM303DLH/LSM303.c **** 	}
+ 433              		.loc 1 127 10 view .LVU100
+ 434 00b8 0120     		movs	r0, #1
+ 435 00ba D2E7     		b	.L29
+ 436              	.L39:
+ 437              		.align	2
+ 438              	.L38:
+ 439 00bc 00380240 		.word	1073887232
+ 440 00c0 00000000 		.word	LSM303_bus
+ 441              		.cfi_endproc
+ 442              	.LFE220:
+ 444              		.section	.text.LSM303DLH_Sleep,"ax",%progbits
+ 445              		.align	1
+ 446              		.global	LSM303DLH_Sleep
+ 447              		.syntax unified
+ 448              		.thumb
+ 449              		.thumb_func
+ 451              	LSM303DLH_Sleep:
+ 452              	.LFB221:
+ 131:BSP/LSM303DLH/LSM303.c **** 
+ 132:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+ 133:BSP/LSM303DLH/LSM303.c **** *function  	:	LSM303DLH_Sleep()
+ 134:BSP/LSM303DLH/LSM303.c **** *paraments	: None
+ 135:BSP/LSM303DLH/LSM303.c **** *return     : None
+ 136:BSP/LSM303DLH/LSM303.c **** *detail     :	
+ 137:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+ 138:BSP/LSM303DLH/LSM303.c **** void LSM303DLH_Sleep()
+ 139:BSP/LSM303DLH/LSM303.c **** {
+ 453              		.loc 1 139 1 is_stmt 1 view -0
+ 454              		.cfi_startproc
+ 455              		@ args = 0, pretend = 0, frame = 0
+ 456              		@ frame_needed = 0, uses_anonymous_args = 0
+ 457 0000 08B5     		push	{r3, lr}
+ 458              	.LCFI8:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 12
+
+
+ 459              		.cfi_def_cfa_offset 8
+ 460              		.cfi_offset 3, -8
+ 461              		.cfi_offset 14, -4
+ 140:BSP/LSM303DLH/LSM303.c **** 	LSM303_WriteOneReg(LSM303_MR_REG_M,0x03);
+ 462              		.loc 1 140 2 view .LVU102
+ 463 0002 0321     		movs	r1, #3
+ 464 0004 0220     		movs	r0, #2
+ 465 0006 FFF7FEFF 		bl	LSM303_WriteOneReg
+ 466              	.LVL51:
+ 141:BSP/LSM303DLH/LSM303.c **** 	LSM303_WriteOneReg(LSM303_CTRL_REG1_A,0x0f);		
+ 467              		.loc 1 141 2 view .LVU103
+ 468 000a 0F21     		movs	r1, #15
+ 469 000c 2020     		movs	r0, #32
+ 470 000e FFF7FEFF 		bl	LSM303_WriteOneReg
+ 471              	.LVL52:
+ 142:BSP/LSM303DLH/LSM303.c **** }
+ 472              		.loc 1 142 1 is_stmt 0 view .LVU104
+ 473 0012 08BD     		pop	{r3, pc}
+ 474              		.cfi_endproc
+ 475              	.LFE221:
+ 477              		.section	.text.LSM303DLH_Wakeup,"ax",%progbits
+ 478              		.align	1
+ 479              		.global	LSM303DLH_Wakeup
+ 480              		.syntax unified
+ 481              		.thumb
+ 482              		.thumb_func
+ 484              	LSM303DLH_Wakeup:
+ 485              	.LFB222:
+ 143:BSP/LSM303DLH/LSM303.c **** 
+ 144:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+ 145:BSP/LSM303DLH/LSM303.c **** *function  	:	LSM303DLH_Wakeup()
+ 146:BSP/LSM303DLH/LSM303.c **** *paraments	: None
+ 147:BSP/LSM303DLH/LSM303.c **** *return     : None
+ 148:BSP/LSM303DLH/LSM303.c **** *detail     :	
+ 149:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+ 150:BSP/LSM303DLH/LSM303.c **** void LSM303DLH_Wakeup()
+ 151:BSP/LSM303DLH/LSM303.c **** {
+ 486              		.loc 1 151 1 is_stmt 1 view -0
+ 487              		.cfi_startproc
+ 488              		@ args = 0, pretend = 0, frame = 0
+ 489              		@ frame_needed = 0, uses_anonymous_args = 0
+ 490 0000 08B5     		push	{r3, lr}
+ 491              	.LCFI9:
+ 492              		.cfi_def_cfa_offset 8
+ 493              		.cfi_offset 3, -8
+ 494              		.cfi_offset 14, -4
+ 152:BSP/LSM303DLH/LSM303.c **** 	LSM303_WriteOneReg(LSM303_MR_REG_M,0x00);//磁场传感器连续转换模式
+ 495              		.loc 1 152 2 view .LVU106
+ 496 0002 0021     		movs	r1, #0
+ 497 0004 0220     		movs	r0, #2
+ 498 0006 FFF7FEFF 		bl	LSM303_WriteOneReg
+ 499              	.LVL53:
+ 153:BSP/LSM303DLH/LSM303.c **** 	LSM303_WriteOneReg(LSM303_CTRL_REG1_A,0x2f);//low power mode, 10Hz速度	
+ 500              		.loc 1 153 2 view .LVU107
+ 501 000a 2F21     		movs	r1, #47
+ 502 000c 2020     		movs	r0, #32
+ 503 000e FFF7FEFF 		bl	LSM303_WriteOneReg
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 13
+
+
+ 504              	.LVL54:
+ 154:BSP/LSM303DLH/LSM303.c **** }
+ 505              		.loc 1 154 1 is_stmt 0 view .LVU108
+ 506 0012 08BD     		pop	{r3, pc}
+ 507              		.cfi_endproc
+ 508              	.LFE222:
+ 510              		.section	.text.LSM303_ReadAcceleration,"ax",%progbits
+ 511              		.align	1
+ 512              		.global	LSM303_ReadAcceleration
+ 513              		.syntax unified
+ 514              		.thumb
+ 515              		.thumb_func
+ 517              	LSM303_ReadAcceleration:
+ 518              	.LVL55:
+ 519              	.LFB223:
+ 155:BSP/LSM303DLH/LSM303.c **** 
+ 156:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+ 157:BSP/LSM303DLH/LSM303.c **** *function  	:	LSM303_ReadAcceleration()
+ 158:BSP/LSM303DLH/LSM303.c **** *paraments	: int16_t *Xa, int16_t *Ya, int16_t *Z
+ 159:BSP/LSM303DLH/LSM303.c **** *return     : None
+ 160:BSP/LSM303DLH/LSM303.c **** *detail     :	to read the Acceleration data, but the real Acceleration should be divided by the uni
+ 161:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+ 162:BSP/LSM303DLH/LSM303.c **** void LSM303_ReadAcceleration(int16_t *Xa, int16_t *Ya, int16_t *Za)
+ 163:BSP/LSM303DLH/LSM303.c **** {
+ 520              		.loc 1 163 1 is_stmt 1 view -0
+ 521              		.cfi_startproc
+ 522              		@ args = 0, pretend = 0, frame = 8
+ 523              		@ frame_needed = 0, uses_anonymous_args = 0
+ 524              		.loc 1 163 1 is_stmt 0 view .LVU110
+ 525 0000 70B5     		push	{r4, r5, r6, lr}
+ 526              	.LCFI10:
+ 527              		.cfi_def_cfa_offset 16
+ 528              		.cfi_offset 4, -16
+ 529              		.cfi_offset 5, -12
+ 530              		.cfi_offset 6, -8
+ 531              		.cfi_offset 14, -4
+ 532 0002 82B0     		sub	sp, sp, #8
+ 533              	.LCFI11:
+ 534              		.cfi_def_cfa_offset 24
+ 535 0004 0646     		mov	r6, r0
+ 536 0006 0D46     		mov	r5, r1
+ 537 0008 1446     		mov	r4, r2
+ 164:BSP/LSM303DLH/LSM303.c **** 	uint8_t buff[6];
+ 538              		.loc 1 164 2 is_stmt 1 view .LVU111
+ 165:BSP/LSM303DLH/LSM303.c **** 	int16_t temp;
+ 539              		.loc 1 165 2 view .LVU112
+ 166:BSP/LSM303DLH/LSM303.c **** 	LSM303_ReadMultiReg(LSM303_OUT_X_L_A,6,buff);
+ 540              		.loc 1 166 2 view .LVU113
+ 541 000a 6A46     		mov	r2, sp
+ 542              	.LVL56:
+ 543              		.loc 1 166 2 is_stmt 0 view .LVU114
+ 544 000c 0621     		movs	r1, #6
+ 545              	.LVL57:
+ 546              		.loc 1 166 2 view .LVU115
+ 547 000e 2820     		movs	r0, #40
+ 548              	.LVL58:
+ 549              		.loc 1 166 2 view .LVU116
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 14
+
+
+ 550 0010 FFF7FEFF 		bl	LSM303_ReadMultiReg
+ 551              	.LVL59:
+ 167:BSP/LSM303DLH/LSM303.c **** 	
+ 168:BSP/LSM303DLH/LSM303.c **** 	temp = buff[1];
+ 552              		.loc 1 168 2 is_stmt 1 view .LVU117
+ 553              		.loc 1 168 7 is_stmt 0 view .LVU118
+ 554 0014 9DF80130 		ldrb	r3, [sp, #1]	@ zero_extendqisi2
+ 555              	.LVL60:
+ 169:BSP/LSM303DLH/LSM303.c **** 	temp <<= 8;
+ 556              		.loc 1 169 2 is_stmt 1 view .LVU119
+ 557              		.loc 1 169 7 is_stmt 0 view .LVU120
+ 558 0018 1B02     		lsls	r3, r3, #8
+ 559              	.LVL61:
+ 560              		.loc 1 169 7 view .LVU121
+ 561 001a 1BB2     		sxth	r3, r3
+ 562              	.LVL62:
+ 170:BSP/LSM303DLH/LSM303.c **** 	temp |= buff[0];
+ 563              		.loc 1 170 2 is_stmt 1 view .LVU122
+ 564              		.loc 1 170 14 is_stmt 0 view .LVU123
+ 565 001c 9DF80020 		ldrb	r2, [sp]	@ zero_extendqisi2
+ 566              		.loc 1 170 7 view .LVU124
+ 567 0020 1343     		orrs	r3, r3, r2
+ 568              	.LVL63:
+ 171:BSP/LSM303DLH/LSM303.c **** 	*Xa = temp;
+ 569              		.loc 1 171 2 is_stmt 1 view .LVU125
+ 570              		.loc 1 171 6 is_stmt 0 view .LVU126
+ 571 0022 3380     		strh	r3, [r6]	@ movhi
+ 172:BSP/LSM303DLH/LSM303.c **** 	
+ 173:BSP/LSM303DLH/LSM303.c **** 	temp = buff[3];
+ 572              		.loc 1 173 2 is_stmt 1 view .LVU127
+ 573              		.loc 1 173 7 is_stmt 0 view .LVU128
+ 574 0024 9DF80330 		ldrb	r3, [sp, #3]	@ zero_extendqisi2
+ 575              	.LVL64:
+ 174:BSP/LSM303DLH/LSM303.c **** 	temp <<= 8;
+ 576              		.loc 1 174 2 is_stmt 1 view .LVU129
+ 577              		.loc 1 174 7 is_stmt 0 view .LVU130
+ 578 0028 1B02     		lsls	r3, r3, #8
+ 579              	.LVL65:
+ 580              		.loc 1 174 7 view .LVU131
+ 581 002a 1BB2     		sxth	r3, r3
+ 582              	.LVL66:
+ 175:BSP/LSM303DLH/LSM303.c **** 	temp |= buff[2];
+ 583              		.loc 1 175 2 is_stmt 1 view .LVU132
+ 584              		.loc 1 175 14 is_stmt 0 view .LVU133
+ 585 002c 9DF80220 		ldrb	r2, [sp, #2]	@ zero_extendqisi2
+ 586              		.loc 1 175 7 view .LVU134
+ 587 0030 1343     		orrs	r3, r3, r2
+ 588              	.LVL67:
+ 176:BSP/LSM303DLH/LSM303.c **** 	*Ya = temp;
+ 589              		.loc 1 176 2 is_stmt 1 view .LVU135
+ 590              		.loc 1 176 6 is_stmt 0 view .LVU136
+ 591 0032 2B80     		strh	r3, [r5]	@ movhi
+ 177:BSP/LSM303DLH/LSM303.c **** 	
+ 178:BSP/LSM303DLH/LSM303.c **** 	temp = buff[5];
+ 592              		.loc 1 178 2 is_stmt 1 view .LVU137
+ 593              		.loc 1 178 7 is_stmt 0 view .LVU138
+ 594 0034 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 15
+
+
+ 595              	.LVL68:
+ 179:BSP/LSM303DLH/LSM303.c **** 	temp <<= 8;
+ 596              		.loc 1 179 2 is_stmt 1 view .LVU139
+ 597              		.loc 1 179 7 is_stmt 0 view .LVU140
+ 598 0038 1B02     		lsls	r3, r3, #8
+ 599              	.LVL69:
+ 600              		.loc 1 179 7 view .LVU141
+ 601 003a 1BB2     		sxth	r3, r3
+ 602              	.LVL70:
+ 180:BSP/LSM303DLH/LSM303.c **** 	temp |= buff[4];
+ 603              		.loc 1 180 2 is_stmt 1 view .LVU142
+ 604              		.loc 1 180 14 is_stmt 0 view .LVU143
+ 605 003c 9DF80420 		ldrb	r2, [sp, #4]	@ zero_extendqisi2
+ 606              		.loc 1 180 7 view .LVU144
+ 607 0040 1343     		orrs	r3, r3, r2
+ 608              	.LVL71:
+ 181:BSP/LSM303DLH/LSM303.c **** 	*Za = temp;
+ 609              		.loc 1 181 2 is_stmt 1 view .LVU145
+ 610              		.loc 1 181 6 is_stmt 0 view .LVU146
+ 611 0042 2380     		strh	r3, [r4]	@ movhi
+ 182:BSP/LSM303DLH/LSM303.c **** }
+ 612              		.loc 1 182 1 view .LVU147
+ 613 0044 02B0     		add	sp, sp, #8
+ 614              	.LCFI12:
+ 615              		.cfi_def_cfa_offset 16
+ 616              		@ sp needed
+ 617 0046 70BD     		pop	{r4, r5, r6, pc}
+ 618              		.loc 1 182 1 view .LVU148
+ 619              		.cfi_endproc
+ 620              	.LFE223:
+ 622              		.section	.text.LSM303_ReadMagnetic,"ax",%progbits
+ 623              		.align	1
+ 624              		.global	LSM303_ReadMagnetic
+ 625              		.syntax unified
+ 626              		.thumb
+ 627              		.thumb_func
+ 629              	LSM303_ReadMagnetic:
+ 630              	.LVL72:
+ 631              	.LFB224:
+ 183:BSP/LSM303DLH/LSM303.c **** 
+ 184:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+ 185:BSP/LSM303DLH/LSM303.c **** *function  	:	LSM303_ReadMagnetic()
+ 186:BSP/LSM303DLH/LSM303.c **** *paraments	: int16_t *Xm, int16_t *Ym, int16_t *Zm
+ 187:BSP/LSM303DLH/LSM303.c **** *return     : None
+ 188:BSP/LSM303DLH/LSM303.c **** *detail     :	to read the Magnetic data, but the real Magnetic should be divided by the unit(n LSB/
+ 189:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+ 190:BSP/LSM303DLH/LSM303.c **** void LSM303_ReadMagnetic(int16_t *Xm, int16_t *Ym, int16_t *Zm)
+ 191:BSP/LSM303DLH/LSM303.c **** {
+ 632              		.loc 1 191 1 is_stmt 1 view -0
+ 633              		.cfi_startproc
+ 634              		@ args = 0, pretend = 0, frame = 8
+ 635              		@ frame_needed = 0, uses_anonymous_args = 0
+ 636              		.loc 1 191 1 is_stmt 0 view .LVU150
+ 637 0000 70B5     		push	{r4, r5, r6, lr}
+ 638              	.LCFI13:
+ 639              		.cfi_def_cfa_offset 16
+ 640              		.cfi_offset 4, -16
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 16
+
+
+ 641              		.cfi_offset 5, -12
+ 642              		.cfi_offset 6, -8
+ 643              		.cfi_offset 14, -4
+ 644 0002 82B0     		sub	sp, sp, #8
+ 645              	.LCFI14:
+ 646              		.cfi_def_cfa_offset 24
+ 647 0004 0646     		mov	r6, r0
+ 648 0006 0C46     		mov	r4, r1
+ 649 0008 1546     		mov	r5, r2
+ 192:BSP/LSM303DLH/LSM303.c **** 	uint8_t buff[6];
+ 650              		.loc 1 192 2 is_stmt 1 view .LVU151
+ 193:BSP/LSM303DLH/LSM303.c **** 	int16_t temp;
+ 651              		.loc 1 193 2 view .LVU152
+ 194:BSP/LSM303DLH/LSM303.c **** 	LSM303_ReadMultiReg(LSM303_OUT_X_H_M,6, buff);
+ 652              		.loc 1 194 2 view .LVU153
+ 653 000a 6A46     		mov	r2, sp
+ 654              	.LVL73:
+ 655              		.loc 1 194 2 is_stmt 0 view .LVU154
+ 656 000c 0621     		movs	r1, #6
+ 657              	.LVL74:
+ 658              		.loc 1 194 2 view .LVU155
+ 659 000e 0320     		movs	r0, #3
+ 660              	.LVL75:
+ 661              		.loc 1 194 2 view .LVU156
+ 662 0010 FFF7FEFF 		bl	LSM303_ReadMultiReg
+ 663              	.LVL76:
+ 195:BSP/LSM303DLH/LSM303.c **** 	
+ 196:BSP/LSM303DLH/LSM303.c **** 	temp = buff[0];
+ 664              		.loc 1 196 2 is_stmt 1 view .LVU157
+ 665              		.loc 1 196 7 is_stmt 0 view .LVU158
+ 666 0014 9DF80030 		ldrb	r3, [sp]	@ zero_extendqisi2
+ 667              	.LVL77:
+ 197:BSP/LSM303DLH/LSM303.c **** 	temp <<= 8;
+ 668              		.loc 1 197 2 is_stmt 1 view .LVU159
+ 669              		.loc 1 197 7 is_stmt 0 view .LVU160
+ 670 0018 1B02     		lsls	r3, r3, #8
+ 671              	.LVL78:
+ 672              		.loc 1 197 7 view .LVU161
+ 673 001a 1BB2     		sxth	r3, r3
+ 674              	.LVL79:
+ 198:BSP/LSM303DLH/LSM303.c **** 	temp |= buff[1];
+ 675              		.loc 1 198 2 is_stmt 1 view .LVU162
+ 676              		.loc 1 198 14 is_stmt 0 view .LVU163
+ 677 001c 9DF80120 		ldrb	r2, [sp, #1]	@ zero_extendqisi2
+ 678              		.loc 1 198 7 view .LVU164
+ 679 0020 1343     		orrs	r3, r3, r2
+ 680              	.LVL80:
+ 199:BSP/LSM303DLH/LSM303.c **** 	*Xm = temp;
+ 681              		.loc 1 199 2 is_stmt 1 view .LVU165
+ 682              		.loc 1 199 6 is_stmt 0 view .LVU166
+ 683 0022 3380     		strh	r3, [r6]	@ movhi
+ 200:BSP/LSM303DLH/LSM303.c **** 	
+ 201:BSP/LSM303DLH/LSM303.c **** 	temp = buff[2];
+ 684              		.loc 1 201 2 is_stmt 1 view .LVU167
+ 685              		.loc 1 201 7 is_stmt 0 view .LVU168
+ 686 0024 9DF80230 		ldrb	r3, [sp, #2]	@ zero_extendqisi2
+ 687              	.LVL81:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 17
+
+
+ 202:BSP/LSM303DLH/LSM303.c **** 	temp <<= 8;
+ 688              		.loc 1 202 2 is_stmt 1 view .LVU169
+ 689              		.loc 1 202 7 is_stmt 0 view .LVU170
+ 690 0028 1B02     		lsls	r3, r3, #8
+ 691              	.LVL82:
+ 692              		.loc 1 202 7 view .LVU171
+ 693 002a 1BB2     		sxth	r3, r3
+ 694              	.LVL83:
+ 203:BSP/LSM303DLH/LSM303.c **** 	temp |= buff[3];
+ 695              		.loc 1 203 2 is_stmt 1 view .LVU172
+ 696              		.loc 1 203 14 is_stmt 0 view .LVU173
+ 697 002c 9DF80320 		ldrb	r2, [sp, #3]	@ zero_extendqisi2
+ 698              		.loc 1 203 7 view .LVU174
+ 699 0030 1343     		orrs	r3, r3, r2
+ 700              	.LVL84:
+ 204:BSP/LSM303DLH/LSM303.c **** 	*Zm = temp;
+ 701              		.loc 1 204 2 is_stmt 1 view .LVU175
+ 702              		.loc 1 204 6 is_stmt 0 view .LVU176
+ 703 0032 2B80     		strh	r3, [r5]	@ movhi
+ 205:BSP/LSM303DLH/LSM303.c **** 	
+ 206:BSP/LSM303DLH/LSM303.c **** 	temp = buff[4];
+ 704              		.loc 1 206 2 is_stmt 1 view .LVU177
+ 705              		.loc 1 206 7 is_stmt 0 view .LVU178
+ 706 0034 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 707              	.LVL85:
+ 207:BSP/LSM303DLH/LSM303.c **** 	temp <<= 8;
+ 708              		.loc 1 207 2 is_stmt 1 view .LVU179
+ 709              		.loc 1 207 7 is_stmt 0 view .LVU180
+ 710 0038 1B02     		lsls	r3, r3, #8
+ 711              	.LVL86:
+ 712              		.loc 1 207 7 view .LVU181
+ 713 003a 1BB2     		sxth	r3, r3
+ 714              	.LVL87:
+ 208:BSP/LSM303DLH/LSM303.c **** 	temp |= buff[5];
+ 715              		.loc 1 208 2 is_stmt 1 view .LVU182
+ 716              		.loc 1 208 14 is_stmt 0 view .LVU183
+ 717 003c 9DF80520 		ldrb	r2, [sp, #5]	@ zero_extendqisi2
+ 718              		.loc 1 208 7 view .LVU184
+ 719 0040 1343     		orrs	r3, r3, r2
+ 720              	.LVL88:
+ 209:BSP/LSM303DLH/LSM303.c **** 	*Ym = temp;
+ 721              		.loc 1 209 2 is_stmt 1 view .LVU185
+ 722              		.loc 1 209 6 is_stmt 0 view .LVU186
+ 723 0042 2380     		strh	r3, [r4]	@ movhi
+ 210:BSP/LSM303DLH/LSM303.c **** }
+ 724              		.loc 1 210 1 view .LVU187
+ 725 0044 02B0     		add	sp, sp, #8
+ 726              	.LCFI15:
+ 727              		.cfi_def_cfa_offset 16
+ 728              		@ sp needed
+ 729 0046 70BD     		pop	{r4, r5, r6, pc}
+ 730              		.loc 1 210 1 view .LVU188
+ 731              		.cfi_endproc
+ 732              	.LFE224:
+ 734              		.global	__aeabi_i2d
+ 735              		.global	__aeabi_dadd
+ 736              		.global	__aeabi_d2iz
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 18
+
+
+ 737              		.section	.text.LSM303_ReadTemperature,"ax",%progbits
+ 738              		.align	1
+ 739              		.global	LSM303_ReadTemperature
+ 740              		.syntax unified
+ 741              		.thumb
+ 742              		.thumb_func
+ 744              	LSM303_ReadTemperature:
+ 745              	.LVL89:
+ 746              	.LFB225:
+ 211:BSP/LSM303DLH/LSM303.c **** 
+ 212:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+ 213:BSP/LSM303DLH/LSM303.c **** *function  	:	LSM303_ReadTemperature()
+ 214:BSP/LSM303DLH/LSM303.c **** *paraments	: int16_t *Temp
+ 215:BSP/LSM303DLH/LSM303.c **** *return     : None
+ 216:BSP/LSM303DLH/LSM303.c **** *detail     :	to read the Temperature data, 
+ 217:BSP/LSM303DLH/LSM303.c **** 							the real Temperature already be divided by 8(8 LSB/deg)(not guaranteed, as the datasheet sai
+ 218:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+ 219:BSP/LSM303DLH/LSM303.c **** void LSM303_ReadTemperature(int16_t *Temp)
+ 220:BSP/LSM303DLH/LSM303.c **** {
+ 747              		.loc 1 220 1 is_stmt 1 view -0
+ 748              		.cfi_startproc
+ 749              		@ args = 0, pretend = 0, frame = 8
+ 750              		@ frame_needed = 0, uses_anonymous_args = 0
+ 751              		.loc 1 220 1 is_stmt 0 view .LVU190
+ 752 0000 10B5     		push	{r4, lr}
+ 753              	.LCFI16:
+ 754              		.cfi_def_cfa_offset 8
+ 755              		.cfi_offset 4, -8
+ 756              		.cfi_offset 14, -4
+ 757 0002 84B0     		sub	sp, sp, #16
+ 758              	.LCFI17:
+ 759              		.cfi_def_cfa_offset 24
+ 760 0004 0446     		mov	r4, r0
+ 221:BSP/LSM303DLH/LSM303.c **** 	uint8_t buff[2];
+ 761              		.loc 1 221 2 is_stmt 1 view .LVU191
+ 222:BSP/LSM303DLH/LSM303.c **** 	int16_t temp;
+ 762              		.loc 1 222 2 view .LVU192
+ 223:BSP/LSM303DLH/LSM303.c **** 	IIC_Read_Multi_Byte(&LSM303_bus, LSM303_SlaveAddr_M, TEMP_OUT_H_M, 2, buff);
+ 763              		.loc 1 223 2 view .LVU193
+ 764 0006 03AB     		add	r3, sp, #12
+ 765 0008 0093     		str	r3, [sp]
+ 766 000a 0223     		movs	r3, #2
+ 767 000c 3122     		movs	r2, #49
+ 768 000e 1E21     		movs	r1, #30
+ 769 0010 0D48     		ldr	r0, .L50
+ 770              	.LVL90:
+ 771              		.loc 1 223 2 is_stmt 0 view .LVU194
+ 772 0012 FFF7FEFF 		bl	IIC_Read_Multi_Byte
+ 773              	.LVL91:
+ 224:BSP/LSM303DLH/LSM303.c **** 	temp = buff[0];
+ 774              		.loc 1 224 2 is_stmt 1 view .LVU195
+ 775              		.loc 1 224 7 is_stmt 0 view .LVU196
+ 776 0016 9DF80C20 		ldrb	r2, [sp, #12]	@ zero_extendqisi2
+ 777              	.LVL92:
+ 225:BSP/LSM303DLH/LSM303.c **** 	temp <<= 8;
+ 778              		.loc 1 225 2 is_stmt 1 view .LVU197
+ 779              		.loc 1 225 7 is_stmt 0 view .LVU198
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 19
+
+
+ 780 001a 1202     		lsls	r2, r2, #8
+ 781              	.LVL93:
+ 782              		.loc 1 225 7 view .LVU199
+ 783 001c 12B2     		sxth	r2, r2
+ 784              	.LVL94:
+ 226:BSP/LSM303DLH/LSM303.c **** 	temp |= buff[1];
+ 785              		.loc 1 226 2 is_stmt 1 view .LVU200
+ 786              		.loc 1 226 14 is_stmt 0 view .LVU201
+ 787 001e 9DF80D30 		ldrb	r3, [sp, #13]	@ zero_extendqisi2
+ 788              		.loc 1 226 7 view .LVU202
+ 789 0022 1343     		orrs	r3, r3, r2
+ 790              	.LVL95:
+ 227:BSP/LSM303DLH/LSM303.c **** 	temp >>= 4;
+ 791              		.loc 1 227 2 is_stmt 1 view .LVU203
+ 792              		.loc 1 227 7 is_stmt 0 view .LVU204
+ 793 0024 1B11     		asrs	r3, r3, #4
+ 794              	.LVL96:
+ 228:BSP/LSM303DLH/LSM303.c **** 	*Temp = temp / 3 + 0.5;//8 LSB/deg
+ 795              		.loc 1 228 2 is_stmt 1 view .LVU205
+ 796              		.loc 1 228 19 is_stmt 0 view .LVU206
+ 797 0026 094A     		ldr	r2, .L50+4
+ 798 0028 82FB0312 		smull	r1, r2, r2, r3
+ 799 002c A2EBE373 		sub	r3, r2, r3, asr #31
+ 800              	.LVL97:
+ 801              		.loc 1 228 19 view .LVU207
+ 802 0030 18B2     		sxth	r0, r3
+ 803 0032 FFF7FEFF 		bl	__aeabi_i2d
+ 804              	.LVL98:
+ 805              		.loc 1 228 19 view .LVU208
+ 806 0036 0022     		movs	r2, #0
+ 807 0038 054B     		ldr	r3, .L50+8
+ 808 003a FFF7FEFF 		bl	__aeabi_dadd
+ 809              	.LVL99:
+ 810              		.loc 1 228 8 view .LVU209
+ 811 003e FFF7FEFF 		bl	__aeabi_d2iz
+ 812              	.LVL100:
+ 813 0042 2080     		strh	r0, [r4]	@ movhi
+ 229:BSP/LSM303DLH/LSM303.c **** }
+ 814              		.loc 1 229 1 view .LVU210
+ 815 0044 04B0     		add	sp, sp, #16
+ 816              	.LCFI18:
+ 817              		.cfi_def_cfa_offset 8
+ 818              		@ sp needed
+ 819 0046 10BD     		pop	{r4, pc}
+ 820              	.LVL101:
+ 821              	.L51:
+ 822              		.loc 1 229 1 view .LVU211
+ 823              		.align	2
+ 824              	.L50:
+ 825 0048 00000000 		.word	LSM303_bus
+ 826 004c 56555555 		.word	1431655766
+ 827 0050 0000E03F 		.word	1071644672
+ 828              		.cfi_endproc
+ 829              	.LFE225:
+ 831              		.global	__aeabi_ddiv
+ 832              		.global	__aeabi_d2f
+ 833              		.global	__aeabi_f2d
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 20
+
+
+ 834              		.global	__aeabi_dmul
+ 835              		.global	__aeabi_dcmplt
+ 836              		.global	__aeabi_dsub
+ 837              		.section	.text.LSM303DLH_CalculationZAxisAngle,"ax",%progbits
+ 838              		.align	1
+ 839              		.global	LSM303DLH_CalculationZAxisAngle
+ 840              		.syntax unified
+ 841              		.thumb
+ 842              		.thumb_func
+ 844              	LSM303DLH_CalculationZAxisAngle:
+ 845              	.LVL102:
+ 846              	.LFB226:
+ 230:BSP/LSM303DLH/LSM303.c **** 
+ 231:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+ 232:BSP/LSM303DLH/LSM303.c **** *function  	:	LSM303DLH_CalculationZAxisAngle()
+ 233:BSP/LSM303DLH/LSM303.c **** *paraments	: int16_t Xa, int16_t Ya, int16_t Za
+ 234:BSP/LSM303DLH/LSM303.c **** *return     : ZAxisAngle
+ 235:BSP/LSM303DLH/LSM303.c **** *detail     :	
+ 236:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+ 237:BSP/LSM303DLH/LSM303.c **** int LSM303DLH_CalculationZAxisAngle(int16_t Xa, int16_t Ya, int16_t Za)
+ 238:BSP/LSM303DLH/LSM303.c **** {
+ 847              		.loc 1 238 1 is_stmt 1 view -0
+ 848              		.cfi_startproc
+ 849              		@ args = 0, pretend = 0, frame = 0
+ 850              		@ frame_needed = 0, uses_anonymous_args = 0
+ 851              		.loc 1 238 1 is_stmt 0 view .LVU213
+ 852 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 853              	.LCFI19:
+ 854              		.cfi_def_cfa_offset 24
+ 855              		.cfi_offset 4, -24
+ 856              		.cfi_offset 5, -20
+ 857              		.cfi_offset 6, -16
+ 858              		.cfi_offset 7, -12
+ 859              		.cfi_offset 8, -8
+ 860              		.cfi_offset 14, -4
+ 861 0004 2DED028B 		vpush.64	{d8}
+ 862              	.LCFI20:
+ 863              		.cfi_def_cfa_offset 32
+ 864              		.cfi_offset 80, -32
+ 865              		.cfi_offset 81, -28
+ 866 0008 8046     		mov	r8, r0
+ 867 000a 0F46     		mov	r7, r1
+ 868 000c 1646     		mov	r6, r2
+ 239:BSP/LSM303DLH/LSM303.c **** 	double A;
+ 869              		.loc 1 239 2 is_stmt 1 view .LVU214
+ 240:BSP/LSM303DLH/LSM303.c **** 	float fx,fy,fz;
+ 870              		.loc 1 240 2 view .LVU215
+ 241:BSP/LSM303DLH/LSM303.c **** 	
+ 242:BSP/LSM303DLH/LSM303.c **** 	A = sqrt((int)Xa*Xa + (int)Ya*Ya + (int)Za*Za);	//计算角加速度的矢量模长 |A|=根号下(
+ 871              		.loc 1 242 2 view .LVU216
+ 872              		.loc 1 242 31 is_stmt 0 view .LVU217
+ 873 000e 01FB01F0 		mul	r0, r1, r1
+ 874              	.LVL103:
+ 875              		.loc 1 242 22 view .LVU218
+ 876 0012 08FB0800 		mla	r0, r8, r8, r0
+ 877              		.loc 1 242 6 view .LVU219
+ 878 0016 02FB0200 		mla	r0, r2, r2, r0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 21
+
+
+ 879 001a FFF7FEFF 		bl	__aeabi_i2d
+ 880              	.LVL104:
+ 881              		.loc 1 242 6 view .LVU220
+ 882 001e 41EC100B 		vmov	d0, r0, r1
+ 883 0022 FFF7FEFF 		bl	sqrt
+ 884              	.LVL105:
+ 885 0026 55EC104B 		vmov	r4, r5, d0
+ 886              	.LVL106:
+ 243:BSP/LSM303DLH/LSM303.c **** 	fx = Xa/A;
+ 887              		.loc 1 243 2 is_stmt 1 view .LVU221
+ 888              		.loc 1 243 9 is_stmt 0 view .LVU222
+ 889 002a 4046     		mov	r0, r8
+ 890 002c FFF7FEFF 		bl	__aeabi_i2d
+ 891              	.LVL107:
+ 892 0030 2246     		mov	r2, r4
+ 893 0032 2B46     		mov	r3, r5
+ 894 0034 FFF7FEFF 		bl	__aeabi_ddiv
+ 895              	.LVL108:
+ 896              		.loc 1 243 5 view .LVU223
+ 897 0038 FFF7FEFF 		bl	__aeabi_d2f
+ 898              	.LVL109:
+ 899 003c 08EE900A 		vmov	s17, r0
+ 900              	.LVL110:
+ 244:BSP/LSM303DLH/LSM303.c **** 	fy = Ya/A;
+ 901              		.loc 1 244 2 is_stmt 1 view .LVU224
+ 902              		.loc 1 244 9 is_stmt 0 view .LVU225
+ 903 0040 3846     		mov	r0, r7
+ 904              	.LVL111:
+ 905              		.loc 1 244 9 view .LVU226
+ 906 0042 FFF7FEFF 		bl	__aeabi_i2d
+ 907              	.LVL112:
+ 908 0046 2246     		mov	r2, r4
+ 909 0048 2B46     		mov	r3, r5
+ 910 004a FFF7FEFF 		bl	__aeabi_ddiv
+ 911              	.LVL113:
+ 912              		.loc 1 244 5 view .LVU227
+ 913 004e FFF7FEFF 		bl	__aeabi_d2f
+ 914              	.LVL114:
+ 915 0052 08EE100A 		vmov	s16, r0
+ 916              	.LVL115:
+ 245:BSP/LSM303DLH/LSM303.c **** 	fz = Za/A;
+ 917              		.loc 1 245 2 is_stmt 1 view .LVU228
+ 918              		.loc 1 245 9 is_stmt 0 view .LVU229
+ 919 0056 3046     		mov	r0, r6
+ 920              	.LVL116:
+ 921              		.loc 1 245 9 view .LVU230
+ 922 0058 FFF7FEFF 		bl	__aeabi_i2d
+ 923              	.LVL117:
+ 924 005c 2246     		mov	r2, r4
+ 925 005e 2B46     		mov	r3, r5
+ 926 0060 FFF7FEFF 		bl	__aeabi_ddiv
+ 927              	.LVL118:
+ 928              		.loc 1 245 5 view .LVU231
+ 929 0064 FFF7FEFF 		bl	__aeabi_d2f
+ 930              	.LVL119:
+ 931 0068 0646     		mov	r6, r0	@ float
+ 932              	.LVL120:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 22
+
+
+ 246:BSP/LSM303DLH/LSM303.c **** 	
+ 247:BSP/LSM303DLH/LSM303.c **** 	
+ 248:BSP/LSM303DLH/LSM303.c **** 	//Z方向
+ 249:BSP/LSM303DLH/LSM303.c **** 	A = fx*fx+fy*fy;
+ 933              		.loc 1 249 2 is_stmt 1 view .LVU232
+ 934              		.loc 1 249 8 is_stmt 0 view .LVU233
+ 935 006a 68EEA88A 		vmul.f32	s17, s17, s17
+ 936              	.LVL121:
+ 937              		.loc 1 249 14 view .LVU234
+ 938 006e 28EE088A 		vmul.f32	s16, s16, s16
+ 939              	.LVL122:
+ 940              		.loc 1 249 4 view .LVU235
+ 941 0072 78EE887A 		vadd.f32	s15, s17, s16
+ 942 0076 17EE900A 		vmov	r0, s15
+ 943              	.LVL123:
+ 944              		.loc 1 249 4 view .LVU236
+ 945 007a FFF7FEFF 		bl	__aeabi_f2d
+ 946              	.LVL124:
+ 250:BSP/LSM303DLH/LSM303.c **** 	A = sqrt(A);
+ 947              		.loc 1 250 2 is_stmt 1 view .LVU237
+ 948              		.loc 1 250 6 is_stmt 0 view .LVU238
+ 949 007e 41EC100B 		vmov	d0, r0, r1
+ 950 0082 FFF7FEFF 		bl	sqrt
+ 951              	.LVL125:
+ 952              		.loc 1 250 6 view .LVU239
+ 953 0086 55EC104B 		vmov	r4, r5, d0
+ 954              	.LVL126:
+ 251:BSP/LSM303DLH/LSM303.c **** 	A = (double)A/fz;
+ 955              		.loc 1 251 2 is_stmt 1 view .LVU240
+ 956              		.loc 1 251 15 is_stmt 0 view .LVU241
+ 957 008a 3046     		mov	r0, r6	@ float
+ 958 008c FFF7FEFF 		bl	__aeabi_f2d
+ 959              	.LVL127:
+ 960 0090 0246     		mov	r2, r0
+ 961 0092 0B46     		mov	r3, r1
+ 962              		.loc 1 251 4 view .LVU242
+ 963 0094 2046     		mov	r0, r4
+ 964 0096 2946     		mov	r1, r5
+ 965 0098 FFF7FEFF 		bl	__aeabi_ddiv
+ 966              	.LVL128:
+ 252:BSP/LSM303DLH/LSM303.c **** 	A = atan(A); 
+ 967              		.loc 1 252 2 is_stmt 1 view .LVU243
+ 968              		.loc 1 252 6 is_stmt 0 view .LVU244
+ 969 009c 41EC100B 		vmov	d0, r0, r1
+ 970 00a0 FFF7FEFF 		bl	atan
+ 971              	.LVL129:
+ 972              		.loc 1 252 6 view .LVU245
+ 973 00a4 51EC100B 		vmov	r0, r1, d0
+ 974              	.LVL130:
+ 253:BSP/LSM303DLH/LSM303.c **** 	A = A*180/PI;
+ 975              		.loc 1 253 2 is_stmt 1 view .LVU246
+ 976              		.loc 1 253 7 is_stmt 0 view .LVU247
+ 977 00a8 0022     		movs	r2, #0
+ 978 00aa 194B     		ldr	r3, .L60+8
+ 979 00ac FFF7FEFF 		bl	__aeabi_dmul
+ 980              	.LVL131:
+ 981              		.loc 1 253 4 view .LVU248
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 23
+
+
+ 982 00b0 15A3     		adr	r3, .L60
+ 983 00b2 D3E90023 		ldrd	r2, [r3]
+ 984 00b6 FFF7FEFF 		bl	__aeabi_ddiv
+ 985              	.LVL132:
+ 986 00ba 0446     		mov	r4, r0
+ 987 00bc 0D46     		mov	r5, r1
+ 988              	.LVL133:
+ 254:BSP/LSM303DLH/LSM303.c **** 	if(A < 0)
+ 989              		.loc 1 254 2 is_stmt 1 view .LVU249
+ 990              		.loc 1 254 4 is_stmt 0 view .LVU250
+ 991 00be 0022     		movs	r2, #0
+ 992 00c0 0023     		movs	r3, #0
+ 993 00c2 FFF7FEFF 		bl	__aeabi_dcmplt
+ 994              	.LVL134:
+ 995 00c6 78B9     		cbnz	r0, .L59
+ 255:BSP/LSM303DLH/LSM303.c **** 	{
+ 256:BSP/LSM303DLH/LSM303.c **** 		A += 90;
+ 257:BSP/LSM303DLH/LSM303.c **** 		A = 0-A;
+ 258:BSP/LSM303DLH/LSM303.c **** 	}
+ 259:BSP/LSM303DLH/LSM303.c **** 	else
+ 260:BSP/LSM303DLH/LSM303.c **** 	{
+ 261:BSP/LSM303DLH/LSM303.c **** 		A = 90-A;
+ 996              		.loc 1 261 3 is_stmt 1 view .LVU251
+ 997              		.loc 1 261 5 is_stmt 0 view .LVU252
+ 998 00c8 2246     		mov	r2, r4
+ 999 00ca 2B46     		mov	r3, r5
+ 1000 00cc 0020     		movs	r0, #0
+ 1001 00ce 1149     		ldr	r1, .L60+12
+ 1002 00d0 FFF7FEFF 		bl	__aeabi_dsub
+ 1003              	.LVL135:
+ 1004              	.L55:
+ 262:BSP/LSM303DLH/LSM303.c **** 	}
+ 263:BSP/LSM303DLH/LSM303.c **** 	return A*100;
+ 1005              		.loc 1 263 2 is_stmt 1 view .LVU253
+ 1006              		.loc 1 263 10 is_stmt 0 view .LVU254
+ 1007 00d4 0022     		movs	r2, #0
+ 1008 00d6 104B     		ldr	r3, .L60+16
+ 1009 00d8 FFF7FEFF 		bl	__aeabi_dmul
+ 1010              	.LVL136:
+ 1011              		.loc 1 263 10 view .LVU255
+ 1012 00dc FFF7FEFF 		bl	__aeabi_d2iz
+ 1013              	.LVL137:
+ 264:BSP/LSM303DLH/LSM303.c **** }
+ 1014              		.loc 1 264 1 view .LVU256
+ 1015 00e0 BDEC028B 		vldm	sp!, {d8}
+ 1016              	.LCFI21:
+ 1017              		.cfi_remember_state
+ 1018              		.cfi_restore 80
+ 1019              		.cfi_restore 81
+ 1020              		.cfi_def_cfa_offset 24
+ 1021 00e4 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1022              	.LVL138:
+ 1023              	.L59:
+ 1024              	.LCFI22:
+ 1025              		.cfi_restore_state
+ 256:BSP/LSM303DLH/LSM303.c **** 		A = 0-A;
+ 1026              		.loc 1 256 3 is_stmt 1 view .LVU257
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 24
+
+
+ 256:BSP/LSM303DLH/LSM303.c **** 		A = 0-A;
+ 1027              		.loc 1 256 5 is_stmt 0 view .LVU258
+ 1028 00e8 0022     		movs	r2, #0
+ 1029 00ea 0A4B     		ldr	r3, .L60+12
+ 1030 00ec 2046     		mov	r0, r4
+ 1031 00ee 2946     		mov	r1, r5
+ 1032 00f0 FFF7FEFF 		bl	__aeabi_dadd
+ 1033              	.LVL139:
+ 1034 00f4 0246     		mov	r2, r0
+ 1035 00f6 0B46     		mov	r3, r1
+ 1036              	.LVL140:
+ 257:BSP/LSM303DLH/LSM303.c **** 	}
+ 1037              		.loc 1 257 3 is_stmt 1 view .LVU259
+ 257:BSP/LSM303DLH/LSM303.c **** 	}
+ 1038              		.loc 1 257 5 is_stmt 0 view .LVU260
+ 1039 00f8 0020     		movs	r0, #0
+ 1040 00fa 0021     		movs	r1, #0
+ 1041 00fc FFF7FEFF 		bl	__aeabi_dsub
+ 1042              	.LVL141:
+ 257:BSP/LSM303DLH/LSM303.c **** 	}
+ 1043              		.loc 1 257 5 view .LVU261
+ 1044 0100 E8E7     		b	.L55
+ 1045              	.L61:
+ 1046 0102 00BFAFF3 		.align	3
+ 1046      0080
+ 1047              	.L60:
+ 1048 0108 4AD8124D 		.word	1293080650
+ 1049 010c FB210940 		.word	1074340347
+ 1050 0110 00806640 		.word	1080459264
+ 1051 0114 00805640 		.word	1079410688
+ 1052 0118 00005940 		.word	1079574528
+ 1053              		.cfi_endproc
+ 1054              	.LFE226:
+ 1056              		.section	.text.LSM303DLH_CalculationXAxisAngle,"ax",%progbits
+ 1057              		.align	1
+ 1058              		.global	LSM303DLH_CalculationXAxisAngle
+ 1059              		.syntax unified
+ 1060              		.thumb
+ 1061              		.thumb_func
+ 1063              	LSM303DLH_CalculationXAxisAngle:
+ 1064              	.LVL142:
+ 1065              	.LFB227:
+ 265:BSP/LSM303DLH/LSM303.c ****  
+ 266:BSP/LSM303DLH/LSM303.c ****  
+ 267:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+ 268:BSP/LSM303DLH/LSM303.c **** *function  	:	LSM303DLH_CalculationZAxisAngle()
+ 269:BSP/LSM303DLH/LSM303.c **** *paraments	: int16_t Xa, int16_t Ya, int16_t Za
+ 270:BSP/LSM303DLH/LSM303.c **** *return     : XAxisAngle
+ 271:BSP/LSM303DLH/LSM303.c **** *detail     :	
+ 272:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+ 273:BSP/LSM303DLH/LSM303.c **** int LSM303DLH_CalculationXAxisAngle(int16_t Xa, int16_t Ya, int16_t Za)
+ 274:BSP/LSM303DLH/LSM303.c **** {
+ 1066              		.loc 1 274 1 is_stmt 1 view -0
+ 1067              		.cfi_startproc
+ 1068              		@ args = 0, pretend = 0, frame = 0
+ 1069              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1070              		.loc 1 274 1 is_stmt 0 view .LVU263
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 25
+
+
+ 1071 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1072              	.LCFI23:
+ 1073              		.cfi_def_cfa_offset 24
+ 1074              		.cfi_offset 4, -24
+ 1075              		.cfi_offset 5, -20
+ 1076              		.cfi_offset 6, -16
+ 1077              		.cfi_offset 7, -12
+ 1078              		.cfi_offset 8, -8
+ 1079              		.cfi_offset 14, -4
+ 1080 0004 2DED028B 		vpush.64	{d8}
+ 1081              	.LCFI24:
+ 1082              		.cfi_def_cfa_offset 32
+ 1083              		.cfi_offset 80, -32
+ 1084              		.cfi_offset 81, -28
+ 1085 0008 8046     		mov	r8, r0
+ 1086 000a 0F46     		mov	r7, r1
+ 1087 000c 1646     		mov	r6, r2
+ 275:BSP/LSM303DLH/LSM303.c **** 	double A;
+ 1088              		.loc 1 275 2 is_stmt 1 view .LVU264
+ 276:BSP/LSM303DLH/LSM303.c **** 	float fx,fy,fz;
+ 1089              		.loc 1 276 2 view .LVU265
+ 277:BSP/LSM303DLH/LSM303.c **** 	
+ 278:BSP/LSM303DLH/LSM303.c **** 	A = sqrt((int)Xa*Xa + (int)Ya*Ya + (int)Za*Za);	//计算角加速度的矢量模长 |A|=根号下(
+ 1090              		.loc 1 278 2 view .LVU266
+ 1091              		.loc 1 278 31 is_stmt 0 view .LVU267
+ 1092 000e 01FB01F0 		mul	r0, r1, r1
+ 1093              	.LVL143:
+ 1094              		.loc 1 278 22 view .LVU268
+ 1095 0012 08FB0800 		mla	r0, r8, r8, r0
+ 1096              		.loc 1 278 6 view .LVU269
+ 1097 0016 02FB0200 		mla	r0, r2, r2, r0
+ 1098 001a FFF7FEFF 		bl	__aeabi_i2d
+ 1099              	.LVL144:
+ 1100              		.loc 1 278 6 view .LVU270
+ 1101 001e 41EC100B 		vmov	d0, r0, r1
+ 1102 0022 FFF7FEFF 		bl	sqrt
+ 1103              	.LVL145:
+ 1104 0026 55EC104B 		vmov	r4, r5, d0
+ 1105              	.LVL146:
+ 279:BSP/LSM303DLH/LSM303.c **** 	fx = Xa/A;
+ 1106              		.loc 1 279 2 is_stmt 1 view .LVU271
+ 1107              		.loc 1 279 9 is_stmt 0 view .LVU272
+ 1108 002a 4046     		mov	r0, r8
+ 1109 002c FFF7FEFF 		bl	__aeabi_i2d
+ 1110              	.LVL147:
+ 1111 0030 2246     		mov	r2, r4
+ 1112 0032 2B46     		mov	r3, r5
+ 1113 0034 FFF7FEFF 		bl	__aeabi_ddiv
+ 1114              	.LVL148:
+ 1115              		.loc 1 279 5 view .LVU273
+ 1116 0038 FFF7FEFF 		bl	__aeabi_d2f
+ 1117              	.LVL149:
+ 1118 003c 8046     		mov	r8, r0	@ float
+ 1119              	.LVL150:
+ 280:BSP/LSM303DLH/LSM303.c **** 	fy = Ya/A;
+ 1120              		.loc 1 280 2 is_stmt 1 view .LVU274
+ 1121              		.loc 1 280 9 is_stmt 0 view .LVU275
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 26
+
+
+ 1122 003e 3846     		mov	r0, r7
+ 1123              	.LVL151:
+ 1124              		.loc 1 280 9 view .LVU276
+ 1125 0040 FFF7FEFF 		bl	__aeabi_i2d
+ 1126              	.LVL152:
+ 1127 0044 2246     		mov	r2, r4
+ 1128 0046 2B46     		mov	r3, r5
+ 1129 0048 FFF7FEFF 		bl	__aeabi_ddiv
+ 1130              	.LVL153:
+ 1131              		.loc 1 280 5 view .LVU277
+ 1132 004c FFF7FEFF 		bl	__aeabi_d2f
+ 1133              	.LVL154:
+ 1134 0050 08EE100A 		vmov	s16, r0
+ 1135              	.LVL155:
+ 281:BSP/LSM303DLH/LSM303.c **** 	fz = Za/A;
+ 1136              		.loc 1 281 2 is_stmt 1 view .LVU278
+ 1137              		.loc 1 281 9 is_stmt 0 view .LVU279
+ 1138 0054 3046     		mov	r0, r6
+ 1139              	.LVL156:
+ 1140              		.loc 1 281 9 view .LVU280
+ 1141 0056 FFF7FEFF 		bl	__aeabi_i2d
+ 1142              	.LVL157:
+ 1143 005a 2246     		mov	r2, r4
+ 1144 005c 2B46     		mov	r3, r5
+ 1145 005e FFF7FEFF 		bl	__aeabi_ddiv
+ 1146              	.LVL158:
+ 1147              		.loc 1 281 5 view .LVU281
+ 1148 0062 FFF7FEFF 		bl	__aeabi_d2f
+ 1149              	.LVL159:
+ 1150 0066 07EE900A 		vmov	s15, r0
+ 1151              	.LVL160:
+ 282:BSP/LSM303DLH/LSM303.c **** 	
+ 283:BSP/LSM303DLH/LSM303.c **** 	
+ 284:BSP/LSM303DLH/LSM303.c **** 	//X方向
+ 285:BSP/LSM303DLH/LSM303.c **** 	A = fz*fz+fy*fy;
+ 1152              		.loc 1 285 2 is_stmt 1 view .LVU282
+ 1153              		.loc 1 285 8 is_stmt 0 view .LVU283
+ 1154 006a 67EEA77A 		vmul.f32	s15, s15, s15
+ 1155              		.loc 1 285 14 view .LVU284
+ 1156 006e 28EE088A 		vmul.f32	s16, s16, s16
+ 1157              	.LVL161:
+ 1158              		.loc 1 285 4 view .LVU285
+ 1159 0072 77EE887A 		vadd.f32	s15, s15, s16
+ 1160 0076 17EE900A 		vmov	r0, s15
+ 1161              	.LVL162:
+ 1162              		.loc 1 285 4 view .LVU286
+ 1163 007a FFF7FEFF 		bl	__aeabi_f2d
+ 1164              	.LVL163:
+ 286:BSP/LSM303DLH/LSM303.c **** 	A = sqrt(A);
+ 1165              		.loc 1 286 2 is_stmt 1 view .LVU287
+ 1166              		.loc 1 286 6 is_stmt 0 view .LVU288
+ 1167 007e 41EC100B 		vmov	d0, r0, r1
+ 1168 0082 FFF7FEFF 		bl	sqrt
+ 1169              	.LVL164:
+ 1170              		.loc 1 286 6 view .LVU289
+ 1171 0086 55EC104B 		vmov	r4, r5, d0
+ 1172              	.LVL165:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 27
+
+
+ 287:BSP/LSM303DLH/LSM303.c **** 	
+ 288:BSP/LSM303DLH/LSM303.c **** 	A = (double)A/fx;
+ 1173              		.loc 1 288 2 is_stmt 1 view .LVU290
+ 1174              		.loc 1 288 15 is_stmt 0 view .LVU291
+ 1175 008a 4046     		mov	r0, r8	@ float
+ 1176 008c FFF7FEFF 		bl	__aeabi_f2d
+ 1177              	.LVL166:
+ 1178 0090 0246     		mov	r2, r0
+ 1179 0092 0B46     		mov	r3, r1
+ 1180              		.loc 1 288 4 view .LVU292
+ 1181 0094 2046     		mov	r0, r4
+ 1182 0096 2946     		mov	r1, r5
+ 1183 0098 FFF7FEFF 		bl	__aeabi_ddiv
+ 1184              	.LVL167:
+ 289:BSP/LSM303DLH/LSM303.c **** 	A = atan(A); 
+ 1185              		.loc 1 289 2 is_stmt 1 view .LVU293
+ 1186              		.loc 1 289 6 is_stmt 0 view .LVU294
+ 1187 009c 41EC100B 		vmov	d0, r0, r1
+ 1188 00a0 FFF7FEFF 		bl	atan
+ 1189              	.LVL168:
+ 1190              		.loc 1 289 6 view .LVU295
+ 1191 00a4 51EC100B 		vmov	r0, r1, d0
+ 1192              	.LVL169:
+ 290:BSP/LSM303DLH/LSM303.c **** 	A = A*180/PI;
+ 1193              		.loc 1 290 2 is_stmt 1 view .LVU296
+ 1194              		.loc 1 290 7 is_stmt 0 view .LVU297
+ 1195 00a8 0022     		movs	r2, #0
+ 1196 00aa 194B     		ldr	r3, .L70+8
+ 1197 00ac FFF7FEFF 		bl	__aeabi_dmul
+ 1198              	.LVL170:
+ 1199              		.loc 1 290 4 view .LVU298
+ 1200 00b0 15A3     		adr	r3, .L70
+ 1201 00b2 D3E90023 		ldrd	r2, [r3]
+ 1202 00b6 FFF7FEFF 		bl	__aeabi_ddiv
+ 1203              	.LVL171:
+ 1204 00ba 0446     		mov	r4, r0
+ 1205 00bc 0D46     		mov	r5, r1
+ 1206              	.LVL172:
+ 291:BSP/LSM303DLH/LSM303.c **** 	if(A < 0)
+ 1207              		.loc 1 291 2 is_stmt 1 view .LVU299
+ 1208              		.loc 1 291 4 is_stmt 0 view .LVU300
+ 1209 00be 0022     		movs	r2, #0
+ 1210 00c0 0023     		movs	r3, #0
+ 1211 00c2 FFF7FEFF 		bl	__aeabi_dcmplt
+ 1212              	.LVL173:
+ 1213 00c6 A8B9     		cbnz	r0, .L69
+ 292:BSP/LSM303DLH/LSM303.c **** 	{
+ 293:BSP/LSM303DLH/LSM303.c **** 		A += 90; //向上为正
+ 294:BSP/LSM303DLH/LSM303.c **** 	}
+ 295:BSP/LSM303DLH/LSM303.c **** 	else
+ 296:BSP/LSM303DLH/LSM303.c **** 	{
+ 297:BSP/LSM303DLH/LSM303.c **** 		A = 90-A;
+ 1214              		.loc 1 297 3 is_stmt 1 view .LVU301
+ 1215              		.loc 1 297 5 is_stmt 0 view .LVU302
+ 1216 00c8 2246     		mov	r2, r4
+ 1217 00ca 2B46     		mov	r3, r5
+ 1218 00cc 0020     		movs	r0, #0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 28
+
+
+ 1219 00ce 1149     		ldr	r1, .L70+12
+ 1220 00d0 FFF7FEFF 		bl	__aeabi_dsub
+ 1221              	.LVL174:
+ 1222 00d4 0246     		mov	r2, r0
+ 1223 00d6 0B46     		mov	r3, r1
+ 1224              	.LVL175:
+ 298:BSP/LSM303DLH/LSM303.c **** 		A = 0-A; //向下为负
+ 1225              		.loc 1 298 3 is_stmt 1 view .LVU303
+ 1226              		.loc 1 298 5 is_stmt 0 view .LVU304
+ 1227 00d8 0020     		movs	r0, #0
+ 1228 00da 0021     		movs	r1, #0
+ 1229 00dc FFF7FEFF 		bl	__aeabi_dsub
+ 1230              	.LVL176:
+ 1231              	.L65:
+ 299:BSP/LSM303DLH/LSM303.c **** 	}
+ 300:BSP/LSM303DLH/LSM303.c **** 	return A*100;
+ 1232              		.loc 1 300 2 is_stmt 1 view .LVU305
+ 1233              		.loc 1 300 10 is_stmt 0 view .LVU306
+ 1234 00e0 0022     		movs	r2, #0
+ 1235 00e2 0D4B     		ldr	r3, .L70+16
+ 1236 00e4 FFF7FEFF 		bl	__aeabi_dmul
+ 1237              	.LVL177:
+ 1238              		.loc 1 300 10 view .LVU307
+ 1239 00e8 FFF7FEFF 		bl	__aeabi_d2iz
+ 1240              	.LVL178:
+ 301:BSP/LSM303DLH/LSM303.c **** }
+ 1241              		.loc 1 301 1 view .LVU308
+ 1242 00ec BDEC028B 		vldm	sp!, {d8}
+ 1243              	.LCFI25:
+ 1244              		.cfi_remember_state
+ 1245              		.cfi_restore 80
+ 1246              		.cfi_restore 81
+ 1247              		.cfi_def_cfa_offset 24
+ 1248 00f0 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1249              	.LVL179:
+ 1250              	.L69:
+ 1251              	.LCFI26:
+ 1252              		.cfi_restore_state
+ 293:BSP/LSM303DLH/LSM303.c **** 	}
+ 1253              		.loc 1 293 3 is_stmt 1 view .LVU309
+ 293:BSP/LSM303DLH/LSM303.c **** 	}
+ 1254              		.loc 1 293 5 is_stmt 0 view .LVU310
+ 1255 00f4 0022     		movs	r2, #0
+ 1256 00f6 074B     		ldr	r3, .L70+12
+ 1257 00f8 2046     		mov	r0, r4
+ 1258 00fa 2946     		mov	r1, r5
+ 1259 00fc FFF7FEFF 		bl	__aeabi_dadd
+ 1260              	.LVL180:
+ 293:BSP/LSM303DLH/LSM303.c **** 	}
+ 1261              		.loc 1 293 5 view .LVU311
+ 1262 0100 EEE7     		b	.L65
+ 1263              	.L71:
+ 1264 0102 00BFAFF3 		.align	3
+ 1264      0080
+ 1265              	.L70:
+ 1266 0108 4AD8124D 		.word	1293080650
+ 1267 010c FB210940 		.word	1074340347
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 29
+
+
+ 1268 0110 00806640 		.word	1080459264
+ 1269 0114 00805640 		.word	1079410688
+ 1270 0118 00005940 		.word	1079574528
+ 1271              		.cfi_endproc
+ 1272              	.LFE227:
+ 1274              		.section	.text.Azimuth_Calculate,"ax",%progbits
+ 1275              		.align	1
+ 1276              		.global	Azimuth_Calculate
+ 1277              		.syntax unified
+ 1278              		.thumb
+ 1279              		.thumb_func
+ 1281              	Azimuth_Calculate:
+ 1282              	.LVL181:
+ 1283              	.LFB228:
+ 302:BSP/LSM303DLH/LSM303.c **** 
+ 303:BSP/LSM303DLH/LSM303.c **** /**************************************************************************************************
+ 304:BSP/LSM303DLH/LSM303.c **** *function  	:	Azimuth_Calculate()
+ 305:BSP/LSM303DLH/LSM303.c **** *paraments	: int16_t Xa, int16_t Ya, int16_t Za, int16_t Xm, int16_t Ym, int16_t Zm
+ 306:BSP/LSM303DLH/LSM303.c **** *return     : Azimuth
+ 307:BSP/LSM303DLH/LSM303.c **** *detail     :	to Calculate the Azimuth to find the direction
+ 308:BSP/LSM303DLH/LSM303.c **** ***************************************************************************************************
+ 309:BSP/LSM303DLH/LSM303.c **** float Azimuth_Calculate(int16_t Xa, int16_t Ya, int16_t Za, int16_t Xm, int16_t Ym, int16_t Zm)
+ 310:BSP/LSM303DLH/LSM303.c **** {
+ 1284              		.loc 1 310 1 is_stmt 1 view -0
+ 1285              		.cfi_startproc
+ 1286              		@ args = 8, pretend = 0, frame = 0
+ 1287              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1288              		.loc 1 310 1 is_stmt 0 view .LVU313
+ 1289 0000 70B5     		push	{r4, r5, r6, lr}
+ 1290              	.LCFI27:
+ 1291              		.cfi_def_cfa_offset 16
+ 1292              		.cfi_offset 4, -16
+ 1293              		.cfi_offset 5, -12
+ 1294              		.cfi_offset 6, -8
+ 1295              		.cfi_offset 14, -4
+ 1296 0002 2DED068B 		vpush.64	{d8, d9, d10}
+ 1297              	.LCFI28:
+ 1298              		.cfi_def_cfa_offset 40
+ 1299              		.cfi_offset 80, -40
+ 1300              		.cfi_offset 81, -36
+ 1301              		.cfi_offset 82, -32
+ 1302              		.cfi_offset 83, -28
+ 1303              		.cfi_offset 84, -24
+ 1304              		.cfi_offset 85, -20
+ 1305 0006 0446     		mov	r4, r0
+ 1306 0008 0D46     		mov	r5, r1
+ 1307 000a 08EE103A 		vmov	s16, r3	@ int
+ 311:BSP/LSM303DLH/LSM303.c **** 	float pitch, roll, Hy, Hx, Azimuth; 
+ 1308              		.loc 1 311 2 is_stmt 1 view .LVU314
+ 312:BSP/LSM303DLH/LSM303.c **** 	pitch   = atan2f(Xa, sqrtf(Ya * Ya + Za * Za));
+ 1309              		.loc 1 312 2 view .LVU315
+ 1310              		.loc 1 312 42 is_stmt 0 view .LVU316
+ 1311 000e 02FB02F6 		mul	r6, r2, r2
+ 1312              		.loc 1 312 37 view .LVU317
+ 1313 0012 01FB0163 		mla	r3, r1, r1, r6
+ 1314              	.LVL182:
+ 1315              		.loc 1 312 37 view .LVU318
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 30
+
+
+ 1316 0016 00EE103A 		vmov	s0, r3	@ int
+ 1317              		.loc 1 312 12 view .LVU319
+ 1318 001a B8EEC00A 		vcvt.f32.s32	s0, s0
+ 1319 001e FFF7FEFF 		bl	sqrtf
+ 1320              	.LVL183:
+ 1321              		.loc 1 312 12 view .LVU320
+ 1322 0022 F0EE400A 		vmov.f32	s1, s0
+ 1323              		.loc 1 312 12 discriminator 1 view .LVU321
+ 1324 0026 07EE904A 		vmov	s15, r4	@ int
+ 1325 002a B8EEE70A 		vcvt.f32.s32	s0, s15
+ 1326 002e FFF7FEFF 		bl	atan2f
+ 1327              	.LVL184:
+ 1328 0032 F0EE40AA 		vmov.f32	s21, s0
+ 1329              	.LVL185:
+ 313:BSP/LSM303DLH/LSM303.c **** 	roll    = atan2f(Ya, sqrtf(Xa * Xa + Za * Za));
+ 1330              		.loc 1 313 2 is_stmt 1 view .LVU322
+ 1331              		.loc 1 313 37 is_stmt 0 view .LVU323
+ 1332 0036 04FB0463 		mla	r3, r4, r4, r6
+ 1333 003a 00EE103A 		vmov	s0, r3	@ int
+ 1334              	.LVL186:
+ 1335              		.loc 1 313 12 view .LVU324
+ 1336 003e B8EEC00A 		vcvt.f32.s32	s0, s0
+ 1337 0042 FFF7FEFF 		bl	sqrtf
+ 1338              	.LVL187:
+ 1339 0046 F0EE400A 		vmov.f32	s1, s0
+ 1340              		.loc 1 313 12 discriminator 1 view .LVU325
+ 1341 004a 07EE905A 		vmov	s15, r5	@ int
+ 1342 004e B8EEE70A 		vcvt.f32.s32	s0, s15
+ 1343 0052 FFF7FEFF 		bl	atan2f
+ 1344              	.LVL188:
+ 1345 0056 B0EE409A 		vmov.f32	s18, s0
+ 1346              	.LVL189:
+ 314:BSP/LSM303DLH/LSM303.c **** 	Hy      = Ym * cosf(roll) + Xm * sinf(roll) * sinf(pitch) - Zm * cosf(pitch) * sinf(roll);
+ 1347              		.loc 1 314 2 is_stmt 1 view .LVU326
+ 1348              		.loc 1 314 17 is_stmt 0 view .LVU327
+ 1349 005a FFF7FEFF 		bl	cosf
+ 1350              	.LVL190:
+ 1351              		.loc 1 314 15 view .LVU328
+ 1352 005e BDF92830 		ldrsh	r3, [sp, #40]
+ 1353 0062 08EE903A 		vmov	s17, r3	@ int
+ 1354 0066 F8EEE88A 		vcvt.f32.s32	s17, s17
+ 1355              		.loc 1 314 15 discriminator 1 view .LVU329
+ 1356 006a 68EE808A 		vmul.f32	s17, s17, s0
+ 1357              		.loc 1 314 33 discriminator 1 view .LVU330
+ 1358 006e B8EEC88A 		vcvt.f32.s32	s16, s16
+ 1359              	.LVL191:
+ 1360              		.loc 1 314 35 discriminator 1 view .LVU331
+ 1361 0072 B0EE490A 		vmov.f32	s0, s18
+ 1362 0076 FFF7FEFF 		bl	sinf
+ 1363              	.LVL192:
+ 1364 007a B0EE409A 		vmov.f32	s18, s0
+ 1365              	.LVL193:
+ 1366              		.loc 1 314 33 discriminator 2 view .LVU332
+ 1367 007e 28EE00AA 		vmul.f32	s20, s16, s0
+ 1368              		.loc 1 314 48 discriminator 2 view .LVU333
+ 1369 0082 B0EE6A0A 		vmov.f32	s0, s21
+ 1370 0086 FFF7FEFF 		bl	sinf
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 31
+
+
+ 1371              	.LVL194:
+ 1372 008a F0EE409A 		vmov.f32	s19, s0
+ 1373              		.loc 1 314 46 discriminator 3 view .LVU334
+ 1374 008e 2AEE00AA 		vmul.f32	s20, s20, s0
+ 1375              		.loc 1 314 28 discriminator 3 view .LVU335
+ 1376 0092 78EE8A8A 		vadd.f32	s17, s17, s20
+ 1377              		.loc 1 314 65 discriminator 3 view .LVU336
+ 1378 0096 BDF92C30 		ldrsh	r3, [sp, #44]
+ 1379 009a 0AEE103A 		vmov	s20, r3	@ int
+ 1380 009e B8EECAAA 		vcvt.f32.s32	s20, s20
+ 1381              		.loc 1 314 67 discriminator 3 view .LVU337
+ 1382 00a2 B0EE6A0A 		vmov.f32	s0, s21
+ 1383 00a6 FFF7FEFF 		bl	cosf
+ 1384              	.LVL195:
+ 1385              		.loc 1 314 65 discriminator 4 view .LVU338
+ 1386 00aa 6AEE007A 		vmul.f32	s15, s20, s0
+ 1387              		.loc 1 314 79 discriminator 5 view .LVU339
+ 1388 00ae 29EE279A 		vmul.f32	s18, s18, s15
+ 1389              	.LVL196:
+ 315:BSP/LSM303DLH/LSM303.c **** 	Hx      = Xm * cosf(pitch) + Zm * sinf(pitch);
+ 1390              		.loc 1 315 2 is_stmt 1 view .LVU340
+ 1391              		.loc 1 315 15 is_stmt 0 discriminator 1 view .LVU341
+ 1392 00b2 68EE000A 		vmul.f32	s1, s16, s0
+ 1393              		.loc 1 315 34 discriminator 2 view .LVU342
+ 1394 00b6 69EE8A9A 		vmul.f32	s19, s19, s20
+ 1395              	.LVL197:
+ 316:BSP/LSM303DLH/LSM303.c **** 	Azimuth = atan2f(Hy,Hx)*180.0/PI;
+ 1396              		.loc 1 316 2 is_stmt 1 view .LVU343
+ 1397              		.loc 1 316 12 is_stmt 0 view .LVU344
+ 1398 00ba 70EEA90A 		vadd.f32	s1, s1, s19
+ 1399              	.LVL198:
+ 1400              		.loc 1 316 12 view .LVU345
+ 1401 00be 38EEC90A 		vsub.f32	s0, s17, s18
+ 1402              	.LVL199:
+ 1403              		.loc 1 316 12 view .LVU346
+ 1404 00c2 FFF7FEFF 		bl	atan2f
+ 1405              	.LVL200:
+ 1406              		.loc 1 316 12 view .LVU347
+ 1407 00c6 10EE100A 		vmov	r0, s0
+ 1408              		.loc 1 316 12 discriminator 1 view .LVU348
+ 1409 00ca FFF7FEFF 		bl	__aeabi_f2d
+ 1410              	.LVL201:
+ 1411              		.loc 1 316 25 discriminator 1 view .LVU349
+ 1412 00ce 0022     		movs	r2, #0
+ 1413 00d0 094B     		ldr	r3, .L74+8
+ 1414 00d2 FFF7FEFF 		bl	__aeabi_dmul
+ 1415              	.LVL202:
+ 1416              		.loc 1 316 31 discriminator 1 view .LVU350
+ 1417 00d6 06A3     		adr	r3, .L74
+ 1418 00d8 D3E90023 		ldrd	r2, [r3]
+ 1419 00dc FFF7FEFF 		bl	__aeabi_ddiv
+ 1420              	.LVL203:
+ 1421              		.loc 1 316 10 discriminator 1 view .LVU351
+ 1422 00e0 FFF7FEFF 		bl	__aeabi_d2f
+ 1423              	.LVL204:
+ 317:BSP/LSM303DLH/LSM303.c **** 	return Azimuth;
+ 1424              		.loc 1 317 2 is_stmt 1 view .LVU352
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 32
+
+
+ 318:BSP/LSM303DLH/LSM303.c **** }
+ 1425              		.loc 1 318 1 is_stmt 0 view .LVU353
+ 1426 00e4 00EE100A 		vmov	s0, r0
+ 1427 00e8 BDEC068B 		vldm	sp!, {d8-d10}
+ 1428              	.LCFI29:
+ 1429              		.cfi_restore 84
+ 1430              		.cfi_restore 85
+ 1431              		.cfi_restore 82
+ 1432              		.cfi_restore 83
+ 1433              		.cfi_restore 80
+ 1434              		.cfi_restore 81
+ 1435              		.cfi_def_cfa_offset 16
+ 1436              	.LVL205:
+ 1437              		.loc 1 318 1 view .LVU354
+ 1438 00ec 70BD     		pop	{r4, r5, r6, pc}
+ 1439              	.LVL206:
+ 1440              	.L75:
+ 1441              		.loc 1 318 1 view .LVU355
+ 1442 00ee 00BF     		.align	3
+ 1443              	.L74:
+ 1444 00f0 4AD8124D 		.word	1293080650
+ 1445 00f4 FB210940 		.word	1074340347
+ 1446 00f8 00806640 		.word	1080459264
+ 1447              		.cfi_endproc
+ 1448              	.LFE228:
+ 1450              		.global	LSM303_bus
+ 1451              		.section	.data.LSM303_bus,"aw"
+ 1452              		.align	2
+ 1455              	LSM303_bus:
+ 1456 0000 00040240 		.word	1073873920
+ 1457 0004 00040240 		.word	1073873920
+ 1458 0008 0020     		.short	8192
+ 1459 000a 0040     		.short	16384
+ 1460              		.text
+ 1461              	.Letext0:
+ 1462              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1463              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1464              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 1465              		.file 5 "BSP/IIC/iic_hal.h"
+ 1466              		.file 6 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1467              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 33
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 LSM303.c
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:21     .text.LSM303_ReadOneReg:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:27     .text.LSM303_ReadOneReg:00000000 LSM303_ReadOneReg
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:68     .text.LSM303_ReadOneReg:00000018 $d
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:1455   .data.LSM303_bus:00000000 LSM303_bus
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:73     .text.LSM303_ReadMultiReg:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:79     .text.LSM303_ReadMultiReg:00000000 LSM303_ReadMultiReg
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:147    .text.LSM303_ReadMultiReg:00000038 $d
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:152    .text.LSM303_Temp_ReadOneReg:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:158    .text.LSM303_Temp_ReadOneReg:00000000 LSM303_Temp_ReadOneReg
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:187    .text.LSM303_Temp_ReadOneReg:00000010 $d
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:192    .text.LSM303_WriteOneReg:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:198    .text.LSM303_WriteOneReg:00000000 LSM303_WriteOneReg
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:239    .text.LSM303_WriteOneReg:00000018 $d
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:244    .text.LSM303DLH_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:250    .text.LSM303DLH_Init:00000000 LSM303DLH_Init
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:439    .text.LSM303DLH_Init:000000bc $d
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:445    .text.LSM303DLH_Sleep:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:451    .text.LSM303DLH_Sleep:00000000 LSM303DLH_Sleep
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:478    .text.LSM303DLH_Wakeup:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:484    .text.LSM303DLH_Wakeup:00000000 LSM303DLH_Wakeup
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:511    .text.LSM303_ReadAcceleration:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:517    .text.LSM303_ReadAcceleration:00000000 LSM303_ReadAcceleration
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:623    .text.LSM303_ReadMagnetic:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:629    .text.LSM303_ReadMagnetic:00000000 LSM303_ReadMagnetic
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:738    .text.LSM303_ReadTemperature:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:744    .text.LSM303_ReadTemperature:00000000 LSM303_ReadTemperature
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:825    .text.LSM303_ReadTemperature:00000048 $d
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:838    .text.LSM303DLH_CalculationZAxisAngle:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:844    .text.LSM303DLH_CalculationZAxisAngle:00000000 LSM303DLH_CalculationZAxisAngle
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:1048   .text.LSM303DLH_CalculationZAxisAngle:00000108 $d
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:1057   .text.LSM303DLH_CalculationXAxisAngle:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:1063   .text.LSM303DLH_CalculationXAxisAngle:00000000 LSM303DLH_CalculationXAxisAngle
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:1266   .text.LSM303DLH_CalculationXAxisAngle:00000108 $d
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:1275   .text.Azimuth_Calculate:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:1281   .text.Azimuth_Calculate:00000000 Azimuth_Calculate
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:1444   .text.Azimuth_Calculate:000000f0 $d
+C:\Users\chen\AppData\Local\Temp\ccNDg90g.s:1452   .data.LSM303_bus:00000000 $d
+
+UNDEFINED SYMBOLS
+IIC_Read_One_Byte
+IIC_Write_One_Byte
+IICInit
+HAL_Delay
+__aeabi_i2d
+__aeabi_dadd
+__aeabi_d2iz
+IIC_Read_Multi_Byte
+__aeabi_ddiv
+__aeabi_d2f
+__aeabi_f2d
+__aeabi_dmul
+__aeabi_dcmplt
+__aeabi_dsub
+sqrt
+atan
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccNDg90g.s 			page 34
+
+
+sqrtf
+atan2f
+cosf
+sinf

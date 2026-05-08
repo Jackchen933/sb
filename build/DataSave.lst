@@ -1,0 +1,526 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"DataSave.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "BSP/BL24C02/DataSave.c"
+  20              		.section	.text.EEPROM_Init,"ax",%progbits
+  21              		.align	1
+  22              		.global	EEPROM_Init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	EEPROM_Init:
+  28              	.LFB216:
+   1:BSP/BL24C02/DataSave.c **** #include "DataSave.h"
+   2:BSP/BL24C02/DataSave.c **** #include "string.h"
+   3:BSP/BL24C02/DataSave.c **** 
+   4:BSP/BL24C02/DataSave.c **** /******************************************
+   5:BSP/BL24C02/DataSave.c **** EEPROM Data description:
+   6:BSP/BL24C02/DataSave.c **** [0x00]:0x55 for check
+   7:BSP/BL24C02/DataSave.c **** [0x01]:0xAA for check
+   8:BSP/BL24C02/DataSave.c **** 
+   9:BSP/BL24C02/DataSave.c **** [0x10]:user wrist setting, HWInterface.IMU.wrist_is_enabled
+  10:BSP/BL24C02/DataSave.c **** [0x11]:user ui_APPSy_EN setting
+  11:BSP/BL24C02/DataSave.c **** 
+  12:BSP/BL24C02/DataSave.c **** [0x20]:Last Save Day(0-31)
+  13:BSP/BL24C02/DataSave.c **** [0x21]:Day Steps
+  14:BSP/BL24C02/DataSave.c **** 
+  15:BSP/BL24C02/DataSave.c **** *******************************************/
+  16:BSP/BL24C02/DataSave.c **** 
+  17:BSP/BL24C02/DataSave.c **** 
+  18:BSP/BL24C02/DataSave.c **** void EEPROM_Init(void)
+  19:BSP/BL24C02/DataSave.c **** {
+  29              		.loc 1 19 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  20:BSP/BL24C02/DataSave.c **** 	BL24C02_Init();
+  38              		.loc 1 20 2 view .LVU1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s 			page 2
+
+
+  39 0002 FFF7FEFF 		bl	BL24C02_Init
+  40              	.LVL0:
+  21:BSP/BL24C02/DataSave.c **** }
+  41              		.loc 1 21 1 is_stmt 0 view .LVU2
+  42 0006 08BD     		pop	{r3, pc}
+  43              		.cfi_endproc
+  44              	.LFE216:
+  46              		.section	.text.EEPROM_Check,"ax",%progbits
+  47              		.align	1
+  48              		.global	EEPROM_Check
+  49              		.syntax unified
+  50              		.thumb
+  51              		.thumb_func
+  53              	EEPROM_Check:
+  54              	.LFB217:
+  22:BSP/BL24C02/DataSave.c **** 
+  23:BSP/BL24C02/DataSave.c **** 
+  24:BSP/BL24C02/DataSave.c **** //to check the Data is right and the EEPROM is working
+  25:BSP/BL24C02/DataSave.c **** uint8_t EEPROM_Check(void)
+  26:BSP/BL24C02/DataSave.c **** {
+  55              		.loc 1 26 1 is_stmt 1 view -0
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 8
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59 0000 10B5     		push	{r4, lr}
+  60              	.LCFI1:
+  61              		.cfi_def_cfa_offset 8
+  62              		.cfi_offset 4, -8
+  63              		.cfi_offset 14, -4
+  64 0002 82B0     		sub	sp, sp, #8
+  65              	.LCFI2:
+  66              		.cfi_def_cfa_offset 16
+  27:BSP/BL24C02/DataSave.c **** 	uint8_t check_buff[2];
+  67              		.loc 1 27 2 view .LVU4
+  28:BSP/BL24C02/DataSave.c **** 	delay_ms(10);
+  68              		.loc 1 28 2 view .LVU5
+  69 0004 0A20     		movs	r0, #10
+  70 0006 FFF7FEFF 		bl	delay_ms
+  71              	.LVL1:
+  29:BSP/BL24C02/DataSave.c **** 	BL24C02_Read(0,2,check_buff);
+  72              		.loc 1 29 2 view .LVU6
+  73 000a 01AA     		add	r2, sp, #4
+  74 000c 0221     		movs	r1, #2
+  75 000e 0020     		movs	r0, #0
+  76 0010 FFF7FEFF 		bl	BL24C02_Read
+  77              	.LVL2:
+  30:BSP/BL24C02/DataSave.c **** 	if(check_buff[0] == 0x55 && check_buff[1] == 0xAA)
+  78              		.loc 1 30 2 view .LVU7
+  79              		.loc 1 30 15 is_stmt 0 view .LVU8
+  80 0014 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+  81              		.loc 1 30 4 view .LVU9
+  82 0018 552B     		cmp	r3, #85
+  83 001a 03D1     		bne	.L4
+  84              		.loc 1 30 40 discriminator 1 view .LVU10
+  85 001c 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+  86              		.loc 1 30 27 discriminator 1 view .LVU11
+  87 0020 AA2B     		cmp	r3, #170
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s 			page 3
+
+
+  88 0022 25D0     		beq	.L6
+  89              	.L4:
+  31:BSP/BL24C02/DataSave.c **** 	{
+  32:BSP/BL24C02/DataSave.c **** 		return 0;//check OK
+  33:BSP/BL24C02/DataSave.c **** 	}
+  34:BSP/BL24C02/DataSave.c **** 	else
+  35:BSP/BL24C02/DataSave.c **** 	{
+  36:BSP/BL24C02/DataSave.c **** 		check_buff[0] = 0x55;
+  90              		.loc 1 36 3 is_stmt 1 view .LVU12
+  91              		.loc 1 36 17 is_stmt 0 view .LVU13
+  92 0024 5523     		movs	r3, #85
+  93 0026 8DF80430 		strb	r3, [sp, #4]
+  37:BSP/BL24C02/DataSave.c **** 		check_buff[1] = 0xAA;
+  94              		.loc 1 37 3 is_stmt 1 view .LVU14
+  95              		.loc 1 37 17 is_stmt 0 view .LVU15
+  96 002a AA23     		movs	r3, #170
+  97 002c 8DF80530 		strb	r3, [sp, #5]
+  38:BSP/BL24C02/DataSave.c **** 		delay_ms(10);
+  98              		.loc 1 38 3 is_stmt 1 view .LVU16
+  99 0030 0A20     		movs	r0, #10
+ 100 0032 FFF7FEFF 		bl	delay_ms
+ 101              	.LVL3:
+  39:BSP/BL24C02/DataSave.c **** 		BL24C02_Write(0,2,check_buff);
+ 102              		.loc 1 39 3 view .LVU17
+ 103 0036 01AA     		add	r2, sp, #4
+ 104 0038 0221     		movs	r1, #2
+ 105 003a 0020     		movs	r0, #0
+ 106 003c FFF7FEFF 		bl	BL24C02_Write
+ 107              	.LVL4:
+  40:BSP/BL24C02/DataSave.c **** 		memset(check_buff,0,2);
+ 108              		.loc 1 40 3 view .LVU18
+ 109 0040 0024     		movs	r4, #0
+ 110 0042 ADF80440 		strh	r4, [sp, #4]	@ movhi
+  41:BSP/BL24C02/DataSave.c **** 		delay_ms(10);
+ 111              		.loc 1 41 3 view .LVU19
+ 112 0046 0A20     		movs	r0, #10
+ 113 0048 FFF7FEFF 		bl	delay_ms
+ 114              	.LVL5:
+  42:BSP/BL24C02/DataSave.c **** 		BL24C02_Read(0,2,check_buff);
+ 115              		.loc 1 42 3 view .LVU20
+ 116 004c 01AA     		add	r2, sp, #4
+ 117 004e 0221     		movs	r1, #2
+ 118 0050 2046     		mov	r0, r4
+ 119 0052 FFF7FEFF 		bl	BL24C02_Read
+ 120              	.LVL6:
+  43:BSP/BL24C02/DataSave.c **** 		if(check_buff[0] == 0x55 && check_buff[1] == 0xAA)
+ 121              		.loc 1 43 3 view .LVU21
+ 122              		.loc 1 43 16 is_stmt 0 view .LVU22
+ 123 0056 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 124              		.loc 1 43 5 view .LVU23
+ 125 005a 552B     		cmp	r3, #85
+ 126 005c 02D0     		beq	.L10
+  44:BSP/BL24C02/DataSave.c **** 			return 0;//check ok
+  45:BSP/BL24C02/DataSave.c **** 	}
+  46:BSP/BL24C02/DataSave.c **** 	return 1;//check erro
+ 127              		.loc 1 46 9 view .LVU24
+ 128 005e 0120     		movs	r0, #1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s 			page 4
+
+
+ 129              	.L5:
+  47:BSP/BL24C02/DataSave.c **** }
+ 130              		.loc 1 47 1 view .LVU25
+ 131 0060 02B0     		add	sp, sp, #8
+ 132              	.LCFI3:
+ 133              		.cfi_remember_state
+ 134              		.cfi_def_cfa_offset 8
+ 135              		@ sp needed
+ 136 0062 10BD     		pop	{r4, pc}
+ 137              	.L10:
+ 138              	.LCFI4:
+ 139              		.cfi_restore_state
+  43:BSP/BL24C02/DataSave.c **** 		if(check_buff[0] == 0x55 && check_buff[1] == 0xAA)
+ 140              		.loc 1 43 41 discriminator 1 view .LVU26
+ 141 0064 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+  43:BSP/BL24C02/DataSave.c **** 		if(check_buff[0] == 0x55 && check_buff[1] == 0xAA)
+ 142              		.loc 1 43 28 discriminator 1 view .LVU27
+ 143 0068 AA2B     		cmp	r3, #170
+ 144 006a 03D0     		beq	.L8
+  46:BSP/BL24C02/DataSave.c **** }
+ 145              		.loc 1 46 9 view .LVU28
+ 146 006c 0120     		movs	r0, #1
+ 147 006e F7E7     		b	.L5
+ 148              	.L6:
+  32:BSP/BL24C02/DataSave.c **** 	}
+ 149              		.loc 1 32 10 view .LVU29
+ 150 0070 0020     		movs	r0, #0
+ 151 0072 F5E7     		b	.L5
+ 152              	.L8:
+  44:BSP/BL24C02/DataSave.c **** 	}
+ 153              		.loc 1 44 11 view .LVU30
+ 154 0074 0020     		movs	r0, #0
+ 155 0076 F3E7     		b	.L5
+ 156              		.cfi_endproc
+ 157              	.LFE217:
+ 159              		.section	.text.SettingSave,"ax",%progbits
+ 160              		.align	1
+ 161              		.global	SettingSave
+ 162              		.syntax unified
+ 163              		.thumb
+ 164              		.thumb_func
+ 166              	SettingSave:
+ 167              	.LVL7:
+ 168              	.LFB218:
+  48:BSP/BL24C02/DataSave.c **** 
+  49:BSP/BL24C02/DataSave.c **** 
+  50:BSP/BL24C02/DataSave.c **** //to Save the settings
+  51:BSP/BL24C02/DataSave.c **** uint8_t SettingSave(uint8_t *buf, uint8_t addr, uint8_t lenth)
+  52:BSP/BL24C02/DataSave.c **** {
+ 169              		.loc 1 52 1 is_stmt 1 view -0
+ 170              		.cfi_startproc
+ 171              		@ args = 0, pretend = 0, frame = 0
+ 172              		@ frame_needed = 0, uses_anonymous_args = 0
+ 173              		.loc 1 52 1 is_stmt 0 view .LVU32
+ 174 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 175              	.LCFI5:
+ 176              		.cfi_def_cfa_offset 24
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s 			page 5
+
+
+ 177              		.cfi_offset 3, -24
+ 178              		.cfi_offset 4, -20
+ 179              		.cfi_offset 5, -16
+ 180              		.cfi_offset 6, -12
+ 181              		.cfi_offset 7, -8
+ 182              		.cfi_offset 14, -4
+  53:BSP/BL24C02/DataSave.c **** 	if(addr > 1 && !EEPROM_Check())
+ 183              		.loc 1 53 2 is_stmt 1 view .LVU33
+ 184              		.loc 1 53 4 is_stmt 0 view .LVU34
+ 185 0002 0129     		cmp	r1, #1
+ 186 0004 02D8     		bhi	.L16
+  54:BSP/BL24C02/DataSave.c **** 	{
+  55:BSP/BL24C02/DataSave.c **** 		delay_ms(10);
+  56:BSP/BL24C02/DataSave.c **** 		BL24C02_Write(addr,lenth,buf);
+  57:BSP/BL24C02/DataSave.c **** 		return 0;
+  58:BSP/BL24C02/DataSave.c **** 	}
+  59:BSP/BL24C02/DataSave.c **** 	return 1;
+ 187              		.loc 1 59 9 view .LVU35
+ 188 0006 0127     		movs	r7, #1
+ 189              	.LVL8:
+ 190              	.L12:
+  60:BSP/BL24C02/DataSave.c **** }
+ 191              		.loc 1 60 1 view .LVU36
+ 192 0008 3846     		mov	r0, r7
+ 193 000a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 194              	.LVL9:
+ 195              	.L16:
+ 196              		.loc 1 60 1 view .LVU37
+ 197 000c 0646     		mov	r6, r0
+ 198 000e 0C46     		mov	r4, r1
+ 199 0010 1546     		mov	r5, r2
+  53:BSP/BL24C02/DataSave.c **** 	if(addr > 1 && !EEPROM_Check())
+ 200              		.loc 1 53 18 discriminator 1 view .LVU38
+ 201 0012 FFF7FEFF 		bl	EEPROM_Check
+ 202              	.LVL10:
+  53:BSP/BL24C02/DataSave.c **** 	if(addr > 1 && !EEPROM_Check())
+ 203              		.loc 1 53 14 discriminator 1 view .LVU39
+ 204 0016 0746     		mov	r7, r0
+ 205 0018 08B1     		cbz	r0, .L17
+  59:BSP/BL24C02/DataSave.c **** }
+ 206              		.loc 1 59 9 view .LVU40
+ 207 001a 0127     		movs	r7, #1
+ 208 001c F4E7     		b	.L12
+ 209              	.L17:
+  55:BSP/BL24C02/DataSave.c **** 		BL24C02_Write(addr,lenth,buf);
+ 210              		.loc 1 55 3 is_stmt 1 view .LVU41
+ 211 001e 0A20     		movs	r0, #10
+ 212 0020 FFF7FEFF 		bl	delay_ms
+ 213              	.LVL11:
+  56:BSP/BL24C02/DataSave.c **** 		return 0;
+ 214              		.loc 1 56 3 view .LVU42
+ 215 0024 3246     		mov	r2, r6
+ 216 0026 2946     		mov	r1, r5
+ 217 0028 2046     		mov	r0, r4
+ 218 002a FFF7FEFF 		bl	BL24C02_Write
+ 219              	.LVL12:
+  57:BSP/BL24C02/DataSave.c **** 	}
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s 			page 6
+
+
+ 220              		.loc 1 57 3 view .LVU43
+  57:BSP/BL24C02/DataSave.c **** 	}
+ 221              		.loc 1 57 10 is_stmt 0 view .LVU44
+ 222 002e EBE7     		b	.L12
+ 223              		.cfi_endproc
+ 224              	.LFE218:
+ 226              		.section	.text.SettingGet,"ax",%progbits
+ 227              		.align	1
+ 228              		.global	SettingGet
+ 229              		.syntax unified
+ 230              		.thumb
+ 231              		.thumb_func
+ 233              	SettingGet:
+ 234              	.LVL13:
+ 235              	.LFB219:
+  61:BSP/BL24C02/DataSave.c **** 
+  62:BSP/BL24C02/DataSave.c **** 
+  63:BSP/BL24C02/DataSave.c **** //to Get the settings
+  64:BSP/BL24C02/DataSave.c **** uint8_t SettingGet(uint8_t *buf, uint8_t addr, uint8_t lenth)
+  65:BSP/BL24C02/DataSave.c **** {
+ 236              		.loc 1 65 1 is_stmt 1 view -0
+ 237              		.cfi_startproc
+ 238              		@ args = 0, pretend = 0, frame = 0
+ 239              		@ frame_needed = 0, uses_anonymous_args = 0
+ 240              		.loc 1 65 1 is_stmt 0 view .LVU46
+ 241 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 242              	.LCFI6:
+ 243              		.cfi_def_cfa_offset 24
+ 244              		.cfi_offset 3, -24
+ 245              		.cfi_offset 4, -20
+ 246              		.cfi_offset 5, -16
+ 247              		.cfi_offset 6, -12
+ 248              		.cfi_offset 7, -8
+ 249              		.cfi_offset 14, -4
+  66:BSP/BL24C02/DataSave.c **** 	if(addr > 1 && !EEPROM_Check())
+ 250              		.loc 1 66 2 is_stmt 1 view .LVU47
+ 251              		.loc 1 66 4 is_stmt 0 view .LVU48
+ 252 0002 0129     		cmp	r1, #1
+ 253 0004 02D8     		bhi	.L23
+  67:BSP/BL24C02/DataSave.c **** 	{
+  68:BSP/BL24C02/DataSave.c **** 		delay_ms(10);
+  69:BSP/BL24C02/DataSave.c **** 		BL24C02_Read(addr,lenth,buf);
+  70:BSP/BL24C02/DataSave.c **** 		return 0;
+  71:BSP/BL24C02/DataSave.c **** 	}
+  72:BSP/BL24C02/DataSave.c **** 	return 1;
+ 254              		.loc 1 72 9 view .LVU49
+ 255 0006 0127     		movs	r7, #1
+ 256              	.LVL14:
+ 257              	.L19:
+  73:BSP/BL24C02/DataSave.c **** }
+ 258              		.loc 1 73 1 view .LVU50
+ 259 0008 3846     		mov	r0, r7
+ 260 000a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 261              	.LVL15:
+ 262              	.L23:
+ 263              		.loc 1 73 1 view .LVU51
+ 264 000c 0646     		mov	r6, r0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s 			page 7
+
+
+ 265 000e 0C46     		mov	r4, r1
+ 266 0010 1546     		mov	r5, r2
+  66:BSP/BL24C02/DataSave.c **** 	if(addr > 1 && !EEPROM_Check())
+ 267              		.loc 1 66 18 discriminator 1 view .LVU52
+ 268 0012 FFF7FEFF 		bl	EEPROM_Check
+ 269              	.LVL16:
+  66:BSP/BL24C02/DataSave.c **** 	if(addr > 1 && !EEPROM_Check())
+ 270              		.loc 1 66 14 discriminator 1 view .LVU53
+ 271 0016 0746     		mov	r7, r0
+ 272 0018 08B1     		cbz	r0, .L24
+  72:BSP/BL24C02/DataSave.c **** }
+ 273              		.loc 1 72 9 view .LVU54
+ 274 001a 0127     		movs	r7, #1
+ 275 001c F4E7     		b	.L19
+ 276              	.L24:
+  68:BSP/BL24C02/DataSave.c **** 		BL24C02_Read(addr,lenth,buf);
+ 277              		.loc 1 68 3 is_stmt 1 view .LVU55
+ 278 001e 0A20     		movs	r0, #10
+ 279 0020 FFF7FEFF 		bl	delay_ms
+ 280              	.LVL17:
+  69:BSP/BL24C02/DataSave.c **** 		return 0;
+ 281              		.loc 1 69 3 view .LVU56
+ 282 0024 3246     		mov	r2, r6
+ 283 0026 2946     		mov	r1, r5
+ 284 0028 2046     		mov	r0, r4
+ 285 002a FFF7FEFF 		bl	BL24C02_Read
+ 286              	.LVL18:
+  70:BSP/BL24C02/DataSave.c **** 	}
+ 287              		.loc 1 70 3 view .LVU57
+  70:BSP/BL24C02/DataSave.c **** 	}
+ 288              		.loc 1 70 10 is_stmt 0 view .LVU58
+ 289 002e EBE7     		b	.L19
+ 290              		.cfi_endproc
+ 291              	.LFE219:
+ 293              		.section	.text.DataSave_SetWatchFace,"ax",%progbits
+ 294              		.align	1
+ 295              		.global	DataSave_SetWatchFace
+ 296              		.syntax unified
+ 297              		.thumb
+ 298              		.thumb_func
+ 300              	DataSave_SetWatchFace:
+ 301              	.LVL19:
+ 302              	.LFB220:
+  74:BSP/BL24C02/DataSave.c **** 
+  75:BSP/BL24C02/DataSave.c **** // 保存表盘样式
+  76:BSP/BL24C02/DataSave.c **** void DataSave_SetWatchFace(uint8_t face_style)
+  77:BSP/BL24C02/DataSave.c **** {
+ 303              		.loc 1 77 1 is_stmt 1 view -0
+ 304              		.cfi_startproc
+ 305              		@ args = 0, pretend = 0, frame = 8
+ 306              		@ frame_needed = 0, uses_anonymous_args = 0
+ 307              		.loc 1 77 1 is_stmt 0 view .LVU60
+ 308 0000 00B5     		push	{lr}
+ 309              	.LCFI7:
+ 310              		.cfi_def_cfa_offset 4
+ 311              		.cfi_offset 14, -4
+ 312 0002 83B0     		sub	sp, sp, #12
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s 			page 8
+
+
+ 313              	.LCFI8:
+ 314              		.cfi_def_cfa_offset 16
+ 315 0004 8DF80700 		strb	r0, [sp, #7]
+  78:BSP/BL24C02/DataSave.c ****     SettingSave(&face_style, EEPROM_ADDR_WATCHFACE, 1);
+ 316              		.loc 1 78 5 is_stmt 1 view .LVU61
+ 317 0008 0122     		movs	r2, #1
+ 318 000a 1221     		movs	r1, #18
+ 319 000c 0DF10700 		add	r0, sp, #7
+ 320              	.LVL20:
+ 321              		.loc 1 78 5 is_stmt 0 view .LVU62
+ 322 0010 FFF7FEFF 		bl	SettingSave
+ 323              	.LVL21:
+  79:BSP/BL24C02/DataSave.c **** }
+ 324              		.loc 1 79 1 view .LVU63
+ 325 0014 03B0     		add	sp, sp, #12
+ 326              	.LCFI9:
+ 327              		.cfi_def_cfa_offset 4
+ 328              		@ sp needed
+ 329 0016 5DF804FB 		ldr	pc, [sp], #4
+ 330              		.cfi_endproc
+ 331              	.LFE220:
+ 333              		.section	.text.DataSave_GetWatchFace,"ax",%progbits
+ 334              		.align	1
+ 335              		.global	DataSave_GetWatchFace
+ 336              		.syntax unified
+ 337              		.thumb
+ 338              		.thumb_func
+ 340              	DataSave_GetWatchFace:
+ 341              	.LFB221:
+  80:BSP/BL24C02/DataSave.c **** 
+  81:BSP/BL24C02/DataSave.c **** // 获取表盘样式
+  82:BSP/BL24C02/DataSave.c **** uint8_t DataSave_GetWatchFace(void)
+  83:BSP/BL24C02/DataSave.c **** {
+ 342              		.loc 1 83 1 is_stmt 1 view -0
+ 343              		.cfi_startproc
+ 344              		@ args = 0, pretend = 0, frame = 8
+ 345              		@ frame_needed = 0, uses_anonymous_args = 0
+ 346 0000 00B5     		push	{lr}
+ 347              	.LCFI10:
+ 348              		.cfi_def_cfa_offset 4
+ 349              		.cfi_offset 14, -4
+ 350 0002 83B0     		sub	sp, sp, #12
+ 351              	.LCFI11:
+ 352              		.cfi_def_cfa_offset 16
+  84:BSP/BL24C02/DataSave.c ****     uint8_t face_style = 0;
+ 353              		.loc 1 84 5 view .LVU65
+ 354              		.loc 1 84 13 is_stmt 0 view .LVU66
+ 355 0004 0023     		movs	r3, #0
+ 356 0006 8DF80730 		strb	r3, [sp, #7]
+  85:BSP/BL24C02/DataSave.c ****     SettingGet(&face_style, EEPROM_ADDR_WATCHFACE, 1);
+ 357              		.loc 1 85 5 is_stmt 1 view .LVU67
+ 358 000a 0122     		movs	r2, #1
+ 359 000c 1221     		movs	r1, #18
+ 360 000e 0DF10700 		add	r0, sp, #7
+ 361 0012 FFF7FEFF 		bl	SettingGet
+ 362              	.LVL22:
+  86:BSP/BL24C02/DataSave.c ****     return face_style;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s 			page 9
+
+
+ 363              		.loc 1 86 5 view .LVU68
+  87:BSP/BL24C02/DataSave.c **** }
+ 364              		.loc 1 87 1 is_stmt 0 view .LVU69
+ 365 0016 9DF80700 		ldrb	r0, [sp, #7]	@ zero_extendqisi2
+ 366 001a 03B0     		add	sp, sp, #12
+ 367              	.LCFI12:
+ 368              		.cfi_def_cfa_offset 4
+ 369              		@ sp needed
+ 370 001c 5DF804FB 		ldr	pc, [sp], #4
+ 371              		.cfi_endproc
+ 372              	.LFE221:
+ 374              		.text
+ 375              	.Letext0:
+ 376              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 377              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 378              		.file 4 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 379              		.file 5 "BSP/BL24C02/BL24C02.h"
+ 380              		.file 6 "SYSTEM/delay.h"
+ 381              		.file 7 "SYSTEM/sys.h"
+ 382              		.file 8 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 DataSave.c
+C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s:21     .text.EEPROM_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s:27     .text.EEPROM_Init:00000000 EEPROM_Init
+C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s:47     .text.EEPROM_Check:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s:53     .text.EEPROM_Check:00000000 EEPROM_Check
+C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s:160    .text.SettingSave:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s:166    .text.SettingSave:00000000 SettingSave
+C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s:227    .text.SettingGet:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s:233    .text.SettingGet:00000000 SettingGet
+C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s:294    .text.DataSave_SetWatchFace:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s:300    .text.DataSave_SetWatchFace:00000000 DataSave_SetWatchFace
+C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s:334    .text.DataSave_GetWatchFace:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccTPUgWb.s:340    .text.DataSave_GetWatchFace:00000000 DataSave_GetWatchFace
+
+UNDEFINED SYMBOLS
+BL24C02_Init
+delay_ms
+BL24C02_Read
+BL24C02_Write

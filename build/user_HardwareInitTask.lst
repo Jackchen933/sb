@@ -1,0 +1,913 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"user_HardwareInitTask.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/Tasks/Src/user_HardwareInitTask.c"
+  20              		.section	.rodata.HardwareInitTask.str1.4,"aMS",%progbits,1
+  21              		.align	2
+  22              	.LC0:
+  23 0000 57656C63 		.ascii	"Welcome!\000"
+  23      6F6D6521 
+  23      00
+  24 0009 000000   		.align	2
+  25              	.LC1:
+  26 000c 4F562D57 		.ascii	"OV-Watch V%d.%d.%d\000"
+  26      61746368 
+  26      20562564 
+  26      2E25642E 
+  26      256400
+  27              		.section	.text.HardwareInitTask,"ax",%progbits
+  28              		.align	1
+  29              		.global	HardwareInitTask
+  30              		.syntax unified
+  31              		.thumb
+  32              		.thumb_func
+  34              	HardwareInitTask:
+  35              	.LFB420:
+   1:User/Tasks/Src/user_HardwareInitTask.c **** /* Private includes -----------------------------------------------------------*/
+   2:User/Tasks/Src/user_HardwareInitTask.c **** 
+   3:User/Tasks/Src/user_HardwareInitTask.c **** // includes
+   4:User/Tasks/Src/user_HardwareInitTask.c **** // sys
+   5:User/Tasks/Src/user_HardwareInitTask.c **** #include "usart.h"
+   6:User/Tasks/Src/user_HardwareInitTask.c **** #include "tim.h"
+   7:User/Tasks/Src/user_HardwareInitTask.c **** #include "stm32f4xx_it.h"
+   8:User/Tasks/Src/user_HardwareInitTask.c **** #include "delay.h"
+   9:User/Tasks/Src/user_HardwareInitTask.c **** 
+  10:User/Tasks/Src/user_HardwareInitTask.c **** // user
+  11:User/Tasks/Src/user_HardwareInitTask.c **** #include "user_TasksInit.h"
+  12:User/Tasks/Src/user_HardwareInitTask.c **** #include "HWDataAccess.h"
+  13:User/Tasks/Src/user_HardwareInitTask.c **** #include "version.h"
+  14:User/Tasks/Src/user_HardwareInitTask.c **** 
+  15:User/Tasks/Src/user_HardwareInitTask.c **** // bsp
+  16:User/Tasks/Src/user_HardwareInitTask.c **** #include "key.h"
+  17:User/Tasks/Src/user_HardwareInitTask.c **** #include "lcd.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 2
+
+
+  18:User/Tasks/Src/user_HardwareInitTask.c **** #include "lcd_init.h"
+  19:User/Tasks/Src/user_HardwareInitTask.c **** #include "CST816.h"
+  20:User/Tasks/Src/user_HardwareInitTask.c **** #include "DataSave.h"
+  21:User/Tasks/Src/user_HardwareInitTask.c **** 
+  22:User/Tasks/Src/user_HardwareInitTask.c **** // ui
+  23:User/Tasks/Src/user_HardwareInitTask.c **** //gui
+  24:User/Tasks/Src/user_HardwareInitTask.c **** #include "lvgl.h"
+  25:User/Tasks/Src/user_HardwareInitTask.c **** #include "lv_port_disp.h"
+  26:User/Tasks/Src/user_HardwareInitTask.c **** #include "lv_port_indev.h"
+  27:User/Tasks/Src/user_HardwareInitTask.c **** #include "ui.h"
+  28:User/Tasks/Src/user_HardwareInitTask.c **** 
+  29:User/Tasks/Src/user_HardwareInitTask.c **** // APP SYS setting
+  30:User/Tasks/Src/user_HardwareInitTask.c **** #include "ui_DateTimeSetPage.h"
+  31:User/Tasks/Src/user_HardwareInitTask.c **** 
+  32:User/Tasks/Src/user_HardwareInitTask.c **** /* Private typedef -----------------------------------------------------------*/
+  33:User/Tasks/Src/user_HardwareInitTask.c **** 
+  34:User/Tasks/Src/user_HardwareInitTask.c **** /* Private define ------------------------------------------------------------*/
+  35:User/Tasks/Src/user_HardwareInitTask.c **** 
+  36:User/Tasks/Src/user_HardwareInitTask.c **** /* Private variables ---------------------------------------------------------*/
+  37:User/Tasks/Src/user_HardwareInitTask.c **** 
+  38:User/Tasks/Src/user_HardwareInitTask.c **** /* Private function prototypes -----------------------------------------------*/
+  39:User/Tasks/Src/user_HardwareInitTask.c **** 
+  40:User/Tasks/Src/user_HardwareInitTask.c **** 
+  41:User/Tasks/Src/user_HardwareInitTask.c **** /**
+  42:User/Tasks/Src/user_HardwareInitTask.c ****   * @brief  hardwares init task
+  43:User/Tasks/Src/user_HardwareInitTask.c ****   * @param  argument: Not used
+  44:User/Tasks/Src/user_HardwareInitTask.c ****   * @retval None
+  45:User/Tasks/Src/user_HardwareInitTask.c ****   */
+  46:User/Tasks/Src/user_HardwareInitTask.c **** void HardwareInitTask(void *argument)
+  47:User/Tasks/Src/user_HardwareInitTask.c **** {
+  36              		.loc 1 47 1 view -0
+  37              		.cfi_startproc
+  38              		@ args = 0, pretend = 0, frame = 24
+  39              		@ frame_needed = 0, uses_anonymous_args = 0
+  40              	.LVL0:
+  41              		.loc 1 47 1 is_stmt 0 view .LVU1
+  42 0000 30B5     		push	{r4, r5, lr}
+  43              	.LCFI0:
+  44              		.cfi_def_cfa_offset 12
+  45              		.cfi_offset 4, -12
+  46              		.cfi_offset 5, -8
+  47              		.cfi_offset 14, -4
+  48 0002 8BB0     		sub	sp, sp, #44
+  49              	.LCFI1:
+  50              		.cfi_def_cfa_offset 56
+  51 0004 D8E0     		b	.L25
+  52              	.LVL1:
+  53              	.L32:
+  54              	.LBB11:
+  48:User/Tasks/Src/user_HardwareInitTask.c **** 	while(1)
+  49:User/Tasks/Src/user_HardwareInitTask.c **** 	{
+  50:User/Tasks/Src/user_HardwareInitTask.c ****     vTaskSuspendAll();
+  51:User/Tasks/Src/user_HardwareInitTask.c **** 
+  52:User/Tasks/Src/user_HardwareInitTask.c ****     // RTC Wake
+  53:User/Tasks/Src/user_HardwareInitTask.c ****     if(HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 2000, RTC_WAKEUPCLOCK_RTCCLK_DIV16) != HAL_OK)
+  54:User/Tasks/Src/user_HardwareInitTask.c ****     {
+  55:User/Tasks/Src/user_HardwareInitTask.c ****       Error_Handler();
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 3
+
+
+  55              		.loc 1 55 7 is_stmt 1 view .LVU2
+  56 0006 FFF7FEFF 		bl	Error_Handler
+  57              	.LVL2:
+  58 000a E0E0     		b	.L2
+  59              	.LVL3:
+  60              	.L5:
+  56:User/Tasks/Src/user_HardwareInitTask.c ****     }
+  57:User/Tasks/Src/user_HardwareInitTask.c ****     // usart start
+  58:User/Tasks/Src/user_HardwareInitTask.c ****     HAL_UART_Receive_DMA(&huart1,(uint8_t*)HardInt_receive_str,25);
+  59:User/Tasks/Src/user_HardwareInitTask.c ****     __HAL_UART_ENABLE_IT(&huart1,UART_IT_IDLE);
+  60:User/Tasks/Src/user_HardwareInitTask.c **** 
+  61:User/Tasks/Src/user_HardwareInitTask.c ****     // PWM Start
+  62:User/Tasks/Src/user_HardwareInitTask.c ****     HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_3);
+  63:User/Tasks/Src/user_HardwareInitTask.c **** 
+  64:User/Tasks/Src/user_HardwareInitTask.c ****     // sys delay
+  65:User/Tasks/Src/user_HardwareInitTask.c ****     delay_init();
+  66:User/Tasks/Src/user_HardwareInitTask.c ****     // wait
+  67:User/Tasks/Src/user_HardwareInitTask.c ****     // delay_ms(1000);
+  68:User/Tasks/Src/user_HardwareInitTask.c **** 
+  69:User/Tasks/Src/user_HardwareInitTask.c ****     // power
+  70:User/Tasks/Src/user_HardwareInitTask.c ****     HWInterface.Power.Init();
+  71:User/Tasks/Src/user_HardwareInitTask.c **** 
+  72:User/Tasks/Src/user_HardwareInitTask.c ****     // key
+  73:User/Tasks/Src/user_HardwareInitTask.c ****     Key_Port_Init();
+  74:User/Tasks/Src/user_HardwareInitTask.c **** 
+  75:User/Tasks/Src/user_HardwareInitTask.c ****     // sensors
+  76:User/Tasks/Src/user_HardwareInitTask.c ****     uint8_t num = 3;
+  77:User/Tasks/Src/user_HardwareInitTask.c ****     while(num && HWInterface.AHT21.ConnectionError)
+  78:User/Tasks/Src/user_HardwareInitTask.c ****     {
+  79:User/Tasks/Src/user_HardwareInitTask.c ****       num--;
+  61              		.loc 1 79 7 view .LVU3
+  62              		.loc 1 79 10 is_stmt 0 view .LVU4
+  63 000c 013C     		subs	r4, r4, #1
+  64              	.LVL4:
+  65              		.loc 1 79 10 view .LVU5
+  66 000e E4B2     		uxtb	r4, r4
+  67              	.LVL5:
+  80:User/Tasks/Src/user_HardwareInitTask.c ****       HWInterface.AHT21.ConnectionError = HWInterface.AHT21.Init();
+  68              		.loc 1 80 7 is_stmt 1 view .LVU6
+  69              		.loc 1 80 60 is_stmt 0 view .LVU7
+  70 0010 894D     		ldr	r5, .L33
+  71 0012 2B6D     		ldr	r3, [r5, #80]
+  72              		.loc 1 80 43 view .LVU8
+  73 0014 9847     		blx	r3
+  74              	.LVL6:
+  75              		.loc 1 80 41 discriminator 1 view .LVU9
+  76 0016 85F84C00 		strb	r0, [r5, #76]
+  77              	.LVL7:
+  78              	.L3:
+  77:User/Tasks/Src/user_HardwareInitTask.c ****     {
+  79              		.loc 1 77 15 is_stmt 1 view .LVU10
+  80 001a E4B1     		cbz	r4, .L26
+  77:User/Tasks/Src/user_HardwareInitTask.c ****     {
+  81              		.loc 1 77 35 is_stmt 0 discriminator 1 view .LVU11
+  82 001c 864B     		ldr	r3, .L33
+  83 001e 93F84C30 		ldrb	r3, [r3, #76]	@ zero_extendqisi2
+  77:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 4
+
+
+  84              		.loc 1 77 15 discriminator 1 view .LVU12
+  85 0022 002B     		cmp	r3, #0
+  86 0024 F2D1     		bne	.L5
+  87 0026 0324     		movs	r4, #3
+  88              	.LVL8:
+  77:User/Tasks/Src/user_HardwareInitTask.c ****     {
+  89              		.loc 1 77 15 discriminator 1 view .LVU13
+  90 0028 06E0     		b	.L6
+  91              	.LVL9:
+  92              	.L8:
+  81:User/Tasks/Src/user_HardwareInitTask.c ****     }
+  82:User/Tasks/Src/user_HardwareInitTask.c **** 
+  83:User/Tasks/Src/user_HardwareInitTask.c ****     num = 3;
+  84:User/Tasks/Src/user_HardwareInitTask.c ****     while(num && HWInterface.Ecompass.ConnectionError)
+  85:User/Tasks/Src/user_HardwareInitTask.c ****     {
+  86:User/Tasks/Src/user_HardwareInitTask.c ****       num--;
+  93              		.loc 1 86 7 is_stmt 1 view .LVU14
+  94              		.loc 1 86 10 is_stmt 0 view .LVU15
+  95 002a 013C     		subs	r4, r4, #1
+  96              	.LVL10:
+  97              		.loc 1 86 10 view .LVU16
+  98 002c E4B2     		uxtb	r4, r4
+  99              	.LVL11:
+  87:User/Tasks/Src/user_HardwareInitTask.c ****       HWInterface.Ecompass.ConnectionError = HWInterface.Ecompass.Init();
+ 100              		.loc 1 87 7 is_stmt 1 view .LVU17
+ 101              		.loc 1 87 66 is_stmt 0 view .LVU18
+ 102 002e 824D     		ldr	r5, .L33
+ 103 0030 6B6E     		ldr	r3, [r5, #100]
+ 104              		.loc 1 87 46 view .LVU19
+ 105 0032 9847     		blx	r3
+ 106              	.LVL12:
+ 107              		.loc 1 87 44 discriminator 1 view .LVU20
+ 108 0034 85F86000 		strb	r0, [r5, #96]
+ 109              	.LVL13:
+ 110              	.L6:
+  84:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 111              		.loc 1 84 15 is_stmt 1 view .LVU21
+ 112 0038 24B1     		cbz	r4, .L7
+  84:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 113              		.loc 1 84 38 is_stmt 0 discriminator 1 view .LVU22
+ 114 003a 7F4B     		ldr	r3, .L33
+ 115 003c 93F86030 		ldrb	r3, [r3, #96]	@ zero_extendqisi2
+  84:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 116              		.loc 1 84 15 discriminator 1 view .LVU23
+ 117 0040 002B     		cmp	r3, #0
+ 118 0042 F2D1     		bne	.L8
+ 119              	.L7:
+  88:User/Tasks/Src/user_HardwareInitTask.c ****     }
+  89:User/Tasks/Src/user_HardwareInitTask.c ****     if(!HWInterface.Ecompass.ConnectionError)
+ 120              		.loc 1 89 5 is_stmt 1 view .LVU24
+ 121              		.loc 1 89 29 is_stmt 0 view .LVU25
+ 122 0044 7C4B     		ldr	r3, .L33
+ 123 0046 93F86030 		ldrb	r3, [r3, #96]	@ zero_extendqisi2
+ 124              		.loc 1 89 7 view .LVU26
+ 125 004a 13B9     		cbnz	r3, .L9
+  90:User/Tasks/Src/user_HardwareInitTask.c ****       HWInterface.Ecompass.Sleep();
+ 126              		.loc 1 90 7 is_stmt 1 view .LVU27
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 5
+
+
+ 127              		.loc 1 90 27 is_stmt 0 view .LVU28
+ 128 004c 7A4B     		ldr	r3, .L33
+ 129 004e 9B6E     		ldr	r3, [r3, #104]
+ 130              		.loc 1 90 7 view .LVU29
+ 131 0050 9847     		blx	r3
+ 132              	.LVL14:
+ 133              	.L9:
+ 134 0052 0324     		movs	r4, #3
+ 135              	.LVL15:
+ 136              		.loc 1 90 7 view .LVU30
+ 137 0054 08E0     		b	.L10
+ 138              	.LVL16:
+ 139              	.L26:
+ 140              		.loc 1 90 7 view .LVU31
+ 141 0056 0324     		movs	r4, #3
+ 142              	.LVL17:
+ 143              		.loc 1 90 7 view .LVU32
+ 144 0058 EEE7     		b	.L6
+ 145              	.LVL18:
+ 146              	.L12:
+  91:User/Tasks/Src/user_HardwareInitTask.c **** 
+  92:User/Tasks/Src/user_HardwareInitTask.c ****     num = 3;
+  93:User/Tasks/Src/user_HardwareInitTask.c ****     while(num && HWInterface.Barometer.ConnectionError)
+  94:User/Tasks/Src/user_HardwareInitTask.c ****     {
+  95:User/Tasks/Src/user_HardwareInitTask.c ****       num--;
+ 147              		.loc 1 95 7 is_stmt 1 view .LVU33
+ 148              		.loc 1 95 10 is_stmt 0 view .LVU34
+ 149 005a 013C     		subs	r4, r4, #1
+ 150              	.LVL19:
+ 151              		.loc 1 95 10 view .LVU35
+ 152 005c E4B2     		uxtb	r4, r4
+ 153              	.LVL20:
+  96:User/Tasks/Src/user_HardwareInitTask.c ****       HWInterface.Barometer.ConnectionError = HWInterface.Barometer.Init();
+ 154              		.loc 1 96 7 is_stmt 1 view .LVU36
+ 155              		.loc 1 96 68 is_stmt 0 view .LVU37
+ 156 005e 764D     		ldr	r5, .L33
+ 157 0060 EB6D     		ldr	r3, [r5, #92]
+ 158              		.loc 1 96 47 view .LVU38
+ 159 0062 9847     		blx	r3
+ 160              	.LVL21:
+ 161              		.loc 1 96 45 discriminator 1 view .LVU39
+ 162 0064 85F85800 		strb	r0, [r5, #88]
+ 163              	.LVL22:
+ 164              	.L10:
+  93:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 165              		.loc 1 93 15 is_stmt 1 view .LVU40
+ 166 0068 BCB1     		cbz	r4, .L27
+  93:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 167              		.loc 1 93 39 is_stmt 0 discriminator 1 view .LVU41
+ 168 006a 734B     		ldr	r3, .L33
+ 169 006c 93F85830 		ldrb	r3, [r3, #88]	@ zero_extendqisi2
+  93:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 170              		.loc 1 93 15 discriminator 1 view .LVU42
+ 171 0070 002B     		cmp	r3, #0
+ 172 0072 F2D1     		bne	.L12
+ 173 0074 0324     		movs	r4, #3
+ 174              	.LVL23:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 6
+
+
+  93:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 175              		.loc 1 93 15 discriminator 1 view .LVU43
+ 176 0076 06E0     		b	.L13
+ 177              	.LVL24:
+ 178              	.L15:
+  97:User/Tasks/Src/user_HardwareInitTask.c ****     }
+  98:User/Tasks/Src/user_HardwareInitTask.c **** 
+  99:User/Tasks/Src/user_HardwareInitTask.c ****     num = 3;
+ 100:User/Tasks/Src/user_HardwareInitTask.c ****     while(num && HWInterface.IMU.ConnectionError)
+ 101:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 102:User/Tasks/Src/user_HardwareInitTask.c ****       num--;
+ 179              		.loc 1 102 7 is_stmt 1 view .LVU44
+ 180              		.loc 1 102 10 is_stmt 0 view .LVU45
+ 181 0078 013C     		subs	r4, r4, #1
+ 182              	.LVL25:
+ 183              		.loc 1 102 10 view .LVU46
+ 184 007a E4B2     		uxtb	r4, r4
+ 185              	.LVL26:
+ 103:User/Tasks/Src/user_HardwareInitTask.c ****       HWInterface.IMU.ConnectionError = HWInterface.IMU.Init();
+ 186              		.loc 1 103 7 is_stmt 1 view .LVU47
+ 187              		.loc 1 103 56 is_stmt 0 view .LVU48
+ 188 007c 6E4D     		ldr	r5, .L33
+ 189 007e AB6B     		ldr	r3, [r5, #56]
+ 190              		.loc 1 103 41 view .LVU49
+ 191 0080 9847     		blx	r3
+ 192              	.LVL27:
+ 193              		.loc 1 103 39 discriminator 1 view .LVU50
+ 194 0082 85F83000 		strb	r0, [r5, #48]
+ 195              	.LVL28:
+ 196              	.L13:
+ 100:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 197              		.loc 1 100 15 is_stmt 1 view .LVU51
+ 198 0086 002C     		cmp	r4, #0
+ 199 0088 00F0B980 		beq	.L28
+ 100:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 200              		.loc 1 100 33 is_stmt 0 discriminator 1 view .LVU52
+ 201 008c 6A4B     		ldr	r3, .L33
+ 202 008e 93F83030 		ldrb	r3, [r3, #48]	@ zero_extendqisi2
+ 100:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 203              		.loc 1 100 15 discriminator 1 view .LVU53
+ 204 0092 002B     		cmp	r3, #0
+ 205 0094 F0D1     		bne	.L15
+ 206 0096 0324     		movs	r4, #3
+ 207              	.LVL29:
+ 100:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 208              		.loc 1 100 15 discriminator 1 view .LVU54
+ 209 0098 08E0     		b	.L16
+ 210              	.LVL30:
+ 211              	.L27:
+ 100:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 212              		.loc 1 100 15 discriminator 1 view .LVU55
+ 213 009a 0324     		movs	r4, #3
+ 214              	.LVL31:
+ 100:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 215              		.loc 1 100 15 discriminator 1 view .LVU56
+ 216 009c F3E7     		b	.L13
+ 217              	.LVL32:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 7
+
+
+ 218              	.L18:
+ 104:User/Tasks/Src/user_HardwareInitTask.c ****       // Sensor_MPU_Erro = MPU_Init();
+ 105:User/Tasks/Src/user_HardwareInitTask.c ****     }
+ 106:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 107:User/Tasks/Src/user_HardwareInitTask.c ****     num = 3;
+ 108:User/Tasks/Src/user_HardwareInitTask.c ****     while(num && HWInterface.HR_meter.ConnectionError)
+ 109:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 110:User/Tasks/Src/user_HardwareInitTask.c ****       num--;
+ 219              		.loc 1 110 7 is_stmt 1 view .LVU57
+ 220              		.loc 1 110 10 is_stmt 0 view .LVU58
+ 221 009e 013C     		subs	r4, r4, #1
+ 222              	.LVL33:
+ 223              		.loc 1 110 10 view .LVU59
+ 224 00a0 E4B2     		uxtb	r4, r4
+ 225              	.LVL34:
+ 111:User/Tasks/Src/user_HardwareInitTask.c ****       HWInterface.HR_meter.ConnectionError = HWInterface.HR_meter.Init();
+ 226              		.loc 1 111 7 is_stmt 1 view .LVU60
+ 227              		.loc 1 111 66 is_stmt 0 view .LVU61
+ 228 00a2 654D     		ldr	r5, .L33
+ 229 00a4 2B6F     		ldr	r3, [r5, #112]
+ 230              		.loc 1 111 46 view .LVU62
+ 231 00a6 9847     		blx	r3
+ 232              	.LVL35:
+ 233              		.loc 1 111 44 discriminator 1 view .LVU63
+ 234 00a8 85F86C00 		strb	r0, [r5, #108]
+ 235              	.LVL36:
+ 236              	.L16:
+ 108:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 237              		.loc 1 108 15 is_stmt 1 view .LVU64
+ 238 00ac 24B1     		cbz	r4, .L17
+ 108:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 239              		.loc 1 108 38 is_stmt 0 discriminator 1 view .LVU65
+ 240 00ae 624B     		ldr	r3, .L33
+ 241 00b0 93F86C30 		ldrb	r3, [r3, #108]	@ zero_extendqisi2
+ 108:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 242              		.loc 1 108 15 discriminator 1 view .LVU66
+ 243 00b4 002B     		cmp	r3, #0
+ 244 00b6 F2D1     		bne	.L18
+ 245              	.L17:
+ 112:User/Tasks/Src/user_HardwareInitTask.c ****     }
+ 113:User/Tasks/Src/user_HardwareInitTask.c ****     if(!HWInterface.HR_meter.ConnectionError)
+ 246              		.loc 1 113 5 is_stmt 1 view .LVU67
+ 247              		.loc 1 113 29 is_stmt 0 view .LVU68
+ 248 00b8 5F4B     		ldr	r3, .L33
+ 249 00ba 93F86C30 		ldrb	r3, [r3, #108]	@ zero_extendqisi2
+ 250              		.loc 1 113 7 view .LVU69
+ 251 00be 13B9     		cbnz	r3, .L19
+ 114:User/Tasks/Src/user_HardwareInitTask.c ****       HWInterface.HR_meter.Sleep();
+ 252              		.loc 1 114 7 is_stmt 1 view .LVU70
+ 253              		.loc 1 114 27 is_stmt 0 view .LVU71
+ 254 00c0 5D4B     		ldr	r3, .L33
+ 255 00c2 5B6F     		ldr	r3, [r3, #116]
+ 256              		.loc 1 114 7 view .LVU72
+ 257 00c4 9847     		blx	r3
+ 258              	.LVL37:
+ 259              	.L19:
+ 115:User/Tasks/Src/user_HardwareInitTask.c **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 8
+
+
+ 116:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 117:User/Tasks/Src/user_HardwareInitTask.c ****     // EEPROM
+ 118:User/Tasks/Src/user_HardwareInitTask.c ****     EEPROM_Init();
+ 260              		.loc 1 118 5 is_stmt 1 view .LVU73
+ 261 00c6 FFF7FEFF 		bl	EEPROM_Init
+ 262              	.LVL38:
+ 119:User/Tasks/Src/user_HardwareInitTask.c ****     if(!EEPROM_Check())
+ 263              		.loc 1 119 5 view .LVU74
+ 264              		.loc 1 119 9 is_stmt 0 view .LVU75
+ 265 00ca FFF7FEFF 		bl	EEPROM_Check
+ 266              	.LVL39:
+ 267              		.loc 1 119 7 discriminator 1 view .LVU76
+ 268 00ce 08BB     		cbnz	r0, .L20
+ 269              	.LBB12:
+ 120:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 121:User/Tasks/Src/user_HardwareInitTask.c ****       uint8_t recbuf[3];
+ 270              		.loc 1 121 7 is_stmt 1 view .LVU77
+ 122:User/Tasks/Src/user_HardwareInitTask.c ****       SettingGet(recbuf,0x10,2);
+ 271              		.loc 1 122 7 view .LVU78
+ 272 00d0 0222     		movs	r2, #2
+ 273 00d2 1021     		movs	r1, #16
+ 274 00d4 0DEB0100 		add	r0, sp, r1
+ 275 00d8 FFF7FEFF 		bl	SettingGet
+ 276              	.LVL40:
+ 123:User/Tasks/Src/user_HardwareInitTask.c ****       if((recbuf[0]!=0 && recbuf[0]!=1) || (recbuf[1]!=0 && recbuf[1]!=1))
+ 277              		.loc 1 123 7 view .LVU79
+ 278              		.loc 1 123 17 is_stmt 0 view .LVU80
+ 279 00dc 9DF81030 		ldrb	r3, [sp, #16]	@ zero_extendqisi2
+ 280              		.loc 1 123 9 view .LVU81
+ 281 00e0 012B     		cmp	r3, #1
+ 282 00e2 40F28E80 		bls	.L30
+ 283              	.L21:
+ 124:User/Tasks/Src/user_HardwareInitTask.c ****       {
+ 125:User/Tasks/Src/user_HardwareInitTask.c ****         HWInterface.IMU.wrist_is_enabled = 0;
+ 284              		.loc 1 125 9 is_stmt 1 view .LVU82
+ 285              		.loc 1 125 42 is_stmt 0 view .LVU83
+ 286 00e6 0023     		movs	r3, #0
+ 287 00e8 534A     		ldr	r2, .L33
+ 288 00ea 82F83530 		strb	r3, [r2, #53]
+ 126:User/Tasks/Src/user_HardwareInitTask.c ****         ui_APPSy_EN = 0;
+ 289              		.loc 1 126 9 is_stmt 1 view .LVU84
+ 290              		.loc 1 126 21 is_stmt 0 view .LVU85
+ 291 00ee 534A     		ldr	r2, .L33+4
+ 292 00f0 1370     		strb	r3, [r2]
+ 293              	.L23:
+ 127:User/Tasks/Src/user_HardwareInitTask.c ****       }
+ 128:User/Tasks/Src/user_HardwareInitTask.c ****       else
+ 129:User/Tasks/Src/user_HardwareInitTask.c ****       {
+ 130:User/Tasks/Src/user_HardwareInitTask.c ****         HWInterface.IMU.wrist_is_enabled = recbuf[0];
+ 131:User/Tasks/Src/user_HardwareInitTask.c ****         ui_APPSy_EN = recbuf[1];
+ 132:User/Tasks/Src/user_HardwareInitTask.c ****       }
+ 133:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 134:User/Tasks/Src/user_HardwareInitTask.c ****       RTC_DateTypeDef nowdate;
+ 294              		.loc 1 134 7 is_stmt 1 view .LVU86
+ 135:User/Tasks/Src/user_HardwareInitTask.c ****       HAL_RTC_GetDate(&hrtc,&nowdate,RTC_FORMAT_BIN);
+ 295              		.loc 1 135 7 view .LVU87
+ 296 00f2 0022     		movs	r2, #0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 9
+
+
+ 297 00f4 05A9     		add	r1, sp, #20
+ 298 00f6 5248     		ldr	r0, .L33+8
+ 299 00f8 FFF7FEFF 		bl	HAL_RTC_GetDate
+ 300              	.LVL41:
+ 136:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 137:User/Tasks/Src/user_HardwareInitTask.c ****       SettingGet(recbuf,0x20,3);
+ 301              		.loc 1 137 7 view .LVU88
+ 302 00fc 0322     		movs	r2, #3
+ 303 00fe 2021     		movs	r1, #32
+ 304 0100 04A8     		add	r0, sp, #16
+ 305 0102 FFF7FEFF 		bl	SettingGet
+ 306              	.LVL42:
+ 138:User/Tasks/Src/user_HardwareInitTask.c ****       if(recbuf[0] == nowdate.Date)
+ 307              		.loc 1 138 7 view .LVU89
+ 308              		.loc 1 138 16 is_stmt 0 view .LVU90
+ 309 0106 9DF81020 		ldrb	r2, [sp, #16]	@ zero_extendqisi2
+ 310              		.loc 1 138 30 view .LVU91
+ 311 010a 9DF81630 		ldrb	r3, [sp, #22]	@ zero_extendqisi2
+ 312              		.loc 1 138 9 view .LVU92
+ 313 010e 9A42     		cmp	r2, r3
+ 314 0110 00F08280 		beq	.L31
+ 315              	.L20:
+ 316              	.LBE12:
+ 139:User/Tasks/Src/user_HardwareInitTask.c ****       {
+ 140:User/Tasks/Src/user_HardwareInitTask.c ****         uint16_t steps=0;
+ 141:User/Tasks/Src/user_HardwareInitTask.c ****         steps = recbuf[1]&0x00ff;
+ 142:User/Tasks/Src/user_HardwareInitTask.c ****         steps = steps<<8 | recbuf[2];
+ 143:User/Tasks/Src/user_HardwareInitTask.c ****         if(!HWInterface.IMU.ConnectionError)
+ 144:User/Tasks/Src/user_HardwareInitTask.c ****           dmp_set_pedometer_step_count((unsigned long)steps);
+ 145:User/Tasks/Src/user_HardwareInitTask.c ****       }
+ 146:User/Tasks/Src/user_HardwareInitTask.c ****     }
+ 147:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 148:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 149:User/Tasks/Src/user_HardwareInitTask.c ****     // BLE
+ 150:User/Tasks/Src/user_HardwareInitTask.c ****     HWInterface.BLE.Init();
+ 317              		.loc 1 150 5 is_stmt 1 view .LVU93
+ 318              		.loc 1 150 20 is_stmt 0 view .LVU94
+ 319 0114 484C     		ldr	r4, .L33
+ 320              	.LVL43:
+ 321              		.loc 1 150 20 view .LVU95
+ 322 0116 2369     		ldr	r3, [r4, #16]
+ 323              		.loc 1 150 5 view .LVU96
+ 324 0118 9847     		blx	r3
+ 325              	.LVL44:
+ 151:User/Tasks/Src/user_HardwareInitTask.c ****     HWInterface.BLE.Disable();
+ 326              		.loc 1 151 5 is_stmt 1 view .LVU97
+ 327              		.loc 1 151 20 is_stmt 0 view .LVU98
+ 328 011a A369     		ldr	r3, [r4, #24]
+ 329              		.loc 1 151 5 view .LVU99
+ 330 011c 9847     		blx	r3
+ 331              	.LVL45:
+ 152:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 153:User/Tasks/Src/user_HardwareInitTask.c ****     //set the KT6328 BautRate 9600
+ 154:User/Tasks/Src/user_HardwareInitTask.c ****     //default is 115200
+ 155:User/Tasks/Src/user_HardwareInitTask.c ****     //printf("AT+CT01\r\n");
+ 156:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 157:User/Tasks/Src/user_HardwareInitTask.c ****     // touch
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 10
+
+
+ 158:User/Tasks/Src/user_HardwareInitTask.c ****     CST816_GPIO_Init();
+ 332              		.loc 1 158 5 is_stmt 1 view .LVU100
+ 333 011e FFF7FEFF 		bl	CST816_GPIO_Init
+ 334              	.LVL46:
+ 159:User/Tasks/Src/user_HardwareInitTask.c ****     CST816_RESET();
+ 335              		.loc 1 159 5 view .LVU101
+ 336 0122 FFF7FEFF 		bl	CST816_RESET
+ 337              	.LVL47:
+ 160:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 161:User/Tasks/Src/user_HardwareInitTask.c ****     // lcd
+ 162:User/Tasks/Src/user_HardwareInitTask.c ****     LCD_Init();
+ 338              		.loc 1 162 5 view .LVU102
+ 339 0126 FFF7FEFF 		bl	LCD_Init
+ 340              	.LVL48:
+ 163:User/Tasks/Src/user_HardwareInitTask.c ****     LCD_Fill(0,0, LCD_W, LCD_H, BLACK);
+ 341              		.loc 1 163 5 view .LVU103
+ 342 012a 0024     		movs	r4, #0
+ 343 012c 0094     		str	r4, [sp]
+ 344 012e 4FF48C73 		mov	r3, #280
+ 345 0132 F022     		movs	r2, #240
+ 346 0134 2146     		mov	r1, r4
+ 347 0136 2046     		mov	r0, r4
+ 348 0138 FFF7FEFF 		bl	LCD_Fill
+ 349              	.LVL49:
+ 164:User/Tasks/Src/user_HardwareInitTask.c ****     delay_ms(10);
+ 350              		.loc 1 164 5 view .LVU104
+ 351 013c 0A20     		movs	r0, #10
+ 352 013e FFF7FEFF 		bl	delay_ms
+ 353              	.LVL50:
+ 165:User/Tasks/Src/user_HardwareInitTask.c ****     LCD_Set_Light(50);
+ 354              		.loc 1 165 5 view .LVU105
+ 355 0142 3220     		movs	r0, #50
+ 356 0144 FFF7FEFF 		bl	LCD_Set_Light
+ 357              	.LVL51:
+ 166:User/Tasks/Src/user_HardwareInitTask.c ****     LCD_ShowString(72,LCD_H/2,(uint8_t*)"Welcome!", WHITE, BLACK, 24, 0);//12*6,16*8,24*12,32*16
+ 358              		.loc 1 166 5 view .LVU106
+ 359 0148 0294     		str	r4, [sp, #8]
+ 360 014a 1825     		movs	r5, #24
+ 361 014c 0195     		str	r5, [sp, #4]
+ 362 014e 0094     		str	r4, [sp]
+ 363 0150 4FF6FF73 		movw	r3, #65535
+ 364 0154 3B4A     		ldr	r2, .L33+12
+ 365 0156 8C21     		movs	r1, #140
+ 366 0158 4820     		movs	r0, #72
+ 367 015a FFF7FEFF 		bl	LCD_ShowString
+ 368              	.LVL52:
+ 167:User/Tasks/Src/user_HardwareInitTask.c ****     uint8_t lcd_buf_str[17];
+ 369              		.loc 1 167 5 view .LVU107
+ 168:User/Tasks/Src/user_HardwareInitTask.c ****     sprintf(lcd_buf_str, "OV-Watch V%d.%d.%d", watch_version_major(), watch_version_minor(), watch_
+ 370              		.loc 1 168 5 view .LVU108
+ 371              		.loc 1 168 5 is_stmt 0 discriminator 3 view .LVU109
+ 372 015e 0423     		movs	r3, #4
+ 373 0160 0093     		str	r3, [sp]
+ 374 0162 0222     		movs	r2, #2
+ 375 0164 3849     		ldr	r1, .L33+16
+ 376 0166 05A8     		add	r0, sp, #20
+ 377 0168 FFF7FEFF 		bl	sprintf
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 11
+
+
+ 378              	.LVL53:
+ 169:User/Tasks/Src/user_HardwareInitTask.c ****     LCD_ShowString(34, LCD_H/2+48, (uint8_t*)lcd_buf_str, WHITE, BLACK, 24, 0);
+ 379              		.loc 1 169 5 is_stmt 1 view .LVU110
+ 380 016c 0294     		str	r4, [sp, #8]
+ 381 016e 0195     		str	r5, [sp, #4]
+ 382 0170 0094     		str	r4, [sp]
+ 383 0172 4FF6FF73 		movw	r3, #65535
+ 384 0176 05AA     		add	r2, sp, #20
+ 385 0178 BC21     		movs	r1, #188
+ 386 017a 2220     		movs	r0, #34
+ 387 017c FFF7FEFF 		bl	LCD_ShowString
+ 388              	.LVL54:
+ 170:User/Tasks/Src/user_HardwareInitTask.c ****     delay_ms(1000);
+ 389              		.loc 1 170 5 view .LVU111
+ 390 0180 4FF47A70 		mov	r0, #1000
+ 391 0184 FFF7FEFF 		bl	delay_ms
+ 392              	.LVL55:
+ 171:User/Tasks/Src/user_HardwareInitTask.c ****     LCD_Fill(0, LCD_H/2-24, LCD_W, LCD_H/2+49, BLACK);
+ 393              		.loc 1 171 5 view .LVU112
+ 394 0188 0094     		str	r4, [sp]
+ 395 018a BD23     		movs	r3, #189
+ 396 018c F022     		movs	r2, #240
+ 397 018e 7421     		movs	r1, #116
+ 398 0190 2046     		mov	r0, r4
+ 399 0192 FFF7FEFF 		bl	LCD_Fill
+ 400              	.LVL56:
+ 172:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 173:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 174:User/Tasks/Src/user_HardwareInitTask.c ****     // ui
+ 175:User/Tasks/Src/user_HardwareInitTask.c ****     // LVGL init
+ 176:User/Tasks/Src/user_HardwareInitTask.c ****     lv_init();
+ 401              		.loc 1 176 5 view .LVU113
+ 402 0196 FFF7FEFF 		bl	lv_init
+ 403              	.LVL57:
+ 177:User/Tasks/Src/user_HardwareInitTask.c ****     lv_port_disp_init();
+ 404              		.loc 1 177 5 view .LVU114
+ 405 019a FFF7FEFF 		bl	lv_port_disp_init
+ 406              	.LVL58:
+ 178:User/Tasks/Src/user_HardwareInitTask.c ****     lv_port_indev_init();
+ 407              		.loc 1 178 5 view .LVU115
+ 408 019e FFF7FEFF 		bl	lv_port_indev_init
+ 409              	.LVL59:
+ 179:User/Tasks/Src/user_HardwareInitTask.c ****     ui_init();
+ 410              		.loc 1 179 5 view .LVU116
+ 411 01a2 FFF7FEFF 		bl	ui_init
+ 412              	.LVL60:
+ 180:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 181:User/Tasks/Src/user_HardwareInitTask.c ****     xTaskResumeAll();
+ 413              		.loc 1 181 5 view .LVU117
+ 414 01a6 FFF7FEFF 		bl	xTaskResumeAll
+ 415              	.LVL61:
+ 182:User/Tasks/Src/user_HardwareInitTask.c **** 		vTaskDelete(NULL);
+ 416              		.loc 1 182 3 view .LVU118
+ 417 01aa 2046     		mov	r0, r4
+ 418 01ac FFF7FEFF 		bl	vTaskDelete
+ 419              	.LVL62:
+ 183:User/Tasks/Src/user_HardwareInitTask.c **** 		osDelay(500);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 12
+
+
+ 420              		.loc 1 183 3 view .LVU119
+ 421 01b0 4FF4FA70 		mov	r0, #500
+ 422 01b4 FFF7FEFF 		bl	osDelay
+ 423              	.LVL63:
+ 424              	.LBE11:
+  48:User/Tasks/Src/user_HardwareInitTask.c **** 	{
+ 425              		.loc 1 48 7 view .LVU120
+ 426              	.L25:
+  48:User/Tasks/Src/user_HardwareInitTask.c **** 	{
+ 427              		.loc 1 48 2 view .LVU121
+ 428              	.LBB15:
+  50:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 429              		.loc 1 50 5 view .LVU122
+ 430 01b8 FFF7FEFF 		bl	vTaskSuspendAll
+ 431              	.LVL64:
+  53:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 432              		.loc 1 53 5 view .LVU123
+  53:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 433              		.loc 1 53 8 is_stmt 0 view .LVU124
+ 434 01bc 0022     		movs	r2, #0
+ 435 01be 4FF4FA61 		mov	r1, #2000
+ 436 01c2 1F48     		ldr	r0, .L33+8
+ 437 01c4 FFF7FEFF 		bl	HAL_RTCEx_SetWakeUpTimer_IT
+ 438              	.LVL65:
+  53:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 439              		.loc 1 53 7 discriminator 1 view .LVU125
+ 440 01c8 0028     		cmp	r0, #0
+ 441 01ca 7FF41CAF 		bne	.L32
+ 442              	.L2:
+  58:User/Tasks/Src/user_HardwareInitTask.c ****     __HAL_UART_ENABLE_IT(&huart1,UART_IT_IDLE);
+ 443              		.loc 1 58 5 is_stmt 1 view .LVU126
+ 444 01ce 1F4C     		ldr	r4, .L33+20
+ 445 01d0 1922     		movs	r2, #25
+ 446 01d2 1F49     		ldr	r1, .L33+24
+ 447 01d4 2046     		mov	r0, r4
+ 448 01d6 FFF7FEFF 		bl	HAL_UART_Receive_DMA
+ 449              	.LVL66:
+  59:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 450              		.loc 1 59 5 view .LVU127
+ 451 01da 2268     		ldr	r2, [r4]
+ 452 01dc D368     		ldr	r3, [r2, #12]
+ 453 01de 43F01003 		orr	r3, r3, #16
+ 454 01e2 D360     		str	r3, [r2, #12]
+  62:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 455              		.loc 1 62 5 view .LVU128
+ 456 01e4 0821     		movs	r1, #8
+ 457 01e6 1B48     		ldr	r0, .L33+28
+ 458 01e8 FFF7FEFF 		bl	HAL_TIM_PWM_Start
+ 459              	.LVL67:
+  65:User/Tasks/Src/user_HardwareInitTask.c ****     // wait
+ 460              		.loc 1 65 5 view .LVU129
+ 461 01ec FFF7FEFF 		bl	delay_init
+ 462              	.LVL68:
+  70:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 463              		.loc 1 70 5 view .LVU130
+  70:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 464              		.loc 1 70 22 is_stmt 0 view .LVU131
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 13
+
+
+ 465 01f0 114B     		ldr	r3, .L33
+ 466 01f2 1B6A     		ldr	r3, [r3, #32]
+  70:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 467              		.loc 1 70 5 view .LVU132
+ 468 01f4 9847     		blx	r3
+ 469              	.LVL69:
+  73:User/Tasks/Src/user_HardwareInitTask.c **** 
+ 470              		.loc 1 73 5 is_stmt 1 view .LVU133
+ 471 01f6 FFF7FEFF 		bl	Key_Port_Init
+ 472              	.LVL70:
+  76:User/Tasks/Src/user_HardwareInitTask.c ****     while(num && HWInterface.AHT21.ConnectionError)
+ 473              		.loc 1 76 5 view .LVU134
+  77:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 474              		.loc 1 77 5 view .LVU135
+  76:User/Tasks/Src/user_HardwareInitTask.c ****     while(num && HWInterface.AHT21.ConnectionError)
+ 475              		.loc 1 76 13 is_stmt 0 view .LVU136
+ 476 01fa 0324     		movs	r4, #3
+  77:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 477              		.loc 1 77 10 view .LVU137
+ 478 01fc 0DE7     		b	.L3
+ 479              	.LVL71:
+ 480              	.L28:
+  77:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 481              		.loc 1 77 10 view .LVU138
+ 482 01fe 0324     		movs	r4, #3
+ 483              	.LVL72:
+  77:User/Tasks/Src/user_HardwareInitTask.c ****     {
+ 484              		.loc 1 77 10 view .LVU139
+ 485 0200 54E7     		b	.L16
+ 486              	.LVL73:
+ 487              	.L30:
+ 488              	.LBB14:
+ 123:User/Tasks/Src/user_HardwareInitTask.c ****       {
+ 489              		.loc 1 123 51 discriminator 1 view .LVU140
+ 490 0202 9DF81120 		ldrb	r2, [sp, #17]	@ zero_extendqisi2
+ 123:User/Tasks/Src/user_HardwareInitTask.c ****       {
+ 491              		.loc 1 123 41 discriminator 1 view .LVU141
+ 492 0206 012A     		cmp	r2, #1
+ 493 0208 3FF66DAF 		bhi	.L21
+ 130:User/Tasks/Src/user_HardwareInitTask.c ****         ui_APPSy_EN = recbuf[1];
+ 494              		.loc 1 130 9 is_stmt 1 view .LVU142
+ 130:User/Tasks/Src/user_HardwareInitTask.c ****         ui_APPSy_EN = recbuf[1];
+ 495              		.loc 1 130 42 is_stmt 0 view .LVU143
+ 496 020c 0A49     		ldr	r1, .L33
+ 497 020e 81F83530 		strb	r3, [r1, #53]
+ 131:User/Tasks/Src/user_HardwareInitTask.c ****       }
+ 498              		.loc 1 131 9 is_stmt 1 view .LVU144
+ 131:User/Tasks/Src/user_HardwareInitTask.c ****       }
+ 499              		.loc 1 131 21 is_stmt 0 view .LVU145
+ 500 0212 0A4B     		ldr	r3, .L33+4
+ 501 0214 1A70     		strb	r2, [r3]
+ 502 0216 6CE7     		b	.L23
+ 503              	.L31:
+ 504              	.LBB13:
+ 140:User/Tasks/Src/user_HardwareInitTask.c ****         steps = recbuf[1]&0x00ff;
+ 505              		.loc 1 140 9 is_stmt 1 view .LVU146
+ 506              	.LVL74:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 14
+
+
+ 141:User/Tasks/Src/user_HardwareInitTask.c ****         steps = steps<<8 | recbuf[2];
+ 507              		.loc 1 141 9 view .LVU147
+ 141:User/Tasks/Src/user_HardwareInitTask.c ****         steps = steps<<8 | recbuf[2];
+ 508              		.loc 1 141 23 is_stmt 0 view .LVU148
+ 509 0218 9DF81130 		ldrb	r3, [sp, #17]	@ zero_extendqisi2
+ 510              	.LVL75:
+ 142:User/Tasks/Src/user_HardwareInitTask.c ****         if(!HWInterface.IMU.ConnectionError)
+ 511              		.loc 1 142 9 is_stmt 1 view .LVU149
+ 142:User/Tasks/Src/user_HardwareInitTask.c ****         if(!HWInterface.IMU.ConnectionError)
+ 512              		.loc 1 142 34 is_stmt 0 view .LVU150
+ 513 021c 9DF81200 		ldrb	r0, [sp, #18]	@ zero_extendqisi2
+ 142:User/Tasks/Src/user_HardwareInitTask.c ****         if(!HWInterface.IMU.ConnectionError)
+ 514              		.loc 1 142 15 view .LVU151
+ 515 0220 40EA0320 		orr	r0, r0, r3, lsl #8
+ 516              	.LVL76:
+ 143:User/Tasks/Src/user_HardwareInitTask.c ****           dmp_set_pedometer_step_count((unsigned long)steps);
+ 517              		.loc 1 143 9 is_stmt 1 view .LVU152
+ 143:User/Tasks/Src/user_HardwareInitTask.c ****           dmp_set_pedometer_step_count((unsigned long)steps);
+ 518              		.loc 1 143 28 is_stmt 0 view .LVU153
+ 519 0224 044B     		ldr	r3, .L33
+ 520 0226 93F83030 		ldrb	r3, [r3, #48]	@ zero_extendqisi2
+ 143:User/Tasks/Src/user_HardwareInitTask.c ****           dmp_set_pedometer_step_count((unsigned long)steps);
+ 521              		.loc 1 143 11 view .LVU154
+ 522 022a 002B     		cmp	r3, #0
+ 523 022c 7FF472AF 		bne	.L20
+ 144:User/Tasks/Src/user_HardwareInitTask.c ****       }
+ 524              		.loc 1 144 11 is_stmt 1 view .LVU155
+ 525 0230 FFF7FEFF 		bl	dmp_set_pedometer_step_count
+ 526              	.LVL77:
+ 144:User/Tasks/Src/user_HardwareInitTask.c ****       }
+ 527              		.loc 1 144 11 is_stmt 0 view .LVU156
+ 528 0234 6EE7     		b	.L20
+ 529              	.L34:
+ 530 0236 00BF     		.align	2
+ 531              	.L33:
+ 532 0238 00000000 		.word	HWInterface
+ 533 023c 00000000 		.word	ui_APPSy_EN
+ 534 0240 00000000 		.word	hrtc
+ 535 0244 00000000 		.word	.LC0
+ 536 0248 0C000000 		.word	.LC1
+ 537 024c 00000000 		.word	huart1
+ 538 0250 00000000 		.word	HardInt_receive_str
+ 539 0254 00000000 		.word	htim3
+ 540              	.LBE13:
+ 541              	.LBE14:
+ 542              	.LBE15:
+ 543              		.cfi_endproc
+ 544              	.LFE420:
+ 546              		.text
+ 547              	.Letext0:
+ 548              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 549              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 550              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 551              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 552              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 553              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h"
+ 554              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 15
+
+
+ 555              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 556              		.file 10 "Core/Inc/usart.h"
+ 557              		.file 11 "Core/Inc/tim.h"
+ 558              		.file 12 "Core/Inc/stm32f4xx_it.h"
+ 559              		.file 13 "SYSTEM/sys.h"
+ 560              		.file 14 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h"
+ 561              		.file 15 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
+ 562              		.file 16 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ 563              		.file 17 "Core/Inc/rtc.h"
+ 564              		.file 18 "User/Func/Inc/HWDataAccess.h"
+ 565              		.file 19 "User/GUI_App/Screens/Inc/ui_DateTimeSetPage.h"
+ 566              		.file 20 "User/GUI_App/ui.h"
+ 567              		.file 21 "Middlewares/LVGL/GUI/porting/lv_port_indev.h"
+ 568              		.file 22 "Middlewares/LVGL/GUI/porting/lv_port_disp.h"
+ 569              		.file 23 "Middlewares/LVGL/GUI/lvgl/src/../src/core/lv_obj.h"
+ 570              		.file 24 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3
+ 571              		.file 25 "BSP/LCD/lcd.h"
+ 572              		.file 26 "BSP/LCD/lcd_init.h"
+ 573              		.file 27 "SYSTEM/delay.h"
+ 574              		.file 28 "BSP/TOUCH/CST816.h"
+ 575              		.file 29 "BSP/MPU6050/eMPL/inv_mpu_dmp_motion_driver.h"
+ 576              		.file 30 "BSP/BL24C02/DataSave.h"
+ 577              		.file 31 "BSP/KEY/key.h"
+ 578              		.file 32 "Core/Inc/main.h"
+ 579              		.file 33 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h"
+ 580              		.file 34 "User/version.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 user_HardwareInitTask.c
+C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s:21     .rodata.HardwareInitTask.str1.4:00000000 $d
+C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s:28     .text.HardwareInitTask:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s:34     .text.HardwareInitTask:00000000 HardwareInitTask
+C:\Users\chen\AppData\Local\Temp\cc4mhLJ0.s:532    .text.HardwareInitTask:00000238 $d
+
+UNDEFINED SYMBOLS
+Error_Handler
+EEPROM_Init
+EEPROM_Check
+SettingGet
+HAL_RTC_GetDate
+CST816_GPIO_Init
+CST816_RESET
+LCD_Init
+LCD_Fill
+delay_ms
+LCD_Set_Light
+LCD_ShowString
+sprintf
+lv_init
+lv_port_disp_init
+lv_port_indev_init
+ui_init
+xTaskResumeAll
+vTaskDelete
+osDelay
+vTaskSuspendAll
+HAL_RTCEx_SetWakeUpTimer_IT
+HAL_UART_Receive_DMA
+HAL_TIM_PWM_Start
+delay_init
+Key_Port_Init
+dmp_set_pedometer_step_count
+HWInterface
+ui_APPSy_EN
+hrtc
+huart1
+HardInt_receive_str
+htim3

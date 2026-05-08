@@ -1,0 +1,1804 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"SPL06_001.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "BSP/SPL06_001/SPL06_001.c"
+  20              		.section	.text.SPL_ReadOneReg,"ax",%progbits
+  21              		.align	1
+  22              		.global	SPL_ReadOneReg
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	SPL_ReadOneReg:
+  28              	.LVL0:
+  29              	.LFB216:
+   1:BSP/SPL06_001/SPL06_001.c **** #include <math.h>
+   2:BSP/SPL06_001/SPL06_001.c **** #include "SPL06_001.h"
+   3:BSP/SPL06_001/SPL06_001.c **** 
+   4:BSP/SPL06_001/SPL06_001.c **** #define SPL_CLK_ENABLE __HAL_RCC_GPIOB_CLK_ENABLE()
+   5:BSP/SPL06_001/SPL06_001.c **** iic_bus_t SPL_bus = 
+   6:BSP/SPL06_001/SPL06_001.c **** {
+   7:BSP/SPL06_001/SPL06_001.c **** 	.IIC_SDA_PORT = GPIOB,
+   8:BSP/SPL06_001/SPL06_001.c **** 	.IIC_SCL_PORT = GPIOB,
+   9:BSP/SPL06_001/SPL06_001.c **** 	.IIC_SDA_PIN  = GPIO_PIN_13,
+  10:BSP/SPL06_001/SPL06_001.c **** 	.IIC_SCL_PIN  = GPIO_PIN_14,
+  11:BSP/SPL06_001/SPL06_001.c **** };
+  12:BSP/SPL06_001/SPL06_001.c **** 
+  13:BSP/SPL06_001/SPL06_001.c **** int16_t c0,c1,c01,c11,c20,c21,c30;
+  14:BSP/SPL06_001/SPL06_001.c **** int32_t c00,c10;
+  15:BSP/SPL06_001/SPL06_001.c **** 
+  16:BSP/SPL06_001/SPL06_001.c **** uint8_t SPL_ReadOneReg(uint8_t addr)
+  17:BSP/SPL06_001/SPL06_001.c **** {
+  30              		.loc 1 17 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 17 1 is_stmt 0 view .LVU1
+  35 0000 08B5     		push	{r3, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 3, -8
+  39              		.cfi_offset 14, -4
+  40 0002 0246     		mov	r2, r0
+  18:BSP/SPL06_001/SPL06_001.c **** 	uint8_t dat;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 2
+
+
+  41              		.loc 1 18 2 is_stmt 1 view .LVU2
+  19:BSP/SPL06_001/SPL06_001.c **** 	dat = IIC_Read_One_Byte(&SPL_bus, SPL_CHIP_ADDRESS,addr);
+  42              		.loc 1 19 2 view .LVU3
+  43              		.loc 1 19 8 is_stmt 0 view .LVU4
+  44 0004 7621     		movs	r1, #118
+  45 0006 0248     		ldr	r0, .L3
+  46              	.LVL1:
+  47              		.loc 1 19 8 view .LVU5
+  48 0008 FFF7FEFF 		bl	IIC_Read_One_Byte
+  49              	.LVL2:
+  20:BSP/SPL06_001/SPL06_001.c **** 	return dat;
+  50              		.loc 1 20 2 is_stmt 1 view .LVU6
+  21:BSP/SPL06_001/SPL06_001.c **** }
+  51              		.loc 1 21 1 is_stmt 0 view .LVU7
+  52 000c 08BD     		pop	{r3, pc}
+  53              	.L4:
+  54 000e 00BF     		.align	2
+  55              	.L3:
+  56 0010 00000000 		.word	SPL_bus
+  57              		.cfi_endproc
+  58              	.LFE216:
+  60              		.section	.text.SPL_WriteOneReg,"ax",%progbits
+  61              		.align	1
+  62              		.global	SPL_WriteOneReg
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  67              	SPL_WriteOneReg:
+  68              	.LVL3:
+  69              	.LFB217:
+  22:BSP/SPL06_001/SPL06_001.c **** 
+  23:BSP/SPL06_001/SPL06_001.c **** void SPL_WriteOneReg(uint8_t addr, uint8_t dat)
+  24:BSP/SPL06_001/SPL06_001.c **** {
+  70              		.loc 1 24 1 is_stmt 1 view -0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74              		.loc 1 24 1 is_stmt 0 view .LVU9
+  75 0000 08B5     		push	{r3, lr}
+  76              	.LCFI1:
+  77              		.cfi_def_cfa_offset 8
+  78              		.cfi_offset 3, -8
+  79              		.cfi_offset 14, -4
+  80 0002 0246     		mov	r2, r0
+  81 0004 0B46     		mov	r3, r1
+  25:BSP/SPL06_001/SPL06_001.c **** 	IIC_Write_One_Byte(&SPL_bus, SPL_CHIP_ADDRESS,addr,dat);
+  82              		.loc 1 25 2 is_stmt 1 view .LVU10
+  83 0006 7621     		movs	r1, #118
+  84              	.LVL4:
+  85              		.loc 1 25 2 is_stmt 0 view .LVU11
+  86 0008 0148     		ldr	r0, .L7
+  87              	.LVL5:
+  88              		.loc 1 25 2 view .LVU12
+  89 000a FFF7FEFF 		bl	IIC_Write_One_Byte
+  90              	.LVL6:
+  26:BSP/SPL06_001/SPL06_001.c **** }
+  91              		.loc 1 26 1 view .LVU13
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 3
+
+
+  92 000e 08BD     		pop	{r3, pc}
+  93              	.L8:
+  94              		.align	2
+  95              	.L7:
+  96 0010 00000000 		.word	SPL_bus
+  97              		.cfi_endproc
+  98              	.LFE217:
+ 100              		.section	.text.Get_Traw,"ax",%progbits
+ 101              		.align	1
+ 102              		.global	Get_Traw
+ 103              		.syntax unified
+ 104              		.thumb
+ 105              		.thumb_func
+ 107              	Get_Traw:
+ 108              	.LFB218:
+  27:BSP/SPL06_001/SPL06_001.c **** 
+  28:BSP/SPL06_001/SPL06_001.c **** int32_t Get_Traw()
+  29:BSP/SPL06_001/SPL06_001.c **** {
+ 109              		.loc 1 29 1 is_stmt 1 view -0
+ 110              		.cfi_startproc
+ 111              		@ args = 0, pretend = 0, frame = 8
+ 112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 113 0000 30B5     		push	{r4, r5, lr}
+ 114              	.LCFI2:
+ 115              		.cfi_def_cfa_offset 12
+ 116              		.cfi_offset 4, -12
+ 117              		.cfi_offset 5, -8
+ 118              		.cfi_offset 14, -4
+ 119 0002 83B0     		sub	sp, sp, #12
+ 120              	.LCFI3:
+ 121              		.cfi_def_cfa_offset 24
+  30:BSP/SPL06_001/SPL06_001.c **** 	uint8_t buff[3];
+ 122              		.loc 1 30 2 view .LVU15
+  31:BSP/SPL06_001/SPL06_001.c **** 	int32_t Traw;
+ 123              		.loc 1 31 2 view .LVU16
+  32:BSP/SPL06_001/SPL06_001.c **** 	buff[0] = SPL_ReadOneReg(SPL_TMP_B0);
+ 124              		.loc 1 32 2 view .LVU17
+ 125              		.loc 1 32 12 is_stmt 0 view .LVU18
+ 126 0004 0520     		movs	r0, #5
+ 127 0006 FFF7FEFF 		bl	SPL_ReadOneReg
+ 128              	.LVL7:
+ 129 000a 0546     		mov	r5, r0
+ 130              		.loc 1 32 10 discriminator 1 view .LVU19
+ 131 000c 8DF80400 		strb	r0, [sp, #4]
+  33:BSP/SPL06_001/SPL06_001.c **** 	buff[1] = SPL_ReadOneReg(SPL_TMP_B1);
+ 132              		.loc 1 33 2 is_stmt 1 view .LVU20
+ 133              		.loc 1 33 12 is_stmt 0 view .LVU21
+ 134 0010 0420     		movs	r0, #4
+ 135 0012 FFF7FEFF 		bl	SPL_ReadOneReg
+ 136              	.LVL8:
+ 137 0016 0446     		mov	r4, r0
+ 138              		.loc 1 33 10 discriminator 1 view .LVU22
+ 139 0018 8DF80500 		strb	r0, [sp, #5]
+  34:BSP/SPL06_001/SPL06_001.c **** 	buff[2] = SPL_ReadOneReg(SPL_TMP_B2);
+ 140              		.loc 1 34 2 is_stmt 1 view .LVU23
+ 141              		.loc 1 34 12 is_stmt 0 view .LVU24
+ 142 001c 0320     		movs	r0, #3
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 4
+
+
+ 143 001e FFF7FEFF 		bl	SPL_ReadOneReg
+ 144              	.LVL9:
+ 145              		.loc 1 34 10 discriminator 1 view .LVU25
+ 146 0022 8DF80600 		strb	r0, [sp, #6]
+  35:BSP/SPL06_001/SPL06_001.c **** 	Traw = buff[2];
+ 147              		.loc 1 35 2 is_stmt 1 view .LVU26
+ 148              	.LVL10:
+  36:BSP/SPL06_001/SPL06_001.c **** 	Traw = Traw << 8 | buff[1];
+ 149              		.loc 1 36 2 view .LVU27
+ 150              		.loc 1 36 7 is_stmt 0 view .LVU28
+ 151 0026 44EA0024 		orr	r4, r4, r0, lsl #8
+ 152              	.LVL11:
+  37:BSP/SPL06_001/SPL06_001.c **** 	Traw = Traw << 8 | buff[0];
+ 153              		.loc 1 37 2 is_stmt 1 view .LVU29
+ 154              		.loc 1 37 7 is_stmt 0 view .LVU30
+ 155 002a 45EA0420 		orr	r0, r5, r4, lsl #8
+ 156              	.LVL12:
+  38:BSP/SPL06_001/SPL06_001.c **** 	if(Traw & (1<<23))
+ 157              		.loc 1 38 2 is_stmt 1 view .LVU31
+ 158              		.loc 1 38 4 is_stmt 0 view .LVU32
+ 159 002e E40B     		lsrs	r4, r4, #15
+ 160 0030 01D0     		beq	.L9
+  39:BSP/SPL06_001/SPL06_001.c **** 	{Traw |= 0xFF000000;}//24 bit 2´s complement numbers
+ 161              		.loc 1 39 3 is_stmt 1 view .LVU33
+ 162 0032 40F07F40 		orr	r0, r0, #-16777216
+ 163              	.LVL13:
+  40:BSP/SPL06_001/SPL06_001.c **** 	return Traw;
+ 164              		.loc 1 40 2 view .LVU34
+ 165              	.L9:
+  41:BSP/SPL06_001/SPL06_001.c **** }
+ 166              		.loc 1 41 1 is_stmt 0 view .LVU35
+ 167 0036 03B0     		add	sp, sp, #12
+ 168              	.LCFI4:
+ 169              		.cfi_def_cfa_offset 12
+ 170              		@ sp needed
+ 171 0038 30BD     		pop	{r4, r5, pc}
+ 172              		.cfi_endproc
+ 173              	.LFE218:
+ 175              		.section	.text.Get_Praw,"ax",%progbits
+ 176              		.align	1
+ 177              		.global	Get_Praw
+ 178              		.syntax unified
+ 179              		.thumb
+ 180              		.thumb_func
+ 182              	Get_Praw:
+ 183              	.LFB219:
+  42:BSP/SPL06_001/SPL06_001.c **** 
+  43:BSP/SPL06_001/SPL06_001.c **** int32_t Get_Praw()
+  44:BSP/SPL06_001/SPL06_001.c **** {
+ 184              		.loc 1 44 1 is_stmt 1 view -0
+ 185              		.cfi_startproc
+ 186              		@ args = 0, pretend = 0, frame = 8
+ 187              		@ frame_needed = 0, uses_anonymous_args = 0
+ 188 0000 30B5     		push	{r4, r5, lr}
+ 189              	.LCFI5:
+ 190              		.cfi_def_cfa_offset 12
+ 191              		.cfi_offset 4, -12
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 5
+
+
+ 192              		.cfi_offset 5, -8
+ 193              		.cfi_offset 14, -4
+ 194 0002 83B0     		sub	sp, sp, #12
+ 195              	.LCFI6:
+ 196              		.cfi_def_cfa_offset 24
+  45:BSP/SPL06_001/SPL06_001.c **** 	uint8_t buff[3];
+ 197              		.loc 1 45 2 view .LVU37
+  46:BSP/SPL06_001/SPL06_001.c **** 	int32_t Praw;
+ 198              		.loc 1 46 2 view .LVU38
+  47:BSP/SPL06_001/SPL06_001.c **** 	buff[0] = SPL_ReadOneReg(SPL_PRS_B0);
+ 199              		.loc 1 47 2 view .LVU39
+ 200              		.loc 1 47 12 is_stmt 0 view .LVU40
+ 201 0004 0220     		movs	r0, #2
+ 202 0006 FFF7FEFF 		bl	SPL_ReadOneReg
+ 203              	.LVL14:
+ 204 000a 0546     		mov	r5, r0
+ 205              		.loc 1 47 10 discriminator 1 view .LVU41
+ 206 000c 8DF80400 		strb	r0, [sp, #4]
+  48:BSP/SPL06_001/SPL06_001.c **** 	buff[1] = SPL_ReadOneReg(SPL_PRS_B1);
+ 207              		.loc 1 48 2 is_stmt 1 view .LVU42
+ 208              		.loc 1 48 12 is_stmt 0 view .LVU43
+ 209 0010 0120     		movs	r0, #1
+ 210 0012 FFF7FEFF 		bl	SPL_ReadOneReg
+ 211              	.LVL15:
+ 212 0016 0446     		mov	r4, r0
+ 213              		.loc 1 48 10 discriminator 1 view .LVU44
+ 214 0018 8DF80500 		strb	r0, [sp, #5]
+  49:BSP/SPL06_001/SPL06_001.c **** 	buff[2] = SPL_ReadOneReg(SPL_PRS_B2);
+ 215              		.loc 1 49 2 is_stmt 1 view .LVU45
+ 216              		.loc 1 49 12 is_stmt 0 view .LVU46
+ 217 001c 0020     		movs	r0, #0
+ 218 001e FFF7FEFF 		bl	SPL_ReadOneReg
+ 219              	.LVL16:
+ 220              		.loc 1 49 10 discriminator 1 view .LVU47
+ 221 0022 8DF80600 		strb	r0, [sp, #6]
+  50:BSP/SPL06_001/SPL06_001.c **** 	Praw = buff[2];
+ 222              		.loc 1 50 2 is_stmt 1 view .LVU48
+ 223              	.LVL17:
+  51:BSP/SPL06_001/SPL06_001.c **** 	Praw = Praw << 8 | buff[1];
+ 224              		.loc 1 51 2 view .LVU49
+ 225              		.loc 1 51 7 is_stmt 0 view .LVU50
+ 226 0026 44EA0024 		orr	r4, r4, r0, lsl #8
+ 227              	.LVL18:
+  52:BSP/SPL06_001/SPL06_001.c **** 	Praw = Praw << 8 | buff[0];
+ 228              		.loc 1 52 2 is_stmt 1 view .LVU51
+ 229              		.loc 1 52 7 is_stmt 0 view .LVU52
+ 230 002a 45EA0420 		orr	r0, r5, r4, lsl #8
+ 231              	.LVL19:
+  53:BSP/SPL06_001/SPL06_001.c **** 	if(Praw & (1<<23))
+ 232              		.loc 1 53 2 is_stmt 1 view .LVU53
+ 233              		.loc 1 53 4 is_stmt 0 view .LVU54
+ 234 002e E40B     		lsrs	r4, r4, #15
+ 235 0030 01D0     		beq	.L12
+  54:BSP/SPL06_001/SPL06_001.c **** 	{Praw |= 0xFF000000;}//24 bit 2´s complement numbers
+ 236              		.loc 1 54 3 is_stmt 1 view .LVU55
+ 237 0032 40F07F40 		orr	r0, r0, #-16777216
+ 238              	.LVL20:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 6
+
+
+  55:BSP/SPL06_001/SPL06_001.c **** 	return Praw;
+ 239              		.loc 1 55 2 view .LVU56
+ 240              	.L12:
+  56:BSP/SPL06_001/SPL06_001.c **** }
+ 241              		.loc 1 56 1 is_stmt 0 view .LVU57
+ 242 0036 03B0     		add	sp, sp, #12
+ 243              	.LCFI7:
+ 244              		.cfi_def_cfa_offset 12
+ 245              		@ sp needed
+ 246 0038 30BD     		pop	{r4, r5, pc}
+ 247              		.cfi_endproc
+ 248              	.LFE219:
+ 250              		.section	.text.get_c0,"ax",%progbits
+ 251              		.align	1
+ 252              		.global	get_c0
+ 253              		.syntax unified
+ 254              		.thumb
+ 255              		.thumb_func
+ 257              	get_c0:
+ 258              	.LFB220:
+  57:BSP/SPL06_001/SPL06_001.c **** 
+  58:BSP/SPL06_001/SPL06_001.c **** int16_t get_c0()
+  59:BSP/SPL06_001/SPL06_001.c **** {
+ 259              		.loc 1 59 1 is_stmt 1 view -0
+ 260              		.cfi_startproc
+ 261              		@ args = 0, pretend = 0, frame = 8
+ 262              		@ frame_needed = 0, uses_anonymous_args = 0
+ 263 0000 10B5     		push	{r4, lr}
+ 264              	.LCFI8:
+ 265              		.cfi_def_cfa_offset 8
+ 266              		.cfi_offset 4, -8
+ 267              		.cfi_offset 14, -4
+ 268 0002 82B0     		sub	sp, sp, #8
+ 269              	.LCFI9:
+ 270              		.cfi_def_cfa_offset 16
+  60:BSP/SPL06_001/SPL06_001.c **** 	uint8_t buff[2];
+ 271              		.loc 1 60 2 view .LVU59
+  61:BSP/SPL06_001/SPL06_001.c **** 	int16_t c0;
+ 272              		.loc 1 61 2 view .LVU60
+  62:BSP/SPL06_001/SPL06_001.c **** 	buff[0] = SPL_ReadOneReg(COEF_C0);
+ 273              		.loc 1 62 2 view .LVU61
+ 274              		.loc 1 62 12 is_stmt 0 view .LVU62
+ 275 0004 1020     		movs	r0, #16
+ 276 0006 FFF7FEFF 		bl	SPL_ReadOneReg
+ 277              	.LVL21:
+ 278 000a 0446     		mov	r4, r0
+ 279              		.loc 1 62 10 discriminator 1 view .LVU63
+ 280 000c 8DF80400 		strb	r0, [sp, #4]
+  63:BSP/SPL06_001/SPL06_001.c **** 	buff[1] = SPL_ReadOneReg(COEF_C0_C1);
+ 281              		.loc 1 63 2 is_stmt 1 view .LVU64
+ 282              		.loc 1 63 12 is_stmt 0 view .LVU65
+ 283 0010 1120     		movs	r0, #17
+ 284 0012 FFF7FEFF 		bl	SPL_ReadOneReg
+ 285              	.LVL22:
+ 286              		.loc 1 63 10 discriminator 1 view .LVU66
+ 287 0016 8DF80500 		strb	r0, [sp, #5]
+  64:BSP/SPL06_001/SPL06_001.c **** 	c0 = buff[0];
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 7
+
+
+ 288              		.loc 1 64 2 is_stmt 1 view .LVU67
+ 289              	.LVL23:
+  65:BSP/SPL06_001/SPL06_001.c **** 	c0 = (c0 << 4) | (buff[1] >> 4);
+ 290              		.loc 1 65 2 view .LVU68
+ 291              		.loc 1 65 17 is_stmt 0 view .LVU69
+ 292 001a 0009     		lsrs	r0, r0, #4
+ 293              		.loc 1 65 5 view .LVU70
+ 294 001c 40EA0410 		orr	r0, r0, r4, lsl #4
+ 295              	.LVL24:
+  66:BSP/SPL06_001/SPL06_001.c **** 	if(c0 & (1<<11))
+ 296              		.loc 1 66 2 is_stmt 1 view .LVU71
+ 297              		.loc 1 66 4 is_stmt 0 view .LVU72
+ 298 0020 E409     		lsrs	r4, r4, #7
+ 299 0022 03D0     		beq	.L16
+  67:BSP/SPL06_001/SPL06_001.c **** 	{c0 |= 0xF000;}
+ 300              		.loc 1 67 3 is_stmt 1 view .LVU73
+ 301              		.loc 1 67 6 is_stmt 0 view .LVU74
+ 302 0024 6FEA0050 		mvn	r0, r0, lsl #20
+ 303              	.LVL25:
+ 304              		.loc 1 67 6 view .LVU75
+ 305 0028 6FEA1050 		mvn	r0, r0, lsr #20
+ 306              	.LVL26:
+ 307              	.L16:
+  68:BSP/SPL06_001/SPL06_001.c **** 	return c0;
+ 308              		.loc 1 68 2 is_stmt 1 view .LVU76
+  69:BSP/SPL06_001/SPL06_001.c **** }
+ 309              		.loc 1 69 1 is_stmt 0 view .LVU77
+ 310 002c 02B0     		add	sp, sp, #8
+ 311              	.LCFI10:
+ 312              		.cfi_def_cfa_offset 8
+ 313              		@ sp needed
+ 314 002e 10BD     		pop	{r4, pc}
+ 315              		.cfi_endproc
+ 316              	.LFE220:
+ 318              		.section	.text.get_c1,"ax",%progbits
+ 319              		.align	1
+ 320              		.global	get_c1
+ 321              		.syntax unified
+ 322              		.thumb
+ 323              		.thumb_func
+ 325              	get_c1:
+ 326              	.LFB221:
+  70:BSP/SPL06_001/SPL06_001.c **** 
+  71:BSP/SPL06_001/SPL06_001.c **** int16_t get_c1()
+  72:BSP/SPL06_001/SPL06_001.c **** {
+ 327              		.loc 1 72 1 is_stmt 1 view -0
+ 328              		.cfi_startproc
+ 329              		@ args = 0, pretend = 0, frame = 8
+ 330              		@ frame_needed = 0, uses_anonymous_args = 0
+ 331 0000 10B5     		push	{r4, lr}
+ 332              	.LCFI11:
+ 333              		.cfi_def_cfa_offset 8
+ 334              		.cfi_offset 4, -8
+ 335              		.cfi_offset 14, -4
+ 336 0002 82B0     		sub	sp, sp, #8
+ 337              	.LCFI12:
+ 338              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 8
+
+
+  73:BSP/SPL06_001/SPL06_001.c **** 	uint8_t buff[2];
+ 339              		.loc 1 73 2 view .LVU79
+  74:BSP/SPL06_001/SPL06_001.c **** 	int16_t c1;
+ 340              		.loc 1 74 2 view .LVU80
+  75:BSP/SPL06_001/SPL06_001.c **** 	buff[0] = SPL_ReadOneReg(COEF_C0_C1);
+ 341              		.loc 1 75 2 view .LVU81
+ 342              		.loc 1 75 12 is_stmt 0 view .LVU82
+ 343 0004 1120     		movs	r0, #17
+ 344 0006 FFF7FEFF 		bl	SPL_ReadOneReg
+ 345              	.LVL27:
+ 346 000a 0446     		mov	r4, r0
+ 347              		.loc 1 75 10 discriminator 1 view .LVU83
+ 348 000c 8DF80400 		strb	r0, [sp, #4]
+  76:BSP/SPL06_001/SPL06_001.c **** 	buff[1] = SPL_ReadOneReg(COEF_C1);
+ 349              		.loc 1 76 2 is_stmt 1 view .LVU84
+ 350              		.loc 1 76 12 is_stmt 0 view .LVU85
+ 351 0010 1220     		movs	r0, #18
+ 352 0012 FFF7FEFF 		bl	SPL_ReadOneReg
+ 353              	.LVL28:
+ 354              		.loc 1 76 10 discriminator 1 view .LVU86
+ 355 0016 8DF80500 		strb	r0, [sp, #5]
+  77:BSP/SPL06_001/SPL06_001.c **** 	c1 = buff[0] & 0x0F;
+ 356              		.loc 1 77 2 is_stmt 1 view .LVU87
+ 357              		.loc 1 77 5 is_stmt 0 view .LVU88
+ 358 001a 04F00F04 		and	r4, r4, #15
+ 359              	.LVL29:
+  78:BSP/SPL06_001/SPL06_001.c **** 	c1 = (c1 << 8) | buff[1] ;
+ 360              		.loc 1 78 2 is_stmt 1 view .LVU89
+ 361              		.loc 1 78 5 is_stmt 0 view .LVU90
+ 362 001e 40EA0420 		orr	r0, r0, r4, lsl #8
+ 363              	.LVL30:
+  79:BSP/SPL06_001/SPL06_001.c **** 	if(c1 & (1<<11))
+ 364              		.loc 1 79 2 is_stmt 1 view .LVU91
+ 365              		.loc 1 79 4 is_stmt 0 view .LVU92
+ 366 0022 E408     		lsrs	r4, r4, #3
+ 367 0024 03D0     		beq	.L19
+  80:BSP/SPL06_001/SPL06_001.c **** 	{c1 |= 0xF000;}
+ 368              		.loc 1 80 3 is_stmt 1 view .LVU93
+ 369              		.loc 1 80 6 is_stmt 0 view .LVU94
+ 370 0026 6FEA0050 		mvn	r0, r0, lsl #20
+ 371              	.LVL31:
+ 372              		.loc 1 80 6 view .LVU95
+ 373 002a 6FEA1050 		mvn	r0, r0, lsr #20
+ 374              	.LVL32:
+ 375              	.L19:
+  81:BSP/SPL06_001/SPL06_001.c **** 	return c1;
+ 376              		.loc 1 81 2 is_stmt 1 view .LVU96
+  82:BSP/SPL06_001/SPL06_001.c **** }
+ 377              		.loc 1 82 1 is_stmt 0 view .LVU97
+ 378 002e 02B0     		add	sp, sp, #8
+ 379              	.LCFI13:
+ 380              		.cfi_def_cfa_offset 8
+ 381              		@ sp needed
+ 382 0030 10BD     		pop	{r4, pc}
+ 383              		.cfi_endproc
+ 384              	.LFE221:
+ 386              		.section	.text.get_c00,"ax",%progbits
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 9
+
+
+ 387              		.align	1
+ 388              		.global	get_c00
+ 389              		.syntax unified
+ 390              		.thumb
+ 391              		.thumb_func
+ 393              	get_c00:
+ 394              	.LFB222:
+  83:BSP/SPL06_001/SPL06_001.c **** 
+  84:BSP/SPL06_001/SPL06_001.c **** int32_t get_c00()
+  85:BSP/SPL06_001/SPL06_001.c **** {
+ 395              		.loc 1 85 1 is_stmt 1 view -0
+ 396              		.cfi_startproc
+ 397              		@ args = 0, pretend = 0, frame = 8
+ 398              		@ frame_needed = 0, uses_anonymous_args = 0
+ 399 0000 30B5     		push	{r4, r5, lr}
+ 400              	.LCFI14:
+ 401              		.cfi_def_cfa_offset 12
+ 402              		.cfi_offset 4, -12
+ 403              		.cfi_offset 5, -8
+ 404              		.cfi_offset 14, -4
+ 405 0002 83B0     		sub	sp, sp, #12
+ 406              	.LCFI15:
+ 407              		.cfi_def_cfa_offset 24
+  86:BSP/SPL06_001/SPL06_001.c **** 	uint8_t buff[3];
+ 408              		.loc 1 86 2 view .LVU99
+  87:BSP/SPL06_001/SPL06_001.c **** 	int32_t c00;
+ 409              		.loc 1 87 2 view .LVU100
+  88:BSP/SPL06_001/SPL06_001.c **** 	buff[0] = SPL_ReadOneReg(COEF_C00_H);
+ 410              		.loc 1 88 2 view .LVU101
+ 411              		.loc 1 88 12 is_stmt 0 view .LVU102
+ 412 0004 1320     		movs	r0, #19
+ 413 0006 FFF7FEFF 		bl	SPL_ReadOneReg
+ 414              	.LVL33:
+ 415 000a 0546     		mov	r5, r0
+ 416              		.loc 1 88 10 discriminator 1 view .LVU103
+ 417 000c 8DF80400 		strb	r0, [sp, #4]
+  89:BSP/SPL06_001/SPL06_001.c **** 	buff[1] = SPL_ReadOneReg(COEF_C00_L);
+ 418              		.loc 1 89 2 is_stmt 1 view .LVU104
+ 419              		.loc 1 89 12 is_stmt 0 view .LVU105
+ 420 0010 1420     		movs	r0, #20
+ 421 0012 FFF7FEFF 		bl	SPL_ReadOneReg
+ 422              	.LVL34:
+ 423 0016 0446     		mov	r4, r0
+ 424              		.loc 1 89 10 discriminator 1 view .LVU106
+ 425 0018 8DF80500 		strb	r0, [sp, #5]
+  90:BSP/SPL06_001/SPL06_001.c **** 	buff[2] = SPL_ReadOneReg(COEF_C00_C10);
+ 426              		.loc 1 90 2 is_stmt 1 view .LVU107
+ 427              		.loc 1 90 12 is_stmt 0 view .LVU108
+ 428 001c 1520     		movs	r0, #21
+ 429 001e FFF7FEFF 		bl	SPL_ReadOneReg
+ 430              	.LVL35:
+ 431              		.loc 1 90 10 discriminator 1 view .LVU109
+ 432 0022 8DF80600 		strb	r0, [sp, #6]
+  91:BSP/SPL06_001/SPL06_001.c **** 	c00 = buff[0];
+ 433              		.loc 1 91 2 is_stmt 1 view .LVU110
+ 434              	.LVL36:
+  92:BSP/SPL06_001/SPL06_001.c **** 	c00 = c00<<8 | buff[1];
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 10
+
+
+ 435              		.loc 1 92 2 view .LVU111
+ 436              		.loc 1 92 6 is_stmt 0 view .LVU112
+ 437 0026 44EA0524 		orr	r4, r4, r5, lsl #8
+ 438              	.LVL37:
+  93:BSP/SPL06_001/SPL06_001.c **** 	c00 = (c00<<4) | (buff[2]>>4);
+ 439              		.loc 1 93 2 is_stmt 1 view .LVU113
+ 440              		.loc 1 93 27 is_stmt 0 view .LVU114
+ 441 002a 0009     		lsrs	r0, r0, #4
+ 442              		.loc 1 93 6 view .LVU115
+ 443 002c 40EA0410 		orr	r0, r0, r4, lsl #4
+ 444              	.LVL38:
+  94:BSP/SPL06_001/SPL06_001.c **** 	if(c00 & (1<<19))
+ 445              		.loc 1 94 2 is_stmt 1 view .LVU116
+ 446              		.loc 1 94 4 is_stmt 0 view .LVU117
+ 447 0030 E40B     		lsrs	r4, r4, #15
+ 448 0032 03D0     		beq	.L21
+  95:BSP/SPL06_001/SPL06_001.c **** 	{c00 |= 0xFFF00000;}
+ 449              		.loc 1 95 3 is_stmt 1 view .LVU118
+ 450 0034 6FEA0030 		mvn	r0, r0, lsl #12
+ 451              	.LVL39:
+ 452              		.loc 1 95 3 is_stmt 0 view .LVU119
+ 453 0038 6FEA1030 		mvn	r0, r0, lsr #12
+ 454              	.LVL40:
+  96:BSP/SPL06_001/SPL06_001.c **** 	return c00;
+ 455              		.loc 1 96 2 is_stmt 1 view .LVU120
+ 456              	.L21:
+  97:BSP/SPL06_001/SPL06_001.c **** }
+ 457              		.loc 1 97 1 is_stmt 0 view .LVU121
+ 458 003c 03B0     		add	sp, sp, #12
+ 459              	.LCFI16:
+ 460              		.cfi_def_cfa_offset 12
+ 461              		@ sp needed
+ 462 003e 30BD     		pop	{r4, r5, pc}
+ 463              		.cfi_endproc
+ 464              	.LFE222:
+ 466              		.section	.text.get_c10,"ax",%progbits
+ 467              		.align	1
+ 468              		.global	get_c10
+ 469              		.syntax unified
+ 470              		.thumb
+ 471              		.thumb_func
+ 473              	get_c10:
+ 474              	.LFB223:
+  98:BSP/SPL06_001/SPL06_001.c **** 
+  99:BSP/SPL06_001/SPL06_001.c **** int32_t get_c10()
+ 100:BSP/SPL06_001/SPL06_001.c **** {
+ 475              		.loc 1 100 1 is_stmt 1 view -0
+ 476              		.cfi_startproc
+ 477              		@ args = 0, pretend = 0, frame = 8
+ 478              		@ frame_needed = 0, uses_anonymous_args = 0
+ 479 0000 30B5     		push	{r4, r5, lr}
+ 480              	.LCFI17:
+ 481              		.cfi_def_cfa_offset 12
+ 482              		.cfi_offset 4, -12
+ 483              		.cfi_offset 5, -8
+ 484              		.cfi_offset 14, -4
+ 485 0002 83B0     		sub	sp, sp, #12
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 11
+
+
+ 486              	.LCFI18:
+ 487              		.cfi_def_cfa_offset 24
+ 101:BSP/SPL06_001/SPL06_001.c **** 	uint8_t buff[3];
+ 488              		.loc 1 101 2 view .LVU123
+ 102:BSP/SPL06_001/SPL06_001.c **** 	int32_t c10;
+ 489              		.loc 1 102 2 view .LVU124
+ 103:BSP/SPL06_001/SPL06_001.c **** 	buff[0] = SPL_ReadOneReg(COEF_C00_C10);
+ 490              		.loc 1 103 2 view .LVU125
+ 491              		.loc 1 103 12 is_stmt 0 view .LVU126
+ 492 0004 1520     		movs	r0, #21
+ 493 0006 FFF7FEFF 		bl	SPL_ReadOneReg
+ 494              	.LVL41:
+ 495 000a 0546     		mov	r5, r0
+ 496              		.loc 1 103 10 discriminator 1 view .LVU127
+ 497 000c 8DF80400 		strb	r0, [sp, #4]
+ 104:BSP/SPL06_001/SPL06_001.c **** 	buff[1] = SPL_ReadOneReg(COEF_C10_M);
+ 498              		.loc 1 104 2 is_stmt 1 view .LVU128
+ 499              		.loc 1 104 12 is_stmt 0 view .LVU129
+ 500 0010 1620     		movs	r0, #22
+ 501 0012 FFF7FEFF 		bl	SPL_ReadOneReg
+ 502              	.LVL42:
+ 503 0016 0446     		mov	r4, r0
+ 504              		.loc 1 104 10 discriminator 1 view .LVU130
+ 505 0018 8DF80500 		strb	r0, [sp, #5]
+ 105:BSP/SPL06_001/SPL06_001.c **** 	buff[2] = SPL_ReadOneReg(COEF_C10_L);
+ 506              		.loc 1 105 2 is_stmt 1 view .LVU131
+ 507              		.loc 1 105 12 is_stmt 0 view .LVU132
+ 508 001c 1720     		movs	r0, #23
+ 509 001e FFF7FEFF 		bl	SPL_ReadOneReg
+ 510              	.LVL43:
+ 511              		.loc 1 105 10 discriminator 1 view .LVU133
+ 512 0022 8DF80600 		strb	r0, [sp, #6]
+ 106:BSP/SPL06_001/SPL06_001.c **** 	c10 = buff[0] & 0x0F;
+ 513              		.loc 1 106 2 is_stmt 1 view .LVU134
+ 514              		.loc 1 106 6 is_stmt 0 view .LVU135
+ 515 0026 05F00F05 		and	r5, r5, #15
+ 516              	.LVL44:
+ 107:BSP/SPL06_001/SPL06_001.c **** 	c10 = c10<<8 | buff[1];
+ 517              		.loc 1 107 2 is_stmt 1 view .LVU136
+ 518              		.loc 1 107 6 is_stmt 0 view .LVU137
+ 519 002a 44EA0524 		orr	r4, r4, r5, lsl #8
+ 520              	.LVL45:
+ 108:BSP/SPL06_001/SPL06_001.c **** 	c10 = c10<<8 | buff[2];
+ 521              		.loc 1 108 2 is_stmt 1 view .LVU138
+ 522              		.loc 1 108 6 is_stmt 0 view .LVU139
+ 523 002e 40EA0420 		orr	r0, r0, r4, lsl #8
+ 524              	.LVL46:
+ 109:BSP/SPL06_001/SPL06_001.c **** 	if(c10 & (1<<19))
+ 525              		.loc 1 109 2 is_stmt 1 view .LVU140
+ 526              		.loc 1 109 4 is_stmt 0 view .LVU141
+ 527 0032 E40A     		lsrs	r4, r4, #11
+ 528 0034 03D0     		beq	.L24
+ 110:BSP/SPL06_001/SPL06_001.c **** 	{c10 |= 0xFFF00000;}
+ 529              		.loc 1 110 3 is_stmt 1 view .LVU142
+ 530 0036 6FEA0030 		mvn	r0, r0, lsl #12
+ 531              	.LVL47:
+ 532              		.loc 1 110 3 is_stmt 0 view .LVU143
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 12
+
+
+ 533 003a 6FEA1030 		mvn	r0, r0, lsr #12
+ 534              	.LVL48:
+ 111:BSP/SPL06_001/SPL06_001.c **** 	return c10;
+ 535              		.loc 1 111 2 is_stmt 1 view .LVU144
+ 536              	.L24:
+ 112:BSP/SPL06_001/SPL06_001.c **** }
+ 537              		.loc 1 112 1 is_stmt 0 view .LVU145
+ 538 003e 03B0     		add	sp, sp, #12
+ 539              	.LCFI19:
+ 540              		.cfi_def_cfa_offset 12
+ 541              		@ sp needed
+ 542 0040 30BD     		pop	{r4, r5, pc}
+ 543              		.cfi_endproc
+ 544              	.LFE223:
+ 546              		.section	.text.get_c01,"ax",%progbits
+ 547              		.align	1
+ 548              		.global	get_c01
+ 549              		.syntax unified
+ 550              		.thumb
+ 551              		.thumb_func
+ 553              	get_c01:
+ 554              	.LFB224:
+ 113:BSP/SPL06_001/SPL06_001.c **** 
+ 114:BSP/SPL06_001/SPL06_001.c **** int16_t get_c01()
+ 115:BSP/SPL06_001/SPL06_001.c **** {
+ 555              		.loc 1 115 1 is_stmt 1 view -0
+ 556              		.cfi_startproc
+ 557              		@ args = 0, pretend = 0, frame = 8
+ 558              		@ frame_needed = 0, uses_anonymous_args = 0
+ 559 0000 10B5     		push	{r4, lr}
+ 560              	.LCFI20:
+ 561              		.cfi_def_cfa_offset 8
+ 562              		.cfi_offset 4, -8
+ 563              		.cfi_offset 14, -4
+ 564 0002 82B0     		sub	sp, sp, #8
+ 565              	.LCFI21:
+ 566              		.cfi_def_cfa_offset 16
+ 116:BSP/SPL06_001/SPL06_001.c **** 	uint8_t buff[2];
+ 567              		.loc 1 116 2 view .LVU147
+ 117:BSP/SPL06_001/SPL06_001.c **** 	int32_t c01;
+ 568              		.loc 1 117 2 view .LVU148
+ 118:BSP/SPL06_001/SPL06_001.c **** 	buff[0] = SPL_ReadOneReg(COEF_C01_H);
+ 569              		.loc 1 118 2 view .LVU149
+ 570              		.loc 1 118 12 is_stmt 0 view .LVU150
+ 571 0004 1820     		movs	r0, #24
+ 572 0006 FFF7FEFF 		bl	SPL_ReadOneReg
+ 573              	.LVL49:
+ 574 000a 0446     		mov	r4, r0
+ 575              		.loc 1 118 10 discriminator 1 view .LVU151
+ 576 000c 8DF80400 		strb	r0, [sp, #4]
+ 119:BSP/SPL06_001/SPL06_001.c **** 	buff[1] = SPL_ReadOneReg(COEF_C01_L);
+ 577              		.loc 1 119 2 is_stmt 1 view .LVU152
+ 578              		.loc 1 119 12 is_stmt 0 view .LVU153
+ 579 0010 1920     		movs	r0, #25
+ 580 0012 FFF7FEFF 		bl	SPL_ReadOneReg
+ 581              	.LVL50:
+ 582              		.loc 1 119 10 discriminator 1 view .LVU154
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 13
+
+
+ 583 0016 8DF80500 		strb	r0, [sp, #5]
+ 120:BSP/SPL06_001/SPL06_001.c **** 	c01 = buff[0];
+ 584              		.loc 1 120 2 is_stmt 1 view .LVU155
+ 585              	.LVL51:
+ 121:BSP/SPL06_001/SPL06_001.c **** 	c01 = c01<<8 | buff[1];
+ 586              		.loc 1 121 2 view .LVU156
+ 587              		.loc 1 121 6 is_stmt 0 view .LVU157
+ 588 001a 40EA0420 		orr	r0, r0, r4, lsl #8
+ 589              	.LVL52:
+ 122:BSP/SPL06_001/SPL06_001.c **** 	return c01;
+ 590              		.loc 1 122 2 is_stmt 1 view .LVU158
+ 123:BSP/SPL06_001/SPL06_001.c **** }
+ 591              		.loc 1 123 1 is_stmt 0 view .LVU159
+ 592 001e 00B2     		sxth	r0, r0
+ 593              	.LVL53:
+ 594              		.loc 1 123 1 view .LVU160
+ 595 0020 02B0     		add	sp, sp, #8
+ 596              	.LCFI22:
+ 597              		.cfi_def_cfa_offset 8
+ 598              		@ sp needed
+ 599 0022 10BD     		pop	{r4, pc}
+ 600              		.loc 1 123 1 view .LVU161
+ 601              		.cfi_endproc
+ 602              	.LFE224:
+ 604              		.section	.text.get_c11,"ax",%progbits
+ 605              		.align	1
+ 606              		.global	get_c11
+ 607              		.syntax unified
+ 608              		.thumb
+ 609              		.thumb_func
+ 611              	get_c11:
+ 612              	.LFB225:
+ 124:BSP/SPL06_001/SPL06_001.c **** 
+ 125:BSP/SPL06_001/SPL06_001.c **** int16_t get_c11()
+ 126:BSP/SPL06_001/SPL06_001.c **** {
+ 613              		.loc 1 126 1 is_stmt 1 view -0
+ 614              		.cfi_startproc
+ 615              		@ args = 0, pretend = 0, frame = 8
+ 616              		@ frame_needed = 0, uses_anonymous_args = 0
+ 617 0000 10B5     		push	{r4, lr}
+ 618              	.LCFI23:
+ 619              		.cfi_def_cfa_offset 8
+ 620              		.cfi_offset 4, -8
+ 621              		.cfi_offset 14, -4
+ 622 0002 82B0     		sub	sp, sp, #8
+ 623              	.LCFI24:
+ 624              		.cfi_def_cfa_offset 16
+ 127:BSP/SPL06_001/SPL06_001.c **** 	uint8_t buff[2];
+ 625              		.loc 1 127 2 view .LVU163
+ 128:BSP/SPL06_001/SPL06_001.c **** 	int32_t c11;
+ 626              		.loc 1 128 2 view .LVU164
+ 129:BSP/SPL06_001/SPL06_001.c **** 	buff[0] = SPL_ReadOneReg(COEF_C11_H);
+ 627              		.loc 1 129 2 view .LVU165
+ 628              		.loc 1 129 12 is_stmt 0 view .LVU166
+ 629 0004 1A20     		movs	r0, #26
+ 630 0006 FFF7FEFF 		bl	SPL_ReadOneReg
+ 631              	.LVL54:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 14
+
+
+ 632 000a 0446     		mov	r4, r0
+ 633              		.loc 1 129 10 discriminator 1 view .LVU167
+ 634 000c 8DF80400 		strb	r0, [sp, #4]
+ 130:BSP/SPL06_001/SPL06_001.c **** 	buff[1] = SPL_ReadOneReg(COEF_C11_L);
+ 635              		.loc 1 130 2 is_stmt 1 view .LVU168
+ 636              		.loc 1 130 12 is_stmt 0 view .LVU169
+ 637 0010 1B20     		movs	r0, #27
+ 638 0012 FFF7FEFF 		bl	SPL_ReadOneReg
+ 639              	.LVL55:
+ 640              		.loc 1 130 10 discriminator 1 view .LVU170
+ 641 0016 8DF80500 		strb	r0, [sp, #5]
+ 131:BSP/SPL06_001/SPL06_001.c **** 	c11 = buff[0];
+ 642              		.loc 1 131 2 is_stmt 1 view .LVU171
+ 643              	.LVL56:
+ 132:BSP/SPL06_001/SPL06_001.c **** 	c11 = c11<<8 | buff[1];
+ 644              		.loc 1 132 2 view .LVU172
+ 645              		.loc 1 132 6 is_stmt 0 view .LVU173
+ 646 001a 40EA0420 		orr	r0, r0, r4, lsl #8
+ 647              	.LVL57:
+ 133:BSP/SPL06_001/SPL06_001.c **** 	return c11;
+ 648              		.loc 1 133 2 is_stmt 1 view .LVU174
+ 134:BSP/SPL06_001/SPL06_001.c **** }
+ 649              		.loc 1 134 1 is_stmt 0 view .LVU175
+ 650 001e 00B2     		sxth	r0, r0
+ 651              	.LVL58:
+ 652              		.loc 1 134 1 view .LVU176
+ 653 0020 02B0     		add	sp, sp, #8
+ 654              	.LCFI25:
+ 655              		.cfi_def_cfa_offset 8
+ 656              		@ sp needed
+ 657 0022 10BD     		pop	{r4, pc}
+ 658              		.loc 1 134 1 view .LVU177
+ 659              		.cfi_endproc
+ 660              	.LFE225:
+ 662              		.section	.text.get_c20,"ax",%progbits
+ 663              		.align	1
+ 664              		.global	get_c20
+ 665              		.syntax unified
+ 666              		.thumb
+ 667              		.thumb_func
+ 669              	get_c20:
+ 670              	.LFB226:
+ 135:BSP/SPL06_001/SPL06_001.c **** 
+ 136:BSP/SPL06_001/SPL06_001.c **** int16_t get_c20()
+ 137:BSP/SPL06_001/SPL06_001.c **** {
+ 671              		.loc 1 137 1 is_stmt 1 view -0
+ 672              		.cfi_startproc
+ 673              		@ args = 0, pretend = 0, frame = 8
+ 674              		@ frame_needed = 0, uses_anonymous_args = 0
+ 675 0000 10B5     		push	{r4, lr}
+ 676              	.LCFI26:
+ 677              		.cfi_def_cfa_offset 8
+ 678              		.cfi_offset 4, -8
+ 679              		.cfi_offset 14, -4
+ 680 0002 82B0     		sub	sp, sp, #8
+ 681              	.LCFI27:
+ 682              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 15
+
+
+ 138:BSP/SPL06_001/SPL06_001.c **** 	uint8_t buff[2];
+ 683              		.loc 1 138 2 view .LVU179
+ 139:BSP/SPL06_001/SPL06_001.c **** 	int32_t c20;
+ 684              		.loc 1 139 2 view .LVU180
+ 140:BSP/SPL06_001/SPL06_001.c **** 	buff[0] = SPL_ReadOneReg(COEF_C20_H);
+ 685              		.loc 1 140 2 view .LVU181
+ 686              		.loc 1 140 12 is_stmt 0 view .LVU182
+ 687 0004 1C20     		movs	r0, #28
+ 688 0006 FFF7FEFF 		bl	SPL_ReadOneReg
+ 689              	.LVL59:
+ 690 000a 0446     		mov	r4, r0
+ 691              		.loc 1 140 10 discriminator 1 view .LVU183
+ 692 000c 8DF80400 		strb	r0, [sp, #4]
+ 141:BSP/SPL06_001/SPL06_001.c **** 	buff[1] = SPL_ReadOneReg(COEF_C20_L);
+ 693              		.loc 1 141 2 is_stmt 1 view .LVU184
+ 694              		.loc 1 141 12 is_stmt 0 view .LVU185
+ 695 0010 1D20     		movs	r0, #29
+ 696 0012 FFF7FEFF 		bl	SPL_ReadOneReg
+ 697              	.LVL60:
+ 698              		.loc 1 141 10 discriminator 1 view .LVU186
+ 699 0016 8DF80500 		strb	r0, [sp, #5]
+ 142:BSP/SPL06_001/SPL06_001.c **** 	c20 = buff[0];
+ 700              		.loc 1 142 2 is_stmt 1 view .LVU187
+ 701              	.LVL61:
+ 143:BSP/SPL06_001/SPL06_001.c **** 	c20 = c20<<8 | buff[1];
+ 702              		.loc 1 143 2 view .LVU188
+ 703              		.loc 1 143 6 is_stmt 0 view .LVU189
+ 704 001a 40EA0420 		orr	r0, r0, r4, lsl #8
+ 705              	.LVL62:
+ 144:BSP/SPL06_001/SPL06_001.c **** 	return c20;
+ 706              		.loc 1 144 2 is_stmt 1 view .LVU190
+ 145:BSP/SPL06_001/SPL06_001.c **** }
+ 707              		.loc 1 145 1 is_stmt 0 view .LVU191
+ 708 001e 00B2     		sxth	r0, r0
+ 709              	.LVL63:
+ 710              		.loc 1 145 1 view .LVU192
+ 711 0020 02B0     		add	sp, sp, #8
+ 712              	.LCFI28:
+ 713              		.cfi_def_cfa_offset 8
+ 714              		@ sp needed
+ 715 0022 10BD     		pop	{r4, pc}
+ 716              		.loc 1 145 1 view .LVU193
+ 717              		.cfi_endproc
+ 718              	.LFE226:
+ 720              		.section	.text.get_c21,"ax",%progbits
+ 721              		.align	1
+ 722              		.global	get_c21
+ 723              		.syntax unified
+ 724              		.thumb
+ 725              		.thumb_func
+ 727              	get_c21:
+ 728              	.LFB227:
+ 146:BSP/SPL06_001/SPL06_001.c **** 
+ 147:BSP/SPL06_001/SPL06_001.c **** int16_t get_c21()
+ 148:BSP/SPL06_001/SPL06_001.c **** {
+ 729              		.loc 1 148 1 is_stmt 1 view -0
+ 730              		.cfi_startproc
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 16
+
+
+ 731              		@ args = 0, pretend = 0, frame = 8
+ 732              		@ frame_needed = 0, uses_anonymous_args = 0
+ 733 0000 10B5     		push	{r4, lr}
+ 734              	.LCFI29:
+ 735              		.cfi_def_cfa_offset 8
+ 736              		.cfi_offset 4, -8
+ 737              		.cfi_offset 14, -4
+ 738 0002 82B0     		sub	sp, sp, #8
+ 739              	.LCFI30:
+ 740              		.cfi_def_cfa_offset 16
+ 149:BSP/SPL06_001/SPL06_001.c **** 	uint8_t buff[2];
+ 741              		.loc 1 149 2 view .LVU195
+ 150:BSP/SPL06_001/SPL06_001.c **** 	int32_t c21;
+ 742              		.loc 1 150 2 view .LVU196
+ 151:BSP/SPL06_001/SPL06_001.c **** 	buff[0] = SPL_ReadOneReg(COEF_C21_H);
+ 743              		.loc 1 151 2 view .LVU197
+ 744              		.loc 1 151 12 is_stmt 0 view .LVU198
+ 745 0004 1E20     		movs	r0, #30
+ 746 0006 FFF7FEFF 		bl	SPL_ReadOneReg
+ 747              	.LVL64:
+ 748 000a 0446     		mov	r4, r0
+ 749              		.loc 1 151 10 discriminator 1 view .LVU199
+ 750 000c 8DF80400 		strb	r0, [sp, #4]
+ 152:BSP/SPL06_001/SPL06_001.c **** 	buff[1] = SPL_ReadOneReg(COEF_C21_L);
+ 751              		.loc 1 152 2 is_stmt 1 view .LVU200
+ 752              		.loc 1 152 12 is_stmt 0 view .LVU201
+ 753 0010 1F20     		movs	r0, #31
+ 754 0012 FFF7FEFF 		bl	SPL_ReadOneReg
+ 755              	.LVL65:
+ 756              		.loc 1 152 10 discriminator 1 view .LVU202
+ 757 0016 8DF80500 		strb	r0, [sp, #5]
+ 153:BSP/SPL06_001/SPL06_001.c **** 	c21 = buff[0];
+ 758              		.loc 1 153 2 is_stmt 1 view .LVU203
+ 759              	.LVL66:
+ 154:BSP/SPL06_001/SPL06_001.c **** 	c21 = c21<<8 | buff[1];
+ 760              		.loc 1 154 2 view .LVU204
+ 761              		.loc 1 154 6 is_stmt 0 view .LVU205
+ 762 001a 40EA0420 		orr	r0, r0, r4, lsl #8
+ 763              	.LVL67:
+ 155:BSP/SPL06_001/SPL06_001.c **** 	return c21;
+ 764              		.loc 1 155 2 is_stmt 1 view .LVU206
+ 156:BSP/SPL06_001/SPL06_001.c **** }
+ 765              		.loc 1 156 1 is_stmt 0 view .LVU207
+ 766 001e 00B2     		sxth	r0, r0
+ 767              	.LVL68:
+ 768              		.loc 1 156 1 view .LVU208
+ 769 0020 02B0     		add	sp, sp, #8
+ 770              	.LCFI31:
+ 771              		.cfi_def_cfa_offset 8
+ 772              		@ sp needed
+ 773 0022 10BD     		pop	{r4, pc}
+ 774              		.loc 1 156 1 view .LVU209
+ 775              		.cfi_endproc
+ 776              	.LFE227:
+ 778              		.section	.text.get_c30,"ax",%progbits
+ 779              		.align	1
+ 780              		.global	get_c30
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 17
+
+
+ 781              		.syntax unified
+ 782              		.thumb
+ 783              		.thumb_func
+ 785              	get_c30:
+ 786              	.LFB228:
+ 157:BSP/SPL06_001/SPL06_001.c **** 
+ 158:BSP/SPL06_001/SPL06_001.c **** int16_t get_c30()
+ 159:BSP/SPL06_001/SPL06_001.c **** {
+ 787              		.loc 1 159 1 is_stmt 1 view -0
+ 788              		.cfi_startproc
+ 789              		@ args = 0, pretend = 0, frame = 8
+ 790              		@ frame_needed = 0, uses_anonymous_args = 0
+ 791 0000 10B5     		push	{r4, lr}
+ 792              	.LCFI32:
+ 793              		.cfi_def_cfa_offset 8
+ 794              		.cfi_offset 4, -8
+ 795              		.cfi_offset 14, -4
+ 796 0002 82B0     		sub	sp, sp, #8
+ 797              	.LCFI33:
+ 798              		.cfi_def_cfa_offset 16
+ 160:BSP/SPL06_001/SPL06_001.c **** 	uint8_t buff[2];
+ 799              		.loc 1 160 2 view .LVU211
+ 161:BSP/SPL06_001/SPL06_001.c **** 	int32_t c30;
+ 800              		.loc 1 161 2 view .LVU212
+ 162:BSP/SPL06_001/SPL06_001.c **** 	buff[0] = SPL_ReadOneReg(COEF_C30_H);
+ 801              		.loc 1 162 2 view .LVU213
+ 802              		.loc 1 162 12 is_stmt 0 view .LVU214
+ 803 0004 2020     		movs	r0, #32
+ 804 0006 FFF7FEFF 		bl	SPL_ReadOneReg
+ 805              	.LVL69:
+ 806 000a 0446     		mov	r4, r0
+ 807              		.loc 1 162 10 discriminator 1 view .LVU215
+ 808 000c 8DF80400 		strb	r0, [sp, #4]
+ 163:BSP/SPL06_001/SPL06_001.c **** 	buff[1] = SPL_ReadOneReg(COEF_C30_L);
+ 809              		.loc 1 163 2 is_stmt 1 view .LVU216
+ 810              		.loc 1 163 12 is_stmt 0 view .LVU217
+ 811 0010 2120     		movs	r0, #33
+ 812 0012 FFF7FEFF 		bl	SPL_ReadOneReg
+ 813              	.LVL70:
+ 814              		.loc 1 163 10 discriminator 1 view .LVU218
+ 815 0016 8DF80500 		strb	r0, [sp, #5]
+ 164:BSP/SPL06_001/SPL06_001.c **** 	c30 = buff[0];
+ 816              		.loc 1 164 2 is_stmt 1 view .LVU219
+ 817              	.LVL71:
+ 165:BSP/SPL06_001/SPL06_001.c **** 	c30 = c30<<8 | buff[1];
+ 818              		.loc 1 165 2 view .LVU220
+ 819              		.loc 1 165 6 is_stmt 0 view .LVU221
+ 820 001a 40EA0420 		orr	r0, r0, r4, lsl #8
+ 821              	.LVL72:
+ 166:BSP/SPL06_001/SPL06_001.c **** 	return c30;
+ 822              		.loc 1 166 2 is_stmt 1 view .LVU222
+ 167:BSP/SPL06_001/SPL06_001.c **** }
+ 823              		.loc 1 167 1 is_stmt 0 view .LVU223
+ 824 001e 00B2     		sxth	r0, r0
+ 825              	.LVL73:
+ 826              		.loc 1 167 1 view .LVU224
+ 827 0020 02B0     		add	sp, sp, #8
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 18
+
+
+ 828              	.LCFI34:
+ 829              		.cfi_def_cfa_offset 8
+ 830              		@ sp needed
+ 831 0022 10BD     		pop	{r4, pc}
+ 832              		.loc 1 167 1 view .LVU225
+ 833              		.cfi_endproc
+ 834              	.LFE228:
+ 836              		.section	.text.SPL_init,"ax",%progbits
+ 837              		.align	1
+ 838              		.global	SPL_init
+ 839              		.syntax unified
+ 840              		.thumb
+ 841              		.thumb_func
+ 843              	SPL_init:
+ 844              	.LFB229:
+ 168:BSP/SPL06_001/SPL06_001.c **** 
+ 169:BSP/SPL06_001/SPL06_001.c **** uint8_t SPL_init()
+ 170:BSP/SPL06_001/SPL06_001.c **** {
+ 845              		.loc 1 170 1 is_stmt 1 view -0
+ 846              		.cfi_startproc
+ 847              		@ args = 0, pretend = 0, frame = 8
+ 848              		@ frame_needed = 0, uses_anonymous_args = 0
+ 849 0000 10B5     		push	{r4, lr}
+ 850              	.LCFI35:
+ 851              		.cfi_def_cfa_offset 8
+ 852              		.cfi_offset 4, -8
+ 853              		.cfi_offset 14, -4
+ 854 0002 82B0     		sub	sp, sp, #8
+ 855              	.LCFI36:
+ 856              		.cfi_def_cfa_offset 16
+ 171:BSP/SPL06_001/SPL06_001.c **** 	
+ 172:BSP/SPL06_001/SPL06_001.c **** 	SPL_CLK_ENABLE;
+ 857              		.loc 1 172 2 view .LVU227
+ 858              	.LBB2:
+ 859              		.loc 1 172 2 view .LVU228
+ 860 0004 0024     		movs	r4, #0
+ 861 0006 0194     		str	r4, [sp, #4]
+ 862              		.loc 1 172 2 view .LVU229
+ 863 0008 274B     		ldr	r3, .L42
+ 864 000a 1A6B     		ldr	r2, [r3, #48]
+ 865 000c 42F00202 		orr	r2, r2, #2
+ 866 0010 1A63     		str	r2, [r3, #48]
+ 867              		.loc 1 172 2 view .LVU230
+ 868 0012 1B6B     		ldr	r3, [r3, #48]
+ 869 0014 03F00203 		and	r3, r3, #2
+ 870 0018 0193     		str	r3, [sp, #4]
+ 871              		.loc 1 172 2 view .LVU231
+ 872 001a 019B     		ldr	r3, [sp, #4]
+ 873              	.LBE2:
+ 874              		.loc 1 172 2 view .LVU232
+ 173:BSP/SPL06_001/SPL06_001.c **** 	IICInit(&SPL_bus);
+ 875              		.loc 1 173 2 view .LVU233
+ 876 001c 2348     		ldr	r0, .L42+4
+ 877 001e FFF7FEFF 		bl	IICInit
+ 878              	.LVL74:
+ 174:BSP/SPL06_001/SPL06_001.c **** 	
+ 175:BSP/SPL06_001/SPL06_001.c **** 	SPL_WriteOneReg(SPL_PRS_CFG, 0x01);		// Pressure 2x oversampling
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 19
+
+
+ 879              		.loc 1 175 2 view .LVU234
+ 880 0022 0121     		movs	r1, #1
+ 881 0024 0620     		movs	r0, #6
+ 882 0026 FFF7FEFF 		bl	SPL_WriteOneReg
+ 883              	.LVL75:
+ 176:BSP/SPL06_001/SPL06_001.c **** 
+ 177:BSP/SPL06_001/SPL06_001.c **** 	SPL_WriteOneReg(SPL_TMP_CFG, 0x80);		// External Temperature 1x oversampling
+ 884              		.loc 1 177 2 view .LVU235
+ 885 002a 8021     		movs	r1, #128
+ 886 002c 0720     		movs	r0, #7
+ 887 002e FFF7FEFF 		bl	SPL_WriteOneReg
+ 888              	.LVL76:
+ 178:BSP/SPL06_001/SPL06_001.c **** 
+ 179:BSP/SPL06_001/SPL06_001.c **** 	SPL_WriteOneReg(SPL_MEAS_CFG, 0x07);	// continuous pressure and temperature measurement
+ 889              		.loc 1 179 2 view .LVU236
+ 890 0032 0721     		movs	r1, #7
+ 891 0034 0820     		movs	r0, #8
+ 892 0036 FFF7FEFF 		bl	SPL_WriteOneReg
+ 893              	.LVL77:
+ 180:BSP/SPL06_001/SPL06_001.c **** 
+ 181:BSP/SPL06_001/SPL06_001.c **** 	SPL_WriteOneReg(SPL_CFG_REG, 0x00);		//   
+ 894              		.loc 1 181 2 view .LVU237
+ 895 003a 2146     		mov	r1, r4
+ 896 003c 0920     		movs	r0, #9
+ 897 003e FFF7FEFF 		bl	SPL_WriteOneReg
+ 898              	.LVL78:
+ 182:BSP/SPL06_001/SPL06_001.c **** 	
+ 183:BSP/SPL06_001/SPL06_001.c **** 	c0 = get_c0();
+ 899              		.loc 1 183 2 view .LVU238
+ 900              		.loc 1 183 7 is_stmt 0 view .LVU239
+ 901 0042 FFF7FEFF 		bl	get_c0
+ 902              	.LVL79:
+ 903              		.loc 1 183 5 discriminator 1 view .LVU240
+ 904 0046 1A4B     		ldr	r3, .L42+8
+ 905 0048 1880     		strh	r0, [r3]	@ movhi
+ 184:BSP/SPL06_001/SPL06_001.c **** 	c1 = get_c1();
+ 906              		.loc 1 184 2 is_stmt 1 view .LVU241
+ 907              		.loc 1 184 7 is_stmt 0 view .LVU242
+ 908 004a FFF7FEFF 		bl	get_c1
+ 909              	.LVL80:
+ 910              		.loc 1 184 5 discriminator 1 view .LVU243
+ 911 004e 194B     		ldr	r3, .L42+12
+ 912 0050 1880     		strh	r0, [r3]	@ movhi
+ 185:BSP/SPL06_001/SPL06_001.c **** 	c01 = get_c01();
+ 913              		.loc 1 185 2 is_stmt 1 view .LVU244
+ 914              		.loc 1 185 8 is_stmt 0 view .LVU245
+ 915 0052 FFF7FEFF 		bl	get_c01
+ 916              	.LVL81:
+ 917              		.loc 1 185 6 discriminator 1 view .LVU246
+ 918 0056 184B     		ldr	r3, .L42+16
+ 919 0058 1880     		strh	r0, [r3]	@ movhi
+ 186:BSP/SPL06_001/SPL06_001.c **** 	c11 = get_c11(); 
+ 920              		.loc 1 186 2 is_stmt 1 view .LVU247
+ 921              		.loc 1 186 8 is_stmt 0 view .LVU248
+ 922 005a FFF7FEFF 		bl	get_c11
+ 923              	.LVL82:
+ 924              		.loc 1 186 6 discriminator 1 view .LVU249
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 20
+
+
+ 925 005e 174B     		ldr	r3, .L42+20
+ 926 0060 1880     		strh	r0, [r3]	@ movhi
+ 187:BSP/SPL06_001/SPL06_001.c **** 	c20 = get_c20();
+ 927              		.loc 1 187 2 is_stmt 1 view .LVU250
+ 928              		.loc 1 187 8 is_stmt 0 view .LVU251
+ 929 0062 FFF7FEFF 		bl	get_c20
+ 930              	.LVL83:
+ 931              		.loc 1 187 6 discriminator 1 view .LVU252
+ 932 0066 164B     		ldr	r3, .L42+24
+ 933 0068 1880     		strh	r0, [r3]	@ movhi
+ 188:BSP/SPL06_001/SPL06_001.c **** 	c21 = get_c21();
+ 934              		.loc 1 188 2 is_stmt 1 view .LVU253
+ 935              		.loc 1 188 8 is_stmt 0 view .LVU254
+ 936 006a FFF7FEFF 		bl	get_c21
+ 937              	.LVL84:
+ 938              		.loc 1 188 6 discriminator 1 view .LVU255
+ 939 006e 154B     		ldr	r3, .L42+28
+ 940 0070 1880     		strh	r0, [r3]	@ movhi
+ 189:BSP/SPL06_001/SPL06_001.c **** 	c30 = get_c30();
+ 941              		.loc 1 189 2 is_stmt 1 view .LVU256
+ 942              		.loc 1 189 8 is_stmt 0 view .LVU257
+ 943 0072 FFF7FEFF 		bl	get_c30
+ 944              	.LVL85:
+ 945              		.loc 1 189 6 discriminator 1 view .LVU258
+ 946 0076 144B     		ldr	r3, .L42+32
+ 947 0078 1880     		strh	r0, [r3]	@ movhi
+ 190:BSP/SPL06_001/SPL06_001.c **** 	c00 = get_c00();
+ 948              		.loc 1 190 2 is_stmt 1 view .LVU259
+ 949              		.loc 1 190 8 is_stmt 0 view .LVU260
+ 950 007a FFF7FEFF 		bl	get_c00
+ 951              	.LVL86:
+ 952              		.loc 1 190 6 discriminator 1 view .LVU261
+ 953 007e 134B     		ldr	r3, .L42+36
+ 954 0080 1860     		str	r0, [r3]
+ 191:BSP/SPL06_001/SPL06_001.c **** 	c10 = get_c10();
+ 955              		.loc 1 191 2 is_stmt 1 view .LVU262
+ 956              		.loc 1 191 8 is_stmt 0 view .LVU263
+ 957 0082 FFF7FEFF 		bl	get_c10
+ 958              	.LVL87:
+ 959              		.loc 1 191 6 discriminator 1 view .LVU264
+ 960 0086 124B     		ldr	r3, .L42+40
+ 961 0088 1860     		str	r0, [r3]
+ 192:BSP/SPL06_001/SPL06_001.c **** 	
+ 193:BSP/SPL06_001/SPL06_001.c **** 	if(SPL_ReadOneReg(SPL_PRS_CFG)!=0x01 || SPL_ReadOneReg(SPL_CFG_REG)!=0x00)
+ 962              		.loc 1 193 2 is_stmt 1 view .LVU265
+ 963              		.loc 1 193 5 is_stmt 0 view .LVU266
+ 964 008a 0620     		movs	r0, #6
+ 965 008c FFF7FEFF 		bl	SPL_ReadOneReg
+ 966              	.LVL88:
+ 967              		.loc 1 193 4 discriminator 1 view .LVU267
+ 968 0090 0128     		cmp	r0, #1
+ 969 0092 02D0     		beq	.L41
+ 970              	.L38:
+ 194:BSP/SPL06_001/SPL06_001.c **** 	{return 1;}//ERRO
+ 971              		.loc 1 194 3 is_stmt 1 view .LVU268
+ 972              		.loc 1 194 10 is_stmt 0 view .LVU269
+ 973 0094 0120     		movs	r0, #1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 21
+
+
+ 974              	.L39:
+ 195:BSP/SPL06_001/SPL06_001.c **** 	else 
+ 196:BSP/SPL06_001/SPL06_001.c **** 	{return 0;}//SUCCESS
+ 197:BSP/SPL06_001/SPL06_001.c **** }
+ 975              		.loc 1 197 1 view .LVU270
+ 976 0096 02B0     		add	sp, sp, #8
+ 977              	.LCFI37:
+ 978              		.cfi_remember_state
+ 979              		.cfi_def_cfa_offset 8
+ 980              		@ sp needed
+ 981 0098 10BD     		pop	{r4, pc}
+ 982              	.L41:
+ 983              	.LCFI38:
+ 984              		.cfi_restore_state
+ 193:BSP/SPL06_001/SPL06_001.c **** 	{return 1;}//ERRO
+ 985              		.loc 1 193 42 discriminator 1 view .LVU271
+ 986 009a 0920     		movs	r0, #9
+ 987 009c FFF7FEFF 		bl	SPL_ReadOneReg
+ 988              	.LVL89:
+ 193:BSP/SPL06_001/SPL06_001.c **** 	{return 1;}//ERRO
+ 989              		.loc 1 193 39 discriminator 1 view .LVU272
+ 990 00a0 0028     		cmp	r0, #0
+ 991 00a2 F8D0     		beq	.L39
+ 992 00a4 F6E7     		b	.L38
+ 993              	.L43:
+ 994 00a6 00BF     		.align	2
+ 995              	.L42:
+ 996 00a8 00380240 		.word	1073887232
+ 997 00ac 00000000 		.word	SPL_bus
+ 998 00b0 00000000 		.word	c0
+ 999 00b4 00000000 		.word	c1
+ 1000 00b8 00000000 		.word	c01
+ 1001 00bc 00000000 		.word	c11
+ 1002 00c0 00000000 		.word	c20
+ 1003 00c4 00000000 		.word	c21
+ 1004 00c8 00000000 		.word	c30
+ 1005 00cc 00000000 		.word	c00
+ 1006 00d0 00000000 		.word	c10
+ 1007              		.cfi_endproc
+ 1008              	.LFE229:
+ 1010              		.section	.text.SPL_Sleep,"ax",%progbits
+ 1011              		.align	1
+ 1012              		.global	SPL_Sleep
+ 1013              		.syntax unified
+ 1014              		.thumb
+ 1015              		.thumb_func
+ 1017              	SPL_Sleep:
+ 1018              	.LFB230:
+ 198:BSP/SPL06_001/SPL06_001.c **** 
+ 199:BSP/SPL06_001/SPL06_001.c **** void SPL_Sleep()
+ 200:BSP/SPL06_001/SPL06_001.c **** {
+ 1019              		.loc 1 200 1 is_stmt 1 view -0
+ 1020              		.cfi_startproc
+ 1021              		@ args = 0, pretend = 0, frame = 0
+ 1022              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1023 0000 08B5     		push	{r3, lr}
+ 1024              	.LCFI39:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 22
+
+
+ 1025              		.cfi_def_cfa_offset 8
+ 1026              		.cfi_offset 3, -8
+ 1027              		.cfi_offset 14, -4
+ 201:BSP/SPL06_001/SPL06_001.c **** 	SPL_WriteOneReg(SPL_MEAS_CFG, 0x00);	// standby
+ 1028              		.loc 1 201 2 view .LVU274
+ 1029 0002 0021     		movs	r1, #0
+ 1030 0004 0820     		movs	r0, #8
+ 1031 0006 FFF7FEFF 		bl	SPL_WriteOneReg
+ 1032              	.LVL90:
+ 202:BSP/SPL06_001/SPL06_001.c **** 	//SPL_WriteOneReg(SPL_RESET_REG,0x09);//reset
+ 203:BSP/SPL06_001/SPL06_001.c **** }
+ 1033              		.loc 1 203 1 is_stmt 0 view .LVU275
+ 1034 000a 08BD     		pop	{r3, pc}
+ 1035              		.cfi_endproc
+ 1036              	.LFE230:
+ 1038              		.section	.text.SPL_Wakeup,"ax",%progbits
+ 1039              		.align	1
+ 1040              		.global	SPL_Wakeup
+ 1041              		.syntax unified
+ 1042              		.thumb
+ 1043              		.thumb_func
+ 1045              	SPL_Wakeup:
+ 1046              	.LFB231:
+ 204:BSP/SPL06_001/SPL06_001.c **** 	
+ 205:BSP/SPL06_001/SPL06_001.c **** void SPL_Wakeup()
+ 206:BSP/SPL06_001/SPL06_001.c **** {
+ 1047              		.loc 1 206 1 is_stmt 1 view -0
+ 1048              		.cfi_startproc
+ 1049              		@ args = 0, pretend = 0, frame = 0
+ 1050              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1051 0000 08B5     		push	{r3, lr}
+ 1052              	.LCFI40:
+ 1053              		.cfi_def_cfa_offset 8
+ 1054              		.cfi_offset 3, -8
+ 1055              		.cfi_offset 14, -4
+ 207:BSP/SPL06_001/SPL06_001.c **** 	SPL_WriteOneReg(SPL_MEAS_CFG, 0x07);	// continuous pressure and temperature measurement
+ 1056              		.loc 1 207 2 view .LVU277
+ 1057 0002 0721     		movs	r1, #7
+ 1058 0004 0820     		movs	r0, #8
+ 1059 0006 FFF7FEFF 		bl	SPL_WriteOneReg
+ 1060              	.LVL91:
+ 208:BSP/SPL06_001/SPL06_001.c **** 	//SPL_init();
+ 209:BSP/SPL06_001/SPL06_001.c **** }
+ 1061              		.loc 1 209 1 is_stmt 0 view .LVU278
+ 1062 000a 08BD     		pop	{r3, pc}
+ 1063              		.cfi_endproc
+ 1064              	.LFE231:
+ 1066              		.section	.text.SPL_GetID,"ax",%progbits
+ 1067              		.align	1
+ 1068              		.global	SPL_GetID
+ 1069              		.syntax unified
+ 1070              		.thumb
+ 1071              		.thumb_func
+ 1073              	SPL_GetID:
+ 1074              	.LFB232:
+ 210:BSP/SPL06_001/SPL06_001.c **** 
+ 211:BSP/SPL06_001/SPL06_001.c **** uint8_t SPL_GetID()
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 23
+
+
+ 212:BSP/SPL06_001/SPL06_001.c **** {
+ 1075              		.loc 1 212 1 is_stmt 1 view -0
+ 1076              		.cfi_startproc
+ 1077              		@ args = 0, pretend = 0, frame = 0
+ 1078              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1079 0000 08B5     		push	{r3, lr}
+ 1080              	.LCFI41:
+ 1081              		.cfi_def_cfa_offset 8
+ 1082              		.cfi_offset 3, -8
+ 1083              		.cfi_offset 14, -4
+ 213:BSP/SPL06_001/SPL06_001.c **** 	return SPL_ReadOneReg(SPL_ID_REG);
+ 1084              		.loc 1 213 2 view .LVU280
+ 1085              		.loc 1 213 9 is_stmt 0 view .LVU281
+ 1086 0002 0D20     		movs	r0, #13
+ 1087 0004 FFF7FEFF 		bl	SPL_ReadOneReg
+ 1088              	.LVL92:
+ 214:BSP/SPL06_001/SPL06_001.c **** }
+ 1089              		.loc 1 214 1 view .LVU282
+ 1090 0008 08BD     		pop	{r3, pc}
+ 1091              		.cfi_endproc
+ 1092              	.LFE232:
+ 1094              		.global	__aeabi_i2d
+ 1095              		.global	__aeabi_dmul
+ 1096              		.global	__aeabi_f2d
+ 1097              		.global	__aeabi_dadd
+ 1098              		.global	__aeabi_d2f
+ 1099              		.section	.text.Temperature_Calculate,"ax",%progbits
+ 1100              		.align	1
+ 1101              		.global	Temperature_Calculate
+ 1102              		.syntax unified
+ 1103              		.thumb
+ 1104              		.thumb_func
+ 1106              	Temperature_Calculate:
+ 1107              	.LFB233:
+ 215:BSP/SPL06_001/SPL06_001.c **** 
+ 216:BSP/SPL06_001/SPL06_001.c **** float Temperature_Calculate()
+ 217:BSP/SPL06_001/SPL06_001.c **** {
+ 1108              		.loc 1 217 1 is_stmt 1 view -0
+ 1109              		.cfi_startproc
+ 1110              		@ args = 0, pretend = 0, frame = 0
+ 1111              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1112 0000 38B5     		push	{r3, r4, r5, lr}
+ 1113              	.LCFI42:
+ 1114              		.cfi_def_cfa_offset 16
+ 1115              		.cfi_offset 3, -16
+ 1116              		.cfi_offset 4, -12
+ 1117              		.cfi_offset 5, -8
+ 1118              		.cfi_offset 14, -4
+ 1119 0002 2DED028B 		vpush.64	{d8}
+ 1120              	.LCFI43:
+ 1121              		.cfi_def_cfa_offset 24
+ 1122              		.cfi_offset 80, -24
+ 1123              		.cfi_offset 81, -20
+ 218:BSP/SPL06_001/SPL06_001.c **** 	float Traw_sc, Tcomp;
+ 1124              		.loc 1 218 2 view .LVU284
+ 219:BSP/SPL06_001/SPL06_001.c **** 	Traw_sc = Get_Traw();
+ 1125              		.loc 1 219 2 view .LVU285
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 24
+
+
+ 1126              		.loc 1 219 12 is_stmt 0 view .LVU286
+ 1127 0006 FFF7FEFF 		bl	Get_Traw
+ 1128              	.LVL93:
+ 1129 000a 08EE100A 		vmov	s16, r0	@ int
+ 1130              		.loc 1 219 10 discriminator 1 view .LVU287
+ 1131 000e B8EEC88A 		vcvt.f32.s32	s16, s16
+ 1132              	.LVL94:
+ 220:BSP/SPL06_001/SPL06_001.c **** 	Traw_sc /= KT;
+ 1133              		.loc 1 220 2 is_stmt 1 view .LVU288
+ 1134              		.loc 1 220 10 is_stmt 0 view .LVU289
+ 1135 0012 DFED147A 		vldr.32	s15, .L52
+ 1136 0016 28EE278A 		vmul.f32	s16, s16, s15
+ 1137              	.LVL95:
+ 221:BSP/SPL06_001/SPL06_001.c **** 	Tcomp = c0 * 0.5 + c1 * Traw_sc;
+ 1138              		.loc 1 221 2 is_stmt 1 view .LVU290
+ 1139              		.loc 1 221 13 is_stmt 0 view .LVU291
+ 1140 001a 134B     		ldr	r3, .L52+4
+ 1141 001c B3F90000 		ldrsh	r0, [r3]
+ 1142 0020 FFF7FEFF 		bl	__aeabi_i2d
+ 1143              	.LVL96:
+ 1144 0024 0022     		movs	r2, #0
+ 1145 0026 114B     		ldr	r3, .L52+8
+ 1146 0028 FFF7FEFF 		bl	__aeabi_dmul
+ 1147              	.LVL97:
+ 1148 002c 0446     		mov	r4, r0
+ 1149 002e 0D46     		mov	r5, r1
+ 1150              		.loc 1 221 24 view .LVU292
+ 1151 0030 0F4B     		ldr	r3, .L52+12
+ 1152 0032 B3F90030 		ldrsh	r3, [r3]
+ 1153 0036 07EE903A 		vmov	s15, r3	@ int
+ 1154 003a F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1155 003e 67EE887A 		vmul.f32	s15, s15, s16
+ 1156 0042 17EE900A 		vmov	r0, s15
+ 1157 0046 FFF7FEFF 		bl	__aeabi_f2d
+ 1158              	.LVL98:
+ 1159 004a 0246     		mov	r2, r0
+ 1160 004c 0B46     		mov	r3, r1
+ 1161              		.loc 1 221 19 view .LVU293
+ 1162 004e 2046     		mov	r0, r4
+ 1163 0050 2946     		mov	r1, r5
+ 1164 0052 FFF7FEFF 		bl	__aeabi_dadd
+ 1165              	.LVL99:
+ 1166              		.loc 1 221 8 view .LVU294
+ 1167 0056 FFF7FEFF 		bl	__aeabi_d2f
+ 1168              	.LVL100:
+ 222:BSP/SPL06_001/SPL06_001.c **** 	return Tcomp;
+ 1169              		.loc 1 222 2 is_stmt 1 view .LVU295
+ 223:BSP/SPL06_001/SPL06_001.c **** }
+ 1170              		.loc 1 223 1 is_stmt 0 view .LVU296
+ 1171 005a 00EE100A 		vmov	s0, r0
+ 1172 005e BDEC028B 		vldm	sp!, {d8}
+ 1173              	.LCFI44:
+ 1174              		.cfi_restore 80
+ 1175              		.cfi_restore 81
+ 1176              		.cfi_def_cfa_offset 16
+ 1177              	.LVL101:
+ 1178              		.loc 1 223 1 view .LVU297
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 25
+
+
+ 1179 0062 38BD     		pop	{r3, r4, r5, pc}
+ 1180              	.L53:
+ 1181              		.align	2
+ 1182              	.L52:
+ 1183 0064 00000036 		.word	905969664
+ 1184 0068 00000000 		.word	c0
+ 1185 006c 0000E03F 		.word	1071644672
+ 1186 0070 00000000 		.word	c1
+ 1187              		.cfi_endproc
+ 1188              	.LFE233:
+ 1190              		.section	.text.Pressure_Calculate,"ax",%progbits
+ 1191              		.align	1
+ 1192              		.global	Pressure_Calculate
+ 1193              		.syntax unified
+ 1194              		.thumb
+ 1195              		.thumb_func
+ 1197              	Pressure_Calculate:
+ 1198              	.LFB234:
+ 224:BSP/SPL06_001/SPL06_001.c **** 
+ 225:BSP/SPL06_001/SPL06_001.c **** float Pressure_Calculate()
+ 226:BSP/SPL06_001/SPL06_001.c **** {
+ 1199              		.loc 1 226 1 is_stmt 1 view -0
+ 1200              		.cfi_startproc
+ 1201              		@ args = 0, pretend = 0, frame = 0
+ 1202              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1203 0000 08B5     		push	{r3, lr}
+ 1204              	.LCFI45:
+ 1205              		.cfi_def_cfa_offset 8
+ 1206              		.cfi_offset 3, -8
+ 1207              		.cfi_offset 14, -4
+ 1208 0002 2DED028B 		vpush.64	{d8}
+ 1209              	.LCFI46:
+ 1210              		.cfi_def_cfa_offset 16
+ 1211              		.cfi_offset 80, -16
+ 1212              		.cfi_offset 81, -12
+ 227:BSP/SPL06_001/SPL06_001.c **** 	float Traw_sc, Praw_sc, Pcomp;
+ 1213              		.loc 1 227 2 view .LVU299
+ 228:BSP/SPL06_001/SPL06_001.c **** 	Traw_sc = Get_Traw();
+ 1214              		.loc 1 228 2 view .LVU300
+ 1215              		.loc 1 228 12 is_stmt 0 view .LVU301
+ 1216 0006 FFF7FEFF 		bl	Get_Traw
+ 1217              	.LVL102:
+ 1218 000a 08EE100A 		vmov	s16, r0	@ int
+ 1219              		.loc 1 228 10 discriminator 1 view .LVU302
+ 1220 000e B8EEC88A 		vcvt.f32.s32	s16, s16
+ 1221              	.LVL103:
+ 229:BSP/SPL06_001/SPL06_001.c **** 	Traw_sc /= KT;
+ 1222              		.loc 1 229 2 is_stmt 1 view .LVU303
+ 1223              		.loc 1 229 10 is_stmt 0 view .LVU304
+ 1224 0012 DFED2C7A 		vldr.32	s15, .L56
+ 1225 0016 28EE278A 		vmul.f32	s16, s16, s15
+ 1226              	.LVL104:
+ 230:BSP/SPL06_001/SPL06_001.c **** 	Praw_sc = Get_Praw();
+ 1227              		.loc 1 230 2 is_stmt 1 view .LVU305
+ 1228              		.loc 1 230 12 is_stmt 0 view .LVU306
+ 1229 001a FFF7FEFF 		bl	Get_Praw
+ 1230              	.LVL105:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 26
+
+
+ 1231 001e 07EE900A 		vmov	s15, r0	@ int
+ 1232              		.loc 1 230 10 discriminator 1 view .LVU307
+ 1233 0022 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1234              	.LVL106:
+ 231:BSP/SPL06_001/SPL06_001.c **** 	Praw_sc /= KP;
+ 1235              		.loc 1 231 2 is_stmt 1 view .LVU308
+ 1236              		.loc 1 231 10 is_stmt 0 view .LVU309
+ 1237 0026 9FED287A 		vldr.32	s14, .L56+4
+ 1238 002a 87EE876A 		vdiv.f32	s12, s15, s14
+ 1239              	.LVL107:
+ 232:BSP/SPL06_001/SPL06_001.c **** 	Pcomp = (c00) + Praw_sc * ((c10) + Praw_sc * ((c20) + Praw_sc * (c30))) + Traw_sc * (c01) + Traw_s
+ 1240              		.loc 1 232 2 is_stmt 1 view .LVU310
+ 1241              		.loc 1 232 64 is_stmt 0 view .LVU311
+ 1242 002e 274B     		ldr	r3, .L56+8
+ 1243 0030 B3F90030 		ldrsh	r3, [r3]
+ 1244 0034 07EE103A 		vmov	s14, r3	@ int
+ 1245 0038 B8EEC77A 		vcvt.f32.s32	s14, s14
+ 1246 003c 27EE067A 		vmul.f32	s14, s14, s12
+ 1247              		.loc 1 232 54 view .LVU312
+ 1248 0040 234B     		ldr	r3, .L56+12
+ 1249 0042 B3F90030 		ldrsh	r3, [r3]
+ 1250 0046 07EE903A 		vmov	s15, r3	@ int
+ 1251 004a F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1252 004e 77EE877A 		vadd.f32	s15, s15, s14
+ 1253              		.loc 1 232 45 view .LVU313
+ 1254 0052 67EE867A 		vmul.f32	s15, s15, s12
+ 1255              		.loc 1 232 35 view .LVU314
+ 1256 0056 1F4B     		ldr	r3, .L56+16
+ 1257 0058 93ED007A 		vldr.32	s14, [r3]	@ int
+ 1258 005c B8EEC77A 		vcvt.f32.s32	s14, s14
+ 1259 0060 37EE277A 		vadd.f32	s14, s14, s15
+ 1260              		.loc 1 232 26 view .LVU315
+ 1261 0064 27EE067A 		vmul.f32	s14, s14, s12
+ 1262              		.loc 1 232 16 view .LVU316
+ 1263 0068 1B4B     		ldr	r3, .L56+20
+ 1264 006a D3ED007A 		vldr.32	s15, [r3]	@ int
+ 1265 006e F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1266 0072 77EE877A 		vadd.f32	s15, s15, s14
+ 1267              		.loc 1 232 84 view .LVU317
+ 1268 0076 194B     		ldr	r3, .L56+24
+ 1269 0078 B3F90030 		ldrsh	r3, [r3]
+ 1270 007c 07EE103A 		vmov	s14, r3	@ int
+ 1271 0080 B8EEC77A 		vcvt.f32.s32	s14, s14
+ 1272 0084 27EE087A 		vmul.f32	s14, s14, s16
+ 1273              		.loc 1 232 74 view .LVU318
+ 1274 0088 77EE877A 		vadd.f32	s15, s15, s14
+ 1275              		.loc 1 232 102 view .LVU319
+ 1276 008c 28EE060A 		vmul.f32	s0, s16, s12
+ 1277              		.loc 1 232 131 view .LVU320
+ 1278 0090 134B     		ldr	r3, .L56+28
+ 1279 0092 B3F90030 		ldrsh	r3, [r3]
+ 1280 0096 06EE903A 		vmov	s13, r3	@ int
+ 1281 009a F8EEE66A 		vcvt.f32.s32	s13, s13
+ 1282 009e 66EE866A 		vmul.f32	s13, s13, s12
+ 1283              		.loc 1 232 121 view .LVU321
+ 1284 00a2 104B     		ldr	r3, .L56+32
+ 1285 00a4 B3F90030 		ldrsh	r3, [r3]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 27
+
+
+ 1286 00a8 07EE103A 		vmov	s14, r3	@ int
+ 1287 00ac B8EEC77A 		vcvt.f32.s32	s14, s14
+ 1288 00b0 37EE267A 		vadd.f32	s14, s14, s13
+ 1289              		.loc 1 232 112 view .LVU322
+ 1290 00b4 20EE070A 		vmul.f32	s0, s0, s14
+ 1291              	.LVL108:
+ 233:BSP/SPL06_001/SPL06_001.c **** 	 
+ 234:BSP/SPL06_001/SPL06_001.c **** 	return Pcomp;
+ 1292              		.loc 1 234 2 is_stmt 1 view .LVU323
+ 235:BSP/SPL06_001/SPL06_001.c **** }
+ 1293              		.loc 1 235 1 is_stmt 0 view .LVU324
+ 1294 00b8 37EE800A 		vadd.f32	s0, s15, s0
+ 1295              	.LVL109:
+ 1296              		.loc 1 235 1 view .LVU325
+ 1297 00bc BDEC028B 		vldm	sp!, {d8}
+ 1298              	.LCFI47:
+ 1299              		.cfi_restore 80
+ 1300              		.cfi_restore 81
+ 1301              		.cfi_def_cfa_offset 8
+ 1302              	.LVL110:
+ 1303              		.loc 1 235 1 view .LVU326
+ 1304 00c0 08BD     		pop	{r3, pc}
+ 1305              	.L57:
+ 1306 00c2 00BF     		.align	2
+ 1307              	.L56:
+ 1308 00c4 00000036 		.word	905969664
+ 1309 00c8 0000C049 		.word	1237319680
+ 1310 00cc 00000000 		.word	c30
+ 1311 00d0 00000000 		.word	c20
+ 1312 00d4 00000000 		.word	c10
+ 1313 00d8 00000000 		.word	c00
+ 1314 00dc 00000000 		.word	c01
+ 1315 00e0 00000000 		.word	c21
+ 1316 00e4 00000000 		.word	c11
+ 1317              		.cfi_endproc
+ 1318              	.LFE234:
+ 1320              		.section	.text.Altitude_Calculate,"ax",%progbits
+ 1321              		.align	1
+ 1322              		.global	Altitude_Calculate
+ 1323              		.syntax unified
+ 1324              		.thumb
+ 1325              		.thumb_func
+ 1327              	Altitude_Calculate:
+ 1328              	.LFB235:
+ 236:BSP/SPL06_001/SPL06_001.c **** 
+ 237:BSP/SPL06_001/SPL06_001.c **** float Altitude_Calculate()
+ 238:BSP/SPL06_001/SPL06_001.c **** {
+ 1329              		.loc 1 238 1 is_stmt 1 view -0
+ 1330              		.cfi_startproc
+ 1331              		@ args = 0, pretend = 0, frame = 0
+ 1332              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1333 0000 08B5     		push	{r3, lr}
+ 1334              	.LCFI48:
+ 1335              		.cfi_def_cfa_offset 8
+ 1336              		.cfi_offset 3, -8
+ 1337              		.cfi_offset 14, -4
+ 239:BSP/SPL06_001/SPL06_001.c **** 	float Altitude;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 28
+
+
+ 1338              		.loc 1 239 2 view .LVU328
+ 240:BSP/SPL06_001/SPL06_001.c **** 	Altitude = 44330 * (1 - powf(Pressure_Calculate()/101325, 0.1903));
+ 1339              		.loc 1 240 2 view .LVU329
+ 1340              		.loc 1 240 31 is_stmt 0 view .LVU330
+ 1341 0002 FFF7FEFF 		bl	Pressure_Calculate
+ 1342              	.LVL111:
+ 1343              		.loc 1 240 26 discriminator 1 view .LVU331
+ 1344 0006 DFED080A 		vldr.32	s1, .L60
+ 1345 000a DFED087A 		vldr.32	s15, .L60+4
+ 1346 000e 80EE270A 		vdiv.f32	s0, s0, s15
+ 1347 0012 FFF7FEFF 		bl	powf
+ 1348              	.LVL112:
+ 1349              		.loc 1 240 24 discriminator 2 view .LVU332
+ 1350 0016 F7EE007A 		vmov.f32	s15, #1.0e+0
+ 1351 001a 77EEC07A 		vsub.f32	s15, s15, s0
+ 1352              	.LVL113:
+ 241:BSP/SPL06_001/SPL06_001.c **** 	return Altitude;
+ 1353              		.loc 1 241 2 is_stmt 1 view .LVU333
+ 242:BSP/SPL06_001/SPL06_001.c **** }
+ 1354              		.loc 1 242 1 is_stmt 0 view .LVU334
+ 1355 001e 9FED040A 		vldr.32	s0, .L60+8
+ 1356 0022 27EE800A 		vmul.f32	s0, s15, s0
+ 1357              	.LVL114:
+ 1358              		.loc 1 242 1 view .LVU335
+ 1359 0026 08BD     		pop	{r3, pc}
+ 1360              	.L61:
+ 1361              		.align	2
+ 1362              	.L60:
+ 1363 0028 01DE423E 		.word	1044569601
+ 1364 002c 80E6C547 		.word	1204151936
+ 1365 0030 002A2D47 		.word	1194142208
+ 1366              		.cfi_endproc
+ 1367              	.LFE235:
+ 1369              		.global	c10
+ 1370              		.section	.bss.c10,"aw",%nobits
+ 1371              		.align	2
+ 1374              	c10:
+ 1375 0000 00000000 		.space	4
+ 1376              		.global	c00
+ 1377              		.section	.bss.c00,"aw",%nobits
+ 1378              		.align	2
+ 1381              	c00:
+ 1382 0000 00000000 		.space	4
+ 1383              		.global	c30
+ 1384              		.section	.bss.c30,"aw",%nobits
+ 1385              		.align	1
+ 1388              	c30:
+ 1389 0000 0000     		.space	2
+ 1390              		.global	c21
+ 1391              		.section	.bss.c21,"aw",%nobits
+ 1392              		.align	1
+ 1395              	c21:
+ 1396 0000 0000     		.space	2
+ 1397              		.global	c20
+ 1398              		.section	.bss.c20,"aw",%nobits
+ 1399              		.align	1
+ 1402              	c20:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 29
+
+
+ 1403 0000 0000     		.space	2
+ 1404              		.global	c11
+ 1405              		.section	.bss.c11,"aw",%nobits
+ 1406              		.align	1
+ 1409              	c11:
+ 1410 0000 0000     		.space	2
+ 1411              		.global	c01
+ 1412              		.section	.bss.c01,"aw",%nobits
+ 1413              		.align	1
+ 1416              	c01:
+ 1417 0000 0000     		.space	2
+ 1418              		.global	c1
+ 1419              		.section	.bss.c1,"aw",%nobits
+ 1420              		.align	1
+ 1423              	c1:
+ 1424 0000 0000     		.space	2
+ 1425              		.global	c0
+ 1426              		.section	.bss.c0,"aw",%nobits
+ 1427              		.align	1
+ 1430              	c0:
+ 1431 0000 0000     		.space	2
+ 1432              		.global	SPL_bus
+ 1433              		.section	.data.SPL_bus,"aw"
+ 1434              		.align	2
+ 1437              	SPL_bus:
+ 1438 0000 00040240 		.word	1073873920
+ 1439 0004 00040240 		.word	1073873920
+ 1440 0008 0020     		.short	8192
+ 1441 000a 0040     		.short	16384
+ 1442              		.text
+ 1443              	.Letext0:
+ 1444              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1445              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1446              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 1447              		.file 5 "BSP/IIC/iic_hal.h"
+ 1448              		.file 6 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 30
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 SPL06_001.c
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:21     .text.SPL_ReadOneReg:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:27     .text.SPL_ReadOneReg:00000000 SPL_ReadOneReg
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:56     .text.SPL_ReadOneReg:00000010 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1437   .data.SPL_bus:00000000 SPL_bus
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:61     .text.SPL_WriteOneReg:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:67     .text.SPL_WriteOneReg:00000000 SPL_WriteOneReg
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:96     .text.SPL_WriteOneReg:00000010 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:101    .text.Get_Traw:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:107    .text.Get_Traw:00000000 Get_Traw
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:176    .text.Get_Praw:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:182    .text.Get_Praw:00000000 Get_Praw
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:251    .text.get_c0:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:257    .text.get_c0:00000000 get_c0
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:319    .text.get_c1:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:325    .text.get_c1:00000000 get_c1
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:387    .text.get_c00:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:393    .text.get_c00:00000000 get_c00
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:467    .text.get_c10:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:473    .text.get_c10:00000000 get_c10
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:547    .text.get_c01:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:553    .text.get_c01:00000000 get_c01
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:605    .text.get_c11:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:611    .text.get_c11:00000000 get_c11
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:663    .text.get_c20:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:669    .text.get_c20:00000000 get_c20
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:721    .text.get_c21:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:727    .text.get_c21:00000000 get_c21
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:779    .text.get_c30:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:785    .text.get_c30:00000000 get_c30
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:837    .text.SPL_init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:843    .text.SPL_init:00000000 SPL_init
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:996    .text.SPL_init:000000a8 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1430   .bss.c0:00000000 c0
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1423   .bss.c1:00000000 c1
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1416   .bss.c01:00000000 c01
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1409   .bss.c11:00000000 c11
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1402   .bss.c20:00000000 c20
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1395   .bss.c21:00000000 c21
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1388   .bss.c30:00000000 c30
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1381   .bss.c00:00000000 c00
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1374   .bss.c10:00000000 c10
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1011   .text.SPL_Sleep:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1017   .text.SPL_Sleep:00000000 SPL_Sleep
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1039   .text.SPL_Wakeup:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1045   .text.SPL_Wakeup:00000000 SPL_Wakeup
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1067   .text.SPL_GetID:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1073   .text.SPL_GetID:00000000 SPL_GetID
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1100   .text.Temperature_Calculate:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1106   .text.Temperature_Calculate:00000000 Temperature_Calculate
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1183   .text.Temperature_Calculate:00000064 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1191   .text.Pressure_Calculate:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1197   .text.Pressure_Calculate:00000000 Pressure_Calculate
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1308   .text.Pressure_Calculate:000000c4 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1321   .text.Altitude_Calculate:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1327   .text.Altitude_Calculate:00000000 Altitude_Calculate
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s 			page 31
+
+
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1363   .text.Altitude_Calculate:00000028 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1371   .bss.c10:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1378   .bss.c00:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1385   .bss.c30:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1392   .bss.c21:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1399   .bss.c20:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1406   .bss.c11:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1413   .bss.c01:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1420   .bss.c1:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1427   .bss.c0:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccLb2oLh.s:1434   .data.SPL_bus:00000000 $d
+
+UNDEFINED SYMBOLS
+IIC_Read_One_Byte
+IIC_Write_One_Byte
+IICInit
+__aeabi_i2d
+__aeabi_dmul
+__aeabi_f2d
+__aeabi_dadd
+__aeabi_d2f
+powf

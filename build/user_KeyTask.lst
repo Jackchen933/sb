@@ -1,0 +1,256 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccKM6UiI.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"user_KeyTask.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/Tasks/Src/user_KeyTask.c"
+  20              		.section	.text.KeyTask,"ax",%progbits
+  21              		.align	1
+  22              		.global	KeyTask
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	KeyTask:
+  28              	.LVL0:
+  29              	.LFB416:
+   1:User/Tasks/Src/user_KeyTask.c **** /* Private includes -----------------------------------------------------------*/
+   2:User/Tasks/Src/user_KeyTask.c **** //includes
+   3:User/Tasks/Src/user_KeyTask.c **** #include "user_TasksInit.h"
+   4:User/Tasks/Src/user_KeyTask.c **** #include "ui_HomePage.h"
+   5:User/Tasks/Src/user_KeyTask.c **** #include "main.h"
+   6:User/Tasks/Src/user_KeyTask.c **** #include "key.h"
+   7:User/Tasks/Src/user_KeyTask.c **** 
+   8:User/Tasks/Src/user_KeyTask.c **** /* Private typedef -----------------------------------------------------------*/
+   9:User/Tasks/Src/user_KeyTask.c **** 
+  10:User/Tasks/Src/user_KeyTask.c **** /* Private define ------------------------------------------------------------*/
+  11:User/Tasks/Src/user_KeyTask.c **** 
+  12:User/Tasks/Src/user_KeyTask.c **** /* Private variables ---------------------------------------------------------*/
+  13:User/Tasks/Src/user_KeyTask.c **** 
+  14:User/Tasks/Src/user_KeyTask.c **** /* Private function prototypes -----------------------------------------------*/
+  15:User/Tasks/Src/user_KeyTask.c **** 
+  16:User/Tasks/Src/user_KeyTask.c **** 
+  17:User/Tasks/Src/user_KeyTask.c **** /**
+  18:User/Tasks/Src/user_KeyTask.c ****   * @brief  Key press check task
+  19:User/Tasks/Src/user_KeyTask.c ****   * @param  argument: Not used
+  20:User/Tasks/Src/user_KeyTask.c ****   * @retval None
+  21:User/Tasks/Src/user_KeyTask.c ****   */
+  22:User/Tasks/Src/user_KeyTask.c **** void KeyTask(void *argument)
+  23:User/Tasks/Src/user_KeyTask.c **** {
+  30              		.loc 1 23 1 view -0
+  31              		.cfi_startproc
+  32              		@ Volatile: function does not return.
+  33              		@ args = 0, pretend = 0, frame = 8
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              		.loc 1 23 1 is_stmt 0 view .LVU1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccKM6UiI.s 			page 2
+
+
+  36 0000 00B5     		push	{lr}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 4
+  39              		.cfi_offset 14, -4
+  40 0002 83B0     		sub	sp, sp, #12
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_offset 16
+  24:User/Tasks/Src/user_KeyTask.c **** 	uint8_t keystr=0;
+  43              		.loc 1 24 2 is_stmt 1 view .LVU2
+  44              		.loc 1 24 10 is_stmt 0 view .LVU3
+  45 0004 0023     		movs	r3, #0
+  46 0006 8DF80730 		strb	r3, [sp, #7]
+  25:User/Tasks/Src/user_KeyTask.c **** 	uint8_t Stopstr=0;
+  47              		.loc 1 25 2 is_stmt 1 view .LVU4
+  48              		.loc 1 25 10 is_stmt 0 view .LVU5
+  49 000a 8DF80630 		strb	r3, [sp, #6]
+  26:User/Tasks/Src/user_KeyTask.c **** 	uint8_t IdleBreakstr=0;
+  50              		.loc 1 26 2 is_stmt 1 view .LVU6
+  51              		.loc 1 26 10 is_stmt 0 view .LVU7
+  52 000e 8DF80530 		strb	r3, [sp, #5]
+  53 0012 15E0     		b	.L6
+  54              	.LVL1:
+  55              	.L2:
+  27:User/Tasks/Src/user_KeyTask.c **** 	while(1)
+  28:User/Tasks/Src/user_KeyTask.c **** 	{
+  29:User/Tasks/Src/user_KeyTask.c **** 		switch(KeyScan(0))
+  30:User/Tasks/Src/user_KeyTask.c **** 		{
+  31:User/Tasks/Src/user_KeyTask.c **** 			case 1:
+  32:User/Tasks/Src/user_KeyTask.c **** 				keystr = 1;
+  56              		.loc 1 32 5 is_stmt 1 view .LVU8
+  57              		.loc 1 32 12 is_stmt 0 view .LVU9
+  58 0014 0124     		movs	r4, #1
+  59 0016 8DF80740 		strb	r4, [sp, #7]
+  33:User/Tasks/Src/user_KeyTask.c **** 				osMessageQueuePut(Key_MessageQueue, &keystr, 0, 1);
+  60              		.loc 1 33 5 is_stmt 1 view .LVU10
+  61 001a 2346     		mov	r3, r4
+  62 001c 0022     		movs	r2, #0
+  63 001e 0DF10701 		add	r1, sp, #7
+  64 0022 1C48     		ldr	r0, .L9
+  65 0024 0068     		ldr	r0, [r0]
+  66 0026 FFF7FEFF 		bl	osMessageQueuePut
+  67              	.LVL2:
+  34:User/Tasks/Src/user_KeyTask.c **** 				osMessageQueuePut(IdleBreak_MessageQueue, &IdleBreakstr, 0, 1);
+  68              		.loc 1 34 5 view .LVU11
+  69 002a 2346     		mov	r3, r4
+  70 002c 0022     		movs	r2, #0
+  71 002e 0DF10501 		add	r1, sp, #5
+  72 0032 1948     		ldr	r0, .L9+4
+  73 0034 0068     		ldr	r0, [r0]
+  74 0036 FFF7FEFF 		bl	osMessageQueuePut
+  75              	.LVL3:
+  35:User/Tasks/Src/user_KeyTask.c **** 				break;
+  76              		.loc 1 35 5 view .LVU12
+  77              	.L4:
+  36:User/Tasks/Src/user_KeyTask.c **** 
+  37:User/Tasks/Src/user_KeyTask.c **** 			case 2:
+  38:User/Tasks/Src/user_KeyTask.c **** 				if(Page_Get_NowPage()->page_obj == &ui_HomePage)
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccKM6UiI.s 			page 3
+
+
+  39:User/Tasks/Src/user_KeyTask.c **** 				{
+  40:User/Tasks/Src/user_KeyTask.c **** 					osMessageQueuePut(Stop_MessageQueue, &Stopstr, 0, 1);
+  41:User/Tasks/Src/user_KeyTask.c **** 				}
+  42:User/Tasks/Src/user_KeyTask.c **** 				else
+  43:User/Tasks/Src/user_KeyTask.c **** 				{
+  44:User/Tasks/Src/user_KeyTask.c **** 					keystr = 2;
+  45:User/Tasks/Src/user_KeyTask.c **** 					osMessageQueuePut(Key_MessageQueue, &keystr, 0, 1);
+  46:User/Tasks/Src/user_KeyTask.c **** 					osMessageQueuePut(IdleBreak_MessageQueue, &IdleBreakstr, 0, 1);
+  47:User/Tasks/Src/user_KeyTask.c **** 				}
+  48:User/Tasks/Src/user_KeyTask.c **** 				break;
+  49:User/Tasks/Src/user_KeyTask.c **** 		}
+  50:User/Tasks/Src/user_KeyTask.c **** 		osDelay(1);
+  78              		.loc 1 50 3 view .LVU13
+  79 003a 0120     		movs	r0, #1
+  80 003c FFF7FEFF 		bl	osDelay
+  81              	.LVL4:
+  27:User/Tasks/Src/user_KeyTask.c **** 	{
+  82              		.loc 1 27 7 view .LVU14
+  83              	.L6:
+  27:User/Tasks/Src/user_KeyTask.c **** 	{
+  84              		.loc 1 27 2 view .LVU15
+  29:User/Tasks/Src/user_KeyTask.c **** 		{
+  85              		.loc 1 29 3 view .LVU16
+  29:User/Tasks/Src/user_KeyTask.c **** 		{
+  86              		.loc 1 29 10 is_stmt 0 view .LVU17
+  87 0040 0020     		movs	r0, #0
+  88 0042 FFF7FEFF 		bl	KeyScan
+  89              	.LVL5:
+  29:User/Tasks/Src/user_KeyTask.c **** 		{
+  90              		.loc 1 29 3 discriminator 1 view .LVU18
+  91 0046 0128     		cmp	r0, #1
+  92 0048 E4D0     		beq	.L2
+  93 004a 0228     		cmp	r0, #2
+  94 004c F5D1     		bne	.L4
+  38:User/Tasks/Src/user_KeyTask.c **** 				{
+  95              		.loc 1 38 5 is_stmt 1 view .LVU19
+  38:User/Tasks/Src/user_KeyTask.c **** 				{
+  96              		.loc 1 38 8 is_stmt 0 view .LVU20
+  97 004e FFF7FEFF 		bl	Page_Get_NowPage
+  98              	.LVL6:
+  38:User/Tasks/Src/user_KeyTask.c **** 				{
+  99              		.loc 1 38 26 discriminator 1 view .LVU21
+ 100 0052 8268     		ldr	r2, [r0, #8]
+  38:User/Tasks/Src/user_KeyTask.c **** 				{
+ 101              		.loc 1 38 7 discriminator 1 view .LVU22
+ 102 0054 114B     		ldr	r3, .L9+8
+ 103 0056 9A42     		cmp	r2, r3
+ 104 0058 13D0     		beq	.L8
+  44:User/Tasks/Src/user_KeyTask.c **** 					osMessageQueuePut(Key_MessageQueue, &keystr, 0, 1);
+ 105              		.loc 1 44 6 is_stmt 1 view .LVU23
+  44:User/Tasks/Src/user_KeyTask.c **** 					osMessageQueuePut(Key_MessageQueue, &keystr, 0, 1);
+ 106              		.loc 1 44 13 is_stmt 0 view .LVU24
+ 107 005a 0223     		movs	r3, #2
+ 108 005c 8DF80730 		strb	r3, [sp, #7]
+  45:User/Tasks/Src/user_KeyTask.c **** 					osMessageQueuePut(IdleBreak_MessageQueue, &IdleBreakstr, 0, 1);
+ 109              		.loc 1 45 6 is_stmt 1 view .LVU25
+ 110 0060 0123     		movs	r3, #1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccKM6UiI.s 			page 4
+
+
+ 111 0062 0022     		movs	r2, #0
+ 112 0064 0DF10701 		add	r1, sp, #7
+ 113 0068 0A48     		ldr	r0, .L9
+ 114 006a 0068     		ldr	r0, [r0]
+ 115 006c FFF7FEFF 		bl	osMessageQueuePut
+ 116              	.LVL7:
+  46:User/Tasks/Src/user_KeyTask.c **** 				}
+ 117              		.loc 1 46 6 view .LVU26
+ 118 0070 0123     		movs	r3, #1
+ 119 0072 0022     		movs	r2, #0
+ 120 0074 0DF10501 		add	r1, sp, #5
+ 121 0078 0748     		ldr	r0, .L9+4
+ 122 007a 0068     		ldr	r0, [r0]
+ 123 007c FFF7FEFF 		bl	osMessageQueuePut
+ 124              	.LVL8:
+ 125 0080 DBE7     		b	.L4
+ 126              	.L8:
+  40:User/Tasks/Src/user_KeyTask.c **** 				}
+ 127              		.loc 1 40 6 view .LVU27
+ 128 0082 0123     		movs	r3, #1
+ 129 0084 0022     		movs	r2, #0
+ 130 0086 0DF10601 		add	r1, sp, #6
+ 131 008a 0548     		ldr	r0, .L9+12
+ 132 008c 0068     		ldr	r0, [r0]
+ 133 008e FFF7FEFF 		bl	osMessageQueuePut
+ 134              	.LVL9:
+ 135 0092 D2E7     		b	.L4
+ 136              	.L10:
+ 137              		.align	2
+ 138              	.L9:
+ 139 0094 00000000 		.word	Key_MessageQueue
+ 140 0098 00000000 		.word	IdleBreak_MessageQueue
+ 141 009c 00000000 		.word	ui_HomePage
+ 142 00a0 00000000 		.word	Stop_MessageQueue
+ 143              		.cfi_endproc
+ 144              	.LFE416:
+ 146              		.text
+ 147              	.Letext0:
+ 148              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 149              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 150              		.file 4 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ 151              		.file 5 "User/Tasks/Inc/user_TasksInit.h"
+ 152              		.file 6 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/../font/../misc/lv_area.h"
+ 153              		.file 7 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h"
+ 154              		.file 8 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_style.h"
+ 155              		.file 9 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj.h"
+ 156              		.file 10 "Middlewares/LVGL/GUI/lvgl/src/hal/../misc/lv_ll.h"
+ 157              		.file 11 "Middlewares/LVGL/GUI/lvgl/src/core/lv_group.h"
+ 158              		.file 12 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_scroll.h"
+ 159              		.file 13 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style.h"
+ 160              		.file 14 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_class.h"
+ 161              		.file 15 "Middlewares/LVGL/GUI/lvgl/src/core/lv_event.h"
+ 162              		.file 16 "User/GUI_App/Screens/Inc/../../../Func/Inc/PageManager.h"
+ 163              		.file 17 "User/GUI_App/Screens/Inc/ui_HomePage.h"
+ 164              		.file 18 "BSP/KEY/key.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccKM6UiI.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 user_KeyTask.c
+C:\Users\chen\AppData\Local\Temp\ccKM6UiI.s:21     .text.KeyTask:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccKM6UiI.s:27     .text.KeyTask:00000000 KeyTask
+C:\Users\chen\AppData\Local\Temp\ccKM6UiI.s:139    .text.KeyTask:00000094 $d
+
+UNDEFINED SYMBOLS
+osMessageQueuePut
+osDelay
+KeyScan
+Page_Get_NowPage
+Key_MessageQueue
+IdleBreak_MessageQueue
+ui_HomePage
+Stop_MessageQueue

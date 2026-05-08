@@ -1,0 +1,1564 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"user_TasksInit.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/Tasks/Src/user_TasksInit.c"
+  20              		.section	.text.LvHandlerTask,"ax",%progbits
+  21              		.align	1
+  22              		.global	LvHandlerTask
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	LvHandlerTask:
+  28              	.LVL0:
+  29              	.LFB418:
+   1:User/Tasks/Src/user_TasksInit.c **** /* Private includes -----------------------------------------------------------*/
+   2:User/Tasks/Src/user_TasksInit.c **** //includes
+   3:User/Tasks/Src/user_TasksInit.c **** #include "user_TasksInit.h"
+   4:User/Tasks/Src/user_TasksInit.c **** //sys
+   5:User/Tasks/Src/user_TasksInit.c **** #include "sys.h"
+   6:User/Tasks/Src/user_TasksInit.c **** #include "stdio.h"
+   7:User/Tasks/Src/user_TasksInit.c **** #include "lcd.h"
+   8:User/Tasks/Src/user_TasksInit.c **** #include "WDOG.h"
+   9:User/Tasks/Src/user_TasksInit.c **** //gui
+  10:User/Tasks/Src/user_TasksInit.c **** #include "lvgl.h"
+  11:User/Tasks/Src/user_TasksInit.c **** #include "ui_TimerPage.h"
+  12:User/Tasks/Src/user_TasksInit.c **** //tasks
+  13:User/Tasks/Src/user_TasksInit.c **** #include "user_HardwareInitTask.h"
+  14:User/Tasks/Src/user_TasksInit.c **** #include "user_RunModeTasks.h"
+  15:User/Tasks/Src/user_TasksInit.c **** #include "user_KeyTask.h"
+  16:User/Tasks/Src/user_TasksInit.c **** #include "user_ScrRenewTask.h"
+  17:User/Tasks/Src/user_TasksInit.c **** #include "user_SensUpdateTask.h"
+  18:User/Tasks/Src/user_TasksInit.c **** #include "user_ChargCheckTask.h"
+  19:User/Tasks/Src/user_TasksInit.c **** #include "user_MessageSendTask.h"
+  20:User/Tasks/Src/user_TasksInit.c **** #include "user_DataSaveTask.h"
+  21:User/Tasks/Src/user_TasksInit.c **** 
+  22:User/Tasks/Src/user_TasksInit.c **** /* Private typedef -----------------------------------------------------------*/
+  23:User/Tasks/Src/user_TasksInit.c **** 
+  24:User/Tasks/Src/user_TasksInit.c **** 
+  25:User/Tasks/Src/user_TasksInit.c **** /* Private define ------------------------------------------------------------*/
+  26:User/Tasks/Src/user_TasksInit.c **** 
+  27:User/Tasks/Src/user_TasksInit.c **** 
+  28:User/Tasks/Src/user_TasksInit.c **** /* Private variables ---------------------------------------------------------*/
+  29:User/Tasks/Src/user_TasksInit.c **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 2
+
+
+  30:User/Tasks/Src/user_TasksInit.c **** 
+  31:User/Tasks/Src/user_TasksInit.c **** /* Timers --------------------------------------------------------------------*/
+  32:User/Tasks/Src/user_TasksInit.c **** osTimerId_t IdleTimerHandle;
+  33:User/Tasks/Src/user_TasksInit.c **** 
+  34:User/Tasks/Src/user_TasksInit.c **** 
+  35:User/Tasks/Src/user_TasksInit.c **** /* Tasks ---------------------------------------------------------------------*/
+  36:User/Tasks/Src/user_TasksInit.c **** // Hardwares initialization
+  37:User/Tasks/Src/user_TasksInit.c **** osThreadId_t HardwareInitTaskHandle;
+  38:User/Tasks/Src/user_TasksInit.c **** const osThreadAttr_t HardwareInitTask_attributes = {
+  39:User/Tasks/Src/user_TasksInit.c ****   .name = "HardwareInitTask",
+  40:User/Tasks/Src/user_TasksInit.c ****   .stack_size = 128 * 10,
+  41:User/Tasks/Src/user_TasksInit.c ****   .priority = (osPriority_t) osPriorityHigh3,
+  42:User/Tasks/Src/user_TasksInit.c **** };
+  43:User/Tasks/Src/user_TasksInit.c **** 
+  44:User/Tasks/Src/user_TasksInit.c **** //LVGL Handler task
+  45:User/Tasks/Src/user_TasksInit.c **** osThreadId_t LvHandlerTaskHandle;
+  46:User/Tasks/Src/user_TasksInit.c **** const osThreadAttr_t LvHandlerTask_attributes = {
+  47:User/Tasks/Src/user_TasksInit.c ****   .name = "LvHandlerTask",
+  48:User/Tasks/Src/user_TasksInit.c ****   .stack_size = 128 * 24,
+  49:User/Tasks/Src/user_TasksInit.c ****   .priority = (osPriority_t) osPriorityLow,
+  50:User/Tasks/Src/user_TasksInit.c **** };
+  51:User/Tasks/Src/user_TasksInit.c **** 
+  52:User/Tasks/Src/user_TasksInit.c **** //WDOG Feed task
+  53:User/Tasks/Src/user_TasksInit.c **** osThreadId_t WDOGFeedTaskHandle;
+  54:User/Tasks/Src/user_TasksInit.c **** const osThreadAttr_t WDOGFeedTask_attributes = {
+  55:User/Tasks/Src/user_TasksInit.c ****   .name = "WDOGFeedTask",
+  56:User/Tasks/Src/user_TasksInit.c ****   .stack_size = 128 * 1,
+  57:User/Tasks/Src/user_TasksInit.c ****   .priority = (osPriority_t) osPriorityHigh2,
+  58:User/Tasks/Src/user_TasksInit.c **** };
+  59:User/Tasks/Src/user_TasksInit.c **** 
+  60:User/Tasks/Src/user_TasksInit.c **** //Idle Enter Task
+  61:User/Tasks/Src/user_TasksInit.c **** osThreadId_t IdleEnterTaskHandle;
+  62:User/Tasks/Src/user_TasksInit.c **** const osThreadAttr_t IdleEnterTask_attributes = {
+  63:User/Tasks/Src/user_TasksInit.c ****   .name = "IdleEnterTask",
+  64:User/Tasks/Src/user_TasksInit.c ****   .stack_size = 128 * 1,
+  65:User/Tasks/Src/user_TasksInit.c ****   .priority = (osPriority_t) osPriorityHigh,
+  66:User/Tasks/Src/user_TasksInit.c **** };
+  67:User/Tasks/Src/user_TasksInit.c **** 
+  68:User/Tasks/Src/user_TasksInit.c **** //Stop Enter Task
+  69:User/Tasks/Src/user_TasksInit.c **** osThreadId_t StopEnterTaskHandle;
+  70:User/Tasks/Src/user_TasksInit.c **** const osThreadAttr_t StopEnterTask_attributes = {
+  71:User/Tasks/Src/user_TasksInit.c ****   .name = "StopEnterTask",
+  72:User/Tasks/Src/user_TasksInit.c ****   .stack_size = 128 * 16,
+  73:User/Tasks/Src/user_TasksInit.c ****   .priority = (osPriority_t) osPriorityHigh1,
+  74:User/Tasks/Src/user_TasksInit.c **** };
+  75:User/Tasks/Src/user_TasksInit.c **** 
+  76:User/Tasks/Src/user_TasksInit.c **** //Key task
+  77:User/Tasks/Src/user_TasksInit.c **** osThreadId_t KeyTaskHandle;
+  78:User/Tasks/Src/user_TasksInit.c **** const osThreadAttr_t KeyTask_attributes = {
+  79:User/Tasks/Src/user_TasksInit.c ****   .name = "KeyTask",
+  80:User/Tasks/Src/user_TasksInit.c ****   .stack_size = 128 * 1,
+  81:User/Tasks/Src/user_TasksInit.c ****   .priority = (osPriority_t) osPriorityNormal,
+  82:User/Tasks/Src/user_TasksInit.c **** };
+  83:User/Tasks/Src/user_TasksInit.c **** 
+  84:User/Tasks/Src/user_TasksInit.c **** //ScrRenew task
+  85:User/Tasks/Src/user_TasksInit.c **** osThreadId_t ScrRenewTaskHandle;
+  86:User/Tasks/Src/user_TasksInit.c **** const osThreadAttr_t ScrRenewTask_attributes = {
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 3
+
+
+  87:User/Tasks/Src/user_TasksInit.c ****   .name = "ScrRenewTask",
+  88:User/Tasks/Src/user_TasksInit.c ****   .stack_size = 128 * 10,
+  89:User/Tasks/Src/user_TasksInit.c ****   .priority = (osPriority_t) osPriorityLow1,
+  90:User/Tasks/Src/user_TasksInit.c **** };
+  91:User/Tasks/Src/user_TasksInit.c **** 
+  92:User/Tasks/Src/user_TasksInit.c **** //SensorDataRenew task
+  93:User/Tasks/Src/user_TasksInit.c **** osThreadId_t SensorDataTaskHandle;
+  94:User/Tasks/Src/user_TasksInit.c **** const osThreadAttr_t SensorDataTask_attributes = {
+  95:User/Tasks/Src/user_TasksInit.c ****   .name = "SensorDataTask",
+  96:User/Tasks/Src/user_TasksInit.c ****   .stack_size = 128 * 5,
+  97:User/Tasks/Src/user_TasksInit.c ****   .priority = (osPriority_t) osPriorityLow1,
+  98:User/Tasks/Src/user_TasksInit.c **** };
+  99:User/Tasks/Src/user_TasksInit.c **** 
+ 100:User/Tasks/Src/user_TasksInit.c **** //HRDataRenew task
+ 101:User/Tasks/Src/user_TasksInit.c **** osThreadId_t HRDataTaskHandle;
+ 102:User/Tasks/Src/user_TasksInit.c **** const osThreadAttr_t HRDataTask_attributes = {
+ 103:User/Tasks/Src/user_TasksInit.c ****   .name = "HRDataTask",
+ 104:User/Tasks/Src/user_TasksInit.c ****   .stack_size = 128 * 5,
+ 105:User/Tasks/Src/user_TasksInit.c ****   .priority = (osPriority_t) osPriorityLow1,
+ 106:User/Tasks/Src/user_TasksInit.c **** };
+ 107:User/Tasks/Src/user_TasksInit.c **** 
+ 108:User/Tasks/Src/user_TasksInit.c **** //ChargPageEnterTask
+ 109:User/Tasks/Src/user_TasksInit.c **** osThreadId_t ChargPageEnterTaskHandle;
+ 110:User/Tasks/Src/user_TasksInit.c **** const osThreadAttr_t ChargPageEnterTask_attributes = {
+ 111:User/Tasks/Src/user_TasksInit.c ****   .name = "ChargPageEnterTask",
+ 112:User/Tasks/Src/user_TasksInit.c ****   .stack_size = 128 * 10,
+ 113:User/Tasks/Src/user_TasksInit.c ****   .priority = (osPriority_t) osPriorityLow1,
+ 114:User/Tasks/Src/user_TasksInit.c **** };
+ 115:User/Tasks/Src/user_TasksInit.c **** 
+ 116:User/Tasks/Src/user_TasksInit.c **** //messagesendtask
+ 117:User/Tasks/Src/user_TasksInit.c **** osThreadId_t MessageSendTaskHandle;
+ 118:User/Tasks/Src/user_TasksInit.c **** const osThreadAttr_t MessageSendTask_attributes = {
+ 119:User/Tasks/Src/user_TasksInit.c ****   .name = "MessageSendTask",
+ 120:User/Tasks/Src/user_TasksInit.c ****   .stack_size = 128 * 5,
+ 121:User/Tasks/Src/user_TasksInit.c ****   .priority = (osPriority_t) osPriorityLow1,
+ 122:User/Tasks/Src/user_TasksInit.c **** };
+ 123:User/Tasks/Src/user_TasksInit.c **** 
+ 124:User/Tasks/Src/user_TasksInit.c **** //MPUCheckTask
+ 125:User/Tasks/Src/user_TasksInit.c **** osThreadId_t MPUCheckTaskHandle;
+ 126:User/Tasks/Src/user_TasksInit.c **** const osThreadAttr_t MPUCheckTask_attributes = {
+ 127:User/Tasks/Src/user_TasksInit.c ****   .name = "MPUCheckTask",
+ 128:User/Tasks/Src/user_TasksInit.c ****   .stack_size = 128 * 3,
+ 129:User/Tasks/Src/user_TasksInit.c ****   .priority = (osPriority_t) osPriorityLow2,
+ 130:User/Tasks/Src/user_TasksInit.c **** };
+ 131:User/Tasks/Src/user_TasksInit.c **** 
+ 132:User/Tasks/Src/user_TasksInit.c **** //DataSaveTask
+ 133:User/Tasks/Src/user_TasksInit.c **** osThreadId_t DataSaveTaskHandle;
+ 134:User/Tasks/Src/user_TasksInit.c **** const osThreadAttr_t DataSaveTask_attributes = {
+ 135:User/Tasks/Src/user_TasksInit.c ****   .name = "DataSaveTask",
+ 136:User/Tasks/Src/user_TasksInit.c ****   .stack_size = 128 * 5,
+ 137:User/Tasks/Src/user_TasksInit.c ****   .priority = (osPriority_t) osPriorityLow2,
+ 138:User/Tasks/Src/user_TasksInit.c **** };
+ 139:User/Tasks/Src/user_TasksInit.c **** 
+ 140:User/Tasks/Src/user_TasksInit.c **** 
+ 141:User/Tasks/Src/user_TasksInit.c **** /* Message queues ------------------------------------------------------------*/
+ 142:User/Tasks/Src/user_TasksInit.c **** //Key message
+ 143:User/Tasks/Src/user_TasksInit.c **** osMessageQueueId_t Key_MessageQueue;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 4
+
+
+ 144:User/Tasks/Src/user_TasksInit.c **** osMessageQueueId_t Idle_MessageQueue;
+ 145:User/Tasks/Src/user_TasksInit.c **** osMessageQueueId_t Stop_MessageQueue;
+ 146:User/Tasks/Src/user_TasksInit.c **** osMessageQueueId_t IdleBreak_MessageQueue;
+ 147:User/Tasks/Src/user_TasksInit.c **** osMessageQueueId_t HomeUpdata_MessageQueue;
+ 148:User/Tasks/Src/user_TasksInit.c **** osMessageQueueId_t DataSave_MessageQueue;
+ 149:User/Tasks/Src/user_TasksInit.c **** 
+ 150:User/Tasks/Src/user_TasksInit.c **** /* Private function prototypes -----------------------------------------------*/
+ 151:User/Tasks/Src/user_TasksInit.c **** void LvHandlerTask(void *argument);
+ 152:User/Tasks/Src/user_TasksInit.c **** void WDOGFeedTask(void *argument);
+ 153:User/Tasks/Src/user_TasksInit.c **** 
+ 154:User/Tasks/Src/user_TasksInit.c **** /**
+ 155:User/Tasks/Src/user_TasksInit.c ****   * @brief  FreeRTOS initialization
+ 156:User/Tasks/Src/user_TasksInit.c ****   * @param  None
+ 157:User/Tasks/Src/user_TasksInit.c ****   * @retval None
+ 158:User/Tasks/Src/user_TasksInit.c ****   */
+ 159:User/Tasks/Src/user_TasksInit.c **** void User_Tasks_Init(void)
+ 160:User/Tasks/Src/user_TasksInit.c **** {
+ 161:User/Tasks/Src/user_TasksInit.c ****   /* add mutexes, ... */
+ 162:User/Tasks/Src/user_TasksInit.c **** 
+ 163:User/Tasks/Src/user_TasksInit.c ****   /* add semaphores, ... */
+ 164:User/Tasks/Src/user_TasksInit.c **** 
+ 165:User/Tasks/Src/user_TasksInit.c ****   /* start timers, add new ones, ... */
+ 166:User/Tasks/Src/user_TasksInit.c **** 
+ 167:User/Tasks/Src/user_TasksInit.c **** 	IdleTimerHandle = osTimerNew(IdleTimerCallback, osTimerPeriodic, NULL, NULL);
+ 168:User/Tasks/Src/user_TasksInit.c **** 	osTimerStart(IdleTimerHandle,100);//100ms
+ 169:User/Tasks/Src/user_TasksInit.c **** 
+ 170:User/Tasks/Src/user_TasksInit.c ****   /* add queues, ... */
+ 171:User/Tasks/Src/user_TasksInit.c **** 	Key_MessageQueue  = osMessageQueueNew(1, 1, NULL);
+ 172:User/Tasks/Src/user_TasksInit.c **** 	Idle_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 173:User/Tasks/Src/user_TasksInit.c **** 	Stop_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 174:User/Tasks/Src/user_TasksInit.c **** 	IdleBreak_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 175:User/Tasks/Src/user_TasksInit.c **** 	HomeUpdata_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 176:User/Tasks/Src/user_TasksInit.c **** 	DataSave_MessageQueue = osMessageQueueNew(2, 1, NULL);
+ 177:User/Tasks/Src/user_TasksInit.c **** 
+ 178:User/Tasks/Src/user_TasksInit.c **** 	/* add threads, ... */
+ 179:User/Tasks/Src/user_TasksInit.c ****   HardwareInitTaskHandle  = osThreadNew(HardwareInitTask, NULL, &HardwareInitTask_attributes);
+ 180:User/Tasks/Src/user_TasksInit.c ****   LvHandlerTaskHandle  = osThreadNew(LvHandlerTask, NULL, &LvHandlerTask_attributes);
+ 181:User/Tasks/Src/user_TasksInit.c ****   WDOGFeedTaskHandle   = osThreadNew(WDOGFeedTask, NULL, &WDOGFeedTask_attributes);
+ 182:User/Tasks/Src/user_TasksInit.c **** 	IdleEnterTaskHandle  = osThreadNew(IdleEnterTask, NULL, &IdleEnterTask_attributes);
+ 183:User/Tasks/Src/user_TasksInit.c **** 	StopEnterTaskHandle  = osThreadNew(StopEnterTask, NULL, &StopEnterTask_attributes);
+ 184:User/Tasks/Src/user_TasksInit.c **** 	KeyTaskHandle 			 = osThreadNew(KeyTask, NULL, &KeyTask_attributes);
+ 185:User/Tasks/Src/user_TasksInit.c **** 	ScrRenewTaskHandle   = osThreadNew(ScrRenewTask, NULL, &ScrRenewTask_attributes);
+ 186:User/Tasks/Src/user_TasksInit.c **** 	SensorDataTaskHandle = osThreadNew(SensorDataUpdateTask, NULL, &SensorDataTask_attributes);
+ 187:User/Tasks/Src/user_TasksInit.c **** 	HRDataTaskHandle		 = osThreadNew(HRDataUpdateTask, NULL, &HRDataTask_attributes);
+ 188:User/Tasks/Src/user_TasksInit.c **** 	ChargPageEnterTaskHandle = osThreadNew(ChargPageEnterTask, NULL, &ChargPageEnterTask_attributes);
+ 189:User/Tasks/Src/user_TasksInit.c ****   MessageSendTaskHandle = osThreadNew(MessageSendTask, NULL, &MessageSendTask_attributes);
+ 190:User/Tasks/Src/user_TasksInit.c **** 	MPUCheckTaskHandle		= osThreadNew(MPUCheckTask, NULL, &MPUCheckTask_attributes);
+ 191:User/Tasks/Src/user_TasksInit.c **** 	DataSaveTaskHandle		= osThreadNew(DataSaveTask, NULL, &DataSaveTask_attributes);
+ 192:User/Tasks/Src/user_TasksInit.c **** 
+ 193:User/Tasks/Src/user_TasksInit.c ****   /* add events, ... */
+ 194:User/Tasks/Src/user_TasksInit.c **** 
+ 195:User/Tasks/Src/user_TasksInit.c **** 
+ 196:User/Tasks/Src/user_TasksInit.c **** 	/* add  others ... */
+ 197:User/Tasks/Src/user_TasksInit.c **** 	uint8_t HomeUpdataStr;
+ 198:User/Tasks/Src/user_TasksInit.c **** 	osMessageQueuePut(HomeUpdata_MessageQueue, &HomeUpdataStr, 0, 1);
+ 199:User/Tasks/Src/user_TasksInit.c **** 
+ 200:User/Tasks/Src/user_TasksInit.c **** }
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 5
+
+
+ 201:User/Tasks/Src/user_TasksInit.c **** 
+ 202:User/Tasks/Src/user_TasksInit.c **** 
+ 203:User/Tasks/Src/user_TasksInit.c **** /**
+ 204:User/Tasks/Src/user_TasksInit.c ****   * @brief  FreeRTOS Tick Hook, to increase the LVGL tick
+ 205:User/Tasks/Src/user_TasksInit.c ****   * @param  None
+ 206:User/Tasks/Src/user_TasksInit.c ****   * @retval None
+ 207:User/Tasks/Src/user_TasksInit.c ****   */
+ 208:User/Tasks/Src/user_TasksInit.c **** void TaskTickHook(void)
+ 209:User/Tasks/Src/user_TasksInit.c **** {
+ 210:User/Tasks/Src/user_TasksInit.c **** 	//to increase the LVGL tick
+ 211:User/Tasks/Src/user_TasksInit.c **** 	lv_tick_inc(1);
+ 212:User/Tasks/Src/user_TasksInit.c **** 	//to increase the timerpage's timer(put in here is to ensure the Real Time)
+ 213:User/Tasks/Src/user_TasksInit.c **** 	if(ui_TimerPageFlag)
+ 214:User/Tasks/Src/user_TasksInit.c **** 	{
+ 215:User/Tasks/Src/user_TasksInit.c **** 			ui_TimerPage_ms+=1;
+ 216:User/Tasks/Src/user_TasksInit.c **** 			if(ui_TimerPage_ms>=10)
+ 217:User/Tasks/Src/user_TasksInit.c **** 			{
+ 218:User/Tasks/Src/user_TasksInit.c **** 				ui_TimerPage_ms=0;
+ 219:User/Tasks/Src/user_TasksInit.c **** 				// 递减逻辑
+ 220:User/Tasks/Src/user_TasksInit.c **** 				if(ui_TimerPage_10ms > 0)
+ 221:User/Tasks/Src/user_TasksInit.c **** 				{
+ 222:User/Tasks/Src/user_TasksInit.c **** 					ui_TimerPage_10ms-=1;
+ 223:User/Tasks/Src/user_TasksInit.c **** 				}
+ 224:User/Tasks/Src/user_TasksInit.c **** 				else
+ 225:User/Tasks/Src/user_TasksInit.c **** 				{
+ 226:User/Tasks/Src/user_TasksInit.c **** 					ui_TimerPage_10ms=99;
+ 227:User/Tasks/Src/user_TasksInit.c **** 					// 秒递减
+ 228:User/Tasks/Src/user_TasksInit.c **** 					if(ui_TimerPage_sec > 0)
+ 229:User/Tasks/Src/user_TasksInit.c **** 					{
+ 230:User/Tasks/Src/user_TasksInit.c **** 						ui_TimerPage_sec-=1;
+ 231:User/Tasks/Src/user_TasksInit.c **** 					}
+ 232:User/Tasks/Src/user_TasksInit.c **** 					else
+ 233:User/Tasks/Src/user_TasksInit.c **** 					{
+ 234:User/Tasks/Src/user_TasksInit.c **** 						ui_TimerPage_sec=59;
+ 235:User/Tasks/Src/user_TasksInit.c **** 						// 分递减
+ 236:User/Tasks/Src/user_TasksInit.c **** 						if(ui_TimerPage_min > 0)
+ 237:User/Tasks/Src/user_TasksInit.c **** 						{
+ 238:User/Tasks/Src/user_TasksInit.c **** 							ui_TimerPage_min-=1;
+ 239:User/Tasks/Src/user_TasksInit.c **** 						}
+ 240:User/Tasks/Src/user_TasksInit.c **** 						else
+ 241:User/Tasks/Src/user_TasksInit.c **** 						{
+ 242:User/Tasks/Src/user_TasksInit.c **** 							// 已经减到00:00.00了，停止！
+ 243:User/Tasks/Src/user_TasksInit.c **** 							ui_TimerPageFlag = 0;
+ 244:User/Tasks/Src/user_TasksInit.c **** 						}
+ 245:User/Tasks/Src/user_TasksInit.c **** 					}
+ 246:User/Tasks/Src/user_TasksInit.c **** 				}
+ 247:User/Tasks/Src/user_TasksInit.c **** 			}
+ 248:User/Tasks/Src/user_TasksInit.c **** 	}
+ 249:User/Tasks/Src/user_TasksInit.c **** 	user_HR_timecount+=1;
+ 250:User/Tasks/Src/user_TasksInit.c **** }
+ 251:User/Tasks/Src/user_TasksInit.c **** 
+ 252:User/Tasks/Src/user_TasksInit.c **** 
+ 253:User/Tasks/Src/user_TasksInit.c **** /**
+ 254:User/Tasks/Src/user_TasksInit.c ****   * @brief  LVGL Handler task, to run the lvgl
+ 255:User/Tasks/Src/user_TasksInit.c ****   * @param  argument: Not used
+ 256:User/Tasks/Src/user_TasksInit.c ****   * @retval None
+ 257:User/Tasks/Src/user_TasksInit.c ****   */
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 6
+
+
+ 258:User/Tasks/Src/user_TasksInit.c **** void LvHandlerTask(void *argument)
+ 259:User/Tasks/Src/user_TasksInit.c **** {
+  30              		.loc 1 259 1 view -0
+  31              		.cfi_startproc
+  32              		@ Volatile: function does not return.
+  33              		@ args = 0, pretend = 0, frame = 8
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              		.loc 1 259 1 is_stmt 0 view .LVU1
+  36 0000 00B5     		push	{lr}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 4
+  39              		.cfi_offset 14, -4
+  40 0002 83B0     		sub	sp, sp, #12
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_offset 16
+ 260:User/Tasks/Src/user_TasksInit.c **** 	uint8_t IdleBreakstr=0;
+  43              		.loc 1 260 2 is_stmt 1 view .LVU2
+  44              		.loc 1 260 10 is_stmt 0 view .LVU3
+  45 0004 0023     		movs	r3, #0
+  46 0006 8DF80730 		strb	r3, [sp, #7]
+  47 000a 0CE0     		b	.L3
+  48              	.LVL1:
+  49              	.L5:
+ 261:User/Tasks/Src/user_TasksInit.c ****   while(1)
+ 262:User/Tasks/Src/user_TasksInit.c ****   {
+ 263:User/Tasks/Src/user_TasksInit.c **** 		if(lv_disp_get_inactive_time(NULL)<1000)
+ 264:User/Tasks/Src/user_TasksInit.c **** 		{
+ 265:User/Tasks/Src/user_TasksInit.c **** 			//Idle time break, set to 0
+ 266:User/Tasks/Src/user_TasksInit.c **** 			osMessageQueuePut(IdleBreak_MessageQueue, &IdleBreakstr, 0, 0);
+  50              		.loc 1 266 4 is_stmt 1 view .LVU4
+  51 000c 0023     		movs	r3, #0
+  52 000e 1A46     		mov	r2, r3
+  53 0010 0DF10701 		add	r1, sp, #7
+  54 0014 0748     		ldr	r0, .L6
+  55 0016 0068     		ldr	r0, [r0]
+  56 0018 FFF7FEFF 		bl	osMessageQueuePut
+  57              	.LVL2:
+  58              	.L2:
+ 267:User/Tasks/Src/user_TasksInit.c **** 		}
+ 268:User/Tasks/Src/user_TasksInit.c **** 		lv_task_handler();
+  59              		.loc 1 268 3 view .LVU5
+  60              	.LBB4:
+  61              	.LBI4:
+  62              		.file 2 "Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h"
+   1:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** /**
+   2:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h ****  * @file lv_api_map.h
+   3:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h ****  *
+   4:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h ****  */
+   5:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** 
+   6:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** #ifndef LV_API_MAP_H
+   7:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** #define LV_API_MAP_H
+   8:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** 
+   9:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** #ifdef __cplusplus
+  10:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** extern "C" {
+  11:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** #endif
+  12:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** 
+  13:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** /*********************
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 7
+
+
+  14:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h ****  *      INCLUDES
+  15:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h ****  *********************/
+  16:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** #include "../lvgl.h"
+  17:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** 
+  18:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** /*********************
+  19:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h ****  *      DEFINES
+  20:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h ****  *********************/
+  21:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** 
+  22:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** #define LV_NO_TASK_READY        LV_NO_TIMER_READY
+  23:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** #define LV_INDEV_STATE_REL      LV_INDEV_STATE_RELEASED
+  24:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** #define LV_INDEV_STATE_PR       LV_INDEV_STATE_PRESSED
+  25:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** #define LV_OBJ_FLAG_SNAPABLE    LV_OBJ_FLAG_SNAPPABLE   /*Fixed typo*/
+  26:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** 
+  27:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** /**********************
+  28:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h ****  *      TYPEDEFS
+  29:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h ****  **********************/
+  30:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** 
+  31:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** /**********************
+  32:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h ****  * GLOBAL PROTOTYPES
+  33:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h ****  **********************/
+  34:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** 
+  35:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** static inline LV_ATTRIBUTE_TIMER_HANDLER uint32_t lv_task_handler(void)
+  63              		.loc 2 35 51 view .LVU6
+  64              	.LBB5:
+  36:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h **** {
+  37:Middlewares/LVGL/GUI/lvgl/src/../src/lv_api_map.h ****     return lv_timer_handler();
+  65              		.loc 2 37 5 view .LVU7
+  66              		.loc 2 37 12 is_stmt 0 view .LVU8
+  67 001c FFF7FEFF 		bl	lv_timer_handler
+  68              	.LVL3:
+  69              	.LBE5:
+  70              	.LBE4:
+ 269:User/Tasks/Src/user_TasksInit.c ****     osDelay(1);
+  71              		.loc 1 269 5 is_stmt 1 view .LVU9
+  72 0020 0120     		movs	r0, #1
+  73 0022 FFF7FEFF 		bl	osDelay
+  74              	.LVL4:
+ 261:User/Tasks/Src/user_TasksInit.c ****   {
+  75              		.loc 1 261 8 view .LVU10
+  76              	.L3:
+ 261:User/Tasks/Src/user_TasksInit.c ****   {
+  77              		.loc 1 261 3 view .LVU11
+ 263:User/Tasks/Src/user_TasksInit.c **** 		{
+  78              		.loc 1 263 3 view .LVU12
+ 263:User/Tasks/Src/user_TasksInit.c **** 		{
+  79              		.loc 1 263 6 is_stmt 0 view .LVU13
+  80 0026 0020     		movs	r0, #0
+  81 0028 FFF7FEFF 		bl	lv_disp_get_inactive_time
+  82              	.LVL5:
+ 263:User/Tasks/Src/user_TasksInit.c **** 		{
+  83              		.loc 1 263 5 discriminator 1 view .LVU14
+  84 002c B0F57A7F 		cmp	r0, #1000
+  85 0030 ECD3     		bcc	.L5
+  86 0032 F3E7     		b	.L2
+  87              	.L7:
+  88              		.align	2
+  89              	.L6:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 8
+
+
+  90 0034 00000000 		.word	IdleBreak_MessageQueue
+  91              		.cfi_endproc
+  92              	.LFE418:
+  94              		.section	.text.WDOGFeedTask,"ax",%progbits
+  95              		.align	1
+  96              		.global	WDOGFeedTask
+  97              		.syntax unified
+  98              		.thumb
+  99              		.thumb_func
+ 101              	WDOGFeedTask:
+ 102              	.LVL6:
+ 103              	.LFB419:
+ 270:User/Tasks/Src/user_TasksInit.c **** 	}
+ 271:User/Tasks/Src/user_TasksInit.c **** }
+ 272:User/Tasks/Src/user_TasksInit.c **** 
+ 273:User/Tasks/Src/user_TasksInit.c **** 
+ 274:User/Tasks/Src/user_TasksInit.c **** /**
+ 275:User/Tasks/Src/user_TasksInit.c ****   * @brief  Watch Dog Feed task
+ 276:User/Tasks/Src/user_TasksInit.c ****   * @param  argument: Not used
+ 277:User/Tasks/Src/user_TasksInit.c ****   * @retval None
+ 278:User/Tasks/Src/user_TasksInit.c ****   */
+ 279:User/Tasks/Src/user_TasksInit.c **** void WDOGFeedTask(void *argument)
+ 280:User/Tasks/Src/user_TasksInit.c **** {
+ 104              		.loc 1 280 1 is_stmt 1 view -0
+ 105              		.cfi_startproc
+ 106              		@ Volatile: function does not return.
+ 107              		@ args = 0, pretend = 0, frame = 0
+ 108              		@ frame_needed = 0, uses_anonymous_args = 0
+ 109              		.loc 1 280 1 is_stmt 0 view .LVU16
+ 110 0000 08B5     		push	{r3, lr}
+ 111              	.LCFI2:
+ 112              		.cfi_def_cfa_offset 8
+ 113              		.cfi_offset 3, -8
+ 114              		.cfi_offset 14, -4
+ 281:User/Tasks/Src/user_TasksInit.c **** 	//owdg
+ 282:User/Tasks/Src/user_TasksInit.c **** 	WDOG_Port_Init();
+ 115              		.loc 1 282 2 is_stmt 1 view .LVU17
+ 116 0002 FFF7FEFF 		bl	WDOG_Port_Init
+ 117              	.LVL7:
+ 118              	.L9:
+ 283:User/Tasks/Src/user_TasksInit.c ****   while(1)
+ 119              		.loc 1 283 3 view .LVU18
+ 284:User/Tasks/Src/user_TasksInit.c ****   {
+ 285:User/Tasks/Src/user_TasksInit.c **** 		WDOG_Feed();
+ 120              		.loc 1 285 3 view .LVU19
+ 121 0006 FFF7FEFF 		bl	WDOG_Feed
+ 122              	.LVL8:
+ 286:User/Tasks/Src/user_TasksInit.c **** 		WDOG_Enable();
+ 123              		.loc 1 286 3 view .LVU20
+ 124 000a FFF7FEFF 		bl	WDOG_Enable
+ 125              	.LVL9:
+ 287:User/Tasks/Src/user_TasksInit.c ****     osDelay(100);
+ 126              		.loc 1 287 5 discriminator 1 view .LVU21
+ 127 000e 6420     		movs	r0, #100
+ 128 0010 FFF7FEFF 		bl	osDelay
+ 129              	.LVL10:
+ 283:User/Tasks/Src/user_TasksInit.c ****   {
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 9
+
+
+ 130              		.loc 1 283 8 view .LVU22
+ 131 0014 F7E7     		b	.L9
+ 132              		.cfi_endproc
+ 133              	.LFE419:
+ 135              		.section	.text.User_Tasks_Init,"ax",%progbits
+ 136              		.align	1
+ 137              		.global	User_Tasks_Init
+ 138              		.syntax unified
+ 139              		.thumb
+ 140              		.thumb_func
+ 142              	User_Tasks_Init:
+ 143              	.LFB416:
+ 160:User/Tasks/Src/user_TasksInit.c ****   /* add mutexes, ... */
+ 144              		.loc 1 160 1 view -0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 8
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148 0000 10B5     		push	{r4, lr}
+ 149              	.LCFI3:
+ 150              		.cfi_def_cfa_offset 8
+ 151              		.cfi_offset 4, -8
+ 152              		.cfi_offset 14, -4
+ 153 0002 82B0     		sub	sp, sp, #8
+ 154              	.LCFI4:
+ 155              		.cfi_def_cfa_offset 16
+ 167:User/Tasks/Src/user_TasksInit.c **** 	osTimerStart(IdleTimerHandle,100);//100ms
+ 156              		.loc 1 167 2 view .LVU24
+ 167:User/Tasks/Src/user_TasksInit.c **** 	osTimerStart(IdleTimerHandle,100);//100ms
+ 157              		.loc 1 167 20 is_stmt 0 view .LVU25
+ 158 0004 0023     		movs	r3, #0
+ 159 0006 1A46     		mov	r2, r3
+ 160 0008 0121     		movs	r1, #1
+ 161 000a 4B48     		ldr	r0, .L13
+ 162 000c FFF7FEFF 		bl	osTimerNew
+ 163              	.LVL11:
+ 167:User/Tasks/Src/user_TasksInit.c **** 	osTimerStart(IdleTimerHandle,100);//100ms
+ 164              		.loc 1 167 18 discriminator 1 view .LVU26
+ 165 0010 4A4B     		ldr	r3, .L13+4
+ 166 0012 1860     		str	r0, [r3]
+ 168:User/Tasks/Src/user_TasksInit.c **** 
+ 167              		.loc 1 168 2 is_stmt 1 view .LVU27
+ 168 0014 6421     		movs	r1, #100
+ 169 0016 FFF7FEFF 		bl	osTimerStart
+ 170              	.LVL12:
+ 171:User/Tasks/Src/user_TasksInit.c **** 	Idle_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 171              		.loc 1 171 2 view .LVU28
+ 171:User/Tasks/Src/user_TasksInit.c **** 	Idle_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 172              		.loc 1 171 22 is_stmt 0 view .LVU29
+ 173 001a 0022     		movs	r2, #0
+ 174 001c 0121     		movs	r1, #1
+ 175 001e 0846     		mov	r0, r1
+ 176 0020 FFF7FEFF 		bl	osMessageQueueNew
+ 177              	.LVL13:
+ 171:User/Tasks/Src/user_TasksInit.c **** 	Idle_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 178              		.loc 1 171 20 discriminator 1 view .LVU30
+ 179 0024 464B     		ldr	r3, .L13+8
+ 180 0026 1860     		str	r0, [r3]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 10
+
+
+ 172:User/Tasks/Src/user_TasksInit.c **** 	Stop_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 181              		.loc 1 172 2 is_stmt 1 view .LVU31
+ 172:User/Tasks/Src/user_TasksInit.c **** 	Stop_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 182              		.loc 1 172 22 is_stmt 0 view .LVU32
+ 183 0028 0022     		movs	r2, #0
+ 184 002a 0121     		movs	r1, #1
+ 185 002c 0846     		mov	r0, r1
+ 186 002e FFF7FEFF 		bl	osMessageQueueNew
+ 187              	.LVL14:
+ 172:User/Tasks/Src/user_TasksInit.c **** 	Stop_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 188              		.loc 1 172 20 discriminator 1 view .LVU33
+ 189 0032 444B     		ldr	r3, .L13+12
+ 190 0034 1860     		str	r0, [r3]
+ 173:User/Tasks/Src/user_TasksInit.c **** 	IdleBreak_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 191              		.loc 1 173 2 is_stmt 1 view .LVU34
+ 173:User/Tasks/Src/user_TasksInit.c **** 	IdleBreak_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 192              		.loc 1 173 22 is_stmt 0 view .LVU35
+ 193 0036 0022     		movs	r2, #0
+ 194 0038 0121     		movs	r1, #1
+ 195 003a 0846     		mov	r0, r1
+ 196 003c FFF7FEFF 		bl	osMessageQueueNew
+ 197              	.LVL15:
+ 173:User/Tasks/Src/user_TasksInit.c **** 	IdleBreak_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 198              		.loc 1 173 20 discriminator 1 view .LVU36
+ 199 0040 414B     		ldr	r3, .L13+16
+ 200 0042 1860     		str	r0, [r3]
+ 174:User/Tasks/Src/user_TasksInit.c **** 	HomeUpdata_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 201              		.loc 1 174 2 is_stmt 1 view .LVU37
+ 174:User/Tasks/Src/user_TasksInit.c **** 	HomeUpdata_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 202              		.loc 1 174 27 is_stmt 0 view .LVU38
+ 203 0044 0022     		movs	r2, #0
+ 204 0046 0121     		movs	r1, #1
+ 205 0048 0846     		mov	r0, r1
+ 206 004a FFF7FEFF 		bl	osMessageQueueNew
+ 207              	.LVL16:
+ 174:User/Tasks/Src/user_TasksInit.c **** 	HomeUpdata_MessageQueue = osMessageQueueNew(1, 1, NULL);
+ 208              		.loc 1 174 25 discriminator 1 view .LVU39
+ 209 004e 3F4B     		ldr	r3, .L13+20
+ 210 0050 1860     		str	r0, [r3]
+ 175:User/Tasks/Src/user_TasksInit.c **** 	DataSave_MessageQueue = osMessageQueueNew(2, 1, NULL);
+ 211              		.loc 1 175 2 is_stmt 1 view .LVU40
+ 175:User/Tasks/Src/user_TasksInit.c **** 	DataSave_MessageQueue = osMessageQueueNew(2, 1, NULL);
+ 212              		.loc 1 175 28 is_stmt 0 view .LVU41
+ 213 0052 0022     		movs	r2, #0
+ 214 0054 0121     		movs	r1, #1
+ 215 0056 0846     		mov	r0, r1
+ 216 0058 FFF7FEFF 		bl	osMessageQueueNew
+ 217              	.LVL17:
+ 175:User/Tasks/Src/user_TasksInit.c **** 	DataSave_MessageQueue = osMessageQueueNew(2, 1, NULL);
+ 218              		.loc 1 175 26 discriminator 1 view .LVU42
+ 219 005c 3C4C     		ldr	r4, .L13+24
+ 220 005e 2060     		str	r0, [r4]
+ 176:User/Tasks/Src/user_TasksInit.c **** 
+ 221              		.loc 1 176 2 is_stmt 1 view .LVU43
+ 176:User/Tasks/Src/user_TasksInit.c **** 
+ 222              		.loc 1 176 26 is_stmt 0 view .LVU44
+ 223 0060 0022     		movs	r2, #0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 11
+
+
+ 224 0062 0121     		movs	r1, #1
+ 225 0064 0220     		movs	r0, #2
+ 226 0066 FFF7FEFF 		bl	osMessageQueueNew
+ 227              	.LVL18:
+ 176:User/Tasks/Src/user_TasksInit.c **** 
+ 228              		.loc 1 176 24 discriminator 1 view .LVU45
+ 229 006a 3A4B     		ldr	r3, .L13+28
+ 230 006c 1860     		str	r0, [r3]
+ 179:User/Tasks/Src/user_TasksInit.c ****   LvHandlerTaskHandle  = osThreadNew(LvHandlerTask, NULL, &LvHandlerTask_attributes);
+ 231              		.loc 1 179 3 is_stmt 1 view .LVU46
+ 179:User/Tasks/Src/user_TasksInit.c ****   LvHandlerTaskHandle  = osThreadNew(LvHandlerTask, NULL, &LvHandlerTask_attributes);
+ 232              		.loc 1 179 29 is_stmt 0 view .LVU47
+ 233 006e 3A4A     		ldr	r2, .L13+32
+ 234 0070 0021     		movs	r1, #0
+ 235 0072 3A48     		ldr	r0, .L13+36
+ 236 0074 FFF7FEFF 		bl	osThreadNew
+ 237              	.LVL19:
+ 179:User/Tasks/Src/user_TasksInit.c ****   LvHandlerTaskHandle  = osThreadNew(LvHandlerTask, NULL, &LvHandlerTask_attributes);
+ 238              		.loc 1 179 27 discriminator 1 view .LVU48
+ 239 0078 394B     		ldr	r3, .L13+40
+ 240 007a 1860     		str	r0, [r3]
+ 180:User/Tasks/Src/user_TasksInit.c ****   WDOGFeedTaskHandle   = osThreadNew(WDOGFeedTask, NULL, &WDOGFeedTask_attributes);
+ 241              		.loc 1 180 3 is_stmt 1 view .LVU49
+ 180:User/Tasks/Src/user_TasksInit.c ****   WDOGFeedTaskHandle   = osThreadNew(WDOGFeedTask, NULL, &WDOGFeedTask_attributes);
+ 242              		.loc 1 180 26 is_stmt 0 view .LVU50
+ 243 007c 394A     		ldr	r2, .L13+44
+ 244 007e 0021     		movs	r1, #0
+ 245 0080 3948     		ldr	r0, .L13+48
+ 246 0082 FFF7FEFF 		bl	osThreadNew
+ 247              	.LVL20:
+ 180:User/Tasks/Src/user_TasksInit.c ****   WDOGFeedTaskHandle   = osThreadNew(WDOGFeedTask, NULL, &WDOGFeedTask_attributes);
+ 248              		.loc 1 180 24 discriminator 1 view .LVU51
+ 249 0086 394B     		ldr	r3, .L13+52
+ 250 0088 1860     		str	r0, [r3]
+ 181:User/Tasks/Src/user_TasksInit.c **** 	IdleEnterTaskHandle  = osThreadNew(IdleEnterTask, NULL, &IdleEnterTask_attributes);
+ 251              		.loc 1 181 3 is_stmt 1 view .LVU52
+ 181:User/Tasks/Src/user_TasksInit.c **** 	IdleEnterTaskHandle  = osThreadNew(IdleEnterTask, NULL, &IdleEnterTask_attributes);
+ 252              		.loc 1 181 26 is_stmt 0 view .LVU53
+ 253 008a 394A     		ldr	r2, .L13+56
+ 254 008c 0021     		movs	r1, #0
+ 255 008e 3948     		ldr	r0, .L13+60
+ 256 0090 FFF7FEFF 		bl	osThreadNew
+ 257              	.LVL21:
+ 181:User/Tasks/Src/user_TasksInit.c **** 	IdleEnterTaskHandle  = osThreadNew(IdleEnterTask, NULL, &IdleEnterTask_attributes);
+ 258              		.loc 1 181 24 discriminator 1 view .LVU54
+ 259 0094 384B     		ldr	r3, .L13+64
+ 260 0096 1860     		str	r0, [r3]
+ 182:User/Tasks/Src/user_TasksInit.c **** 	StopEnterTaskHandle  = osThreadNew(StopEnterTask, NULL, &StopEnterTask_attributes);
+ 261              		.loc 1 182 2 is_stmt 1 view .LVU55
+ 182:User/Tasks/Src/user_TasksInit.c **** 	StopEnterTaskHandle  = osThreadNew(StopEnterTask, NULL, &StopEnterTask_attributes);
+ 262              		.loc 1 182 25 is_stmt 0 view .LVU56
+ 263 0098 384A     		ldr	r2, .L13+68
+ 264 009a 0021     		movs	r1, #0
+ 265 009c 3848     		ldr	r0, .L13+72
+ 266 009e FFF7FEFF 		bl	osThreadNew
+ 267              	.LVL22:
+ 182:User/Tasks/Src/user_TasksInit.c **** 	StopEnterTaskHandle  = osThreadNew(StopEnterTask, NULL, &StopEnterTask_attributes);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 12
+
+
+ 268              		.loc 1 182 23 discriminator 1 view .LVU57
+ 269 00a2 384B     		ldr	r3, .L13+76
+ 270 00a4 1860     		str	r0, [r3]
+ 183:User/Tasks/Src/user_TasksInit.c **** 	KeyTaskHandle 			 = osThreadNew(KeyTask, NULL, &KeyTask_attributes);
+ 271              		.loc 1 183 2 is_stmt 1 view .LVU58
+ 183:User/Tasks/Src/user_TasksInit.c **** 	KeyTaskHandle 			 = osThreadNew(KeyTask, NULL, &KeyTask_attributes);
+ 272              		.loc 1 183 25 is_stmt 0 view .LVU59
+ 273 00a6 384A     		ldr	r2, .L13+80
+ 274 00a8 0021     		movs	r1, #0
+ 275 00aa 3848     		ldr	r0, .L13+84
+ 276 00ac FFF7FEFF 		bl	osThreadNew
+ 277              	.LVL23:
+ 183:User/Tasks/Src/user_TasksInit.c **** 	KeyTaskHandle 			 = osThreadNew(KeyTask, NULL, &KeyTask_attributes);
+ 278              		.loc 1 183 23 discriminator 1 view .LVU60
+ 279 00b0 374B     		ldr	r3, .L13+88
+ 280 00b2 1860     		str	r0, [r3]
+ 184:User/Tasks/Src/user_TasksInit.c **** 	ScrRenewTaskHandle   = osThreadNew(ScrRenewTask, NULL, &ScrRenewTask_attributes);
+ 281              		.loc 1 184 2 is_stmt 1 view .LVU61
+ 184:User/Tasks/Src/user_TasksInit.c **** 	ScrRenewTaskHandle   = osThreadNew(ScrRenewTask, NULL, &ScrRenewTask_attributes);
+ 282              		.loc 1 184 22 is_stmt 0 view .LVU62
+ 283 00b4 374A     		ldr	r2, .L13+92
+ 284 00b6 0021     		movs	r1, #0
+ 285 00b8 3748     		ldr	r0, .L13+96
+ 286 00ba FFF7FEFF 		bl	osThreadNew
+ 287              	.LVL24:
+ 184:User/Tasks/Src/user_TasksInit.c **** 	ScrRenewTaskHandle   = osThreadNew(ScrRenewTask, NULL, &ScrRenewTask_attributes);
+ 288              		.loc 1 184 20 discriminator 1 view .LVU63
+ 289 00be 374B     		ldr	r3, .L13+100
+ 290 00c0 1860     		str	r0, [r3]
+ 185:User/Tasks/Src/user_TasksInit.c **** 	SensorDataTaskHandle = osThreadNew(SensorDataUpdateTask, NULL, &SensorDataTask_attributes);
+ 291              		.loc 1 185 2 is_stmt 1 view .LVU64
+ 185:User/Tasks/Src/user_TasksInit.c **** 	SensorDataTaskHandle = osThreadNew(SensorDataUpdateTask, NULL, &SensorDataTask_attributes);
+ 292              		.loc 1 185 25 is_stmt 0 view .LVU65
+ 293 00c2 374A     		ldr	r2, .L13+104
+ 294 00c4 0021     		movs	r1, #0
+ 295 00c6 3748     		ldr	r0, .L13+108
+ 296 00c8 FFF7FEFF 		bl	osThreadNew
+ 297              	.LVL25:
+ 185:User/Tasks/Src/user_TasksInit.c **** 	SensorDataTaskHandle = osThreadNew(SensorDataUpdateTask, NULL, &SensorDataTask_attributes);
+ 298              		.loc 1 185 23 discriminator 1 view .LVU66
+ 299 00cc 364B     		ldr	r3, .L13+112
+ 300 00ce 1860     		str	r0, [r3]
+ 186:User/Tasks/Src/user_TasksInit.c **** 	HRDataTaskHandle		 = osThreadNew(HRDataUpdateTask, NULL, &HRDataTask_attributes);
+ 301              		.loc 1 186 2 is_stmt 1 view .LVU67
+ 186:User/Tasks/Src/user_TasksInit.c **** 	HRDataTaskHandle		 = osThreadNew(HRDataUpdateTask, NULL, &HRDataTask_attributes);
+ 302              		.loc 1 186 25 is_stmt 0 view .LVU68
+ 303 00d0 364A     		ldr	r2, .L13+116
+ 304 00d2 0021     		movs	r1, #0
+ 305 00d4 3648     		ldr	r0, .L13+120
+ 306 00d6 FFF7FEFF 		bl	osThreadNew
+ 307              	.LVL26:
+ 186:User/Tasks/Src/user_TasksInit.c **** 	HRDataTaskHandle		 = osThreadNew(HRDataUpdateTask, NULL, &HRDataTask_attributes);
+ 308              		.loc 1 186 23 discriminator 1 view .LVU69
+ 309 00da 364B     		ldr	r3, .L13+124
+ 310 00dc 1860     		str	r0, [r3]
+ 187:User/Tasks/Src/user_TasksInit.c **** 	ChargPageEnterTaskHandle = osThreadNew(ChargPageEnterTask, NULL, &ChargPageEnterTask_attributes);
+ 311              		.loc 1 187 2 is_stmt 1 view .LVU70
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 13
+
+
+ 187:User/Tasks/Src/user_TasksInit.c **** 	ChargPageEnterTaskHandle = osThreadNew(ChargPageEnterTask, NULL, &ChargPageEnterTask_attributes);
+ 312              		.loc 1 187 23 is_stmt 0 view .LVU71
+ 313 00de 364A     		ldr	r2, .L13+128
+ 314 00e0 0021     		movs	r1, #0
+ 315 00e2 3648     		ldr	r0, .L13+132
+ 316 00e4 FFF7FEFF 		bl	osThreadNew
+ 317              	.LVL27:
+ 187:User/Tasks/Src/user_TasksInit.c **** 	ChargPageEnterTaskHandle = osThreadNew(ChargPageEnterTask, NULL, &ChargPageEnterTask_attributes);
+ 318              		.loc 1 187 21 discriminator 1 view .LVU72
+ 319 00e8 354B     		ldr	r3, .L13+136
+ 320 00ea 1860     		str	r0, [r3]
+ 188:User/Tasks/Src/user_TasksInit.c ****   MessageSendTaskHandle = osThreadNew(MessageSendTask, NULL, &MessageSendTask_attributes);
+ 321              		.loc 1 188 2 is_stmt 1 view .LVU73
+ 188:User/Tasks/Src/user_TasksInit.c ****   MessageSendTaskHandle = osThreadNew(MessageSendTask, NULL, &MessageSendTask_attributes);
+ 322              		.loc 1 188 29 is_stmt 0 view .LVU74
+ 323 00ec 354A     		ldr	r2, .L13+140
+ 324 00ee 0021     		movs	r1, #0
+ 325 00f0 3548     		ldr	r0, .L13+144
+ 326 00f2 FFF7FEFF 		bl	osThreadNew
+ 327              	.LVL28:
+ 188:User/Tasks/Src/user_TasksInit.c ****   MessageSendTaskHandle = osThreadNew(MessageSendTask, NULL, &MessageSendTask_attributes);
+ 328              		.loc 1 188 27 discriminator 1 view .LVU75
+ 329 00f6 354B     		ldr	r3, .L13+148
+ 330 00f8 1860     		str	r0, [r3]
+ 189:User/Tasks/Src/user_TasksInit.c **** 	MPUCheckTaskHandle		= osThreadNew(MPUCheckTask, NULL, &MPUCheckTask_attributes);
+ 331              		.loc 1 189 3 is_stmt 1 view .LVU76
+ 189:User/Tasks/Src/user_TasksInit.c **** 	MPUCheckTaskHandle		= osThreadNew(MPUCheckTask, NULL, &MPUCheckTask_attributes);
+ 332              		.loc 1 189 27 is_stmt 0 view .LVU77
+ 333 00fa 354A     		ldr	r2, .L13+152
+ 334 00fc 0021     		movs	r1, #0
+ 335 00fe 3548     		ldr	r0, .L13+156
+ 336 0100 FFF7FEFF 		bl	osThreadNew
+ 337              	.LVL29:
+ 189:User/Tasks/Src/user_TasksInit.c **** 	MPUCheckTaskHandle		= osThreadNew(MPUCheckTask, NULL, &MPUCheckTask_attributes);
+ 338              		.loc 1 189 25 discriminator 1 view .LVU78
+ 339 0104 344B     		ldr	r3, .L13+160
+ 340 0106 1860     		str	r0, [r3]
+ 190:User/Tasks/Src/user_TasksInit.c **** 	DataSaveTaskHandle		= osThreadNew(DataSaveTask, NULL, &DataSaveTask_attributes);
+ 341              		.loc 1 190 2 is_stmt 1 view .LVU79
+ 190:User/Tasks/Src/user_TasksInit.c **** 	DataSaveTaskHandle		= osThreadNew(DataSaveTask, NULL, &DataSaveTask_attributes);
+ 342              		.loc 1 190 24 is_stmt 0 view .LVU80
+ 343 0108 344A     		ldr	r2, .L13+164
+ 344 010a 0021     		movs	r1, #0
+ 345 010c 3448     		ldr	r0, .L13+168
+ 346 010e FFF7FEFF 		bl	osThreadNew
+ 347              	.LVL30:
+ 190:User/Tasks/Src/user_TasksInit.c **** 	DataSaveTaskHandle		= osThreadNew(DataSaveTask, NULL, &DataSaveTask_attributes);
+ 348              		.loc 1 190 22 discriminator 1 view .LVU81
+ 349 0112 344B     		ldr	r3, .L13+172
+ 350 0114 1860     		str	r0, [r3]
+ 191:User/Tasks/Src/user_TasksInit.c **** 
+ 351              		.loc 1 191 2 is_stmt 1 view .LVU82
+ 191:User/Tasks/Src/user_TasksInit.c **** 
+ 352              		.loc 1 191 24 is_stmt 0 view .LVU83
+ 353 0116 344A     		ldr	r2, .L13+176
+ 354 0118 0021     		movs	r1, #0
+ 355 011a 3448     		ldr	r0, .L13+180
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 14
+
+
+ 356 011c FFF7FEFF 		bl	osThreadNew
+ 357              	.LVL31:
+ 191:User/Tasks/Src/user_TasksInit.c **** 
+ 358              		.loc 1 191 22 discriminator 1 view .LVU84
+ 359 0120 334B     		ldr	r3, .L13+184
+ 360 0122 1860     		str	r0, [r3]
+ 197:User/Tasks/Src/user_TasksInit.c **** 	osMessageQueuePut(HomeUpdata_MessageQueue, &HomeUpdataStr, 0, 1);
+ 361              		.loc 1 197 2 is_stmt 1 view .LVU85
+ 198:User/Tasks/Src/user_TasksInit.c **** 
+ 362              		.loc 1 198 2 view .LVU86
+ 363 0124 0123     		movs	r3, #1
+ 364 0126 0022     		movs	r2, #0
+ 365 0128 0DF10701 		add	r1, sp, #7
+ 366 012c 2068     		ldr	r0, [r4]
+ 367 012e FFF7FEFF 		bl	osMessageQueuePut
+ 368              	.LVL32:
+ 200:User/Tasks/Src/user_TasksInit.c **** 
+ 369              		.loc 1 200 1 is_stmt 0 view .LVU87
+ 370 0132 02B0     		add	sp, sp, #8
+ 371              	.LCFI5:
+ 372              		.cfi_def_cfa_offset 8
+ 373              		@ sp needed
+ 374 0134 10BD     		pop	{r4, pc}
+ 375              	.L14:
+ 376 0136 00BF     		.align	2
+ 377              	.L13:
+ 378 0138 00000000 		.word	IdleTimerCallback
+ 379 013c 00000000 		.word	IdleTimerHandle
+ 380 0140 00000000 		.word	Key_MessageQueue
+ 381 0144 00000000 		.word	Idle_MessageQueue
+ 382 0148 00000000 		.word	Stop_MessageQueue
+ 383 014c 00000000 		.word	IdleBreak_MessageQueue
+ 384 0150 00000000 		.word	HomeUpdata_MessageQueue
+ 385 0154 00000000 		.word	DataSave_MessageQueue
+ 386 0158 00000000 		.word	HardwareInitTask_attributes
+ 387 015c 00000000 		.word	HardwareInitTask
+ 388 0160 00000000 		.word	HardwareInitTaskHandle
+ 389 0164 00000000 		.word	LvHandlerTask_attributes
+ 390 0168 00000000 		.word	LvHandlerTask
+ 391 016c 00000000 		.word	LvHandlerTaskHandle
+ 392 0170 00000000 		.word	WDOGFeedTask_attributes
+ 393 0174 00000000 		.word	WDOGFeedTask
+ 394 0178 00000000 		.word	WDOGFeedTaskHandle
+ 395 017c 00000000 		.word	IdleEnterTask_attributes
+ 396 0180 00000000 		.word	IdleEnterTask
+ 397 0184 00000000 		.word	IdleEnterTaskHandle
+ 398 0188 00000000 		.word	StopEnterTask_attributes
+ 399 018c 00000000 		.word	StopEnterTask
+ 400 0190 00000000 		.word	StopEnterTaskHandle
+ 401 0194 00000000 		.word	KeyTask_attributes
+ 402 0198 00000000 		.word	KeyTask
+ 403 019c 00000000 		.word	KeyTaskHandle
+ 404 01a0 00000000 		.word	ScrRenewTask_attributes
+ 405 01a4 00000000 		.word	ScrRenewTask
+ 406 01a8 00000000 		.word	ScrRenewTaskHandle
+ 407 01ac 00000000 		.word	SensorDataTask_attributes
+ 408 01b0 00000000 		.word	SensorDataUpdateTask
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 15
+
+
+ 409 01b4 00000000 		.word	SensorDataTaskHandle
+ 410 01b8 00000000 		.word	HRDataTask_attributes
+ 411 01bc 00000000 		.word	HRDataUpdateTask
+ 412 01c0 00000000 		.word	HRDataTaskHandle
+ 413 01c4 00000000 		.word	ChargPageEnterTask_attributes
+ 414 01c8 00000000 		.word	ChargPageEnterTask
+ 415 01cc 00000000 		.word	ChargPageEnterTaskHandle
+ 416 01d0 00000000 		.word	MessageSendTask_attributes
+ 417 01d4 00000000 		.word	MessageSendTask
+ 418 01d8 00000000 		.word	MessageSendTaskHandle
+ 419 01dc 00000000 		.word	MPUCheckTask_attributes
+ 420 01e0 00000000 		.word	MPUCheckTask
+ 421 01e4 00000000 		.word	MPUCheckTaskHandle
+ 422 01e8 00000000 		.word	DataSaveTask_attributes
+ 423 01ec 00000000 		.word	DataSaveTask
+ 424 01f0 00000000 		.word	DataSaveTaskHandle
+ 425              		.cfi_endproc
+ 426              	.LFE416:
+ 428              		.section	.text.TaskTickHook,"ax",%progbits
+ 429              		.align	1
+ 430              		.global	TaskTickHook
+ 431              		.syntax unified
+ 432              		.thumb
+ 433              		.thumb_func
+ 435              	TaskTickHook:
+ 436              	.LFB417:
+ 209:User/Tasks/Src/user_TasksInit.c **** 	//to increase the LVGL tick
+ 437              		.loc 1 209 1 is_stmt 1 view -0
+ 438              		.cfi_startproc
+ 439              		@ args = 0, pretend = 0, frame = 0
+ 440              		@ frame_needed = 0, uses_anonymous_args = 0
+ 441 0000 08B5     		push	{r3, lr}
+ 442              	.LCFI6:
+ 443              		.cfi_def_cfa_offset 8
+ 444              		.cfi_offset 3, -8
+ 445              		.cfi_offset 14, -4
+ 211:User/Tasks/Src/user_TasksInit.c **** 	//to increase the timerpage's timer(put in here is to ensure the Real Time)
+ 446              		.loc 1 211 2 view .LVU89
+ 447 0002 0120     		movs	r0, #1
+ 448 0004 FFF7FEFF 		bl	lv_tick_inc
+ 449              	.LVL33:
+ 213:User/Tasks/Src/user_TasksInit.c **** 	{
+ 450              		.loc 1 213 2 view .LVU90
+ 213:User/Tasks/Src/user_TasksInit.c **** 	{
+ 451              		.loc 1 213 5 is_stmt 0 view .LVU91
+ 452 0008 174B     		ldr	r3, .L21
+ 453 000a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 213:User/Tasks/Src/user_TasksInit.c **** 	{
+ 454              		.loc 1 213 4 view .LVU92
+ 455 000c 7BB1     		cbz	r3, .L16
+ 215:User/Tasks/Src/user_TasksInit.c **** 			if(ui_TimerPage_ms>=10)
+ 456              		.loc 1 215 4 is_stmt 1 view .LVU93
+ 215:User/Tasks/Src/user_TasksInit.c **** 			if(ui_TimerPage_ms>=10)
+ 457              		.loc 1 215 19 is_stmt 0 view .LVU94
+ 458 000e 174A     		ldr	r2, .L21+4
+ 459 0010 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 460 0012 0133     		adds	r3, r3, #1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 16
+
+
+ 461 0014 DBB2     		uxtb	r3, r3
+ 462 0016 1370     		strb	r3, [r2]
+ 216:User/Tasks/Src/user_TasksInit.c **** 			{
+ 463              		.loc 1 216 4 is_stmt 1 view .LVU95
+ 216:User/Tasks/Src/user_TasksInit.c **** 			{
+ 464              		.loc 1 216 6 is_stmt 0 view .LVU96
+ 465 0018 092B     		cmp	r3, #9
+ 466 001a 08D9     		bls	.L16
+ 218:User/Tasks/Src/user_TasksInit.c **** 				// 递减逻辑
+ 467              		.loc 1 218 5 is_stmt 1 view .LVU97
+ 218:User/Tasks/Src/user_TasksInit.c **** 				// 递减逻辑
+ 468              		.loc 1 218 20 is_stmt 0 view .LVU98
+ 469 001c 1346     		mov	r3, r2
+ 470 001e 0022     		movs	r2, #0
+ 471 0020 1A70     		strb	r2, [r3]
+ 220:User/Tasks/Src/user_TasksInit.c **** 				{
+ 472              		.loc 1 220 5 is_stmt 1 view .LVU99
+ 220:User/Tasks/Src/user_TasksInit.c **** 				{
+ 473              		.loc 1 220 26 is_stmt 0 view .LVU100
+ 474 0022 134B     		ldr	r3, .L21+8
+ 475 0024 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 220:User/Tasks/Src/user_TasksInit.c **** 				{
+ 476              		.loc 1 220 7 view .LVU101
+ 477 0026 3BB1     		cbz	r3, .L17
+ 222:User/Tasks/Src/user_TasksInit.c **** 				}
+ 478              		.loc 1 222 6 is_stmt 1 view .LVU102
+ 222:User/Tasks/Src/user_TasksInit.c **** 				}
+ 479              		.loc 1 222 23 is_stmt 0 view .LVU103
+ 480 0028 013B     		subs	r3, r3, #1
+ 481 002a 114A     		ldr	r2, .L21+8
+ 482 002c 1370     		strb	r3, [r2]
+ 483              	.L16:
+ 249:User/Tasks/Src/user_TasksInit.c **** }
+ 484              		.loc 1 249 2 is_stmt 1 view .LVU104
+ 249:User/Tasks/Src/user_TasksInit.c **** }
+ 485              		.loc 1 249 19 is_stmt 0 view .LVU105
+ 486 002e 114A     		ldr	r2, .L21+12
+ 487 0030 1368     		ldr	r3, [r2]
+ 488 0032 0133     		adds	r3, r3, #1
+ 489 0034 1360     		str	r3, [r2]
+ 250:User/Tasks/Src/user_TasksInit.c **** 
+ 490              		.loc 1 250 1 view .LVU106
+ 491 0036 08BD     		pop	{r3, pc}
+ 492              	.L17:
+ 226:User/Tasks/Src/user_TasksInit.c **** 					// 秒递减
+ 493              		.loc 1 226 6 is_stmt 1 view .LVU107
+ 226:User/Tasks/Src/user_TasksInit.c **** 					// 秒递减
+ 494              		.loc 1 226 23 is_stmt 0 view .LVU108
+ 495 0038 0D4B     		ldr	r3, .L21+8
+ 496 003a 6322     		movs	r2, #99
+ 497 003c 1A70     		strb	r2, [r3]
+ 228:User/Tasks/Src/user_TasksInit.c **** 					{
+ 498              		.loc 1 228 6 is_stmt 1 view .LVU109
+ 228:User/Tasks/Src/user_TasksInit.c **** 					{
+ 499              		.loc 1 228 26 is_stmt 0 view .LVU110
+ 500 003e 0E4B     		ldr	r3, .L21+16
+ 501 0040 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 17
+
+
+ 228:User/Tasks/Src/user_TasksInit.c **** 					{
+ 502              		.loc 1 228 8 view .LVU111
+ 503 0042 1BB1     		cbz	r3, .L18
+ 230:User/Tasks/Src/user_TasksInit.c **** 					}
+ 504              		.loc 1 230 7 is_stmt 1 view .LVU112
+ 230:User/Tasks/Src/user_TasksInit.c **** 					}
+ 505              		.loc 1 230 23 is_stmt 0 view .LVU113
+ 506 0044 013B     		subs	r3, r3, #1
+ 507 0046 0C4A     		ldr	r2, .L21+16
+ 508 0048 1370     		strb	r3, [r2]
+ 509 004a F0E7     		b	.L16
+ 510              	.L18:
+ 234:User/Tasks/Src/user_TasksInit.c **** 						// 分递减
+ 511              		.loc 1 234 7 is_stmt 1 view .LVU114
+ 234:User/Tasks/Src/user_TasksInit.c **** 						// 分递减
+ 512              		.loc 1 234 23 is_stmt 0 view .LVU115
+ 513 004c 0A4B     		ldr	r3, .L21+16
+ 514 004e 3B22     		movs	r2, #59
+ 515 0050 1A70     		strb	r2, [r3]
+ 236:User/Tasks/Src/user_TasksInit.c **** 						{
+ 516              		.loc 1 236 7 is_stmt 1 view .LVU116
+ 236:User/Tasks/Src/user_TasksInit.c **** 						{
+ 517              		.loc 1 236 27 is_stmt 0 view .LVU117
+ 518 0052 0A4B     		ldr	r3, .L21+20
+ 519 0054 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 236:User/Tasks/Src/user_TasksInit.c **** 						{
+ 520              		.loc 1 236 9 view .LVU118
+ 521 0056 1BB1     		cbz	r3, .L19
+ 238:User/Tasks/Src/user_TasksInit.c **** 						}
+ 522              		.loc 1 238 8 is_stmt 1 view .LVU119
+ 238:User/Tasks/Src/user_TasksInit.c **** 						}
+ 523              		.loc 1 238 24 is_stmt 0 view .LVU120
+ 524 0058 013B     		subs	r3, r3, #1
+ 525 005a 084A     		ldr	r2, .L21+20
+ 526 005c 1370     		strb	r3, [r2]
+ 527 005e E6E7     		b	.L16
+ 528              	.L19:
+ 243:User/Tasks/Src/user_TasksInit.c **** 						}
+ 529              		.loc 1 243 8 is_stmt 1 view .LVU121
+ 243:User/Tasks/Src/user_TasksInit.c **** 						}
+ 530              		.loc 1 243 25 is_stmt 0 view .LVU122
+ 531 0060 014B     		ldr	r3, .L21
+ 532 0062 0022     		movs	r2, #0
+ 533 0064 1A70     		strb	r2, [r3]
+ 534 0066 E2E7     		b	.L16
+ 535              	.L22:
+ 536              		.align	2
+ 537              	.L21:
+ 538 0068 00000000 		.word	ui_TimerPageFlag
+ 539 006c 00000000 		.word	ui_TimerPage_ms
+ 540 0070 00000000 		.word	ui_TimerPage_10ms
+ 541 0074 00000000 		.word	user_HR_timecount
+ 542 0078 00000000 		.word	ui_TimerPage_sec
+ 543 007c 00000000 		.word	ui_TimerPage_min
+ 544              		.cfi_endproc
+ 545              	.LFE417:
+ 547              		.global	DataSave_MessageQueue
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 18
+
+
+ 548              		.section	.bss.DataSave_MessageQueue,"aw",%nobits
+ 549              		.align	2
+ 552              	DataSave_MessageQueue:
+ 553 0000 00000000 		.space	4
+ 554              		.global	HomeUpdata_MessageQueue
+ 555              		.section	.bss.HomeUpdata_MessageQueue,"aw",%nobits
+ 556              		.align	2
+ 559              	HomeUpdata_MessageQueue:
+ 560 0000 00000000 		.space	4
+ 561              		.global	IdleBreak_MessageQueue
+ 562              		.section	.bss.IdleBreak_MessageQueue,"aw",%nobits
+ 563              		.align	2
+ 566              	IdleBreak_MessageQueue:
+ 567 0000 00000000 		.space	4
+ 568              		.global	Stop_MessageQueue
+ 569              		.section	.bss.Stop_MessageQueue,"aw",%nobits
+ 570              		.align	2
+ 573              	Stop_MessageQueue:
+ 574 0000 00000000 		.space	4
+ 575              		.global	Idle_MessageQueue
+ 576              		.section	.bss.Idle_MessageQueue,"aw",%nobits
+ 577              		.align	2
+ 580              	Idle_MessageQueue:
+ 581 0000 00000000 		.space	4
+ 582              		.global	Key_MessageQueue
+ 583              		.section	.bss.Key_MessageQueue,"aw",%nobits
+ 584              		.align	2
+ 587              	Key_MessageQueue:
+ 588 0000 00000000 		.space	4
+ 589              		.global	DataSaveTask_attributes
+ 590              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 591              		.align	2
+ 592              	.LC0:
+ 593 0000 44617461 		.ascii	"DataSaveTask\000"
+ 593      53617665 
+ 593      5461736B 
+ 593      00
+ 594              		.section	.rodata.DataSaveTask_attributes,"a"
+ 595              		.align	2
+ 598              	DataSaveTask_attributes:
+ 599 0000 00000000 		.word	.LC0
+ 600 0004 00000000 		.space	16
+ 600      00000000 
+ 600      00000000 
+ 600      00000000 
+ 601 0014 80020000 		.word	640
+ 602 0018 0A000000 		.word	10
+ 603 001c 00000000 		.space	8
+ 603      00000000 
+ 604              		.global	DataSaveTaskHandle
+ 605              		.section	.bss.DataSaveTaskHandle,"aw",%nobits
+ 606              		.align	2
+ 609              	DataSaveTaskHandle:
+ 610 0000 00000000 		.space	4
+ 611              		.global	MPUCheckTask_attributes
+ 612              		.section	.rodata.str1.4
+ 613 000d 000000   		.align	2
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 19
+
+
+ 614              	.LC1:
+ 615 0010 4D505543 		.ascii	"MPUCheckTask\000"
+ 615      6865636B 
+ 615      5461736B 
+ 615      00
+ 616              		.section	.rodata.MPUCheckTask_attributes,"a"
+ 617              		.align	2
+ 620              	MPUCheckTask_attributes:
+ 621 0000 10000000 		.word	.LC1
+ 622 0004 00000000 		.space	16
+ 622      00000000 
+ 622      00000000 
+ 622      00000000 
+ 623 0014 80010000 		.word	384
+ 624 0018 0A000000 		.word	10
+ 625 001c 00000000 		.space	8
+ 625      00000000 
+ 626              		.global	MPUCheckTaskHandle
+ 627              		.section	.bss.MPUCheckTaskHandle,"aw",%nobits
+ 628              		.align	2
+ 631              	MPUCheckTaskHandle:
+ 632 0000 00000000 		.space	4
+ 633              		.global	MessageSendTask_attributes
+ 634              		.section	.rodata.str1.4
+ 635 001d 000000   		.align	2
+ 636              	.LC2:
+ 637 0020 4D657373 		.ascii	"MessageSendTask\000"
+ 637      61676553 
+ 637      656E6454 
+ 637      61736B00 
+ 638              		.section	.rodata.MessageSendTask_attributes,"a"
+ 639              		.align	2
+ 642              	MessageSendTask_attributes:
+ 643 0000 20000000 		.word	.LC2
+ 644 0004 00000000 		.space	16
+ 644      00000000 
+ 644      00000000 
+ 644      00000000 
+ 645 0014 80020000 		.word	640
+ 646 0018 09000000 		.word	9
+ 647 001c 00000000 		.space	8
+ 647      00000000 
+ 648              		.global	MessageSendTaskHandle
+ 649              		.section	.bss.MessageSendTaskHandle,"aw",%nobits
+ 650              		.align	2
+ 653              	MessageSendTaskHandle:
+ 654 0000 00000000 		.space	4
+ 655              		.global	ChargPageEnterTask_attributes
+ 656              		.section	.rodata.str1.4
+ 657              		.align	2
+ 658              	.LC3:
+ 659 0030 43686172 		.ascii	"ChargPageEnterTask\000"
+ 659      67506167 
+ 659      65456E74 
+ 659      65725461 
+ 659      736B00
+ 660              		.section	.rodata.ChargPageEnterTask_attributes,"a"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 20
+
+
+ 661              		.align	2
+ 664              	ChargPageEnterTask_attributes:
+ 665 0000 30000000 		.word	.LC3
+ 666 0004 00000000 		.space	16
+ 666      00000000 
+ 666      00000000 
+ 666      00000000 
+ 667 0014 00050000 		.word	1280
+ 668 0018 09000000 		.word	9
+ 669 001c 00000000 		.space	8
+ 669      00000000 
+ 670              		.global	ChargPageEnterTaskHandle
+ 671              		.section	.bss.ChargPageEnterTaskHandle,"aw",%nobits
+ 672              		.align	2
+ 675              	ChargPageEnterTaskHandle:
+ 676 0000 00000000 		.space	4
+ 677              		.global	HRDataTask_attributes
+ 678              		.section	.rodata.str1.4
+ 679 0043 00       		.align	2
+ 680              	.LC4:
+ 681 0044 48524461 		.ascii	"HRDataTask\000"
+ 681      74615461 
+ 681      736B00
+ 682              		.section	.rodata.HRDataTask_attributes,"a"
+ 683              		.align	2
+ 686              	HRDataTask_attributes:
+ 687 0000 44000000 		.word	.LC4
+ 688 0004 00000000 		.space	16
+ 688      00000000 
+ 688      00000000 
+ 688      00000000 
+ 689 0014 80020000 		.word	640
+ 690 0018 09000000 		.word	9
+ 691 001c 00000000 		.space	8
+ 691      00000000 
+ 692              		.global	HRDataTaskHandle
+ 693              		.section	.bss.HRDataTaskHandle,"aw",%nobits
+ 694              		.align	2
+ 697              	HRDataTaskHandle:
+ 698 0000 00000000 		.space	4
+ 699              		.global	SensorDataTask_attributes
+ 700              		.section	.rodata.str1.4
+ 701 004f 00       		.align	2
+ 702              	.LC5:
+ 703 0050 53656E73 		.ascii	"SensorDataTask\000"
+ 703      6F724461 
+ 703      74615461 
+ 703      736B00
+ 704              		.section	.rodata.SensorDataTask_attributes,"a"
+ 705              		.align	2
+ 708              	SensorDataTask_attributes:
+ 709 0000 50000000 		.word	.LC5
+ 710 0004 00000000 		.space	16
+ 710      00000000 
+ 710      00000000 
+ 710      00000000 
+ 711 0014 80020000 		.word	640
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 21
+
+
+ 712 0018 09000000 		.word	9
+ 713 001c 00000000 		.space	8
+ 713      00000000 
+ 714              		.global	SensorDataTaskHandle
+ 715              		.section	.bss.SensorDataTaskHandle,"aw",%nobits
+ 716              		.align	2
+ 719              	SensorDataTaskHandle:
+ 720 0000 00000000 		.space	4
+ 721              		.global	ScrRenewTask_attributes
+ 722              		.section	.rodata.str1.4
+ 723 005f 00       		.align	2
+ 724              	.LC6:
+ 725 0060 53637252 		.ascii	"ScrRenewTask\000"
+ 725      656E6577 
+ 725      5461736B 
+ 725      00
+ 726              		.section	.rodata.ScrRenewTask_attributes,"a"
+ 727              		.align	2
+ 730              	ScrRenewTask_attributes:
+ 731 0000 60000000 		.word	.LC6
+ 732 0004 00000000 		.space	16
+ 732      00000000 
+ 732      00000000 
+ 732      00000000 
+ 733 0014 00050000 		.word	1280
+ 734 0018 09000000 		.word	9
+ 735 001c 00000000 		.space	8
+ 735      00000000 
+ 736              		.global	ScrRenewTaskHandle
+ 737              		.section	.bss.ScrRenewTaskHandle,"aw",%nobits
+ 738              		.align	2
+ 741              	ScrRenewTaskHandle:
+ 742 0000 00000000 		.space	4
+ 743              		.global	KeyTask_attributes
+ 744              		.section	.rodata.str1.4
+ 745 006d 000000   		.align	2
+ 746              	.LC7:
+ 747 0070 4B657954 		.ascii	"KeyTask\000"
+ 747      61736B00 
+ 748              		.section	.rodata.KeyTask_attributes,"a"
+ 749              		.align	2
+ 752              	KeyTask_attributes:
+ 753 0000 70000000 		.word	.LC7
+ 754 0004 00000000 		.space	16
+ 754      00000000 
+ 754      00000000 
+ 754      00000000 
+ 755 0014 80000000 		.word	128
+ 756 0018 18000000 		.word	24
+ 757 001c 00000000 		.space	8
+ 757      00000000 
+ 758              		.global	KeyTaskHandle
+ 759              		.section	.bss.KeyTaskHandle,"aw",%nobits
+ 760              		.align	2
+ 763              	KeyTaskHandle:
+ 764 0000 00000000 		.space	4
+ 765              		.global	StopEnterTask_attributes
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 22
+
+
+ 766              		.section	.rodata.str1.4
+ 767              		.align	2
+ 768              	.LC8:
+ 769 0078 53746F70 		.ascii	"StopEnterTask\000"
+ 769      456E7465 
+ 769      72546173 
+ 769      6B00
+ 770              		.section	.rodata.StopEnterTask_attributes,"a"
+ 771              		.align	2
+ 774              	StopEnterTask_attributes:
+ 775 0000 78000000 		.word	.LC8
+ 776 0004 00000000 		.space	16
+ 776      00000000 
+ 776      00000000 
+ 776      00000000 
+ 777 0014 00080000 		.word	2048
+ 778 0018 29000000 		.word	41
+ 779 001c 00000000 		.space	8
+ 779      00000000 
+ 780              		.global	StopEnterTaskHandle
+ 781              		.section	.bss.StopEnterTaskHandle,"aw",%nobits
+ 782              		.align	2
+ 785              	StopEnterTaskHandle:
+ 786 0000 00000000 		.space	4
+ 787              		.global	IdleEnterTask_attributes
+ 788              		.section	.rodata.str1.4
+ 789 0086 0000     		.align	2
+ 790              	.LC9:
+ 791 0088 49646C65 		.ascii	"IdleEnterTask\000"
+ 791      456E7465 
+ 791      72546173 
+ 791      6B00
+ 792              		.section	.rodata.IdleEnterTask_attributes,"a"
+ 793              		.align	2
+ 796              	IdleEnterTask_attributes:
+ 797 0000 88000000 		.word	.LC9
+ 798 0004 00000000 		.space	16
+ 798      00000000 
+ 798      00000000 
+ 798      00000000 
+ 799 0014 80000000 		.word	128
+ 800 0018 28000000 		.word	40
+ 801 001c 00000000 		.space	8
+ 801      00000000 
+ 802              		.global	IdleEnterTaskHandle
+ 803              		.section	.bss.IdleEnterTaskHandle,"aw",%nobits
+ 804              		.align	2
+ 807              	IdleEnterTaskHandle:
+ 808 0000 00000000 		.space	4
+ 809              		.global	WDOGFeedTask_attributes
+ 810              		.section	.rodata.str1.4
+ 811 0096 0000     		.align	2
+ 812              	.LC10:
+ 813 0098 57444F47 		.ascii	"WDOGFeedTask\000"
+ 813      46656564 
+ 813      5461736B 
+ 813      00
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 23
+
+
+ 814              		.section	.rodata.WDOGFeedTask_attributes,"a"
+ 815              		.align	2
+ 818              	WDOGFeedTask_attributes:
+ 819 0000 98000000 		.word	.LC10
+ 820 0004 00000000 		.space	16
+ 820      00000000 
+ 820      00000000 
+ 820      00000000 
+ 821 0014 80000000 		.word	128
+ 822 0018 2A000000 		.word	42
+ 823 001c 00000000 		.space	8
+ 823      00000000 
+ 824              		.global	WDOGFeedTaskHandle
+ 825              		.section	.bss.WDOGFeedTaskHandle,"aw",%nobits
+ 826              		.align	2
+ 829              	WDOGFeedTaskHandle:
+ 830 0000 00000000 		.space	4
+ 831              		.global	LvHandlerTask_attributes
+ 832              		.section	.rodata.str1.4
+ 833 00a5 000000   		.align	2
+ 834              	.LC11:
+ 835 00a8 4C764861 		.ascii	"LvHandlerTask\000"
+ 835      6E646C65 
+ 835      72546173 
+ 835      6B00
+ 836              		.section	.rodata.LvHandlerTask_attributes,"a"
+ 837              		.align	2
+ 840              	LvHandlerTask_attributes:
+ 841 0000 A8000000 		.word	.LC11
+ 842 0004 00000000 		.space	16
+ 842      00000000 
+ 842      00000000 
+ 842      00000000 
+ 843 0014 000C0000 		.word	3072
+ 844 0018 08000000 		.word	8
+ 845 001c 00000000 		.space	8
+ 845      00000000 
+ 846              		.global	LvHandlerTaskHandle
+ 847              		.section	.bss.LvHandlerTaskHandle,"aw",%nobits
+ 848              		.align	2
+ 851              	LvHandlerTaskHandle:
+ 852 0000 00000000 		.space	4
+ 853              		.global	HardwareInitTask_attributes
+ 854              		.section	.rodata.str1.4
+ 855 00b6 0000     		.align	2
+ 856              	.LC12:
+ 857 00b8 48617264 		.ascii	"HardwareInitTask\000"
+ 857      77617265 
+ 857      496E6974 
+ 857      5461736B 
+ 857      00
+ 858              		.section	.rodata.HardwareInitTask_attributes,"a"
+ 859              		.align	2
+ 862              	HardwareInitTask_attributes:
+ 863 0000 B8000000 		.word	.LC12
+ 864 0004 00000000 		.space	16
+ 864      00000000 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 24
+
+
+ 864      00000000 
+ 864      00000000 
+ 865 0014 00050000 		.word	1280
+ 866 0018 2B000000 		.word	43
+ 867 001c 00000000 		.space	8
+ 867      00000000 
+ 868              		.global	HardwareInitTaskHandle
+ 869              		.section	.bss.HardwareInitTaskHandle,"aw",%nobits
+ 870              		.align	2
+ 873              	HardwareInitTaskHandle:
+ 874 0000 00000000 		.space	4
+ 875              		.global	IdleTimerHandle
+ 876              		.section	.bss.IdleTimerHandle,"aw",%nobits
+ 877              		.align	2
+ 880              	IdleTimerHandle:
+ 881 0000 00000000 		.space	4
+ 882              		.text
+ 883              	.Letext0:
+ 884              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 885              		.file 4 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 886              		.file 5 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 887              		.file 6 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ 888              		.file 7 "User/Tasks/Inc/user_TasksInit.h"
+ 889              		.file 8 "Middlewares/LVGL/GUI/lvgl/src/../src/misc/lv_types.h"
+ 890              		.file 9 "Middlewares/LVGL/GUI/lvgl/src/../src/misc/lv_timer.h"
+ 891              		.file 10 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/../misc/../font/../misc/lv_area.h"
+ 892              		.file 11 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/../misc/../font/lv_font.h"
+ 893              		.file 12 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/../misc/lv_color.h"
+ 894              		.file 13 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/../misc/lv_txt.h"
+ 895              		.file 14 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/../misc/lv_bidi.h"
+ 896              		.file 15 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/../misc/lv_style.h"
+ 897              		.file 16 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/lv_img_buf.h"
+ 898              		.file 17 "Middlewares/LVGL/GUI/lvgl/src/../src/core/lv_obj.h"
+ 899              		.file 18 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/lv_draw_rect.h"
+ 900              		.file 19 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/lv_draw_label.h"
+ 901              		.file 20 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/lv_draw_img.h"
+ 902              		.file 21 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/lv_draw_line.h"
+ 903              		.file 22 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/lv_draw_arc.h"
+ 904              		.file 23 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/lv_draw.h"
+ 905              		.file 24 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../misc/lv_ll.h"
+ 906              		.file 25 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/lv_hal_disp.h"
+ 907              		.file 26 "Middlewares/LVGL/GUI/lvgl/src/../src/core/lv_theme.h"
+ 908              		.file 27 "Middlewares/LVGL/GUI/lvgl/src/../src/core/lv_group.h"
+ 909              		.file 28 "Middlewares/LVGL/GUI/lvgl/src/../src/core/lv_obj_scroll.h"
+ 910              		.file 29 "Middlewares/LVGL/GUI/lvgl/src/../src/core/lv_obj_style.h"
+ 911              		.file 30 "Middlewares/LVGL/GUI/lvgl/src/../src/core/lv_obj_class.h"
+ 912              		.file 31 "Middlewares/LVGL/GUI/lvgl/src/../src/core/lv_event.h"
+ 913              		.file 32 "Middlewares/LVGL/GUI/lvgl/src/../src/widgets/lv_bar.h"
+ 914              		.file 33 "User/GUI_App/Screens/Inc/ui_TimerPage.h"
+ 915              		.file 34 "User/Tasks/Inc/user_SensUpdateTask.h"
+ 916              		.file 35 "BSP/OWDG/WDOG.h"
+ 917              		.file 36 "Middlewares/LVGL/GUI/lvgl/src/../src/core/lv_disp.h"
+ 918              		.file 37 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/lv_hal_tick.h"
+ 919              		.file 38 "User/Tasks/Inc/user_DataSaveTask.h"
+ 920              		.file 39 "User/Tasks/Inc/user_MessageSendTask.h"
+ 921              		.file 40 "User/Tasks/Inc/user_ChargCheckTask.h"
+ 922              		.file 41 "User/Tasks/Inc/user_ScrRenewTask.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 25
+
+
+ 923              		.file 42 "User/Tasks/Inc/user_KeyTask.h"
+ 924              		.file 43 "User/Tasks/Inc/user_RunModeTasks.h"
+ 925              		.file 44 "User/Tasks/Inc/user_HardwareInitTask.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 26
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 user_TasksInit.c
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:21     .text.LvHandlerTask:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:27     .text.LvHandlerTask:00000000 LvHandlerTask
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:90     .text.LvHandlerTask:00000034 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:566    .bss.IdleBreak_MessageQueue:00000000 IdleBreak_MessageQueue
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:95     .text.WDOGFeedTask:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:101    .text.WDOGFeedTask:00000000 WDOGFeedTask
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:136    .text.User_Tasks_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:142    .text.User_Tasks_Init:00000000 User_Tasks_Init
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:378    .text.User_Tasks_Init:00000138 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:880    .bss.IdleTimerHandle:00000000 IdleTimerHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:587    .bss.Key_MessageQueue:00000000 Key_MessageQueue
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:580    .bss.Idle_MessageQueue:00000000 Idle_MessageQueue
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:573    .bss.Stop_MessageQueue:00000000 Stop_MessageQueue
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:559    .bss.HomeUpdata_MessageQueue:00000000 HomeUpdata_MessageQueue
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:552    .bss.DataSave_MessageQueue:00000000 DataSave_MessageQueue
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:862    .rodata.HardwareInitTask_attributes:00000000 HardwareInitTask_attributes
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:873    .bss.HardwareInitTaskHandle:00000000 HardwareInitTaskHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:840    .rodata.LvHandlerTask_attributes:00000000 LvHandlerTask_attributes
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:851    .bss.LvHandlerTaskHandle:00000000 LvHandlerTaskHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:818    .rodata.WDOGFeedTask_attributes:00000000 WDOGFeedTask_attributes
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:829    .bss.WDOGFeedTaskHandle:00000000 WDOGFeedTaskHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:796    .rodata.IdleEnterTask_attributes:00000000 IdleEnterTask_attributes
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:807    .bss.IdleEnterTaskHandle:00000000 IdleEnterTaskHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:774    .rodata.StopEnterTask_attributes:00000000 StopEnterTask_attributes
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:785    .bss.StopEnterTaskHandle:00000000 StopEnterTaskHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:752    .rodata.KeyTask_attributes:00000000 KeyTask_attributes
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:763    .bss.KeyTaskHandle:00000000 KeyTaskHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:730    .rodata.ScrRenewTask_attributes:00000000 ScrRenewTask_attributes
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:741    .bss.ScrRenewTaskHandle:00000000 ScrRenewTaskHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:708    .rodata.SensorDataTask_attributes:00000000 SensorDataTask_attributes
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:719    .bss.SensorDataTaskHandle:00000000 SensorDataTaskHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:686    .rodata.HRDataTask_attributes:00000000 HRDataTask_attributes
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:697    .bss.HRDataTaskHandle:00000000 HRDataTaskHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:664    .rodata.ChargPageEnterTask_attributes:00000000 ChargPageEnterTask_attributes
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:675    .bss.ChargPageEnterTaskHandle:00000000 ChargPageEnterTaskHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:642    .rodata.MessageSendTask_attributes:00000000 MessageSendTask_attributes
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:653    .bss.MessageSendTaskHandle:00000000 MessageSendTaskHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:620    .rodata.MPUCheckTask_attributes:00000000 MPUCheckTask_attributes
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:631    .bss.MPUCheckTaskHandle:00000000 MPUCheckTaskHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:598    .rodata.DataSaveTask_attributes:00000000 DataSaveTask_attributes
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:609    .bss.DataSaveTaskHandle:00000000 DataSaveTaskHandle
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:429    .text.TaskTickHook:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:435    .text.TaskTickHook:00000000 TaskTickHook
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:538    .text.TaskTickHook:00000068 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:549    .bss.DataSave_MessageQueue:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:556    .bss.HomeUpdata_MessageQueue:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:563    .bss.IdleBreak_MessageQueue:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:570    .bss.Stop_MessageQueue:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:577    .bss.Idle_MessageQueue:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:584    .bss.Key_MessageQueue:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:591    .rodata.str1.4:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:595    .rodata.DataSaveTask_attributes:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:606    .bss.DataSaveTaskHandle:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:617    .rodata.MPUCheckTask_attributes:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:628    .bss.MPUCheckTaskHandle:00000000 $d
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s 			page 27
+
+
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:639    .rodata.MessageSendTask_attributes:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:650    .bss.MessageSendTaskHandle:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:661    .rodata.ChargPageEnterTask_attributes:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:672    .bss.ChargPageEnterTaskHandle:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:683    .rodata.HRDataTask_attributes:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:694    .bss.HRDataTaskHandle:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:705    .rodata.SensorDataTask_attributes:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:716    .bss.SensorDataTaskHandle:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:727    .rodata.ScrRenewTask_attributes:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:738    .bss.ScrRenewTaskHandle:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:749    .rodata.KeyTask_attributes:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:760    .bss.KeyTaskHandle:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:771    .rodata.StopEnterTask_attributes:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:782    .bss.StopEnterTaskHandle:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:793    .rodata.IdleEnterTask_attributes:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:804    .bss.IdleEnterTaskHandle:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:815    .rodata.WDOGFeedTask_attributes:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:826    .bss.WDOGFeedTaskHandle:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:837    .rodata.LvHandlerTask_attributes:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:848    .bss.LvHandlerTaskHandle:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:859    .rodata.HardwareInitTask_attributes:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:870    .bss.HardwareInitTaskHandle:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccyT19Qg.s:877    .bss.IdleTimerHandle:00000000 $d
+
+UNDEFINED SYMBOLS
+osMessageQueuePut
+lv_timer_handler
+osDelay
+lv_disp_get_inactive_time
+WDOG_Port_Init
+WDOG_Feed
+WDOG_Enable
+osTimerNew
+osTimerStart
+osMessageQueueNew
+osThreadNew
+IdleTimerCallback
+HardwareInitTask
+IdleEnterTask
+StopEnterTask
+KeyTask
+ScrRenewTask
+SensorDataUpdateTask
+HRDataUpdateTask
+ChargPageEnterTask
+MessageSendTask
+MPUCheckTask
+DataSaveTask
+lv_tick_inc
+ui_TimerPageFlag
+ui_TimerPage_ms
+ui_TimerPage_10ms
+user_HR_timecount
+ui_TimerPage_sec
+ui_TimerPage_min

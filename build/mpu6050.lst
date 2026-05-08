@@ -1,0 +1,2512 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"mpu6050.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "BSP/MPU6050/mpu6050.c"
+  20              		.section	.text.MPU_INT_Pin_Init,"ax",%progbits
+  21              		.align	1
+  22              		.global	MPU_INT_Pin_Init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	MPU_INT_Pin_Init:
+  28              	.LFB216:
+   1:BSP/MPU6050/mpu6050.c **** #include "mpu6050.h"
+   2:BSP/MPU6050/mpu6050.c **** 
+   3:BSP/MPU6050/mpu6050.c **** #define MPU_INT_PORT GPIOB
+   4:BSP/MPU6050/mpu6050.c **** #define MPU_INT_PIN  GPIO_PIN_12
+   5:BSP/MPU6050/mpu6050.c **** 
+   6:BSP/MPU6050/mpu6050.c **** #define CLK_ENABLE __HAL_RCC_GPIOB_CLK_ENABLE();
+   7:BSP/MPU6050/mpu6050.c **** 
+   8:BSP/MPU6050/mpu6050.c **** iic_bus_t MPU_bus = 
+   9:BSP/MPU6050/mpu6050.c **** {
+  10:BSP/MPU6050/mpu6050.c **** 	.IIC_SDA_PORT = GPIOB,
+  11:BSP/MPU6050/mpu6050.c **** 	.IIC_SCL_PORT = GPIOB,
+  12:BSP/MPU6050/mpu6050.c **** 	.IIC_SDA_PIN  = GPIO_PIN_13,
+  13:BSP/MPU6050/mpu6050.c **** 	.IIC_SCL_PIN  = GPIO_PIN_14,
+  14:BSP/MPU6050/mpu6050.c **** };
+  15:BSP/MPU6050/mpu6050.c **** 
+  16:BSP/MPU6050/mpu6050.c **** 
+  17:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+  18:BSP/MPU6050/mpu6050.c **** /*!
+  19:BSP/MPU6050/mpu6050.c ****     @brief  initialize the iic port connect with MPU6050
+  20:BSP/MPU6050/mpu6050.c **** 
+  21:BSP/MPU6050/mpu6050.c ****     @param  NULL
+  22:BSP/MPU6050/mpu6050.c **** */
+  23:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+  24:BSP/MPU6050/mpu6050.c **** void MPU_INT_Pin_Init()
+  25:BSP/MPU6050/mpu6050.c **** {
+  29              		.loc 1 25 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 24
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 10B5     		push	{r4, lr}
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 2
+
+
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  38 0002 86B0     		sub	sp, sp, #24
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 32
+  26:BSP/MPU6050/mpu6050.c **** 	GPIO_InitTypeDef GPIO_InitStruct = {0};
+  41              		.loc 1 26 2 view .LVU1
+  42              		.loc 1 26 19 is_stmt 0 view .LVU2
+  43 0004 0024     		movs	r4, #0
+  44 0006 0194     		str	r4, [sp, #4]
+  45 0008 0294     		str	r4, [sp, #8]
+  46 000a 0394     		str	r4, [sp, #12]
+  47 000c 0494     		str	r4, [sp, #16]
+  48 000e 0594     		str	r4, [sp, #20]
+  27:BSP/MPU6050/mpu6050.c **** 
+  28:BSP/MPU6050/mpu6050.c ****   /* GPIO Ports Clock Enable */
+  29:BSP/MPU6050/mpu6050.c ****   __HAL_RCC_GPIOB_CLK_ENABLE();
+  49              		.loc 1 29 3 is_stmt 1 view .LVU3
+  50              	.LBB2:
+  51              		.loc 1 29 3 view .LVU4
+  52 0010 0094     		str	r4, [sp]
+  53              		.loc 1 29 3 view .LVU5
+  54 0012 104B     		ldr	r3, .L3
+  55 0014 1A6B     		ldr	r2, [r3, #48]
+  56 0016 42F00202 		orr	r2, r2, #2
+  57 001a 1A63     		str	r2, [r3, #48]
+  58              		.loc 1 29 3 view .LVU6
+  59 001c 1B6B     		ldr	r3, [r3, #48]
+  60 001e 03F00203 		and	r3, r3, #2
+  61 0022 0093     		str	r3, [sp]
+  62              		.loc 1 29 3 view .LVU7
+  63 0024 009B     		ldr	r3, [sp]
+  64              	.LBE2:
+  65              		.loc 1 29 3 view .LVU8
+  30:BSP/MPU6050/mpu6050.c **** 
+  31:BSP/MPU6050/mpu6050.c ****   /*Configure GPIO pin : PB12 */
+  32:BSP/MPU6050/mpu6050.c ****   GPIO_InitStruct.Pin = GPIO_PIN_12;
+  66              		.loc 1 32 3 view .LVU9
+  67              		.loc 1 32 23 is_stmt 0 view .LVU10
+  68 0026 4FF48053 		mov	r3, #4096
+  69 002a 0193     		str	r3, [sp, #4]
+  33:BSP/MPU6050/mpu6050.c ****   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  70              		.loc 1 33 3 is_stmt 1 view .LVU11
+  71              		.loc 1 33 24 is_stmt 0 view .LVU12
+  72 002c 4FF40413 		mov	r3, #2162688
+  73 0030 0293     		str	r3, [sp, #8]
+  34:BSP/MPU6050/mpu6050.c ****   GPIO_InitStruct.Pull = GPIO_PULLUP;
+  74              		.loc 1 34 3 is_stmt 1 view .LVU13
+  75              		.loc 1 34 24 is_stmt 0 view .LVU14
+  76 0032 0123     		movs	r3, #1
+  77 0034 0393     		str	r3, [sp, #12]
+  35:BSP/MPU6050/mpu6050.c ****   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  78              		.loc 1 35 3 is_stmt 1 view .LVU15
+  79 0036 01A9     		add	r1, sp, #4
+  80 0038 0748     		ldr	r0, .L3+4
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 3
+
+
+  81 003a FFF7FEFF 		bl	HAL_GPIO_Init
+  82              	.LVL0:
+  36:BSP/MPU6050/mpu6050.c **** 
+  37:BSP/MPU6050/mpu6050.c ****   /* EXTI interrupt init*/
+  38:BSP/MPU6050/mpu6050.c ****   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+  83              		.loc 1 38 3 view .LVU16
+  84 003e 2246     		mov	r2, r4
+  85 0040 2146     		mov	r1, r4
+  86 0042 2820     		movs	r0, #40
+  87 0044 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  88              	.LVL1:
+  39:BSP/MPU6050/mpu6050.c ****   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+  89              		.loc 1 39 3 view .LVU17
+  90 0048 2820     		movs	r0, #40
+  91 004a FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+  92              	.LVL2:
+  40:BSP/MPU6050/mpu6050.c **** }
+  93              		.loc 1 40 1 is_stmt 0 view .LVU18
+  94 004e 06B0     		add	sp, sp, #24
+  95              	.LCFI2:
+  96              		.cfi_def_cfa_offset 8
+  97              		@ sp needed
+  98 0050 10BD     		pop	{r4, pc}
+  99              	.L4:
+ 100 0052 00BF     		.align	2
+ 101              	.L3:
+ 102 0054 00380240 		.word	1073887232
+ 103 0058 00040240 		.word	1073873920
+ 104              		.cfi_endproc
+ 105              	.LFE216:
+ 107              		.section	.text.MPU_Bus_Init,"ax",%progbits
+ 108              		.align	1
+ 109              		.global	MPU_Bus_Init
+ 110              		.syntax unified
+ 111              		.thumb
+ 112              		.thumb_func
+ 114              	MPU_Bus_Init:
+ 115              	.LFB218:
+  41:BSP/MPU6050/mpu6050.c **** 
+  42:BSP/MPU6050/mpu6050.c **** 
+  43:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+  44:BSP/MPU6050/mpu6050.c **** /*!
+  45:BSP/MPU6050/mpu6050.c ****     @brief  initialize the motion function of MPU6050
+  46:BSP/MPU6050/mpu6050.c **** 
+  47:BSP/MPU6050/mpu6050.c ****     @param  NULL
+  48:BSP/MPU6050/mpu6050.c **** */
+  49:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+  50:BSP/MPU6050/mpu6050.c **** void MPU_Motion_Init(void)			
+  51:BSP/MPU6050/mpu6050.c **** {
+  52:BSP/MPU6050/mpu6050.c ****     MPU_Write_Byte(MPU_MOTION_DET_REG,0x01);    //set the acceleration threshold is (LSB*2)mg
+  53:BSP/MPU6050/mpu6050.c ****     MPU_Write_Byte(MPU_MOTION_DUR_REG,0x01);    //Acceleration detection time is ()ms 
+  54:BSP/MPU6050/mpu6050.c ****     MPU_Write_Byte(MPU_INTBP_CFG_REG,0X90);     //INT Pin active low level, reset until 50us
+  55:BSP/MPU6050/mpu6050.c ****     MPU_Write_Byte(MPU_INT_EN_REG,0x40);       	//enable INT
+  56:BSP/MPU6050/mpu6050.c **** }
+  57:BSP/MPU6050/mpu6050.c **** 
+  58:BSP/MPU6050/mpu6050.c **** 
+  59:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 4
+
+
+  60:BSP/MPU6050/mpu6050.c **** /*!
+  61:BSP/MPU6050/mpu6050.c ****     @brief  initialize the IIC bus
+  62:BSP/MPU6050/mpu6050.c **** 
+  63:BSP/MPU6050/mpu6050.c ****     @param  NULL
+  64:BSP/MPU6050/mpu6050.c **** */
+  65:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+  66:BSP/MPU6050/mpu6050.c **** void MPU_Bus_Init(void)
+  67:BSP/MPU6050/mpu6050.c **** {
+ 116              		.loc 1 67 1 is_stmt 1 view -0
+ 117              		.cfi_startproc
+ 118              		@ args = 0, pretend = 0, frame = 8
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120 0000 00B5     		push	{lr}
+ 121              	.LCFI3:
+ 122              		.cfi_def_cfa_offset 4
+ 123              		.cfi_offset 14, -4
+ 124 0002 83B0     		sub	sp, sp, #12
+ 125              	.LCFI4:
+ 126              		.cfi_def_cfa_offset 16
+  68:BSP/MPU6050/mpu6050.c **** 	CLK_ENABLE;
+ 127              		.loc 1 68 2 view .LVU20
+ 128              	.LBB3:
+ 129              		.loc 1 68 2 view .LVU21
+ 130 0004 0023     		movs	r3, #0
+ 131 0006 0193     		str	r3, [sp, #4]
+ 132              		.loc 1 68 2 view .LVU22
+ 133 0008 074B     		ldr	r3, .L7
+ 134 000a 1A6B     		ldr	r2, [r3, #48]
+ 135 000c 42F00202 		orr	r2, r2, #2
+ 136 0010 1A63     		str	r2, [r3, #48]
+ 137              		.loc 1 68 2 view .LVU23
+ 138 0012 1B6B     		ldr	r3, [r3, #48]
+ 139 0014 03F00203 		and	r3, r3, #2
+ 140 0018 0193     		str	r3, [sp, #4]
+ 141              		.loc 1 68 2 view .LVU24
+ 142 001a 019B     		ldr	r3, [sp, #4]
+ 143              	.LBE3:
+ 144              		.loc 1 68 2 view .LVU25
+ 145              		.loc 1 68 12 view .LVU26
+  69:BSP/MPU6050/mpu6050.c **** 	IICInit(&MPU_bus);
+ 146              		.loc 1 69 2 view .LVU27
+ 147 001c 0348     		ldr	r0, .L7+4
+ 148 001e FFF7FEFF 		bl	IICInit
+ 149              	.LVL3:
+  70:BSP/MPU6050/mpu6050.c **** }
+ 150              		.loc 1 70 1 is_stmt 0 view .LVU28
+ 151 0022 03B0     		add	sp, sp, #12
+ 152              	.LCFI5:
+ 153              		.cfi_def_cfa_offset 4
+ 154              		@ sp needed
+ 155 0024 5DF804FB 		ldr	pc, [sp], #4
+ 156              	.L8:
+ 157              		.align	2
+ 158              	.L7:
+ 159 0028 00380240 		.word	1073887232
+ 160 002c 00000000 		.word	MPU_bus
+ 161              		.cfi_endproc
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 5
+
+
+ 162              	.LFE218:
+ 164              		.section	.text.MPU_Write_Len,"ax",%progbits
+ 165              		.align	1
+ 166              		.global	MPU_Write_Len
+ 167              		.syntax unified
+ 168              		.thumb
+ 169              		.thumb_func
+ 171              	MPU_Write_Len:
+ 172              	.LVL4:
+ 173              	.LFB230:
+  71:BSP/MPU6050/mpu6050.c **** 
+  72:BSP/MPU6050/mpu6050.c **** 
+  73:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+  74:BSP/MPU6050/mpu6050.c **** /*!
+  75:BSP/MPU6050/mpu6050.c ****     @brief  init the MPU6050
+  76:BSP/MPU6050/mpu6050.c **** 
+  77:BSP/MPU6050/mpu6050.c ****     @param  NULL
+  78:BSP/MPU6050/mpu6050.c **** 
+  79:BSP/MPU6050/mpu6050.c ****     @return 0 if success
+  80:BSP/MPU6050/mpu6050.c **** */
+  81:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+  82:BSP/MPU6050/mpu6050.c **** u8 MPU_Init(void)
+  83:BSP/MPU6050/mpu6050.c **** { 
+  84:BSP/MPU6050/mpu6050.c **** 	u8 res;
+  85:BSP/MPU6050/mpu6050.c **** 	
+  86:BSP/MPU6050/mpu6050.c **** 	MPU_Bus_Init();
+  87:BSP/MPU6050/mpu6050.c **** 	
+  88:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_PWR_MGMT1_REG,0X80);	//复位MPU6050
+  89:BSP/MPU6050/mpu6050.c ****   delay_ms(100);
+  90:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_PWR_MGMT1_REG,0X00);	//唤醒MPU6050 
+  91:BSP/MPU6050/mpu6050.c **** 	MPU_Set_Gyro_Fsr(3);										//G传感器, 2000dps
+  92:BSP/MPU6050/mpu6050.c **** 	MPU_Set_Accel_Fsr(2);										//A传感器, 8g
+  93:BSP/MPU6050/mpu6050.c **** 	MPU_Set_Rate(50);												//采样率50Hz
+  94:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_INT_EN_REG,0X00);		//关闭所有中断
+  95:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_USER_CTRL_REG,0X00);	//IIC主模式关闭
+  96:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_FIFO_EN_REG,0X00);		//dis FIFO
+  97:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_INTBP_CFG_REG,0X80);	//INT active low
+  98:BSP/MPU6050/mpu6050.c **** 	
+  99:BSP/MPU6050/mpu6050.c **** 	res=MPU_Read_Byte(MPU_DEVICE_ID_REG);
+ 100:BSP/MPU6050/mpu6050.c **** 	if(res==MPU_ADDR)//ID
+ 101:BSP/MPU6050/mpu6050.c **** 	{
+ 102:BSP/MPU6050/mpu6050.c **** 		MPU_Write_Byte(MPU_PWR_MGMT1_REG,0X28);	//SET the internal 8MHz,sleep=0,cycle=1,TEMP_DIS=1//low p
+ 103:BSP/MPU6050/mpu6050.c **** 		MPU_Write_Byte(MPU_PWR_MGMT2_REG,0X87);	//enable accelerometer,disanable gyroscope,set the wake u
+ 104:BSP/MPU6050/mpu6050.c **** 		MPU_Set_Rate(50);												//采样率50Hz
+ 105:BSP/MPU6050/mpu6050.c ****  	}else return 1;
+ 106:BSP/MPU6050/mpu6050.c **** 	
+ 107:BSP/MPU6050/mpu6050.c **** 	MPU_Motion_Init();
+ 108:BSP/MPU6050/mpu6050.c **** 	MPU_INT_Pin_Init();
+ 109:BSP/MPU6050/mpu6050.c **** 	
+ 110:BSP/MPU6050/mpu6050.c **** 	
+ 111:BSP/MPU6050/mpu6050.c **** 	return 0;
+ 112:BSP/MPU6050/mpu6050.c **** }
+ 113:BSP/MPU6050/mpu6050.c **** 
+ 114:BSP/MPU6050/mpu6050.c **** void MPU_Sleep()
+ 115:BSP/MPU6050/mpu6050.c **** {
+ 116:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_PWR_MGMT1_REG,0x48);//sleep=1,cycle=0,temp_dis=1,internal 8MHz
+ 117:BSP/MPU6050/mpu6050.c **** }
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 6
+
+
+ 118:BSP/MPU6050/mpu6050.c **** 
+ 119:BSP/MPU6050/mpu6050.c **** void MPU_Wakeup()
+ 120:BSP/MPU6050/mpu6050.c **** {
+ 121:BSP/MPU6050/mpu6050.c **** 	//low power modes
+ 122:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_PWR_MGMT1_REG,0x28);//sleep=0,cycle=1,temp_dis=1,internal 8MHz
+ 123:BSP/MPU6050/mpu6050.c **** }
+ 124:BSP/MPU6050/mpu6050.c **** 
+ 125:BSP/MPU6050/mpu6050.c **** uint8_t MPU_Read_Status()
+ 126:BSP/MPU6050/mpu6050.c **** {
+ 127:BSP/MPU6050/mpu6050.c **** 	return MPU_Read_Byte(MPU_INT_STA_REG);
+ 128:BSP/MPU6050/mpu6050.c **** }
+ 129:BSP/MPU6050/mpu6050.c **** 
+ 130:BSP/MPU6050/mpu6050.c **** 
+ 131:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 132:BSP/MPU6050/mpu6050.c **** /*
+ 133:BSP/MPU6050/mpu6050.c ****     @brief  设置MPU6050陀螺仪传感器满量程范围
+ 134:BSP/MPU6050/mpu6050.c **** 
+ 135:BSP/MPU6050/mpu6050.c ****     @param  fsr:0,+250dps;1,500dps;2,+1000dps;3,+2000dps
+ 136:BSP/MPU6050/mpu6050.c **** 
+ 137:BSP/MPU6050/mpu6050.c ****     @return 0 if success
+ 138:BSP/MPU6050/mpu6050.c **** */
+ 139:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 140:BSP/MPU6050/mpu6050.c **** u8 MPU_Set_Gyro_Fsr(u8 fsr)
+ 141:BSP/MPU6050/mpu6050.c **** {
+ 142:BSP/MPU6050/mpu6050.c **** 	return MPU_Write_Byte(MPU_GYRO_CFG_REG,fsr<<3); 
+ 143:BSP/MPU6050/mpu6050.c **** }
+ 144:BSP/MPU6050/mpu6050.c **** 
+ 145:BSP/MPU6050/mpu6050.c **** 
+ 146:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 147:BSP/MPU6050/mpu6050.c **** /*
+ 148:BSP/MPU6050/mpu6050.c ****     @brief  设置MPU6050的数字低通滤波器
+ 149:BSP/MPU6050/mpu6050.c **** 
+ 150:BSP/MPU6050/mpu6050.c ****     @param  fsr:低通滤波器频率(Hz)
+ 151:BSP/MPU6050/mpu6050.c **** 
+ 152:BSP/MPU6050/mpu6050.c ****     @return 0 if success
+ 153:BSP/MPU6050/mpu6050.c **** */
+ 154:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 155:BSP/MPU6050/mpu6050.c **** u8 MPU_Set_Accel_Fsr(u8 fsr)
+ 156:BSP/MPU6050/mpu6050.c **** {
+ 157:BSP/MPU6050/mpu6050.c **** 	return MPU_Write_Byte(MPU_ACCEL_CFG_REG,fsr<<3);
+ 158:BSP/MPU6050/mpu6050.c **** }
+ 159:BSP/MPU6050/mpu6050.c **** 
+ 160:BSP/MPU6050/mpu6050.c **** 
+ 161:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 162:BSP/MPU6050/mpu6050.c **** /*
+ 163:BSP/MPU6050/mpu6050.c ****     @brief  设置MPU6050的低通滤波器
+ 164:BSP/MPU6050/mpu6050.c **** 
+ 165:BSP/MPU6050/mpu6050.c ****     @param  lpf: Hz
+ 166:BSP/MPU6050/mpu6050.c **** 
+ 167:BSP/MPU6050/mpu6050.c ****     @return 0 if success
+ 168:BSP/MPU6050/mpu6050.c **** */
+ 169:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 170:BSP/MPU6050/mpu6050.c **** u8 MPU_Set_LPF(u16 lpf)
+ 171:BSP/MPU6050/mpu6050.c **** {
+ 172:BSP/MPU6050/mpu6050.c **** 	u8 data=0;
+ 173:BSP/MPU6050/mpu6050.c **** 	if(lpf>=188)data=1;
+ 174:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=98)data=2;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 7
+
+
+ 175:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=42)data=3;
+ 176:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=20)data=4;
+ 177:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=10)data=5;
+ 178:BSP/MPU6050/mpu6050.c **** 	else data=6; 
+ 179:BSP/MPU6050/mpu6050.c **** 	return MPU_Write_Byte(MPU_CFG_REG,data);
+ 180:BSP/MPU6050/mpu6050.c **** }
+ 181:BSP/MPU6050/mpu6050.c **** 
+ 182:BSP/MPU6050/mpu6050.c **** 
+ 183:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 184:BSP/MPU6050/mpu6050.c **** /*
+ 185:BSP/MPU6050/mpu6050.c ****     @brief  设置MPU6050的采样率
+ 186:BSP/MPU6050/mpu6050.c **** 
+ 187:BSP/MPU6050/mpu6050.c ****     @param  rate: 4~1000 Hz
+ 188:BSP/MPU6050/mpu6050.c **** 
+ 189:BSP/MPU6050/mpu6050.c ****     @return 0 if success
+ 190:BSP/MPU6050/mpu6050.c **** */
+ 191:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 192:BSP/MPU6050/mpu6050.c **** u8 MPU_Set_Rate(u16 rate)
+ 193:BSP/MPU6050/mpu6050.c **** {
+ 194:BSP/MPU6050/mpu6050.c **** 	u8 data;
+ 195:BSP/MPU6050/mpu6050.c **** 	if(rate>1000)rate=1000;
+ 196:BSP/MPU6050/mpu6050.c **** 	if(rate<4)rate=4;
+ 197:BSP/MPU6050/mpu6050.c **** 	data=1000/rate-1;
+ 198:BSP/MPU6050/mpu6050.c **** 	data=MPU_Write_Byte(MPU_SAMPLE_RATE_REG,data);
+ 199:BSP/MPU6050/mpu6050.c ****  	return MPU_Set_LPF(rate/2);
+ 200:BSP/MPU6050/mpu6050.c **** }
+ 201:BSP/MPU6050/mpu6050.c **** 
+ 202:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 203:BSP/MPU6050/mpu6050.c **** /*
+ 204:BSP/MPU6050/mpu6050.c ****     @brief  获取MPU6050温度值
+ 205:BSP/MPU6050/mpu6050.c **** 
+ 206:BSP/MPU6050/mpu6050.c ****     @param  NULL
+ 207:BSP/MPU6050/mpu6050.c **** 
+ 208:BSP/MPU6050/mpu6050.c ****     @return temperature (short)
+ 209:BSP/MPU6050/mpu6050.c **** */
+ 210:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 211:BSP/MPU6050/mpu6050.c **** short MPU_Get_Temperature(void)
+ 212:BSP/MPU6050/mpu6050.c **** {
+ 213:BSP/MPU6050/mpu6050.c ****     u8 buf[2]; 
+ 214:BSP/MPU6050/mpu6050.c ****     short raw;
+ 215:BSP/MPU6050/mpu6050.c **** 		float temp;
+ 216:BSP/MPU6050/mpu6050.c **** 		MPU_Read_Len(MPU_ADDR,MPU_TEMP_OUTH_REG,2,buf); 
+ 217:BSP/MPU6050/mpu6050.c ****     raw=((u16)buf[0]<<8)|buf[1];  
+ 218:BSP/MPU6050/mpu6050.c ****     temp=36.53+((double)raw)/340;  
+ 219:BSP/MPU6050/mpu6050.c ****     return temp*100;;
+ 220:BSP/MPU6050/mpu6050.c **** }
+ 221:BSP/MPU6050/mpu6050.c **** 
+ 222:BSP/MPU6050/mpu6050.c **** 
+ 223:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 224:BSP/MPU6050/mpu6050.c **** /*
+ 225:BSP/MPU6050/mpu6050.c ****     @brief  获取MPU6050陀螺仪原始值
+ 226:BSP/MPU6050/mpu6050.c **** 
+ 227:BSP/MPU6050/mpu6050.c ****     @param  NULL
+ 228:BSP/MPU6050/mpu6050.c **** 
+ 229:BSP/MPU6050/mpu6050.c ****     @return 0 if success
+ 230:BSP/MPU6050/mpu6050.c **** */
+ 231:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 8
+
+
+ 232:BSP/MPU6050/mpu6050.c **** u8 MPU_Get_Gyroscope(short *gx,short *gy,short *gz)
+ 233:BSP/MPU6050/mpu6050.c **** {
+ 234:BSP/MPU6050/mpu6050.c ****     u8 buf[6],res;  
+ 235:BSP/MPU6050/mpu6050.c **** 		res=MPU_Read_Len(MPU_ADDR,MPU_GYRO_XOUTH_REG,6,buf);
+ 236:BSP/MPU6050/mpu6050.c **** 		if(res==0)
+ 237:BSP/MPU6050/mpu6050.c **** 		{
+ 238:BSP/MPU6050/mpu6050.c **** 			*gx=((u16)buf[0]<<8)|buf[1];  
+ 239:BSP/MPU6050/mpu6050.c **** 			*gy=((u16)buf[2]<<8)|buf[3];  
+ 240:BSP/MPU6050/mpu6050.c **** 			*gz=((u16)buf[4]<<8)|buf[5];
+ 241:BSP/MPU6050/mpu6050.c **** 		} 	
+ 242:BSP/MPU6050/mpu6050.c ****     return res;;
+ 243:BSP/MPU6050/mpu6050.c **** }
+ 244:BSP/MPU6050/mpu6050.c **** 
+ 245:BSP/MPU6050/mpu6050.c **** 
+ 246:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 247:BSP/MPU6050/mpu6050.c **** /*
+ 248:BSP/MPU6050/mpu6050.c ****     @brief  获取MPU6050加速度原始值
+ 249:BSP/MPU6050/mpu6050.c **** 
+ 250:BSP/MPU6050/mpu6050.c ****     @param  NULL
+ 251:BSP/MPU6050/mpu6050.c **** 
+ 252:BSP/MPU6050/mpu6050.c ****     @return 0 if success
+ 253:BSP/MPU6050/mpu6050.c **** */
+ 254:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 255:BSP/MPU6050/mpu6050.c **** u8 MPU_Get_Accelerometer(short *ax,short *ay,short *az)
+ 256:BSP/MPU6050/mpu6050.c **** {
+ 257:BSP/MPU6050/mpu6050.c ****     u8 buf[6],res;  
+ 258:BSP/MPU6050/mpu6050.c **** 		res=MPU_Read_Len(MPU_ADDR,MPU_ACCEL_XOUTH_REG,6,buf);
+ 259:BSP/MPU6050/mpu6050.c **** 		if(res==0)
+ 260:BSP/MPU6050/mpu6050.c **** 		{
+ 261:BSP/MPU6050/mpu6050.c **** 			*ax=((u16)buf[0]<<8)|buf[1];  
+ 262:BSP/MPU6050/mpu6050.c **** 			*ay=((u16)buf[2]<<8)|buf[3];  
+ 263:BSP/MPU6050/mpu6050.c **** 			*az=((u16)buf[4]<<8)|buf[5];
+ 264:BSP/MPU6050/mpu6050.c **** 		} 	
+ 265:BSP/MPU6050/mpu6050.c ****     return res;;
+ 266:BSP/MPU6050/mpu6050.c **** }
+ 267:BSP/MPU6050/mpu6050.c **** 
+ 268:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 269:BSP/MPU6050/mpu6050.c **** /*
+ 270:BSP/MPU6050/mpu6050.c ****     @brief  IIC连续写
+ 271:BSP/MPU6050/mpu6050.c **** 
+ 272:BSP/MPU6050/mpu6050.c ****     @param  addr:器件地址
+ 273:BSP/MPU6050/mpu6050.c ****     @param  reg:寄存器地址
+ 274:BSP/MPU6050/mpu6050.c **** 	@param  len:写入长度
+ 275:BSP/MPU6050/mpu6050.c **** 	@param  buf:数据区
+ 276:BSP/MPU6050/mpu6050.c **** 
+ 277:BSP/MPU6050/mpu6050.c ****     @return 0 if success
+ 278:BSP/MPU6050/mpu6050.c **** */
+ 279:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 280:BSP/MPU6050/mpu6050.c **** u8 MPU_Write_Len(u8 addr,u8 reg,u8 len,u8 *buf)
+ 281:BSP/MPU6050/mpu6050.c **** {
+ 174              		.loc 1 281 1 is_stmt 1 view -0
+ 175              		.cfi_startproc
+ 176              		@ args = 0, pretend = 0, frame = 0
+ 177              		@ frame_needed = 0, uses_anonymous_args = 0
+ 178              		.loc 1 281 1 is_stmt 0 view .LVU30
+ 179 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 180              	.LCFI6:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 9
+
+
+ 181              		.cfi_def_cfa_offset 32
+ 182              		.cfi_offset 3, -32
+ 183              		.cfi_offset 4, -28
+ 184              		.cfi_offset 5, -24
+ 185              		.cfi_offset 6, -20
+ 186              		.cfi_offset 7, -16
+ 187              		.cfi_offset 8, -12
+ 188              		.cfi_offset 9, -8
+ 189              		.cfi_offset 14, -4
+ 190 0004 0446     		mov	r4, r0
+ 191 0006 8846     		mov	r8, r1
+ 192 0008 1646     		mov	r6, r2
+ 193 000a 1F46     		mov	r7, r3
+ 282:BSP/MPU6050/mpu6050.c **** 	u8 i; 
+ 194              		.loc 1 282 2 is_stmt 1 view .LVU31
+ 283:BSP/MPU6050/mpu6050.c ****   IICStart(&MPU_bus); 
+ 195              		.loc 1 283 3 view .LVU32
+ 196 000c 1B4D     		ldr	r5, .L19
+ 197 000e 2846     		mov	r0, r5
+ 198              	.LVL5:
+ 199              		.loc 1 283 3 is_stmt 0 view .LVU33
+ 200 0010 FFF7FEFF 		bl	IICStart
+ 201              	.LVL6:
+ 284:BSP/MPU6050/mpu6050.c **** 	IICSendByte(&MPU_bus,(addr<<1)|0);
+ 202              		.loc 1 284 2 is_stmt 1 view .LVU34
+ 203 0014 6400     		lsls	r4, r4, #1
+ 204              	.LVL7:
+ 205              		.loc 1 284 2 is_stmt 0 view .LVU35
+ 206 0016 04F0FE01 		and	r1, r4, #254
+ 207 001a 2846     		mov	r0, r5
+ 208 001c FFF7FEFF 		bl	IICSendByte
+ 209              	.LVL8:
+ 285:BSP/MPU6050/mpu6050.c **** 	if(IICWaitAck(&MPU_bus))	
+ 210              		.loc 1 285 2 is_stmt 1 view .LVU36
+ 211              		.loc 1 285 5 is_stmt 0 view .LVU37
+ 212 0020 2846     		mov	r0, r5
+ 213 0022 FFF7FEFF 		bl	IICWaitAck
+ 214              	.LVL9:
+ 215              		.loc 1 285 4 discriminator 1 view .LVU38
+ 216 0026 B8B9     		cbnz	r0, .L16
+ 217 0028 8146     		mov	r9, r0
+ 286:BSP/MPU6050/mpu6050.c **** 	{
+ 287:BSP/MPU6050/mpu6050.c **** 		IICStop(&MPU_bus);		 
+ 288:BSP/MPU6050/mpu6050.c **** 		return 1;		
+ 289:BSP/MPU6050/mpu6050.c **** 	}
+ 290:BSP/MPU6050/mpu6050.c ****     IICSendByte(&MPU_bus,reg);	
+ 218              		.loc 1 290 5 is_stmt 1 view .LVU39
+ 219 002a 144C     		ldr	r4, .L19
+ 220 002c 4146     		mov	r1, r8
+ 221 002e 2046     		mov	r0, r4
+ 222 0030 FFF7FEFF 		bl	IICSendByte
+ 223              	.LVL10:
+ 291:BSP/MPU6050/mpu6050.c ****     IICWaitAck(&MPU_bus);		
+ 224              		.loc 1 291 5 view .LVU40
+ 225 0034 2046     		mov	r0, r4
+ 226 0036 FFF7FEFF 		bl	IICWaitAck
+ 227              	.LVL11:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 10
+
+
+ 292:BSP/MPU6050/mpu6050.c **** 	for(i=0;i<len;i++)
+ 228              		.loc 1 292 2 view .LVU41
+ 229              		.loc 1 292 7 is_stmt 0 view .LVU42
+ 230 003a 4C46     		mov	r4, r9
+ 231              	.LVL12:
+ 232              	.L12:
+ 233              		.loc 1 292 11 is_stmt 1 discriminator 1 view .LVU43
+ 234 003c B442     		cmp	r4, r6
+ 235 003e 19D2     		bcs	.L17
+ 293:BSP/MPU6050/mpu6050.c **** 	{
+ 294:BSP/MPU6050/mpu6050.c **** 		IICSendByte(&MPU_bus,buf[i]);	
+ 236              		.loc 1 294 3 view .LVU44
+ 237 0040 0E4D     		ldr	r5, .L19
+ 238 0042 395D     		ldrb	r1, [r7, r4]	@ zero_extendqisi2
+ 239 0044 2846     		mov	r0, r5
+ 240 0046 FFF7FEFF 		bl	IICSendByte
+ 241              	.LVL13:
+ 295:BSP/MPU6050/mpu6050.c **** 		if(IICWaitAck(&MPU_bus))		
+ 242              		.loc 1 295 3 view .LVU45
+ 243              		.loc 1 295 6 is_stmt 0 view .LVU46
+ 244 004a 2846     		mov	r0, r5
+ 245 004c FFF7FEFF 		bl	IICWaitAck
+ 246              	.LVL14:
+ 247              		.loc 1 295 5 discriminator 1 view .LVU47
+ 248 0050 50B9     		cbnz	r0, .L18
+ 292:BSP/MPU6050/mpu6050.c **** 	for(i=0;i<len;i++)
+ 249              		.loc 1 292 17 is_stmt 1 discriminator 2 view .LVU48
+ 250 0052 0134     		adds	r4, r4, #1
+ 251              	.LVL15:
+ 292:BSP/MPU6050/mpu6050.c **** 	for(i=0;i<len;i++)
+ 252              		.loc 1 292 17 is_stmt 0 discriminator 2 view .LVU49
+ 253 0054 E4B2     		uxtb	r4, r4
+ 254              	.LVL16:
+ 292:BSP/MPU6050/mpu6050.c **** 	for(i=0;i<len;i++)
+ 255              		.loc 1 292 17 discriminator 2 view .LVU50
+ 256 0056 F1E7     		b	.L12
+ 257              	.LVL17:
+ 258              	.L16:
+ 287:BSP/MPU6050/mpu6050.c **** 		return 1;		
+ 259              		.loc 1 287 3 is_stmt 1 view .LVU51
+ 260 0058 2846     		mov	r0, r5
+ 261 005a FFF7FEFF 		bl	IICStop
+ 262              	.LVL18:
+ 288:BSP/MPU6050/mpu6050.c **** 	}
+ 263              		.loc 1 288 3 view .LVU52
+ 288:BSP/MPU6050/mpu6050.c **** 	}
+ 264              		.loc 1 288 10 is_stmt 0 view .LVU53
+ 265 005e 4FF00109 		mov	r9, #1
+ 266              	.L11:
+ 296:BSP/MPU6050/mpu6050.c **** 		{
+ 297:BSP/MPU6050/mpu6050.c **** 			IICStop(&MPU_bus);	 
+ 298:BSP/MPU6050/mpu6050.c **** 			return 1;		 
+ 299:BSP/MPU6050/mpu6050.c **** 		}		
+ 300:BSP/MPU6050/mpu6050.c **** 	}    
+ 301:BSP/MPU6050/mpu6050.c ****     IICStop(&MPU_bus);	 
+ 302:BSP/MPU6050/mpu6050.c **** 	return 0;	
+ 303:BSP/MPU6050/mpu6050.c **** } 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 11
+
+
+ 267              		.loc 1 303 1 view .LVU54
+ 268 0062 4846     		mov	r0, r9
+ 269 0064 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 270              	.LVL19:
+ 271              	.L18:
+ 297:BSP/MPU6050/mpu6050.c **** 			return 1;		 
+ 272              		.loc 1 297 4 is_stmt 1 view .LVU55
+ 273 0068 2846     		mov	r0, r5
+ 274 006a FFF7FEFF 		bl	IICStop
+ 275              	.LVL20:
+ 298:BSP/MPU6050/mpu6050.c **** 		}		
+ 276              		.loc 1 298 4 view .LVU56
+ 298:BSP/MPU6050/mpu6050.c **** 		}		
+ 277              		.loc 1 298 11 is_stmt 0 view .LVU57
+ 278 006e 4FF00109 		mov	r9, #1
+ 279 0072 F6E7     		b	.L11
+ 280              	.L17:
+ 301:BSP/MPU6050/mpu6050.c **** 	return 0;	
+ 281              		.loc 1 301 5 is_stmt 1 view .LVU58
+ 282 0074 0148     		ldr	r0, .L19
+ 283 0076 FFF7FEFF 		bl	IICStop
+ 284              	.LVL21:
+ 302:BSP/MPU6050/mpu6050.c **** } 
+ 285              		.loc 1 302 2 view .LVU59
+ 302:BSP/MPU6050/mpu6050.c **** } 
+ 286              		.loc 1 302 9 is_stmt 0 view .LVU60
+ 287 007a F2E7     		b	.L11
+ 288              	.L20:
+ 289              		.align	2
+ 290              	.L19:
+ 291 007c 00000000 		.word	MPU_bus
+ 292              		.cfi_endproc
+ 293              	.LFE230:
+ 295              		.section	.text.MPU_Write_Byte,"ax",%progbits
+ 296              		.align	1
+ 297              		.global	MPU_Write_Byte
+ 298              		.syntax unified
+ 299              		.thumb
+ 300              		.thumb_func
+ 302              	MPU_Write_Byte:
+ 303              	.LVL22:
+ 304              	.LFB231:
+ 304:BSP/MPU6050/mpu6050.c **** 
+ 305:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 306:BSP/MPU6050/mpu6050.c **** /*
+ 307:BSP/MPU6050/mpu6050.c ****     @brief  IIC写单字节
+ 308:BSP/MPU6050/mpu6050.c **** 
+ 309:BSP/MPU6050/mpu6050.c ****     @param  reg:寄存器地址
+ 310:BSP/MPU6050/mpu6050.c **** 	@param  data:数据(uint8_t)
+ 311:BSP/MPU6050/mpu6050.c **** 
+ 312:BSP/MPU6050/mpu6050.c ****     @return 0 if success
+ 313:BSP/MPU6050/mpu6050.c **** */
+ 314:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 315:BSP/MPU6050/mpu6050.c **** u8 MPU_Write_Byte(u8 reg,u8 data) 				 
+ 316:BSP/MPU6050/mpu6050.c **** { 
+ 305              		.loc 1 316 1 is_stmt 1 view -0
+ 306              		.cfi_startproc
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 12
+
+
+ 307              		@ args = 0, pretend = 0, frame = 0
+ 308              		@ frame_needed = 0, uses_anonymous_args = 0
+ 309              		.loc 1 316 1 is_stmt 0 view .LVU62
+ 310 0000 70B5     		push	{r4, r5, r6, lr}
+ 311              	.LCFI7:
+ 312              		.cfi_def_cfa_offset 16
+ 313              		.cfi_offset 4, -16
+ 314              		.cfi_offset 5, -12
+ 315              		.cfi_offset 6, -8
+ 316              		.cfi_offset 14, -4
+ 317 0002 0646     		mov	r6, r0
+ 318 0004 0D46     		mov	r5, r1
+ 317:BSP/MPU6050/mpu6050.c ****   IICStart(&MPU_bus); 
+ 319              		.loc 1 317 3 is_stmt 1 view .LVU63
+ 320 0006 164C     		ldr	r4, .L28
+ 321 0008 2046     		mov	r0, r4
+ 322              	.LVL23:
+ 323              		.loc 1 317 3 is_stmt 0 view .LVU64
+ 324 000a FFF7FEFF 		bl	IICStart
+ 325              	.LVL24:
+ 318:BSP/MPU6050/mpu6050.c **** 	IICSendByte(&MPU_bus, (MPU_ADDR<<1)|0);
+ 326              		.loc 1 318 2 is_stmt 1 view .LVU65
+ 327 000e D021     		movs	r1, #208
+ 328 0010 2046     		mov	r0, r4
+ 329 0012 FFF7FEFF 		bl	IICSendByte
+ 330              	.LVL25:
+ 319:BSP/MPU6050/mpu6050.c **** 	if(IICWaitAck(&MPU_bus))	
+ 331              		.loc 1 319 2 view .LVU66
+ 332              		.loc 1 319 5 is_stmt 0 view .LVU67
+ 333 0016 2046     		mov	r0, r4
+ 334 0018 FFF7FEFF 		bl	IICWaitAck
+ 335              	.LVL26:
+ 336              		.loc 1 319 4 discriminator 1 view .LVU68
+ 337 001c A8B9     		cbnz	r0, .L26
+ 320:BSP/MPU6050/mpu6050.c **** 	{
+ 321:BSP/MPU6050/mpu6050.c **** 		IICStop(&MPU_bus);		 
+ 322:BSP/MPU6050/mpu6050.c **** 		return 1;		
+ 323:BSP/MPU6050/mpu6050.c **** 	}
+ 324:BSP/MPU6050/mpu6050.c **** 	IICSendByte(&MPU_bus,reg);	
+ 338              		.loc 1 324 2 is_stmt 1 view .LVU69
+ 339 001e 104C     		ldr	r4, .L28
+ 340 0020 3146     		mov	r1, r6
+ 341 0022 2046     		mov	r0, r4
+ 342 0024 FFF7FEFF 		bl	IICSendByte
+ 343              	.LVL27:
+ 325:BSP/MPU6050/mpu6050.c **** 	IICWaitAck(&MPU_bus);		
+ 344              		.loc 1 325 2 view .LVU70
+ 345 0028 2046     		mov	r0, r4
+ 346 002a FFF7FEFF 		bl	IICWaitAck
+ 347              	.LVL28:
+ 326:BSP/MPU6050/mpu6050.c **** 	IICSendByte(&MPU_bus,data);
+ 348              		.loc 1 326 2 view .LVU71
+ 349 002e 2946     		mov	r1, r5
+ 350 0030 2046     		mov	r0, r4
+ 351 0032 FFF7FEFF 		bl	IICSendByte
+ 352              	.LVL29:
+ 327:BSP/MPU6050/mpu6050.c **** 	if(IICWaitAck(&MPU_bus))	
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 13
+
+
+ 353              		.loc 1 327 2 view .LVU72
+ 354              		.loc 1 327 5 is_stmt 0 view .LVU73
+ 355 0036 2046     		mov	r0, r4
+ 356 0038 FFF7FEFF 		bl	IICWaitAck
+ 357              	.LVL30:
+ 358              		.loc 1 327 4 discriminator 1 view .LVU74
+ 359 003c 0446     		mov	r4, r0
+ 360 003e 48B9     		cbnz	r0, .L27
+ 328:BSP/MPU6050/mpu6050.c **** 	{
+ 329:BSP/MPU6050/mpu6050.c **** 		IICStop(&MPU_bus);	 
+ 330:BSP/MPU6050/mpu6050.c **** 		return 1;		 
+ 331:BSP/MPU6050/mpu6050.c **** 	}		 
+ 332:BSP/MPU6050/mpu6050.c ****   IICStop(&MPU_bus);	 
+ 361              		.loc 1 332 3 is_stmt 1 view .LVU75
+ 362 0040 0748     		ldr	r0, .L28
+ 363 0042 FFF7FEFF 		bl	IICStop
+ 364              	.LVL31:
+ 333:BSP/MPU6050/mpu6050.c **** 	return 0;
+ 365              		.loc 1 333 2 view .LVU76
+ 366              	.L23:
+ 334:BSP/MPU6050/mpu6050.c **** }
+ 367              		.loc 1 334 1 is_stmt 0 view .LVU77
+ 368 0046 2046     		mov	r0, r4
+ 369 0048 70BD     		pop	{r4, r5, r6, pc}
+ 370              	.LVL32:
+ 371              	.L26:
+ 321:BSP/MPU6050/mpu6050.c **** 		return 1;		
+ 372              		.loc 1 321 3 is_stmt 1 view .LVU78
+ 373 004a 2046     		mov	r0, r4
+ 374 004c FFF7FEFF 		bl	IICStop
+ 375              	.LVL33:
+ 322:BSP/MPU6050/mpu6050.c **** 	}
+ 376              		.loc 1 322 3 view .LVU79
+ 322:BSP/MPU6050/mpu6050.c **** 	}
+ 377              		.loc 1 322 10 is_stmt 0 view .LVU80
+ 378 0050 0124     		movs	r4, #1
+ 379 0052 F8E7     		b	.L23
+ 380              	.L27:
+ 329:BSP/MPU6050/mpu6050.c **** 		return 1;		 
+ 381              		.loc 1 329 3 is_stmt 1 view .LVU81
+ 382 0054 0248     		ldr	r0, .L28
+ 383 0056 FFF7FEFF 		bl	IICStop
+ 384              	.LVL34:
+ 330:BSP/MPU6050/mpu6050.c **** 	}		 
+ 385              		.loc 1 330 3 view .LVU82
+ 330:BSP/MPU6050/mpu6050.c **** 	}		 
+ 386              		.loc 1 330 10 is_stmt 0 view .LVU83
+ 387 005a 0124     		movs	r4, #1
+ 388 005c F3E7     		b	.L23
+ 389              	.L29:
+ 390 005e 00BF     		.align	2
+ 391              	.L28:
+ 392 0060 00000000 		.word	MPU_bus
+ 393              		.cfi_endproc
+ 394              	.LFE231:
+ 396              		.section	.text.MPU_Motion_Init,"ax",%progbits
+ 397              		.align	1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 14
+
+
+ 398              		.global	MPU_Motion_Init
+ 399              		.syntax unified
+ 400              		.thumb
+ 401              		.thumb_func
+ 403              	MPU_Motion_Init:
+ 404              	.LFB217:
+  51:BSP/MPU6050/mpu6050.c ****     MPU_Write_Byte(MPU_MOTION_DET_REG,0x01);    //set the acceleration threshold is (LSB*2)mg
+ 405              		.loc 1 51 1 is_stmt 1 view -0
+ 406              		.cfi_startproc
+ 407              		@ args = 0, pretend = 0, frame = 0
+ 408              		@ frame_needed = 0, uses_anonymous_args = 0
+ 409 0000 08B5     		push	{r3, lr}
+ 410              	.LCFI8:
+ 411              		.cfi_def_cfa_offset 8
+ 412              		.cfi_offset 3, -8
+ 413              		.cfi_offset 14, -4
+  52:BSP/MPU6050/mpu6050.c ****     MPU_Write_Byte(MPU_MOTION_DUR_REG,0x01);    //Acceleration detection time is ()ms 
+ 414              		.loc 1 52 5 view .LVU85
+ 415 0002 0121     		movs	r1, #1
+ 416 0004 1F20     		movs	r0, #31
+ 417 0006 FFF7FEFF 		bl	MPU_Write_Byte
+ 418              	.LVL35:
+  53:BSP/MPU6050/mpu6050.c ****     MPU_Write_Byte(MPU_INTBP_CFG_REG,0X90);     //INT Pin active low level, reset until 50us
+ 419              		.loc 1 53 5 view .LVU86
+ 420 000a 0121     		movs	r1, #1
+ 421 000c 2020     		movs	r0, #32
+ 422 000e FFF7FEFF 		bl	MPU_Write_Byte
+ 423              	.LVL36:
+  54:BSP/MPU6050/mpu6050.c ****     MPU_Write_Byte(MPU_INT_EN_REG,0x40);       	//enable INT
+ 424              		.loc 1 54 5 view .LVU87
+ 425 0012 9021     		movs	r1, #144
+ 426 0014 3720     		movs	r0, #55
+ 427 0016 FFF7FEFF 		bl	MPU_Write_Byte
+ 428              	.LVL37:
+  55:BSP/MPU6050/mpu6050.c **** }
+ 429              		.loc 1 55 5 view .LVU88
+ 430 001a 4021     		movs	r1, #64
+ 431 001c 3820     		movs	r0, #56
+ 432 001e FFF7FEFF 		bl	MPU_Write_Byte
+ 433              	.LVL38:
+  56:BSP/MPU6050/mpu6050.c **** 
+ 434              		.loc 1 56 1 is_stmt 0 view .LVU89
+ 435 0022 08BD     		pop	{r3, pc}
+ 436              		.cfi_endproc
+ 437              	.LFE217:
+ 439              		.section	.text.MPU_Sleep,"ax",%progbits
+ 440              		.align	1
+ 441              		.global	MPU_Sleep
+ 442              		.syntax unified
+ 443              		.thumb
+ 444              		.thumb_func
+ 446              	MPU_Sleep:
+ 447              	.LFB220:
+ 115:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_PWR_MGMT1_REG,0x48);//sleep=1,cycle=0,temp_dis=1,internal 8MHz
+ 448              		.loc 1 115 1 is_stmt 1 view -0
+ 449              		.cfi_startproc
+ 450              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 15
+
+
+ 451              		@ frame_needed = 0, uses_anonymous_args = 0
+ 452 0000 08B5     		push	{r3, lr}
+ 453              	.LCFI9:
+ 454              		.cfi_def_cfa_offset 8
+ 455              		.cfi_offset 3, -8
+ 456              		.cfi_offset 14, -4
+ 116:BSP/MPU6050/mpu6050.c **** }
+ 457              		.loc 1 116 2 view .LVU91
+ 458 0002 4821     		movs	r1, #72
+ 459 0004 6B20     		movs	r0, #107
+ 460 0006 FFF7FEFF 		bl	MPU_Write_Byte
+ 461              	.LVL39:
+ 117:BSP/MPU6050/mpu6050.c **** 
+ 462              		.loc 1 117 1 is_stmt 0 view .LVU92
+ 463 000a 08BD     		pop	{r3, pc}
+ 464              		.cfi_endproc
+ 465              	.LFE220:
+ 467              		.section	.text.MPU_Wakeup,"ax",%progbits
+ 468              		.align	1
+ 469              		.global	MPU_Wakeup
+ 470              		.syntax unified
+ 471              		.thumb
+ 472              		.thumb_func
+ 474              	MPU_Wakeup:
+ 475              	.LFB221:
+ 120:BSP/MPU6050/mpu6050.c **** 	//low power modes
+ 476              		.loc 1 120 1 is_stmt 1 view -0
+ 477              		.cfi_startproc
+ 478              		@ args = 0, pretend = 0, frame = 0
+ 479              		@ frame_needed = 0, uses_anonymous_args = 0
+ 480 0000 08B5     		push	{r3, lr}
+ 481              	.LCFI10:
+ 482              		.cfi_def_cfa_offset 8
+ 483              		.cfi_offset 3, -8
+ 484              		.cfi_offset 14, -4
+ 122:BSP/MPU6050/mpu6050.c **** }
+ 485              		.loc 1 122 2 view .LVU94
+ 486 0002 2821     		movs	r1, #40
+ 487 0004 6B20     		movs	r0, #107
+ 488 0006 FFF7FEFF 		bl	MPU_Write_Byte
+ 489              	.LVL40:
+ 123:BSP/MPU6050/mpu6050.c **** 
+ 490              		.loc 1 123 1 is_stmt 0 view .LVU95
+ 491 000a 08BD     		pop	{r3, pc}
+ 492              		.cfi_endproc
+ 493              	.LFE221:
+ 495              		.section	.text.MPU_Set_Gyro_Fsr,"ax",%progbits
+ 496              		.align	1
+ 497              		.global	MPU_Set_Gyro_Fsr
+ 498              		.syntax unified
+ 499              		.thumb
+ 500              		.thumb_func
+ 502              	MPU_Set_Gyro_Fsr:
+ 503              	.LVL41:
+ 504              	.LFB223:
+ 141:BSP/MPU6050/mpu6050.c **** 	return MPU_Write_Byte(MPU_GYRO_CFG_REG,fsr<<3); 
+ 505              		.loc 1 141 1 is_stmt 1 view -0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 16
+
+
+ 506              		.cfi_startproc
+ 507              		@ args = 0, pretend = 0, frame = 0
+ 508              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141:BSP/MPU6050/mpu6050.c **** 	return MPU_Write_Byte(MPU_GYRO_CFG_REG,fsr<<3); 
+ 509              		.loc 1 141 1 is_stmt 0 view .LVU97
+ 510 0000 08B5     		push	{r3, lr}
+ 511              	.LCFI11:
+ 512              		.cfi_def_cfa_offset 8
+ 513              		.cfi_offset 3, -8
+ 514              		.cfi_offset 14, -4
+ 142:BSP/MPU6050/mpu6050.c **** }
+ 515              		.loc 1 142 2 is_stmt 1 view .LVU98
+ 142:BSP/MPU6050/mpu6050.c **** }
+ 516              		.loc 1 142 9 is_stmt 0 view .LVU99
+ 517 0002 C100     		lsls	r1, r0, #3
+ 518 0004 01F0F801 		and	r1, r1, #248
+ 519 0008 1B20     		movs	r0, #27
+ 520              	.LVL42:
+ 142:BSP/MPU6050/mpu6050.c **** }
+ 521              		.loc 1 142 9 view .LVU100
+ 522 000a FFF7FEFF 		bl	MPU_Write_Byte
+ 523              	.LVL43:
+ 143:BSP/MPU6050/mpu6050.c **** 
+ 524              		.loc 1 143 1 view .LVU101
+ 525 000e 08BD     		pop	{r3, pc}
+ 526              		.cfi_endproc
+ 527              	.LFE223:
+ 529              		.section	.text.MPU_Set_Accel_Fsr,"ax",%progbits
+ 530              		.align	1
+ 531              		.global	MPU_Set_Accel_Fsr
+ 532              		.syntax unified
+ 533              		.thumb
+ 534              		.thumb_func
+ 536              	MPU_Set_Accel_Fsr:
+ 537              	.LVL44:
+ 538              	.LFB224:
+ 156:BSP/MPU6050/mpu6050.c **** 	return MPU_Write_Byte(MPU_ACCEL_CFG_REG,fsr<<3);
+ 539              		.loc 1 156 1 is_stmt 1 view -0
+ 540              		.cfi_startproc
+ 541              		@ args = 0, pretend = 0, frame = 0
+ 542              		@ frame_needed = 0, uses_anonymous_args = 0
+ 156:BSP/MPU6050/mpu6050.c **** 	return MPU_Write_Byte(MPU_ACCEL_CFG_REG,fsr<<3);
+ 543              		.loc 1 156 1 is_stmt 0 view .LVU103
+ 544 0000 08B5     		push	{r3, lr}
+ 545              	.LCFI12:
+ 546              		.cfi_def_cfa_offset 8
+ 547              		.cfi_offset 3, -8
+ 548              		.cfi_offset 14, -4
+ 157:BSP/MPU6050/mpu6050.c **** }
+ 549              		.loc 1 157 2 is_stmt 1 view .LVU104
+ 157:BSP/MPU6050/mpu6050.c **** }
+ 550              		.loc 1 157 9 is_stmt 0 view .LVU105
+ 551 0002 C100     		lsls	r1, r0, #3
+ 552 0004 01F0F801 		and	r1, r1, #248
+ 553 0008 1C20     		movs	r0, #28
+ 554              	.LVL45:
+ 157:BSP/MPU6050/mpu6050.c **** }
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 17
+
+
+ 555              		.loc 1 157 9 view .LVU106
+ 556 000a FFF7FEFF 		bl	MPU_Write_Byte
+ 557              	.LVL46:
+ 158:BSP/MPU6050/mpu6050.c **** 
+ 558              		.loc 1 158 1 view .LVU107
+ 559 000e 08BD     		pop	{r3, pc}
+ 560              		.cfi_endproc
+ 561              	.LFE224:
+ 563              		.section	.text.MPU_Set_LPF,"ax",%progbits
+ 564              		.align	1
+ 565              		.global	MPU_Set_LPF
+ 566              		.syntax unified
+ 567              		.thumb
+ 568              		.thumb_func
+ 570              	MPU_Set_LPF:
+ 571              	.LVL47:
+ 572              	.LFB225:
+ 171:BSP/MPU6050/mpu6050.c **** 	u8 data=0;
+ 573              		.loc 1 171 1 is_stmt 1 view -0
+ 574              		.cfi_startproc
+ 575              		@ args = 0, pretend = 0, frame = 0
+ 576              		@ frame_needed = 0, uses_anonymous_args = 0
+ 171:BSP/MPU6050/mpu6050.c **** 	u8 data=0;
+ 577              		.loc 1 171 1 is_stmt 0 view .LVU109
+ 578 0000 08B5     		push	{r3, lr}
+ 579              	.LCFI13:
+ 580              		.cfi_def_cfa_offset 8
+ 581              		.cfi_offset 3, -8
+ 582              		.cfi_offset 14, -4
+ 172:BSP/MPU6050/mpu6050.c **** 	if(lpf>=188)data=1;
+ 583              		.loc 1 172 2 is_stmt 1 view .LVU110
+ 584              	.LVL48:
+ 173:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=98)data=2;
+ 585              		.loc 1 173 2 view .LVU111
+ 173:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=98)data=2;
+ 586              		.loc 1 173 4 is_stmt 0 view .LVU112
+ 587 0002 BB28     		cmp	r0, #187
+ 588 0004 09D8     		bhi	.L42
+ 174:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=42)data=3;
+ 589              		.loc 1 174 7 is_stmt 1 view .LVU113
+ 174:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=42)data=3;
+ 590              		.loc 1 174 9 is_stmt 0 view .LVU114
+ 591 0006 6128     		cmp	r0, #97
+ 592 0008 0CD8     		bhi	.L43
+ 175:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=20)data=4;
+ 593              		.loc 1 175 7 is_stmt 1 view .LVU115
+ 175:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=20)data=4;
+ 594              		.loc 1 175 9 is_stmt 0 view .LVU116
+ 595 000a 2928     		cmp	r0, #41
+ 596 000c 0CD8     		bhi	.L44
+ 176:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=10)data=5;
+ 597              		.loc 1 176 7 is_stmt 1 view .LVU117
+ 176:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=10)data=5;
+ 598              		.loc 1 176 9 is_stmt 0 view .LVU118
+ 599 000e 1328     		cmp	r0, #19
+ 600 0010 0CD8     		bhi	.L45
+ 177:BSP/MPU6050/mpu6050.c **** 	else data=6; 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 18
+
+
+ 601              		.loc 1 177 7 is_stmt 1 view .LVU119
+ 177:BSP/MPU6050/mpu6050.c **** 	else data=6; 
+ 602              		.loc 1 177 9 is_stmt 0 view .LVU120
+ 603 0012 0928     		cmp	r0, #9
+ 604 0014 0CD9     		bls	.L46
+ 177:BSP/MPU6050/mpu6050.c **** 	else data=6; 
+ 605              		.loc 1 177 22 discriminator 1 view .LVU121
+ 606 0016 0521     		movs	r1, #5
+ 607 0018 00E0     		b	.L41
+ 608              	.L42:
+ 173:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=98)data=2;
+ 609              		.loc 1 173 18 discriminator 1 view .LVU122
+ 610 001a 0121     		movs	r1, #1
+ 611              	.L41:
+ 612              	.LVL49:
+ 179:BSP/MPU6050/mpu6050.c **** }
+ 613              		.loc 1 179 2 is_stmt 1 view .LVU123
+ 179:BSP/MPU6050/mpu6050.c **** }
+ 614              		.loc 1 179 9 is_stmt 0 view .LVU124
+ 615 001c 1A20     		movs	r0, #26
+ 616              	.LVL50:
+ 179:BSP/MPU6050/mpu6050.c **** }
+ 617              		.loc 1 179 9 view .LVU125
+ 618 001e FFF7FEFF 		bl	MPU_Write_Byte
+ 619              	.LVL51:
+ 180:BSP/MPU6050/mpu6050.c **** 
+ 620              		.loc 1 180 1 view .LVU126
+ 621 0022 08BD     		pop	{r3, pc}
+ 622              	.LVL52:
+ 623              	.L43:
+ 174:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=42)data=3;
+ 624              		.loc 1 174 22 discriminator 1 view .LVU127
+ 625 0024 0221     		movs	r1, #2
+ 626 0026 F9E7     		b	.L41
+ 627              	.L44:
+ 175:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=20)data=4;
+ 628              		.loc 1 175 22 discriminator 1 view .LVU128
+ 629 0028 0321     		movs	r1, #3
+ 630 002a F7E7     		b	.L41
+ 631              	.L45:
+ 176:BSP/MPU6050/mpu6050.c **** 	else if(lpf>=10)data=5;
+ 632              		.loc 1 176 22 discriminator 1 view .LVU129
+ 633 002c 0421     		movs	r1, #4
+ 634 002e F5E7     		b	.L41
+ 635              	.L46:
+ 178:BSP/MPU6050/mpu6050.c **** 	return MPU_Write_Byte(MPU_CFG_REG,data);
+ 636              		.loc 1 178 11 view .LVU130
+ 637 0030 0621     		movs	r1, #6
+ 638 0032 F3E7     		b	.L41
+ 639              		.cfi_endproc
+ 640              	.LFE225:
+ 642              		.section	.text.MPU_Set_Rate,"ax",%progbits
+ 643              		.align	1
+ 644              		.global	MPU_Set_Rate
+ 645              		.syntax unified
+ 646              		.thumb
+ 647              		.thumb_func
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 19
+
+
+ 649              	MPU_Set_Rate:
+ 650              	.LVL53:
+ 651              	.LFB226:
+ 193:BSP/MPU6050/mpu6050.c **** 	u8 data;
+ 652              		.loc 1 193 1 is_stmt 1 view -0
+ 653              		.cfi_startproc
+ 654              		@ args = 0, pretend = 0, frame = 0
+ 655              		@ frame_needed = 0, uses_anonymous_args = 0
+ 193:BSP/MPU6050/mpu6050.c **** 	u8 data;
+ 656              		.loc 1 193 1 is_stmt 0 view .LVU132
+ 657 0000 10B5     		push	{r4, lr}
+ 658              	.LCFI14:
+ 659              		.cfi_def_cfa_offset 8
+ 660              		.cfi_offset 4, -8
+ 661              		.cfi_offset 14, -4
+ 194:BSP/MPU6050/mpu6050.c **** 	if(rate>1000)rate=1000;
+ 662              		.loc 1 194 2 is_stmt 1 view .LVU133
+ 195:BSP/MPU6050/mpu6050.c **** 	if(rate<4)rate=4;
+ 663              		.loc 1 195 2 view .LVU134
+ 195:BSP/MPU6050/mpu6050.c **** 	if(rate<4)rate=4;
+ 664              		.loc 1 195 4 is_stmt 0 view .LVU135
+ 665 0002 B0F57A7F 		cmp	r0, #1000
+ 666 0006 04D8     		bhi	.L50
+ 667 0008 0446     		mov	r4, r0
+ 196:BSP/MPU6050/mpu6050.c **** 	data=1000/rate-1;
+ 668              		.loc 1 196 2 is_stmt 1 view .LVU136
+ 196:BSP/MPU6050/mpu6050.c **** 	data=1000/rate-1;
+ 669              		.loc 1 196 4 is_stmt 0 view .LVU137
+ 670 000a 0328     		cmp	r0, #3
+ 671 000c 03D8     		bhi	.L49
+ 196:BSP/MPU6050/mpu6050.c **** 	data=1000/rate-1;
+ 672              		.loc 1 196 16 discriminator 1 view .LVU138
+ 673 000e 0424     		movs	r4, #4
+ 674 0010 01E0     		b	.L49
+ 675              	.L50:
+ 195:BSP/MPU6050/mpu6050.c **** 	if(rate<4)rate=4;
+ 676              		.loc 1 195 19 discriminator 1 view .LVU139
+ 677 0012 4FF47A74 		mov	r4, #1000
+ 678              	.L49:
+ 679              	.LVL54:
+ 197:BSP/MPU6050/mpu6050.c **** 	data=MPU_Write_Byte(MPU_SAMPLE_RATE_REG,data);
+ 680              		.loc 1 197 2 is_stmt 1 view .LVU140
+ 197:BSP/MPU6050/mpu6050.c **** 	data=MPU_Write_Byte(MPU_SAMPLE_RATE_REG,data);
+ 681              		.loc 1 197 11 is_stmt 0 view .LVU141
+ 682 0016 4FF47A71 		mov	r1, #1000
+ 683 001a 91FBF4F1 		sdiv	r1, r1, r4
+ 197:BSP/MPU6050/mpu6050.c **** 	data=MPU_Write_Byte(MPU_SAMPLE_RATE_REG,data);
+ 684              		.loc 1 197 16 view .LVU142
+ 685 001e C9B2     		uxtb	r1, r1
+ 197:BSP/MPU6050/mpu6050.c **** 	data=MPU_Write_Byte(MPU_SAMPLE_RATE_REG,data);
+ 686              		.loc 1 197 6 view .LVU143
+ 687 0020 0139     		subs	r1, r1, #1
+ 688              	.LVL55:
+ 198:BSP/MPU6050/mpu6050.c ****  	return MPU_Set_LPF(rate/2);
+ 689              		.loc 1 198 2 is_stmt 1 view .LVU144
+ 198:BSP/MPU6050/mpu6050.c ****  	return MPU_Set_LPF(rate/2);
+ 690              		.loc 1 198 7 is_stmt 0 view .LVU145
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 20
+
+
+ 691 0022 C9B2     		uxtb	r1, r1
+ 198:BSP/MPU6050/mpu6050.c ****  	return MPU_Set_LPF(rate/2);
+ 692              		.loc 1 198 7 view .LVU146
+ 693 0024 1920     		movs	r0, #25
+ 694 0026 FFF7FEFF 		bl	MPU_Write_Byte
+ 695              	.LVL56:
+ 199:BSP/MPU6050/mpu6050.c **** }
+ 696              		.loc 1 199 3 is_stmt 1 view .LVU147
+ 199:BSP/MPU6050/mpu6050.c **** }
+ 697              		.loc 1 199 10 is_stmt 0 view .LVU148
+ 698 002a 6008     		lsrs	r0, r4, #1
+ 699 002c FFF7FEFF 		bl	MPU_Set_LPF
+ 700              	.LVL57:
+ 200:BSP/MPU6050/mpu6050.c **** 
+ 701              		.loc 1 200 1 view .LVU149
+ 702 0030 10BD     		pop	{r4, pc}
+ 200:BSP/MPU6050/mpu6050.c **** 
+ 703              		.loc 1 200 1 view .LVU150
+ 704              		.cfi_endproc
+ 705              	.LFE226:
+ 707              		.section	.text.MPU_Read_Byte,"ax",%progbits
+ 708              		.align	1
+ 709              		.global	MPU_Read_Byte
+ 710              		.syntax unified
+ 711              		.thumb
+ 712              		.thumb_func
+ 714              	MPU_Read_Byte:
+ 715              	.LVL58:
+ 716              	.LFB232:
+ 335:BSP/MPU6050/mpu6050.c **** 
+ 336:BSP/MPU6050/mpu6050.c **** 
+ 337:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 338:BSP/MPU6050/mpu6050.c **** /*
+ 339:BSP/MPU6050/mpu6050.c ****     @brief  IIC读单字节
+ 340:BSP/MPU6050/mpu6050.c **** 
+ 341:BSP/MPU6050/mpu6050.c ****     @param  reg:寄存器地址
+ 342:BSP/MPU6050/mpu6050.c **** 
+ 343:BSP/MPU6050/mpu6050.c ****     @return 0 if success
+ 344:BSP/MPU6050/mpu6050.c **** */
+ 345:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 346:BSP/MPU6050/mpu6050.c **** u8 MPU_Read_Byte(u8 reg)
+ 347:BSP/MPU6050/mpu6050.c **** {
+ 717              		.loc 1 347 1 is_stmt 1 view -0
+ 718              		.cfi_startproc
+ 719              		@ args = 0, pretend = 0, frame = 0
+ 720              		@ frame_needed = 0, uses_anonymous_args = 0
+ 721              		.loc 1 347 1 is_stmt 0 view .LVU152
+ 722 0000 38B5     		push	{r3, r4, r5, lr}
+ 723              	.LCFI15:
+ 724              		.cfi_def_cfa_offset 16
+ 725              		.cfi_offset 3, -16
+ 726              		.cfi_offset 4, -12
+ 727              		.cfi_offset 5, -8
+ 728              		.cfi_offset 14, -4
+ 729 0002 0546     		mov	r5, r0
+ 348:BSP/MPU6050/mpu6050.c **** 	u8 res;
+ 730              		.loc 1 348 2 is_stmt 1 view .LVU153
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 21
+
+
+ 349:BSP/MPU6050/mpu6050.c ****   IICStart(&MPU_bus); 
+ 731              		.loc 1 349 3 view .LVU154
+ 732 0004 134C     		ldr	r4, .L55
+ 733 0006 2046     		mov	r0, r4
+ 734              	.LVL59:
+ 735              		.loc 1 349 3 is_stmt 0 view .LVU155
+ 736 0008 FFF7FEFF 		bl	IICStart
+ 737              	.LVL60:
+ 350:BSP/MPU6050/mpu6050.c **** 	IICSendByte(&MPU_bus,(MPU_ADDR<<1)|0);
+ 738              		.loc 1 350 2 is_stmt 1 view .LVU156
+ 739 000c D021     		movs	r1, #208
+ 740 000e 2046     		mov	r0, r4
+ 741 0010 FFF7FEFF 		bl	IICSendByte
+ 742              	.LVL61:
+ 351:BSP/MPU6050/mpu6050.c **** 	IICWaitAck(&MPU_bus);		
+ 743              		.loc 1 351 2 view .LVU157
+ 744 0014 2046     		mov	r0, r4
+ 745 0016 FFF7FEFF 		bl	IICWaitAck
+ 746              	.LVL62:
+ 352:BSP/MPU6050/mpu6050.c ****   IICSendByte(&MPU_bus,reg);	
+ 747              		.loc 1 352 3 view .LVU158
+ 748 001a 2946     		mov	r1, r5
+ 749 001c 2046     		mov	r0, r4
+ 750 001e FFF7FEFF 		bl	IICSendByte
+ 751              	.LVL63:
+ 353:BSP/MPU6050/mpu6050.c ****   IICWaitAck(&MPU_bus);		
+ 752              		.loc 1 353 3 view .LVU159
+ 753 0022 2046     		mov	r0, r4
+ 754 0024 FFF7FEFF 		bl	IICWaitAck
+ 755              	.LVL64:
+ 354:BSP/MPU6050/mpu6050.c ****   IICStart(&MPU_bus);
+ 756              		.loc 1 354 3 view .LVU160
+ 757 0028 2046     		mov	r0, r4
+ 758 002a FFF7FEFF 		bl	IICStart
+ 759              	.LVL65:
+ 355:BSP/MPU6050/mpu6050.c **** 	IICSendByte(&MPU_bus,(MPU_ADDR<<1)|1);
+ 760              		.loc 1 355 2 view .LVU161
+ 761 002e D121     		movs	r1, #209
+ 762 0030 2046     		mov	r0, r4
+ 763 0032 FFF7FEFF 		bl	IICSendByte
+ 764              	.LVL66:
+ 356:BSP/MPU6050/mpu6050.c ****   IICWaitAck(&MPU_bus);		
+ 765              		.loc 1 356 3 view .LVU162
+ 766 0036 2046     		mov	r0, r4
+ 767 0038 FFF7FEFF 		bl	IICWaitAck
+ 768              	.LVL67:
+ 357:BSP/MPU6050/mpu6050.c **** 	res=IICReceiveByte(&MPU_bus);
+ 769              		.loc 1 357 2 view .LVU163
+ 770              		.loc 1 357 6 is_stmt 0 view .LVU164
+ 771 003c 2046     		mov	r0, r4
+ 772 003e FFF7FEFF 		bl	IICReceiveByte
+ 773              	.LVL68:
+ 774 0042 0546     		mov	r5, r0
+ 775              	.LVL69:
+ 358:BSP/MPU6050/mpu6050.c **** 	IICSendNotAck(&MPU_bus);
+ 776              		.loc 1 358 2 is_stmt 1 view .LVU165
+ 777 0044 2046     		mov	r0, r4
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 22
+
+
+ 778 0046 FFF7FEFF 		bl	IICSendNotAck
+ 779              	.LVL70:
+ 359:BSP/MPU6050/mpu6050.c ****   IICStop(&MPU_bus);			
+ 780              		.loc 1 359 3 view .LVU166
+ 781 004a 2046     		mov	r0, r4
+ 782 004c FFF7FEFF 		bl	IICStop
+ 783              	.LVL71:
+ 360:BSP/MPU6050/mpu6050.c **** 	return res;		
+ 784              		.loc 1 360 2 view .LVU167
+ 361:BSP/MPU6050/mpu6050.c **** }
+ 785              		.loc 1 361 1 is_stmt 0 view .LVU168
+ 786 0050 2846     		mov	r0, r5
+ 787 0052 38BD     		pop	{r3, r4, r5, pc}
+ 788              	.LVL72:
+ 789              	.L56:
+ 790              		.loc 1 361 1 view .LVU169
+ 791              		.align	2
+ 792              	.L55:
+ 793 0054 00000000 		.word	MPU_bus
+ 794              		.cfi_endproc
+ 795              	.LFE232:
+ 797              		.section	.text.MPU_Init,"ax",%progbits
+ 798              		.align	1
+ 799              		.global	MPU_Init
+ 800              		.syntax unified
+ 801              		.thumb
+ 802              		.thumb_func
+ 804              	MPU_Init:
+ 805              	.LFB219:
+  83:BSP/MPU6050/mpu6050.c **** 	u8 res;
+ 806              		.loc 1 83 1 is_stmt 1 view -0
+ 807              		.cfi_startproc
+ 808              		@ args = 0, pretend = 0, frame = 0
+ 809              		@ frame_needed = 0, uses_anonymous_args = 0
+ 810 0000 08B5     		push	{r3, lr}
+ 811              	.LCFI16:
+ 812              		.cfi_def_cfa_offset 8
+ 813              		.cfi_offset 3, -8
+ 814              		.cfi_offset 14, -4
+  84:BSP/MPU6050/mpu6050.c **** 	
+ 815              		.loc 1 84 2 view .LVU171
+  86:BSP/MPU6050/mpu6050.c **** 	
+ 816              		.loc 1 86 2 view .LVU172
+ 817 0002 FFF7FEFF 		bl	MPU_Bus_Init
+ 818              	.LVL73:
+  88:BSP/MPU6050/mpu6050.c ****   delay_ms(100);
+ 819              		.loc 1 88 2 view .LVU173
+ 820 0006 8021     		movs	r1, #128
+ 821 0008 6B20     		movs	r0, #107
+ 822 000a FFF7FEFF 		bl	MPU_Write_Byte
+ 823              	.LVL74:
+  89:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_PWR_MGMT1_REG,0X00);	//唤醒MPU6050 
+ 824              		.loc 1 89 3 view .LVU174
+ 825 000e 6420     		movs	r0, #100
+ 826 0010 FFF7FEFF 		bl	delay_ms
+ 827              	.LVL75:
+  90:BSP/MPU6050/mpu6050.c **** 	MPU_Set_Gyro_Fsr(3);										//G传感器, 2000dps
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 23
+
+
+ 828              		.loc 1 90 2 view .LVU175
+ 829 0014 0021     		movs	r1, #0
+ 830 0016 6B20     		movs	r0, #107
+ 831 0018 FFF7FEFF 		bl	MPU_Write_Byte
+ 832              	.LVL76:
+  91:BSP/MPU6050/mpu6050.c **** 	MPU_Set_Accel_Fsr(2);										//A传感器, 8g
+ 833              		.loc 1 91 2 view .LVU176
+ 834 001c 0320     		movs	r0, #3
+ 835 001e FFF7FEFF 		bl	MPU_Set_Gyro_Fsr
+ 836              	.LVL77:
+  92:BSP/MPU6050/mpu6050.c **** 	MPU_Set_Rate(50);												//采样率50Hz
+ 837              		.loc 1 92 2 view .LVU177
+ 838 0022 0220     		movs	r0, #2
+ 839 0024 FFF7FEFF 		bl	MPU_Set_Accel_Fsr
+ 840              	.LVL78:
+  93:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_INT_EN_REG,0X00);		//关闭所有中断
+ 841              		.loc 1 93 2 view .LVU178
+ 842 0028 3220     		movs	r0, #50
+ 843 002a FFF7FEFF 		bl	MPU_Set_Rate
+ 844              	.LVL79:
+  94:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_USER_CTRL_REG,0X00);	//IIC主模式关闭
+ 845              		.loc 1 94 2 view .LVU179
+ 846 002e 0021     		movs	r1, #0
+ 847 0030 3820     		movs	r0, #56
+ 848 0032 FFF7FEFF 		bl	MPU_Write_Byte
+ 849              	.LVL80:
+  95:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_FIFO_EN_REG,0X00);		//dis FIFO
+ 850              		.loc 1 95 2 view .LVU180
+ 851 0036 0021     		movs	r1, #0
+ 852 0038 6A20     		movs	r0, #106
+ 853 003a FFF7FEFF 		bl	MPU_Write_Byte
+ 854              	.LVL81:
+  96:BSP/MPU6050/mpu6050.c **** 	MPU_Write_Byte(MPU_INTBP_CFG_REG,0X80);	//INT active low
+ 855              		.loc 1 96 2 view .LVU181
+ 856 003e 0021     		movs	r1, #0
+ 857 0040 2320     		movs	r0, #35
+ 858 0042 FFF7FEFF 		bl	MPU_Write_Byte
+ 859              	.LVL82:
+  97:BSP/MPU6050/mpu6050.c **** 	
+ 860              		.loc 1 97 2 view .LVU182
+ 861 0046 8021     		movs	r1, #128
+ 862 0048 3720     		movs	r0, #55
+ 863 004a FFF7FEFF 		bl	MPU_Write_Byte
+ 864              	.LVL83:
+  99:BSP/MPU6050/mpu6050.c **** 	if(res==MPU_ADDR)//ID
+ 865              		.loc 1 99 2 view .LVU183
+  99:BSP/MPU6050/mpu6050.c **** 	if(res==MPU_ADDR)//ID
+ 866              		.loc 1 99 6 is_stmt 0 view .LVU184
+ 867 004e 7520     		movs	r0, #117
+ 868 0050 FFF7FEFF 		bl	MPU_Read_Byte
+ 869              	.LVL84:
+ 100:BSP/MPU6050/mpu6050.c **** 	{
+ 870              		.loc 1 100 2 is_stmt 1 view .LVU185
+ 100:BSP/MPU6050/mpu6050.c **** 	{
+ 871              		.loc 1 100 4 is_stmt 0 view .LVU186
+ 872 0054 6828     		cmp	r0, #104
+ 873 0056 01D0     		beq	.L61
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 24
+
+
+ 105:BSP/MPU6050/mpu6050.c **** 	
+ 874              		.loc 1 105 16 view .LVU187
+ 875 0058 0120     		movs	r0, #1
+ 876              	.LVL85:
+ 877              	.L58:
+ 112:BSP/MPU6050/mpu6050.c **** 
+ 878              		.loc 1 112 1 view .LVU188
+ 879 005a 08BD     		pop	{r3, pc}
+ 880              	.LVL86:
+ 881              	.L61:
+ 102:BSP/MPU6050/mpu6050.c **** 		MPU_Write_Byte(MPU_PWR_MGMT2_REG,0X87);	//enable accelerometer,disanable gyroscope,set the wake u
+ 882              		.loc 1 102 3 is_stmt 1 view .LVU189
+ 883 005c 2821     		movs	r1, #40
+ 884 005e 6B20     		movs	r0, #107
+ 885              	.LVL87:
+ 102:BSP/MPU6050/mpu6050.c **** 		MPU_Write_Byte(MPU_PWR_MGMT2_REG,0X87);	//enable accelerometer,disanable gyroscope,set the wake u
+ 886              		.loc 1 102 3 is_stmt 0 view .LVU190
+ 887 0060 FFF7FEFF 		bl	MPU_Write_Byte
+ 888              	.LVL88:
+ 103:BSP/MPU6050/mpu6050.c **** 		MPU_Set_Rate(50);												//采样率50Hz
+ 889              		.loc 1 103 3 is_stmt 1 view .LVU191
+ 890 0064 8721     		movs	r1, #135
+ 891 0066 6C20     		movs	r0, #108
+ 892 0068 FFF7FEFF 		bl	MPU_Write_Byte
+ 893              	.LVL89:
+ 104:BSP/MPU6050/mpu6050.c ****  	}else return 1;
+ 894              		.loc 1 104 3 view .LVU192
+ 895 006c 3220     		movs	r0, #50
+ 896 006e FFF7FEFF 		bl	MPU_Set_Rate
+ 897              	.LVL90:
+ 107:BSP/MPU6050/mpu6050.c **** 	MPU_INT_Pin_Init();
+ 898              		.loc 1 107 2 view .LVU193
+ 899 0072 FFF7FEFF 		bl	MPU_Motion_Init
+ 900              	.LVL91:
+ 108:BSP/MPU6050/mpu6050.c **** 	
+ 901              		.loc 1 108 2 view .LVU194
+ 902 0076 FFF7FEFF 		bl	MPU_INT_Pin_Init
+ 903              	.LVL92:
+ 111:BSP/MPU6050/mpu6050.c **** }
+ 904              		.loc 1 111 2 view .LVU195
+ 111:BSP/MPU6050/mpu6050.c **** }
+ 905              		.loc 1 111 9 is_stmt 0 view .LVU196
+ 906 007a 0020     		movs	r0, #0
+ 907 007c EDE7     		b	.L58
+ 908              		.cfi_endproc
+ 909              	.LFE219:
+ 911              		.section	.text.MPU_Read_Status,"ax",%progbits
+ 912              		.align	1
+ 913              		.global	MPU_Read_Status
+ 914              		.syntax unified
+ 915              		.thumb
+ 916              		.thumb_func
+ 918              	MPU_Read_Status:
+ 919              	.LFB222:
+ 126:BSP/MPU6050/mpu6050.c **** 	return MPU_Read_Byte(MPU_INT_STA_REG);
+ 920              		.loc 1 126 1 is_stmt 1 view -0
+ 921              		.cfi_startproc
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 25
+
+
+ 922              		@ args = 0, pretend = 0, frame = 0
+ 923              		@ frame_needed = 0, uses_anonymous_args = 0
+ 924 0000 08B5     		push	{r3, lr}
+ 925              	.LCFI17:
+ 926              		.cfi_def_cfa_offset 8
+ 927              		.cfi_offset 3, -8
+ 928              		.cfi_offset 14, -4
+ 127:BSP/MPU6050/mpu6050.c **** }
+ 929              		.loc 1 127 2 view .LVU198
+ 127:BSP/MPU6050/mpu6050.c **** }
+ 930              		.loc 1 127 9 is_stmt 0 view .LVU199
+ 931 0002 3A20     		movs	r0, #58
+ 932 0004 FFF7FEFF 		bl	MPU_Read_Byte
+ 933              	.LVL93:
+ 128:BSP/MPU6050/mpu6050.c **** 
+ 934              		.loc 1 128 1 view .LVU200
+ 935 0008 08BD     		pop	{r3, pc}
+ 936              		.cfi_endproc
+ 937              	.LFE222:
+ 939              		.section	.text.MPU_Read_Len,"ax",%progbits
+ 940              		.align	1
+ 941              		.global	MPU_Read_Len
+ 942              		.syntax unified
+ 943              		.thumb
+ 944              		.thumb_func
+ 946              	MPU_Read_Len:
+ 947              	.LVL94:
+ 948              	.LFB233:
+ 362:BSP/MPU6050/mpu6050.c **** 
+ 363:BSP/MPU6050/mpu6050.c **** 
+ 364:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 365:BSP/MPU6050/mpu6050.c **** /*
+ 366:BSP/MPU6050/mpu6050.c ****     @brief  IIC连续读
+ 367:BSP/MPU6050/mpu6050.c **** 
+ 368:BSP/MPU6050/mpu6050.c ****     @param  addr:器件地址
+ 369:BSP/MPU6050/mpu6050.c ****     @param  reg:寄存器地址
+ 370:BSP/MPU6050/mpu6050.c **** 	@param  len:写入长度
+ 371:BSP/MPU6050/mpu6050.c **** 	@param  buf:数据区
+ 372:BSP/MPU6050/mpu6050.c **** 
+ 373:BSP/MPU6050/mpu6050.c ****     @return 0 if success
+ 374:BSP/MPU6050/mpu6050.c **** */
+ 375:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 376:BSP/MPU6050/mpu6050.c **** u8 MPU_Read_Len(u8 addr,u8 reg,u8 len,u8 *buf)
+ 377:BSP/MPU6050/mpu6050.c **** { 
+ 949              		.loc 1 377 1 is_stmt 1 view -0
+ 950              		.cfi_startproc
+ 951              		@ args = 0, pretend = 0, frame = 0
+ 952              		@ frame_needed = 0, uses_anonymous_args = 0
+ 953              		.loc 1 377 1 is_stmt 0 view .LVU202
+ 954 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 955              	.LCFI18:
+ 956              		.cfi_def_cfa_offset 24
+ 957              		.cfi_offset 4, -24
+ 958              		.cfi_offset 5, -20
+ 959              		.cfi_offset 6, -16
+ 960              		.cfi_offset 7, -12
+ 961              		.cfi_offset 8, -8
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 26
+
+
+ 962              		.cfi_offset 14, -4
+ 963 0004 0546     		mov	r5, r0
+ 964 0006 8846     		mov	r8, r1
+ 965 0008 1446     		mov	r4, r2
+ 966 000a 1E46     		mov	r6, r3
+ 378:BSP/MPU6050/mpu6050.c ****  	IICStart(&MPU_bus); 
+ 967              		.loc 1 378 3 is_stmt 1 view .LVU203
+ 968 000c 224F     		ldr	r7, .L75
+ 969 000e 3846     		mov	r0, r7
+ 970              	.LVL95:
+ 971              		.loc 1 378 3 is_stmt 0 view .LVU204
+ 972 0010 FFF7FEFF 		bl	IICStart
+ 973              	.LVL96:
+ 379:BSP/MPU6050/mpu6050.c **** 	IICSendByte(&MPU_bus,(addr<<1)|0);
+ 974              		.loc 1 379 2 is_stmt 1 view .LVU205
+ 975 0014 6900     		lsls	r1, r5, #1
+ 976 0016 01F0FE01 		and	r1, r1, #254
+ 977 001a 3846     		mov	r0, r7
+ 978 001c FFF7FEFF 		bl	IICSendByte
+ 979              	.LVL97:
+ 380:BSP/MPU6050/mpu6050.c **** 	if(IICWaitAck(&MPU_bus))	
+ 980              		.loc 1 380 2 view .LVU206
+ 981              		.loc 1 380 5 is_stmt 0 view .LVU207
+ 982 0020 3846     		mov	r0, r7
+ 983 0022 FFF7FEFF 		bl	IICWaitAck
+ 984              	.LVL98:
+ 985              		.loc 1 380 4 discriminator 1 view .LVU208
+ 986 0026 A8B9     		cbnz	r0, .L72
+ 381:BSP/MPU6050/mpu6050.c **** 	{
+ 382:BSP/MPU6050/mpu6050.c **** 		IICStop(&MPU_bus);		 
+ 383:BSP/MPU6050/mpu6050.c **** 		return 1;		
+ 384:BSP/MPU6050/mpu6050.c **** 	}
+ 385:BSP/MPU6050/mpu6050.c ****     IICSendByte(&MPU_bus,reg);	
+ 987              		.loc 1 385 5 is_stmt 1 view .LVU209
+ 988 0028 1B4F     		ldr	r7, .L75
+ 989 002a 4146     		mov	r1, r8
+ 990 002c 3846     		mov	r0, r7
+ 991 002e FFF7FEFF 		bl	IICSendByte
+ 992              	.LVL99:
+ 386:BSP/MPU6050/mpu6050.c ****     IICWaitAck(&MPU_bus);		
+ 993              		.loc 1 386 5 view .LVU210
+ 994 0032 3846     		mov	r0, r7
+ 995 0034 FFF7FEFF 		bl	IICWaitAck
+ 996              	.LVL100:
+ 387:BSP/MPU6050/mpu6050.c ****     IICStart(&MPU_bus);
+ 997              		.loc 1 387 5 view .LVU211
+ 998 0038 3846     		mov	r0, r7
+ 999 003a FFF7FEFF 		bl	IICStart
+ 1000              	.LVL101:
+ 388:BSP/MPU6050/mpu6050.c **** 		IICSendByte(&MPU_bus,(addr<<1)|1);
+ 1001              		.loc 1 388 3 view .LVU212
+ 1002              		.loc 1 388 33 is_stmt 0 view .LVU213
+ 1003 003e 6900     		lsls	r1, r5, #1
+ 1004 0040 41F00101 		orr	r1, r1, #1
+ 1005              		.loc 1 388 3 view .LVU214
+ 1006 0044 C9B2     		uxtb	r1, r1
+ 1007 0046 3846     		mov	r0, r7
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 27
+
+
+ 1008 0048 FFF7FEFF 		bl	IICSendByte
+ 1009              	.LVL102:
+ 389:BSP/MPU6050/mpu6050.c ****     IICWaitAck(&MPU_bus);		
+ 1010              		.loc 1 389 5 is_stmt 1 view .LVU215
+ 1011 004c 3846     		mov	r0, r7
+ 1012 004e FFF7FEFF 		bl	IICWaitAck
+ 1013              	.LVL103:
+ 390:BSP/MPU6050/mpu6050.c **** 		while(len)
+ 1014              		.loc 1 390 3 view .LVU216
+ 1015              		.loc 1 390 8 is_stmt 0 view .LVU217
+ 1016 0052 0FE0     		b	.L67
+ 1017              	.L72:
+ 382:BSP/MPU6050/mpu6050.c **** 		return 1;		
+ 1018              		.loc 1 382 3 is_stmt 1 view .LVU218
+ 1019 0054 3846     		mov	r0, r7
+ 1020 0056 FFF7FEFF 		bl	IICStop
+ 1021              	.LVL104:
+ 383:BSP/MPU6050/mpu6050.c **** 	}
+ 1022              		.loc 1 383 3 view .LVU219
+ 383:BSP/MPU6050/mpu6050.c **** 	}
+ 1023              		.loc 1 383 10 is_stmt 0 view .LVU220
+ 1024 005a 0120     		movs	r0, #1
+ 1025 005c 1AE0     		b	.L66
+ 1026              	.LVL105:
+ 1027              	.L74:
+ 391:BSP/MPU6050/mpu6050.c **** 		{
+ 392:BSP/MPU6050/mpu6050.c **** 			if(len==1)
+ 393:BSP/MPU6050/mpu6050.c **** 			{
+ 394:BSP/MPU6050/mpu6050.c **** 				*buf=IICReceiveByte(&MPU_bus);
+ 1028              		.loc 1 394 5 is_stmt 1 view .LVU221
+ 1029              		.loc 1 394 10 is_stmt 0 view .LVU222
+ 1030 005e 0E4D     		ldr	r5, .L75
+ 1031 0060 2846     		mov	r0, r5
+ 1032 0062 FFF7FEFF 		bl	IICReceiveByte
+ 1033              	.LVL106:
+ 1034              		.loc 1 394 9 discriminator 1 view .LVU223
+ 1035 0066 3070     		strb	r0, [r6]
+ 395:BSP/MPU6050/mpu6050.c **** 				IICSendNotAck(&MPU_bus);
+ 1036              		.loc 1 395 5 is_stmt 1 view .LVU224
+ 1037 0068 2846     		mov	r0, r5
+ 1038 006a FFF7FEFF 		bl	IICSendNotAck
+ 1039              	.LVL107:
+ 1040              	.L69:
+ 396:BSP/MPU6050/mpu6050.c **** 			}
+ 397:BSP/MPU6050/mpu6050.c **** 			else 
+ 398:BSP/MPU6050/mpu6050.c **** 			{
+ 399:BSP/MPU6050/mpu6050.c **** 				*buf=IICReceiveByte(&MPU_bus);	
+ 400:BSP/MPU6050/mpu6050.c **** 				IICSendAck(&MPU_bus);
+ 401:BSP/MPU6050/mpu6050.c **** 			}				
+ 402:BSP/MPU6050/mpu6050.c **** 			len--;
+ 1041              		.loc 1 402 4 view .LVU225
+ 1042              		.loc 1 402 7 is_stmt 0 view .LVU226
+ 1043 006e 013C     		subs	r4, r4, #1
+ 1044              	.LVL108:
+ 1045              		.loc 1 402 7 view .LVU227
+ 1046 0070 E4B2     		uxtb	r4, r4
+ 1047              	.LVL109:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 28
+
+
+ 403:BSP/MPU6050/mpu6050.c **** 			buf++; 
+ 1048              		.loc 1 403 4 is_stmt 1 view .LVU228
+ 1049              		.loc 1 403 7 is_stmt 0 view .LVU229
+ 1050 0072 0136     		adds	r6, r6, #1
+ 1051              	.LVL110:
+ 1052              	.L67:
+ 390:BSP/MPU6050/mpu6050.c **** 		{
+ 1053              		.loc 1 390 9 is_stmt 1 view .LVU230
+ 1054 0074 54B1     		cbz	r4, .L73
+ 392:BSP/MPU6050/mpu6050.c **** 			{
+ 1055              		.loc 1 392 4 view .LVU231
+ 392:BSP/MPU6050/mpu6050.c **** 			{
+ 1056              		.loc 1 392 6 is_stmt 0 view .LVU232
+ 1057 0076 012C     		cmp	r4, #1
+ 1058 0078 F1D0     		beq	.L74
+ 399:BSP/MPU6050/mpu6050.c **** 				IICSendAck(&MPU_bus);
+ 1059              		.loc 1 399 5 is_stmt 1 view .LVU233
+ 399:BSP/MPU6050/mpu6050.c **** 				IICSendAck(&MPU_bus);
+ 1060              		.loc 1 399 10 is_stmt 0 view .LVU234
+ 1061 007a 074D     		ldr	r5, .L75
+ 1062 007c 2846     		mov	r0, r5
+ 1063 007e FFF7FEFF 		bl	IICReceiveByte
+ 1064              	.LVL111:
+ 399:BSP/MPU6050/mpu6050.c **** 				IICSendAck(&MPU_bus);
+ 1065              		.loc 1 399 9 discriminator 1 view .LVU235
+ 1066 0082 3070     		strb	r0, [r6]
+ 400:BSP/MPU6050/mpu6050.c **** 			}				
+ 1067              		.loc 1 400 5 is_stmt 1 view .LVU236
+ 1068 0084 2846     		mov	r0, r5
+ 1069 0086 FFF7FEFF 		bl	IICSendAck
+ 1070              	.LVL112:
+ 1071 008a F0E7     		b	.L69
+ 1072              	.L73:
+ 404:BSP/MPU6050/mpu6050.c **** 		}    
+ 405:BSP/MPU6050/mpu6050.c ****     IICStop(&MPU_bus);
+ 1073              		.loc 1 405 5 view .LVU237
+ 1074 008c 0248     		ldr	r0, .L75
+ 1075 008e FFF7FEFF 		bl	IICStop
+ 1076              	.LVL113:
+ 406:BSP/MPU6050/mpu6050.c **** 		return 0;	
+ 1077              		.loc 1 406 3 view .LVU238
+ 1078              		.loc 1 406 10 is_stmt 0 view .LVU239
+ 1079 0092 2046     		mov	r0, r4
+ 1080              	.LVL114:
+ 1081              	.L66:
+ 407:BSP/MPU6050/mpu6050.c **** }
+ 1082              		.loc 1 407 1 view .LVU240
+ 1083 0094 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1084              	.LVL115:
+ 1085              	.L76:
+ 1086              		.loc 1 407 1 view .LVU241
+ 1087              		.align	2
+ 1088              	.L75:
+ 1089 0098 00000000 		.word	MPU_bus
+ 1090              		.cfi_endproc
+ 1091              	.LFE233:
+ 1093              		.global	__aeabi_i2d
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 29
+
+
+ 1094              		.global	__aeabi_ddiv
+ 1095              		.global	__aeabi_dadd
+ 1096              		.global	__aeabi_d2f
+ 1097              		.section	.text.MPU_Get_Temperature,"ax",%progbits
+ 1098              		.align	1
+ 1099              		.global	MPU_Get_Temperature
+ 1100              		.syntax unified
+ 1101              		.thumb
+ 1102              		.thumb_func
+ 1104              	MPU_Get_Temperature:
+ 1105              	.LFB227:
+ 212:BSP/MPU6050/mpu6050.c ****     u8 buf[2]; 
+ 1106              		.loc 1 212 1 is_stmt 1 view -0
+ 1107              		.cfi_startproc
+ 1108              		@ args = 0, pretend = 0, frame = 8
+ 1109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1110 0000 00B5     		push	{lr}
+ 1111              	.LCFI19:
+ 1112              		.cfi_def_cfa_offset 4
+ 1113              		.cfi_offset 14, -4
+ 1114 0002 83B0     		sub	sp, sp, #12
+ 1115              	.LCFI20:
+ 1116              		.cfi_def_cfa_offset 16
+ 213:BSP/MPU6050/mpu6050.c ****     short raw;
+ 1117              		.loc 1 213 5 view .LVU243
+ 214:BSP/MPU6050/mpu6050.c **** 		float temp;
+ 1118              		.loc 1 214 5 view .LVU244
+ 215:BSP/MPU6050/mpu6050.c **** 		MPU_Read_Len(MPU_ADDR,MPU_TEMP_OUTH_REG,2,buf); 
+ 1119              		.loc 1 215 3 view .LVU245
+ 216:BSP/MPU6050/mpu6050.c ****     raw=((u16)buf[0]<<8)|buf[1];  
+ 1120              		.loc 1 216 3 view .LVU246
+ 1121 0004 01AB     		add	r3, sp, #4
+ 1122 0006 0222     		movs	r2, #2
+ 1123 0008 4121     		movs	r1, #65
+ 1124 000a 6820     		movs	r0, #104
+ 1125 000c FFF7FEFF 		bl	MPU_Read_Len
+ 1126              	.LVL116:
+ 217:BSP/MPU6050/mpu6050.c ****     temp=36.53+((double)raw)/340;  
+ 1127              		.loc 1 217 5 view .LVU247
+ 217:BSP/MPU6050/mpu6050.c ****     temp=36.53+((double)raw)/340;  
+ 1128              		.loc 1 217 18 is_stmt 0 view .LVU248
+ 1129 0010 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 217:BSP/MPU6050/mpu6050.c ****     temp=36.53+((double)raw)/340;  
+ 1130              		.loc 1 217 25 view .LVU249
+ 1131 0014 1B02     		lsls	r3, r3, #8
+ 1132 0016 1BB2     		sxth	r3, r3
+ 217:BSP/MPU6050/mpu6050.c ****     temp=36.53+((double)raw)/340;  
+ 1133              		.loc 1 217 29 view .LVU250
+ 1134 0018 9DF80500 		ldrb	r0, [sp, #5]	@ zero_extendqisi2
+ 1135              	.LVL117:
+ 218:BSP/MPU6050/mpu6050.c ****     return temp*100;;
+ 1136              		.loc 1 218 5 is_stmt 1 view .LVU251
+ 218:BSP/MPU6050/mpu6050.c ****     return temp*100;;
+ 1137              		.loc 1 218 17 is_stmt 0 view .LVU252
+ 1138 001c 1843     		orrs	r0, r0, r3
+ 1139              	.LVL118:
+ 218:BSP/MPU6050/mpu6050.c ****     return temp*100;;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 30
+
+
+ 1140              		.loc 1 218 17 view .LVU253
+ 1141 001e FFF7FEFF 		bl	__aeabi_i2d
+ 1142              	.LVL119:
+ 218:BSP/MPU6050/mpu6050.c ****     return temp*100;;
+ 1143              		.loc 1 218 29 view .LVU254
+ 1144 0022 0022     		movs	r2, #0
+ 1145 0024 0E4B     		ldr	r3, .L79+8
+ 1146 0026 FFF7FEFF 		bl	__aeabi_ddiv
+ 1147              	.LVL120:
+ 218:BSP/MPU6050/mpu6050.c ****     return temp*100;;
+ 1148              		.loc 1 218 15 view .LVU255
+ 1149 002a 0BA3     		adr	r3, .L79
+ 1150 002c D3E90023 		ldrd	r2, [r3]
+ 1151 0030 FFF7FEFF 		bl	__aeabi_dadd
+ 1152              	.LVL121:
+ 218:BSP/MPU6050/mpu6050.c ****     return temp*100;;
+ 1153              		.loc 1 218 9 view .LVU256
+ 1154 0034 FFF7FEFF 		bl	__aeabi_d2f
+ 1155              	.LVL122:
+ 1156 0038 07EE900A 		vmov	s15, r0
+ 1157              	.LVL123:
+ 219:BSP/MPU6050/mpu6050.c **** }
+ 1158              		.loc 1 219 5 is_stmt 1 view .LVU257
+ 219:BSP/MPU6050/mpu6050.c **** }
+ 1159              		.loc 1 219 21 discriminator 1 view .LVU258
+ 219:BSP/MPU6050/mpu6050.c **** }
+ 1160              		.loc 1 219 16 is_stmt 0 view .LVU259
+ 1161 003c 9FED097A 		vldr.32	s14, .L79+12
+ 1162 0040 67EE877A 		vmul.f32	s15, s15, s14
+ 1163 0044 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 220:BSP/MPU6050/mpu6050.c **** 
+ 1164              		.loc 1 220 1 view .LVU260
+ 1165 0048 17EE903A 		vmov	r3, s15	@ int
+ 1166 004c 18B2     		sxth	r0, r3
+ 1167              	.LVL124:
+ 220:BSP/MPU6050/mpu6050.c **** 
+ 1168              		.loc 1 220 1 view .LVU261
+ 1169 004e 03B0     		add	sp, sp, #12
+ 1170              	.LCFI21:
+ 1171              		.cfi_def_cfa_offset 4
+ 1172              		@ sp needed
+ 1173 0050 5DF804FB 		ldr	pc, [sp], #4
+ 1174              	.L80:
+ 1175 0054 AFF30080 		.align	3
+ 1176              	.L79:
+ 1177 0058 A4703D0A 		.word	171798692
+ 1178 005c D7434240 		.word	1078084567
+ 1179 0060 00407540 		.word	1081425920
+ 1180 0064 0000C842 		.word	1120403456
+ 1181              		.cfi_endproc
+ 1182              	.LFE227:
+ 1184              		.section	.text.MPU_Get_Gyroscope,"ax",%progbits
+ 1185              		.align	1
+ 1186              		.global	MPU_Get_Gyroscope
+ 1187              		.syntax unified
+ 1188              		.thumb
+ 1189              		.thumb_func
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 31
+
+
+ 1191              	MPU_Get_Gyroscope:
+ 1192              	.LVL125:
+ 1193              	.LFB228:
+ 233:BSP/MPU6050/mpu6050.c ****     u8 buf[6],res;  
+ 1194              		.loc 1 233 1 is_stmt 1 view -0
+ 1195              		.cfi_startproc
+ 1196              		@ args = 0, pretend = 0, frame = 8
+ 1197              		@ frame_needed = 0, uses_anonymous_args = 0
+ 233:BSP/MPU6050/mpu6050.c ****     u8 buf[6],res;  
+ 1198              		.loc 1 233 1 is_stmt 0 view .LVU263
+ 1199 0000 70B5     		push	{r4, r5, r6, lr}
+ 1200              	.LCFI22:
+ 1201              		.cfi_def_cfa_offset 16
+ 1202              		.cfi_offset 4, -16
+ 1203              		.cfi_offset 5, -12
+ 1204              		.cfi_offset 6, -8
+ 1205              		.cfi_offset 14, -4
+ 1206 0002 82B0     		sub	sp, sp, #8
+ 1207              	.LCFI23:
+ 1208              		.cfi_def_cfa_offset 24
+ 1209 0004 0646     		mov	r6, r0
+ 1210 0006 0D46     		mov	r5, r1
+ 1211 0008 1446     		mov	r4, r2
+ 234:BSP/MPU6050/mpu6050.c **** 		res=MPU_Read_Len(MPU_ADDR,MPU_GYRO_XOUTH_REG,6,buf);
+ 1212              		.loc 1 234 5 is_stmt 1 view .LVU264
+ 235:BSP/MPU6050/mpu6050.c **** 		if(res==0)
+ 1213              		.loc 1 235 3 view .LVU265
+ 235:BSP/MPU6050/mpu6050.c **** 		if(res==0)
+ 1214              		.loc 1 235 7 is_stmt 0 view .LVU266
+ 1215 000a 6B46     		mov	r3, sp
+ 1216 000c 0622     		movs	r2, #6
+ 1217              	.LVL126:
+ 235:BSP/MPU6050/mpu6050.c **** 		if(res==0)
+ 1218              		.loc 1 235 7 view .LVU267
+ 1219 000e 4321     		movs	r1, #67
+ 1220              	.LVL127:
+ 235:BSP/MPU6050/mpu6050.c **** 		if(res==0)
+ 1221              		.loc 1 235 7 view .LVU268
+ 1222 0010 6820     		movs	r0, #104
+ 1223              	.LVL128:
+ 235:BSP/MPU6050/mpu6050.c **** 		if(res==0)
+ 1224              		.loc 1 235 7 view .LVU269
+ 1225 0012 FFF7FEFF 		bl	MPU_Read_Len
+ 1226              	.LVL129:
+ 236:BSP/MPU6050/mpu6050.c **** 		{
+ 1227              		.loc 1 236 3 is_stmt 1 view .LVU270
+ 236:BSP/MPU6050/mpu6050.c **** 		{
+ 1228              		.loc 1 236 5 is_stmt 0 view .LVU271
+ 1229 0016 A0B9     		cbnz	r0, .L82
+ 238:BSP/MPU6050/mpu6050.c **** 			*gy=((u16)buf[2]<<8)|buf[3];  
+ 1230              		.loc 1 238 4 is_stmt 1 view .LVU272
+ 238:BSP/MPU6050/mpu6050.c **** 			*gy=((u16)buf[2]<<8)|buf[3];  
+ 1231              		.loc 1 238 17 is_stmt 0 view .LVU273
+ 1232 0018 9DF80020 		ldrb	r2, [sp]	@ zero_extendqisi2
+ 238:BSP/MPU6050/mpu6050.c **** 			*gy=((u16)buf[2]<<8)|buf[3];  
+ 1233              		.loc 1 238 28 view .LVU274
+ 1234 001c 9DF80130 		ldrb	r3, [sp, #1]	@ zero_extendqisi2
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 32
+
+
+ 238:BSP/MPU6050/mpu6050.c **** 			*gy=((u16)buf[2]<<8)|buf[3];  
+ 1235              		.loc 1 238 24 view .LVU275
+ 1236 0020 43EA0223 		orr	r3, r3, r2, lsl #8
+ 238:BSP/MPU6050/mpu6050.c **** 			*gy=((u16)buf[2]<<8)|buf[3];  
+ 1237              		.loc 1 238 7 view .LVU276
+ 1238 0024 3380     		strh	r3, [r6]	@ movhi
+ 239:BSP/MPU6050/mpu6050.c **** 			*gz=((u16)buf[4]<<8)|buf[5];
+ 1239              		.loc 1 239 4 is_stmt 1 view .LVU277
+ 239:BSP/MPU6050/mpu6050.c **** 			*gz=((u16)buf[4]<<8)|buf[5];
+ 1240              		.loc 1 239 17 is_stmt 0 view .LVU278
+ 1241 0026 9DF80220 		ldrb	r2, [sp, #2]	@ zero_extendqisi2
+ 239:BSP/MPU6050/mpu6050.c **** 			*gz=((u16)buf[4]<<8)|buf[5];
+ 1242              		.loc 1 239 28 view .LVU279
+ 1243 002a 9DF80330 		ldrb	r3, [sp, #3]	@ zero_extendqisi2
+ 239:BSP/MPU6050/mpu6050.c **** 			*gz=((u16)buf[4]<<8)|buf[5];
+ 1244              		.loc 1 239 24 view .LVU280
+ 1245 002e 43EA0223 		orr	r3, r3, r2, lsl #8
+ 239:BSP/MPU6050/mpu6050.c **** 			*gz=((u16)buf[4]<<8)|buf[5];
+ 1246              		.loc 1 239 7 view .LVU281
+ 1247 0032 2B80     		strh	r3, [r5]	@ movhi
+ 240:BSP/MPU6050/mpu6050.c **** 		} 	
+ 1248              		.loc 1 240 4 is_stmt 1 view .LVU282
+ 240:BSP/MPU6050/mpu6050.c **** 		} 	
+ 1249              		.loc 1 240 17 is_stmt 0 view .LVU283
+ 1250 0034 9DF80420 		ldrb	r2, [sp, #4]	@ zero_extendqisi2
+ 240:BSP/MPU6050/mpu6050.c **** 		} 	
+ 1251              		.loc 1 240 28 view .LVU284
+ 1252 0038 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 240:BSP/MPU6050/mpu6050.c **** 		} 	
+ 1253              		.loc 1 240 24 view .LVU285
+ 1254 003c 43EA0223 		orr	r3, r3, r2, lsl #8
+ 240:BSP/MPU6050/mpu6050.c **** 		} 	
+ 1255              		.loc 1 240 7 view .LVU286
+ 1256 0040 2380     		strh	r3, [r4]	@ movhi
+ 1257              	.L82:
+ 242:BSP/MPU6050/mpu6050.c **** }
+ 1258              		.loc 1 242 5 is_stmt 1 view .LVU287
+ 242:BSP/MPU6050/mpu6050.c **** }
+ 1259              		.loc 1 242 16 discriminator 1 view .LVU288
+ 243:BSP/MPU6050/mpu6050.c **** 
+ 1260              		.loc 1 243 1 is_stmt 0 view .LVU289
+ 1261 0042 02B0     		add	sp, sp, #8
+ 1262              	.LCFI24:
+ 1263              		.cfi_def_cfa_offset 16
+ 1264              	.LVL130:
+ 243:BSP/MPU6050/mpu6050.c **** 
+ 1265              		.loc 1 243 1 view .LVU290
+ 1266              		@ sp needed
+ 1267 0044 70BD     		pop	{r4, r5, r6, pc}
+ 243:BSP/MPU6050/mpu6050.c **** 
+ 1268              		.loc 1 243 1 view .LVU291
+ 1269              		.cfi_endproc
+ 1270              	.LFE228:
+ 1272              		.section	.text.MPU_Get_Accelerometer,"ax",%progbits
+ 1273              		.align	1
+ 1274              		.global	MPU_Get_Accelerometer
+ 1275              		.syntax unified
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 33
+
+
+ 1276              		.thumb
+ 1277              		.thumb_func
+ 1279              	MPU_Get_Accelerometer:
+ 1280              	.LVL131:
+ 1281              	.LFB229:
+ 256:BSP/MPU6050/mpu6050.c ****     u8 buf[6],res;  
+ 1282              		.loc 1 256 1 is_stmt 1 view -0
+ 1283              		.cfi_startproc
+ 1284              		@ args = 0, pretend = 0, frame = 8
+ 1285              		@ frame_needed = 0, uses_anonymous_args = 0
+ 256:BSP/MPU6050/mpu6050.c ****     u8 buf[6],res;  
+ 1286              		.loc 1 256 1 is_stmt 0 view .LVU293
+ 1287 0000 70B5     		push	{r4, r5, r6, lr}
+ 1288              	.LCFI25:
+ 1289              		.cfi_def_cfa_offset 16
+ 1290              		.cfi_offset 4, -16
+ 1291              		.cfi_offset 5, -12
+ 1292              		.cfi_offset 6, -8
+ 1293              		.cfi_offset 14, -4
+ 1294 0002 82B0     		sub	sp, sp, #8
+ 1295              	.LCFI26:
+ 1296              		.cfi_def_cfa_offset 24
+ 1297 0004 0646     		mov	r6, r0
+ 1298 0006 0D46     		mov	r5, r1
+ 1299 0008 1446     		mov	r4, r2
+ 257:BSP/MPU6050/mpu6050.c **** 		res=MPU_Read_Len(MPU_ADDR,MPU_ACCEL_XOUTH_REG,6,buf);
+ 1300              		.loc 1 257 5 is_stmt 1 view .LVU294
+ 258:BSP/MPU6050/mpu6050.c **** 		if(res==0)
+ 1301              		.loc 1 258 3 view .LVU295
+ 258:BSP/MPU6050/mpu6050.c **** 		if(res==0)
+ 1302              		.loc 1 258 7 is_stmt 0 view .LVU296
+ 1303 000a 6B46     		mov	r3, sp
+ 1304 000c 0622     		movs	r2, #6
+ 1305              	.LVL132:
+ 258:BSP/MPU6050/mpu6050.c **** 		if(res==0)
+ 1306              		.loc 1 258 7 view .LVU297
+ 1307 000e 3B21     		movs	r1, #59
+ 1308              	.LVL133:
+ 258:BSP/MPU6050/mpu6050.c **** 		if(res==0)
+ 1309              		.loc 1 258 7 view .LVU298
+ 1310 0010 6820     		movs	r0, #104
+ 1311              	.LVL134:
+ 258:BSP/MPU6050/mpu6050.c **** 		if(res==0)
+ 1312              		.loc 1 258 7 view .LVU299
+ 1313 0012 FFF7FEFF 		bl	MPU_Read_Len
+ 1314              	.LVL135:
+ 259:BSP/MPU6050/mpu6050.c **** 		{
+ 1315              		.loc 1 259 3 is_stmt 1 view .LVU300
+ 259:BSP/MPU6050/mpu6050.c **** 		{
+ 1316              		.loc 1 259 5 is_stmt 0 view .LVU301
+ 1317 0016 A0B9     		cbnz	r0, .L85
+ 261:BSP/MPU6050/mpu6050.c **** 			*ay=((u16)buf[2]<<8)|buf[3];  
+ 1318              		.loc 1 261 4 is_stmt 1 view .LVU302
+ 261:BSP/MPU6050/mpu6050.c **** 			*ay=((u16)buf[2]<<8)|buf[3];  
+ 1319              		.loc 1 261 17 is_stmt 0 view .LVU303
+ 1320 0018 9DF80020 		ldrb	r2, [sp]	@ zero_extendqisi2
+ 261:BSP/MPU6050/mpu6050.c **** 			*ay=((u16)buf[2]<<8)|buf[3];  
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 34
+
+
+ 1321              		.loc 1 261 28 view .LVU304
+ 1322 001c 9DF80130 		ldrb	r3, [sp, #1]	@ zero_extendqisi2
+ 261:BSP/MPU6050/mpu6050.c **** 			*ay=((u16)buf[2]<<8)|buf[3];  
+ 1323              		.loc 1 261 24 view .LVU305
+ 1324 0020 43EA0223 		orr	r3, r3, r2, lsl #8
+ 261:BSP/MPU6050/mpu6050.c **** 			*ay=((u16)buf[2]<<8)|buf[3];  
+ 1325              		.loc 1 261 7 view .LVU306
+ 1326 0024 3380     		strh	r3, [r6]	@ movhi
+ 262:BSP/MPU6050/mpu6050.c **** 			*az=((u16)buf[4]<<8)|buf[5];
+ 1327              		.loc 1 262 4 is_stmt 1 view .LVU307
+ 262:BSP/MPU6050/mpu6050.c **** 			*az=((u16)buf[4]<<8)|buf[5];
+ 1328              		.loc 1 262 17 is_stmt 0 view .LVU308
+ 1329 0026 9DF80220 		ldrb	r2, [sp, #2]	@ zero_extendqisi2
+ 262:BSP/MPU6050/mpu6050.c **** 			*az=((u16)buf[4]<<8)|buf[5];
+ 1330              		.loc 1 262 28 view .LVU309
+ 1331 002a 9DF80330 		ldrb	r3, [sp, #3]	@ zero_extendqisi2
+ 262:BSP/MPU6050/mpu6050.c **** 			*az=((u16)buf[4]<<8)|buf[5];
+ 1332              		.loc 1 262 24 view .LVU310
+ 1333 002e 43EA0223 		orr	r3, r3, r2, lsl #8
+ 262:BSP/MPU6050/mpu6050.c **** 			*az=((u16)buf[4]<<8)|buf[5];
+ 1334              		.loc 1 262 7 view .LVU311
+ 1335 0032 2B80     		strh	r3, [r5]	@ movhi
+ 263:BSP/MPU6050/mpu6050.c **** 		} 	
+ 1336              		.loc 1 263 4 is_stmt 1 view .LVU312
+ 263:BSP/MPU6050/mpu6050.c **** 		} 	
+ 1337              		.loc 1 263 17 is_stmt 0 view .LVU313
+ 1338 0034 9DF80420 		ldrb	r2, [sp, #4]	@ zero_extendqisi2
+ 263:BSP/MPU6050/mpu6050.c **** 		} 	
+ 1339              		.loc 1 263 28 view .LVU314
+ 1340 0038 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 263:BSP/MPU6050/mpu6050.c **** 		} 	
+ 1341              		.loc 1 263 24 view .LVU315
+ 1342 003c 43EA0223 		orr	r3, r3, r2, lsl #8
+ 263:BSP/MPU6050/mpu6050.c **** 		} 	
+ 1343              		.loc 1 263 7 view .LVU316
+ 1344 0040 2380     		strh	r3, [r4]	@ movhi
+ 1345              	.L85:
+ 265:BSP/MPU6050/mpu6050.c **** }
+ 1346              		.loc 1 265 5 is_stmt 1 view .LVU317
+ 265:BSP/MPU6050/mpu6050.c **** }
+ 1347              		.loc 1 265 16 discriminator 1 view .LVU318
+ 266:BSP/MPU6050/mpu6050.c **** 
+ 1348              		.loc 1 266 1 is_stmt 0 view .LVU319
+ 1349 0042 02B0     		add	sp, sp, #8
+ 1350              	.LCFI27:
+ 1351              		.cfi_def_cfa_offset 16
+ 1352              	.LVL136:
+ 266:BSP/MPU6050/mpu6050.c **** 
+ 1353              		.loc 1 266 1 view .LVU320
+ 1354              		@ sp needed
+ 1355 0044 70BD     		pop	{r4, r5, r6, pc}
+ 266:BSP/MPU6050/mpu6050.c **** 
+ 1356              		.loc 1 266 1 view .LVU321
+ 1357              		.cfi_endproc
+ 1358              	.LFE229:
+ 1360              		.section	.text.MPU_Write_Multi_Byte,"ax",%progbits
+ 1361              		.align	1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 35
+
+
+ 1362              		.global	MPU_Write_Multi_Byte
+ 1363              		.syntax unified
+ 1364              		.thumb
+ 1365              		.thumb_func
+ 1367              	MPU_Write_Multi_Byte:
+ 1368              	.LVL137:
+ 1369              	.LFB234:
+ 408:BSP/MPU6050/mpu6050.c **** 
+ 409:BSP/MPU6050/mpu6050.c **** uint8_t MPU_Write_Multi_Byte(uint8_t addr,uint8_t length,uint8_t buff[])
+ 410:BSP/MPU6050/mpu6050.c **** {
+ 1370              		.loc 1 410 1 is_stmt 1 view -0
+ 1371              		.cfi_startproc
+ 1372              		@ args = 0, pretend = 0, frame = 0
+ 1373              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1374              		.loc 1 410 1 is_stmt 0 view .LVU323
+ 1375 0000 00B5     		push	{lr}
+ 1376              	.LCFI28:
+ 1377              		.cfi_def_cfa_offset 4
+ 1378              		.cfi_offset 14, -4
+ 1379 0002 83B0     		sub	sp, sp, #12
+ 1380              	.LCFI29:
+ 1381              		.cfi_def_cfa_offset 16
+ 1382 0004 0B46     		mov	r3, r1
+ 411:BSP/MPU6050/mpu6050.c **** 	if(IIC_Write_Multi_Byte(&MPU_bus,MPU_ADDR<<1,addr,length,buff))
+ 1383              		.loc 1 411 2 is_stmt 1 view .LVU324
+ 1384              		.loc 1 411 5 is_stmt 0 view .LVU325
+ 1385 0006 0092     		str	r2, [sp]
+ 1386 0008 0246     		mov	r2, r0
+ 1387              	.LVL138:
+ 1388              		.loc 1 411 5 view .LVU326
+ 1389 000a D021     		movs	r1, #208
+ 1390              	.LVL139:
+ 1391              		.loc 1 411 5 view .LVU327
+ 1392 000c 0448     		ldr	r0, .L92
+ 1393              	.LVL140:
+ 1394              		.loc 1 411 5 view .LVU328
+ 1395 000e FFF7FEFF 		bl	IIC_Write_Multi_Byte
+ 1396              	.LVL141:
+ 1397              		.loc 1 411 4 discriminator 1 view .LVU329
+ 1398 0012 10B9     		cbnz	r0, .L91
+ 1399              	.L88:
+ 412:BSP/MPU6050/mpu6050.c **** 	{
+ 413:BSP/MPU6050/mpu6050.c **** 		return 1;
+ 414:BSP/MPU6050/mpu6050.c **** 	}
+ 415:BSP/MPU6050/mpu6050.c **** 	return 0;
+ 416:BSP/MPU6050/mpu6050.c **** }
+ 1400              		.loc 1 416 1 view .LVU330
+ 1401 0014 03B0     		add	sp, sp, #12
+ 1402              	.LCFI30:
+ 1403              		.cfi_remember_state
+ 1404              		.cfi_def_cfa_offset 4
+ 1405              		@ sp needed
+ 1406 0016 5DF804FB 		ldr	pc, [sp], #4
+ 1407              	.L91:
+ 1408              	.LCFI31:
+ 1409              		.cfi_restore_state
+ 413:BSP/MPU6050/mpu6050.c **** 	}
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 36
+
+
+ 1410              		.loc 1 413 10 view .LVU331
+ 1411 001a 0120     		movs	r0, #1
+ 1412 001c FAE7     		b	.L88
+ 1413              	.L93:
+ 1414 001e 00BF     		.align	2
+ 1415              	.L92:
+ 1416 0020 00000000 		.word	MPU_bus
+ 1417              		.cfi_endproc
+ 1418              	.LFE234:
+ 1420              		.section	.text.MPU_Read_Multi_Byte,"ax",%progbits
+ 1421              		.align	1
+ 1422              		.global	MPU_Read_Multi_Byte
+ 1423              		.syntax unified
+ 1424              		.thumb
+ 1425              		.thumb_func
+ 1427              	MPU_Read_Multi_Byte:
+ 1428              	.LVL142:
+ 1429              	.LFB235:
+ 417:BSP/MPU6050/mpu6050.c **** 
+ 418:BSP/MPU6050/mpu6050.c **** uint8_t MPU_Read_Multi_Byte(uint8_t addr, uint8_t length, uint8_t buff[])
+ 419:BSP/MPU6050/mpu6050.c **** {
+ 1430              		.loc 1 419 1 is_stmt 1 view -0
+ 1431              		.cfi_startproc
+ 1432              		@ args = 0, pretend = 0, frame = 0
+ 1433              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1434              		.loc 1 419 1 is_stmt 0 view .LVU333
+ 1435 0000 00B5     		push	{lr}
+ 1436              	.LCFI32:
+ 1437              		.cfi_def_cfa_offset 4
+ 1438              		.cfi_offset 14, -4
+ 1439 0002 83B0     		sub	sp, sp, #12
+ 1440              	.LCFI33:
+ 1441              		.cfi_def_cfa_offset 16
+ 1442 0004 0B46     		mov	r3, r1
+ 420:BSP/MPU6050/mpu6050.c **** 	if(IIC_Read_Multi_Byte(&MPU_bus, MPU_ADDR<<1, addr, length, buff))
+ 1443              		.loc 1 420 2 is_stmt 1 view .LVU334
+ 1444              		.loc 1 420 5 is_stmt 0 view .LVU335
+ 1445 0006 0092     		str	r2, [sp]
+ 1446 0008 0246     		mov	r2, r0
+ 1447              	.LVL143:
+ 1448              		.loc 1 420 5 view .LVU336
+ 1449 000a D021     		movs	r1, #208
+ 1450              	.LVL144:
+ 1451              		.loc 1 420 5 view .LVU337
+ 1452 000c 0448     		ldr	r0, .L99
+ 1453              	.LVL145:
+ 1454              		.loc 1 420 5 view .LVU338
+ 1455 000e FFF7FEFF 		bl	IIC_Read_Multi_Byte
+ 1456              	.LVL146:
+ 1457              		.loc 1 420 4 discriminator 1 view .LVU339
+ 1458 0012 10B9     		cbnz	r0, .L98
+ 1459              	.L95:
+ 421:BSP/MPU6050/mpu6050.c **** 	{
+ 422:BSP/MPU6050/mpu6050.c **** 		return 1;
+ 423:BSP/MPU6050/mpu6050.c **** 	}
+ 424:BSP/MPU6050/mpu6050.c **** 	return 0;
+ 425:BSP/MPU6050/mpu6050.c **** }
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 37
+
+
+ 1460              		.loc 1 425 1 view .LVU340
+ 1461 0014 03B0     		add	sp, sp, #12
+ 1462              	.LCFI34:
+ 1463              		.cfi_remember_state
+ 1464              		.cfi_def_cfa_offset 4
+ 1465              		@ sp needed
+ 1466 0016 5DF804FB 		ldr	pc, [sp], #4
+ 1467              	.L98:
+ 1468              	.LCFI35:
+ 1469              		.cfi_restore_state
+ 422:BSP/MPU6050/mpu6050.c **** 	}
+ 1470              		.loc 1 422 10 view .LVU341
+ 1471 001a 0120     		movs	r0, #1
+ 1472 001c FAE7     		b	.L95
+ 1473              	.L100:
+ 1474 001e 00BF     		.align	2
+ 1475              	.L99:
+ 1476 0020 00000000 		.word	MPU_bus
+ 1477              		.cfi_endproc
+ 1478              	.LFE235:
+ 1480              		.section	.text.MPU_Get_Angles,"ax",%progbits
+ 1481              		.align	1
+ 1482              		.global	MPU_Get_Angles
+ 1483              		.syntax unified
+ 1484              		.thumb
+ 1485              		.thumb_func
+ 1487              	MPU_Get_Angles:
+ 1488              	.LVL147:
+ 1489              	.LFB236:
+ 426:BSP/MPU6050/mpu6050.c **** 
+ 427:BSP/MPU6050/mpu6050.c **** 
+ 428:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 429:BSP/MPU6050/mpu6050.c **** /*
+ 430:BSP/MPU6050/mpu6050.c ****     @brief  get the roll and pitch
+ 431:BSP/MPU6050/mpu6050.c **** 
+ 432:BSP/MPU6050/mpu6050.c ****     @param  roll:roll(float)
+ 433:BSP/MPU6050/mpu6050.c ****     @param  pitch:pitch(float)
+ 434:BSP/MPU6050/mpu6050.c **** 
+ 435:BSP/MPU6050/mpu6050.c ****     @return NULL
+ 436:BSP/MPU6050/mpu6050.c **** */
+ 437:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 438:BSP/MPU6050/mpu6050.c **** void MPU_Get_Angles(float * roll,float * pitch)
+ 439:BSP/MPU6050/mpu6050.c **** {
+ 1490              		.loc 1 439 1 is_stmt 1 view -0
+ 1491              		.cfi_startproc
+ 1492              		@ args = 0, pretend = 0, frame = 8
+ 1493              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1494              		.loc 1 439 1 is_stmt 0 view .LVU343
+ 1495 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1496              	.LCFI36:
+ 1497              		.cfi_def_cfa_offset 20
+ 1498              		.cfi_offset 4, -20
+ 1499              		.cfi_offset 5, -16
+ 1500              		.cfi_offset 6, -12
+ 1501              		.cfi_offset 7, -8
+ 1502              		.cfi_offset 14, -4
+ 1503 0002 2DED028B 		vpush.64	{d8}
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 38
+
+
+ 1504              	.LCFI37:
+ 1505              		.cfi_def_cfa_offset 28
+ 1506              		.cfi_offset 80, -28
+ 1507              		.cfi_offset 81, -24
+ 1508 0006 83B0     		sub	sp, sp, #12
+ 1509              	.LCFI38:
+ 1510              		.cfi_def_cfa_offset 40
+ 1511 0008 0646     		mov	r6, r0
+ 1512 000a 0F46     		mov	r7, r1
+ 440:BSP/MPU6050/mpu6050.c **** 	short ax,ay,az;
+ 1513              		.loc 1 440 2 is_stmt 1 view .LVU344
+ 441:BSP/MPU6050/mpu6050.c **** 	MPU_Get_Accelerometer(&ax,&ay,&az);
+ 1514              		.loc 1 441 2 view .LVU345
+ 1515 000c 0DF10202 		add	r2, sp, #2
+ 1516 0010 01A9     		add	r1, sp, #4
+ 1517              	.LVL148:
+ 1518              		.loc 1 441 2 is_stmt 0 view .LVU346
+ 1519 0012 0DF10600 		add	r0, sp, #6
+ 1520              	.LVL149:
+ 1521              		.loc 1 441 2 view .LVU347
+ 1522 0016 FFF7FEFF 		bl	MPU_Get_Accelerometer
+ 1523              	.LVL150:
+ 442:BSP/MPU6050/mpu6050.c **** 	*pitch = -atanf(ax/sqrtf(ay*ay+az*az));
+ 1524              		.loc 1 442 2 is_stmt 1 view .LVU348
+ 1525              		.loc 1 442 12 is_stmt 0 view .LVU349
+ 1526 001a BDF90630 		ldrsh	r3, [sp, #6]
+ 1527 001e 08EE103A 		vmov	s16, r3	@ int
+ 1528 0022 B8EEC88A 		vcvt.f32.s32	s16, s16
+ 1529              		.loc 1 442 29 view .LVU350
+ 1530 0026 BDF90450 		ldrsh	r5, [sp, #4]
+ 1531              		.loc 1 442 35 view .LVU351
+ 1532 002a BDF90240 		ldrsh	r4, [sp, #2]
+ 1533 002e 04FB04F3 		mul	r3, r4, r4
+ 1534              		.loc 1 442 32 view .LVU352
+ 1535 0032 05FB0533 		mla	r3, r5, r5, r3
+ 1536 0036 00EE103A 		vmov	s0, r3	@ int
+ 1537              		.loc 1 442 21 view .LVU353
+ 1538 003a B8EEC00A 		vcvt.f32.s32	s0, s0
+ 1539 003e FFF7FEFF 		bl	sqrtf
+ 1540              	.LVL151:
+ 1541              		.loc 1 442 12 discriminator 1 view .LVU354
+ 1542 0042 88EE000A 		vdiv.f32	s0, s16, s0
+ 1543 0046 FFF7FEFF 		bl	atanf
+ 1544              	.LVL152:
+ 1545              		.loc 1 442 11 discriminator 2 view .LVU355
+ 1546 004a B1EE400A 		vneg.f32	s0, s0
+ 1547              		.loc 1 442 9 discriminator 2 view .LVU356
+ 1548 004e 87ED000A 		vstr.32	s0, [r7]
+ 443:BSP/MPU6050/mpu6050.c **** 	*roll = atanf((float)ay/(float)az);
+ 1549              		.loc 1 443 2 is_stmt 1 view .LVU357
+ 1550              		.loc 1 443 16 is_stmt 0 view .LVU358
+ 1551 0052 07EE905A 		vmov	s15, r5	@ int
+ 1552 0056 B8EEE70A 		vcvt.f32.s32	s0, s15
+ 1553              		.loc 1 443 26 view .LVU359
+ 1554 005a 07EE904A 		vmov	s15, r4	@ int
+ 1555 005e F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1556              		.loc 1 443 10 view .LVU360
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 39
+
+
+ 1557 0062 80EE270A 		vdiv.f32	s0, s0, s15
+ 1558 0066 FFF7FEFF 		bl	atanf
+ 1559              	.LVL153:
+ 1560              		.loc 1 443 8 discriminator 1 view .LVU361
+ 1561 006a 86ED000A 		vstr.32	s0, [r6]
+ 444:BSP/MPU6050/mpu6050.c **** }
+ 1562              		.loc 1 444 1 view .LVU362
+ 1563 006e 03B0     		add	sp, sp, #12
+ 1564              	.LCFI39:
+ 1565              		.cfi_def_cfa_offset 28
+ 1566              		@ sp needed
+ 1567 0070 BDEC028B 		vldm	sp!, {d8}
+ 1568              	.LCFI40:
+ 1569              		.cfi_restore 80
+ 1570              		.cfi_restore 81
+ 1571              		.cfi_def_cfa_offset 20
+ 1572 0074 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1573              		.loc 1 444 1 view .LVU363
+ 1574              		.cfi_endproc
+ 1575              	.LFE236:
+ 1577              		.section	.text.MPU_isHorizontal,"ax",%progbits
+ 1578              		.align	1
+ 1579              		.global	MPU_isHorizontal
+ 1580              		.syntax unified
+ 1581              		.thumb
+ 1582              		.thumb_func
+ 1584              	MPU_isHorizontal:
+ 1585              	.LFB237:
+ 445:BSP/MPU6050/mpu6050.c **** 
+ 446:BSP/MPU6050/mpu6050.c **** 
+ 447:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 448:BSP/MPU6050/mpu6050.c **** /*
+ 449:BSP/MPU6050/mpu6050.c ****     @brief  check the MPU6050 is horizontal or not
+ 450:BSP/MPU6050/mpu6050.c **** 
+ 451:BSP/MPU6050/mpu6050.c ****     @param  NULL
+ 452:BSP/MPU6050/mpu6050.c **** 
+ 453:BSP/MPU6050/mpu6050.c ****     @return 1 if is horizontal
+ 454:BSP/MPU6050/mpu6050.c **** */
+ 455:BSP/MPU6050/mpu6050.c **** /**************************************************************************/
+ 456:BSP/MPU6050/mpu6050.c **** uint8_t MPU_isHorizontal(void)
+ 457:BSP/MPU6050/mpu6050.c **** {
+ 1586              		.loc 1 457 1 is_stmt 1 view -0
+ 1587              		.cfi_startproc
+ 1588              		@ args = 0, pretend = 0, frame = 8
+ 1589              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1590 0000 00B5     		push	{lr}
+ 1591              	.LCFI41:
+ 1592              		.cfi_def_cfa_offset 4
+ 1593              		.cfi_offset 14, -4
+ 1594 0002 83B0     		sub	sp, sp, #12
+ 1595              	.LCFI42:
+ 1596              		.cfi_def_cfa_offset 16
+ 458:BSP/MPU6050/mpu6050.c **** 	float roll,pitch;
+ 1597              		.loc 1 458 2 view .LVU365
+ 459:BSP/MPU6050/mpu6050.c **** 	MPU_Get_Angles(&roll,&pitch);
+ 1598              		.loc 1 459 2 view .LVU366
+ 1599 0004 6946     		mov	r1, sp
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 40
+
+
+ 1600 0006 01A8     		add	r0, sp, #4
+ 1601 0008 FFF7FEFF 		bl	MPU_Get_Angles
+ 1602              	.LVL154:
+ 460:BSP/MPU6050/mpu6050.c **** 	if(roll<=0.50 && roll>=-0.50 && pitch<=0.50 && pitch>=-0.50)
+ 1603              		.loc 1 460 2 view .LVU367
+ 1604              		.loc 1 460 9 is_stmt 0 view .LVU368
+ 1605 000c DDED017A 		vldr.32	s15, [sp, #4]
+ 1606              		.loc 1 460 4 view .LVU369
+ 1607 0010 B6EE007A 		vmov.f32	s14, #5.0e-1
+ 1608 0014 F4EEC77A 		vcmpe.f32	s15, s14
+ 1609 0018 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1610 001c 18D8     		bhi	.L115
+ 1611              		.loc 1 460 16 discriminator 1 view .LVU370
+ 1612 001e BEEE007A 		vmov.f32	s14, #-5.0e-1
+ 1613 0022 F4EEC77A 		vcmpe.f32	s15, s14
+ 1614 0026 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1615 002a 15DB     		blt	.L116
+ 1616              		.loc 1 460 39 discriminator 2 view .LVU371
+ 1617 002c DDED007A 		vldr.32	s15, [sp]
+ 1618              		.loc 1 460 31 discriminator 2 view .LVU372
+ 1619 0030 B6EE007A 		vmov.f32	s14, #5.0e-1
+ 1620 0034 F4EEC77A 		vcmpe.f32	s15, s14
+ 1621 0038 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1622 003c 0ED8     		bhi	.L117
+ 1623              		.loc 1 460 46 discriminator 3 view .LVU373
+ 1624 003e BEEE007A 		vmov.f32	s14, #-5.0e-1
+ 1625 0042 F4EEC77A 		vcmpe.f32	s15, s14
+ 1626 0046 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1627 004a 09DA     		bge	.L111
+ 461:BSP/MPU6050/mpu6050.c **** 	{return 1;}
+ 462:BSP/MPU6050/mpu6050.c **** 	return 0;
+ 1628              		.loc 1 462 9 view .LVU374
+ 1629 004c 0020     		movs	r0, #0
+ 1630 004e 00E0     		b	.L104
+ 1631              	.L115:
+ 1632 0050 0020     		movs	r0, #0
+ 1633              	.L104:
+ 463:BSP/MPU6050/mpu6050.c **** }
+ 1634              		.loc 1 463 1 view .LVU375
+ 1635 0052 03B0     		add	sp, sp, #12
+ 1636              	.LCFI43:
+ 1637              		.cfi_remember_state
+ 1638              		.cfi_def_cfa_offset 4
+ 1639              		@ sp needed
+ 1640 0054 5DF804FB 		ldr	pc, [sp], #4
+ 1641              	.L116:
+ 1642              	.LCFI44:
+ 1643              		.cfi_restore_state
+ 462:BSP/MPU6050/mpu6050.c **** }
+ 1644              		.loc 1 462 9 view .LVU376
+ 1645 0058 0020     		movs	r0, #0
+ 1646 005a FAE7     		b	.L104
+ 1647              	.L117:
+ 1648 005c 0020     		movs	r0, #0
+ 1649 005e F8E7     		b	.L104
+ 1650              	.L111:
+ 461:BSP/MPU6050/mpu6050.c **** 	{return 1;}
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 41
+
+
+ 1651              		.loc 1 461 10 view .LVU377
+ 1652 0060 0120     		movs	r0, #1
+ 1653 0062 F6E7     		b	.L104
+ 1654              		.cfi_endproc
+ 1655              	.LFE237:
+ 1657              		.global	MPU_bus
+ 1658              		.section	.data.MPU_bus,"aw"
+ 1659              		.align	2
+ 1662              	MPU_bus:
+ 1663 0000 00040240 		.word	1073873920
+ 1664 0004 00040240 		.word	1073873920
+ 1665 0008 0020     		.short	8192
+ 1666 000a 0040     		.short	16384
+ 1667              		.text
+ 1668              	.Letext0:
+ 1669              		.file 2 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 1670              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1671              		.file 4 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1672              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 1673              		.file 6 "BSP/IIC/iic_hal.h"
+ 1674              		.file 7 "SYSTEM/sys.h"
+ 1675              		.file 8 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1676              		.file 9 "SYSTEM/delay.h"
+ 1677              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 42
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mpu6050.c
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:21     .text.MPU_INT_Pin_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:27     .text.MPU_INT_Pin_Init:00000000 MPU_INT_Pin_Init
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:102    .text.MPU_INT_Pin_Init:00000054 $d
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:108    .text.MPU_Bus_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:114    .text.MPU_Bus_Init:00000000 MPU_Bus_Init
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:159    .text.MPU_Bus_Init:00000028 $d
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1662   .data.MPU_bus:00000000 MPU_bus
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:165    .text.MPU_Write_Len:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:171    .text.MPU_Write_Len:00000000 MPU_Write_Len
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:291    .text.MPU_Write_Len:0000007c $d
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:296    .text.MPU_Write_Byte:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:302    .text.MPU_Write_Byte:00000000 MPU_Write_Byte
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:392    .text.MPU_Write_Byte:00000060 $d
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:397    .text.MPU_Motion_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:403    .text.MPU_Motion_Init:00000000 MPU_Motion_Init
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:440    .text.MPU_Sleep:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:446    .text.MPU_Sleep:00000000 MPU_Sleep
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:468    .text.MPU_Wakeup:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:474    .text.MPU_Wakeup:00000000 MPU_Wakeup
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:496    .text.MPU_Set_Gyro_Fsr:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:502    .text.MPU_Set_Gyro_Fsr:00000000 MPU_Set_Gyro_Fsr
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:530    .text.MPU_Set_Accel_Fsr:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:536    .text.MPU_Set_Accel_Fsr:00000000 MPU_Set_Accel_Fsr
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:564    .text.MPU_Set_LPF:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:570    .text.MPU_Set_LPF:00000000 MPU_Set_LPF
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:643    .text.MPU_Set_Rate:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:649    .text.MPU_Set_Rate:00000000 MPU_Set_Rate
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:708    .text.MPU_Read_Byte:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:714    .text.MPU_Read_Byte:00000000 MPU_Read_Byte
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:793    .text.MPU_Read_Byte:00000054 $d
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:798    .text.MPU_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:804    .text.MPU_Init:00000000 MPU_Init
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:912    .text.MPU_Read_Status:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:918    .text.MPU_Read_Status:00000000 MPU_Read_Status
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:940    .text.MPU_Read_Len:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:946    .text.MPU_Read_Len:00000000 MPU_Read_Len
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1089   .text.MPU_Read_Len:00000098 $d
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1098   .text.MPU_Get_Temperature:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1104   .text.MPU_Get_Temperature:00000000 MPU_Get_Temperature
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1177   .text.MPU_Get_Temperature:00000058 $d
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1185   .text.MPU_Get_Gyroscope:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1191   .text.MPU_Get_Gyroscope:00000000 MPU_Get_Gyroscope
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1273   .text.MPU_Get_Accelerometer:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1279   .text.MPU_Get_Accelerometer:00000000 MPU_Get_Accelerometer
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1361   .text.MPU_Write_Multi_Byte:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1367   .text.MPU_Write_Multi_Byte:00000000 MPU_Write_Multi_Byte
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1416   .text.MPU_Write_Multi_Byte:00000020 $d
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1421   .text.MPU_Read_Multi_Byte:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1427   .text.MPU_Read_Multi_Byte:00000000 MPU_Read_Multi_Byte
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1476   .text.MPU_Read_Multi_Byte:00000020 $d
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1481   .text.MPU_Get_Angles:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1487   .text.MPU_Get_Angles:00000000 MPU_Get_Angles
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1578   .text.MPU_isHorizontal:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1584   .text.MPU_isHorizontal:00000000 MPU_isHorizontal
+C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s:1659   .data.MPU_bus:00000000 $d
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMBFtEZ.s 			page 43
+
+
+
+UNDEFINED SYMBOLS
+HAL_GPIO_Init
+HAL_NVIC_SetPriority
+HAL_NVIC_EnableIRQ
+IICInit
+IICStart
+IICSendByte
+IICWaitAck
+IICStop
+IICReceiveByte
+IICSendNotAck
+delay_ms
+IICSendAck
+__aeabi_i2d
+__aeabi_ddiv
+__aeabi_dadd
+__aeabi_d2f
+IIC_Write_Multi_Byte
+IIC_Read_Multi_Byte
+sqrtf
+atanf

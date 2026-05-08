@@ -1,0 +1,242 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccuXaWJc.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"user_ScrRenewTask.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/Tasks/Src/user_ScrRenewTask.c"
+  20              		.section	.text.ScrRenewTask,"ax",%progbits
+  21              		.align	1
+  22              		.global	ScrRenewTask
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	ScrRenewTask:
+  28              	.LVL0:
+  29              	.LFB416:
+   1:User/Tasks/Src/user_ScrRenewTask.c **** /* Private includes -----------------------------------------------------------*/
+   2:User/Tasks/Src/user_ScrRenewTask.c **** //includes
+   3:User/Tasks/Src/user_ScrRenewTask.c **** #include "user_TasksInit.h"
+   4:User/Tasks/Src/user_ScrRenewTask.c **** #include "user_ScrRenewTask.h"
+   5:User/Tasks/Src/user_ScrRenewTask.c **** #include "main.h"
+   6:User/Tasks/Src/user_ScrRenewTask.c **** #include "lvgl.h"
+   7:User/Tasks/Src/user_ScrRenewTask.c **** #include "ui_HomePage.h"
+   8:User/Tasks/Src/user_ScrRenewTask.c **** #include "ui_MenuPage.h"
+   9:User/Tasks/Src/user_ScrRenewTask.c **** 
+  10:User/Tasks/Src/user_ScrRenewTask.c **** 
+  11:User/Tasks/Src/user_ScrRenewTask.c **** /* Private typedef -----------------------------------------------------------*/
+  12:User/Tasks/Src/user_ScrRenewTask.c **** 
+  13:User/Tasks/Src/user_ScrRenewTask.c **** /* Private define ------------------------------------------------------------*/
+  14:User/Tasks/Src/user_ScrRenewTask.c **** 
+  15:User/Tasks/Src/user_ScrRenewTask.c **** /* Private variables ---------------------------------------------------------*/
+  16:User/Tasks/Src/user_ScrRenewTask.c **** extern osMessageQueueId_t Key_MessageQueue;
+  17:User/Tasks/Src/user_ScrRenewTask.c **** 
+  18:User/Tasks/Src/user_ScrRenewTask.c **** /* Private function prototypes -----------------------------------------------*/
+  19:User/Tasks/Src/user_ScrRenewTask.c **** 
+  20:User/Tasks/Src/user_ScrRenewTask.c **** 
+  21:User/Tasks/Src/user_ScrRenewTask.c **** /**
+  22:User/Tasks/Src/user_ScrRenewTask.c ****   * @brief  Screen renew task
+  23:User/Tasks/Src/user_ScrRenewTask.c ****   * @param  argument: Not used
+  24:User/Tasks/Src/user_ScrRenewTask.c ****   * @retval None
+  25:User/Tasks/Src/user_ScrRenewTask.c ****   */
+  26:User/Tasks/Src/user_ScrRenewTask.c **** void ScrRenewTask(void *argument)
+  27:User/Tasks/Src/user_ScrRenewTask.c **** {
+  30              		.loc 1 27 1 view -0
+  31              		.cfi_startproc
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccuXaWJc.s 			page 2
+
+
+  32              		@ Volatile: function does not return.
+  33              		@ args = 0, pretend = 0, frame = 8
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              		.loc 1 27 1 is_stmt 0 view .LVU1
+  36 0000 00B5     		push	{lr}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 4
+  39              		.cfi_offset 14, -4
+  40 0002 83B0     		sub	sp, sp, #12
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_offset 16
+  28:User/Tasks/Src/user_ScrRenewTask.c **** 	uint8_t keystr=0;
+  43              		.loc 1 28 2 is_stmt 1 view .LVU2
+  44              		.loc 1 28 10 is_stmt 0 view .LVU3
+  45 0004 0023     		movs	r3, #0
+  46 0006 8DF80730 		strb	r3, [sp, #7]
+  47 000a 0AE0     		b	.L4
+  48              	.LVL1:
+  49              	.L7:
+  29:User/Tasks/Src/user_ScrRenewTask.c **** 	while(1)
+  30:User/Tasks/Src/user_ScrRenewTask.c **** 	{
+  31:User/Tasks/Src/user_ScrRenewTask.c **** 		if(osMessageQueueGet(Key_MessageQueue,&keystr,NULL,0)==osOK)
+  32:User/Tasks/Src/user_ScrRenewTask.c **** 		{
+  33:User/Tasks/Src/user_ScrRenewTask.c **** 			//key1 pressed
+  34:User/Tasks/Src/user_ScrRenewTask.c **** 			if(keystr == 1)
+  35:User/Tasks/Src/user_ScrRenewTask.c **** 			{
+  36:User/Tasks/Src/user_ScrRenewTask.c **** 
+  37:User/Tasks/Src/user_ScrRenewTask.c **** 				Page_Back();
+  50              		.loc 1 37 5 is_stmt 1 view .LVU4
+  51 000c FFF7FEFF 		bl	Page_Back
+  52              	.LVL2:
+  38:User/Tasks/Src/user_ScrRenewTask.c **** 				if(Page_Get_NowPage()->page_obj == &ui_MenuPage)
+  53              		.loc 1 38 5 view .LVU5
+  54              		.loc 1 38 8 is_stmt 0 view .LVU6
+  55 0010 FFF7FEFF 		bl	Page_Get_NowPage
+  56              	.LVL3:
+  57              		.loc 1 38 26 discriminator 1 view .LVU7
+  58 0014 8268     		ldr	r2, [r0, #8]
+  59              		.loc 1 38 7 discriminator 1 view .LVU8
+  60 0016 114B     		ldr	r3, .L8
+  61 0018 9A42     		cmp	r2, r3
+  62 001a 19D0     		beq	.L6
+  63              	.L2:
+  39:User/Tasks/Src/user_ScrRenewTask.c **** 				{
+  40:User/Tasks/Src/user_ScrRenewTask.c **** 					//HR sensor sleep
+  41:User/Tasks/Src/user_ScrRenewTask.c **** 					EM7028_hrs_DisEnable();
+  42:User/Tasks/Src/user_ScrRenewTask.c **** 					//sensor sleep
+  43:User/Tasks/Src/user_ScrRenewTask.c **** 					LSM303DLH_Sleep();
+  44:User/Tasks/Src/user_ScrRenewTask.c **** 					// SPL_Sleep();
+  45:User/Tasks/Src/user_ScrRenewTask.c **** 				}
+  46:User/Tasks/Src/user_ScrRenewTask.c **** 			}
+  47:User/Tasks/Src/user_ScrRenewTask.c **** 			//key2 pressed
+  48:User/Tasks/Src/user_ScrRenewTask.c **** 			else if(keystr == 2)
+  49:User/Tasks/Src/user_ScrRenewTask.c **** 			{
+  50:User/Tasks/Src/user_ScrRenewTask.c **** 				Page_Back_Bottom();
+  51:User/Tasks/Src/user_ScrRenewTask.c **** 				//HR sensor sleep
+  52:User/Tasks/Src/user_ScrRenewTask.c **** 				EM7028_hrs_DisEnable();
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccuXaWJc.s 			page 3
+
+
+  53:User/Tasks/Src/user_ScrRenewTask.c ****   				//sensor sleep
+  54:User/Tasks/Src/user_ScrRenewTask.c **** 				LSM303DLH_Sleep();
+  55:User/Tasks/Src/user_ScrRenewTask.c **** 				// SPL_Sleep();
+  56:User/Tasks/Src/user_ScrRenewTask.c **** 			}
+  57:User/Tasks/Src/user_ScrRenewTask.c **** 		}
+  58:User/Tasks/Src/user_ScrRenewTask.c **** 		osDelay(10);
+  64              		.loc 1 58 3 is_stmt 1 view .LVU9
+  65 001c 0A20     		movs	r0, #10
+  66 001e FFF7FEFF 		bl	osDelay
+  67              	.LVL4:
+  29:User/Tasks/Src/user_ScrRenewTask.c **** 	{
+  68              		.loc 1 29 7 view .LVU10
+  69              	.L4:
+  29:User/Tasks/Src/user_ScrRenewTask.c **** 	{
+  70              		.loc 1 29 2 view .LVU11
+  31:User/Tasks/Src/user_ScrRenewTask.c **** 		{
+  71              		.loc 1 31 3 view .LVU12
+  31:User/Tasks/Src/user_ScrRenewTask.c **** 		{
+  72              		.loc 1 31 6 is_stmt 0 view .LVU13
+  73 0022 0023     		movs	r3, #0
+  74 0024 1A46     		mov	r2, r3
+  75 0026 0DF10701 		add	r1, sp, #7
+  76 002a 0D48     		ldr	r0, .L8+4
+  77 002c 0068     		ldr	r0, [r0]
+  78 002e FFF7FEFF 		bl	osMessageQueueGet
+  79              	.LVL5:
+  31:User/Tasks/Src/user_ScrRenewTask.c **** 		{
+  80              		.loc 1 31 5 discriminator 1 view .LVU14
+  81 0032 0028     		cmp	r0, #0
+  82 0034 F2D1     		bne	.L2
+  34:User/Tasks/Src/user_ScrRenewTask.c **** 			{
+  83              		.loc 1 34 4 is_stmt 1 view .LVU15
+  34:User/Tasks/Src/user_ScrRenewTask.c **** 			{
+  84              		.loc 1 34 14 is_stmt 0 view .LVU16
+  85 0036 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+  34:User/Tasks/Src/user_ScrRenewTask.c **** 			{
+  86              		.loc 1 34 6 view .LVU17
+  87 003a 012B     		cmp	r3, #1
+  88 003c E6D0     		beq	.L7
+  48:User/Tasks/Src/user_ScrRenewTask.c **** 			{
+  89              		.loc 1 48 9 is_stmt 1 view .LVU18
+  48:User/Tasks/Src/user_ScrRenewTask.c **** 			{
+  90              		.loc 1 48 11 is_stmt 0 view .LVU19
+  91 003e 022B     		cmp	r3, #2
+  92 0040 ECD1     		bne	.L2
+  93              	.LBB2:
+  50:User/Tasks/Src/user_ScrRenewTask.c **** 				//HR sensor sleep
+  94              		.loc 1 50 5 is_stmt 1 view .LVU20
+  95 0042 FFF7FEFF 		bl	Page_Back_Bottom
+  96              	.LVL6:
+  52:User/Tasks/Src/user_ScrRenewTask.c ****   				//sensor sleep
+  97              		.loc 1 52 5 view .LVU21
+  98 0046 FFF7FEFF 		bl	EM7028_hrs_DisEnable
+  99              	.LVL7:
+  54:User/Tasks/Src/user_ScrRenewTask.c **** 				// SPL_Sleep();
+ 100              		.loc 1 54 5 view .LVU22
+ 101 004a FFF7FEFF 		bl	LSM303DLH_Sleep
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccuXaWJc.s 			page 4
+
+
+ 102              	.LVL8:
+ 103 004e E5E7     		b	.L2
+ 104              	.L6:
+ 105              	.LBE2:
+ 106              	.LBB3:
+  41:User/Tasks/Src/user_ScrRenewTask.c **** 					//sensor sleep
+ 107              		.loc 1 41 6 view .LVU23
+ 108 0050 FFF7FEFF 		bl	EM7028_hrs_DisEnable
+ 109              	.LVL9:
+  43:User/Tasks/Src/user_ScrRenewTask.c **** 					// SPL_Sleep();
+ 110              		.loc 1 43 6 view .LVU24
+ 111 0054 FFF7FEFF 		bl	LSM303DLH_Sleep
+ 112              	.LVL10:
+ 113 0058 E0E7     		b	.L2
+ 114              	.L9:
+ 115 005a 00BF     		.align	2
+ 116              	.L8:
+ 117 005c 00000000 		.word	ui_MenuPage
+ 118 0060 00000000 		.word	Key_MessageQueue
+ 119              	.LBE3:
+ 120              		.cfi_endproc
+ 121              	.LFE416:
+ 123              		.text
+ 124              	.Letext0:
+ 125              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 126              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 127              		.file 4 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ 128              		.file 5 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/../font/../misc/lv_area.h"
+ 129              		.file 6 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h"
+ 130              		.file 7 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_style.h"
+ 131              		.file 8 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj.h"
+ 132              		.file 9 "Middlewares/LVGL/GUI/lvgl/src/hal/../misc/lv_ll.h"
+ 133              		.file 10 "Middlewares/LVGL/GUI/lvgl/src/core/lv_group.h"
+ 134              		.file 11 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_scroll.h"
+ 135              		.file 12 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style.h"
+ 136              		.file 13 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_class.h"
+ 137              		.file 14 "Middlewares/LVGL/GUI/lvgl/src/core/lv_event.h"
+ 138              		.file 15 "User/Func/Inc/PageManager.h"
+ 139              		.file 16 "User/Tasks/Inc/user_TasksInit.h"
+ 140              		.file 17 "User/GUI_App/Screens/Inc/ui_MenuPage.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccuXaWJc.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 user_ScrRenewTask.c
+C:\Users\chen\AppData\Local\Temp\ccuXaWJc.s:21     .text.ScrRenewTask:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccuXaWJc.s:27     .text.ScrRenewTask:00000000 ScrRenewTask
+C:\Users\chen\AppData\Local\Temp\ccuXaWJc.s:117    .text.ScrRenewTask:0000005c $d
+
+UNDEFINED SYMBOLS
+Page_Back
+Page_Get_NowPage
+osDelay
+osMessageQueueGet
+Page_Back_Bottom
+EM7028_hrs_DisEnable
+LSM303DLH_Sleep
+ui_MenuPage
+Key_MessageQueue

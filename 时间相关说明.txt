@@ -1,0 +1,227 @@
+OV_Watch 智能手表 - RTC时钟与时间相关模块说明
+=================================================
+
+
+一、概述
+--------
+本项目使用STM32F411的RTC（Real-Time Clock，实时时钟）外设来维护手表的时间信息。
+RTC是一个独立的定时器，即使在系统掉电时也能依靠备用电源（VBAT）继续运行，确
+保手表在断电后时间不会丢失。
+
+
+二、RTC硬件配置
+---------------
+
+【时钟源】
+  - 使用LSE（Low Speed External）外部低速晶振，频率为32.768kHz
+  - LSE晶振精度高，适合作为RTC的时钟源
+
+【RTC参数配置】
+  - HourFormat   : RTC_HOURFORMAT_24    (24小时制)
+  - AsynchPrediv : 127                  (异步预分频)
+  - SynchPrediv  : 255                 (同步预分频)
+  - 实际时钟频率 = 32768 / (127 + 1) / (255 + 1) = 1Hz
+
+【唤醒定时器】
+  - 设置了周期性唤醒中断，每隔一段时间触发一次
+  - 用于低功耗模式的周期性唤醒
+
+【初始化判断】
+  - 使用备份寄存器RTC_BKP_DR0判断是否首次初始化
+  - 如果寄存器值不等于0x5050，则进行首次初始化（设置默认时间日期）
+  - 默认初始时间：11:59:55
+  - 默认初始日期：2023年5月21日 星期日
+
+
+三、RTC驱动程序（Core/Src/rtc.c）
+---------------------------------
+
+【主要函数】
+
+  1. MX_RTC_Init(void)
+     - RTC初始化函数，在系统启动时由main()调用
+     - 初始化RTC外设，设置时间日期
+     - 配置唤醒定时器
+
+  2. HAL_RTC_MspInit(RTC_HandleTypeDef* rtcHandle)
+     - RTC底层驱动初始化
+     - 配置RTC时钟源为LSE
+     - 使能RTC时钟
+     - 配置RTC唤醒中断优先级并使能中断
+
+  3. RTC_SetTime(uint8_t hours, uint8_t minutes, uint8_t seconds)
+     - 设置RTC时间（时、分、秒）
+     - 使用BIN格式（二进制格式，非BCD）
+
+  4. RTC_SetDate(uint8_t year, uint8_t month, uint8_t date)
+     - 设置RTC日期（年、月、日）
+     - 自动计算星期几
+
+  5. weekday_calculate(int y, int m, int d, int c)
+     - 使用蔡勒公式（Zeller's Congruence）计算星期几
+     - 参数：y=年份，m=月份，d=日期，c=世纪数（这里固定为20）
+     - 返回值：1-7（星期一至星期日）
+
+
+四、硬件数据访问层（HWDataAccess）
+----------------------------------
+
+为了方便UI层访问硬件数据，项目设计了统一的硬件访问接口（详见User/Func目录）。
+
+【日期时间数据结构 HW_DateTimeTypeDef】
+  typedef struct
+  {
+      uint8_t WeekDay;   // 星期（1-7）
+      uint8_t Month;      // 月份（1-12）
+      uint8_t Date;      // 日期（1-31）
+      uint8_t Year;      // 年份（0-99，如23表示2023年）
+      uint8_t Hours;     // 小时（0-23）
+      uint8_t Minutes;  // 分钟（0-59）
+      uint8_t Seconds;   // 秒数（0-59）
+  } HW_DateTimeTypeDef;
+
+【RTC接口 HW_RTC_InterfaceTypeDef】
+  - GetTimeDate      : 获取当前日期时间
+  - SetDate          : 设置日期
+  - SetTime          : 设置时间
+  - CalculateWeekday : 计算星期几
+
+【使用示例】
+  HW_DateTimeTypeDef now;
+  HWInterface.RealTimeClock.GetTimeDate(&now);  // 获取当前时间
+  printf("%02d:%02d:%02d\r\n", now.Hours, now.Minutes, now.Seconds);
+
+
+五、时间相关的应用场景
+----------------------
+
+【1. 主页面显示（ui_HomePage）】
+  - 顶部显示当前时间（大字体）
+  - 显示日期和星期几
+  - 实时更新秒数
+
+【2. 日历页面（ui_CalendarPage）】
+  - 显示当前月份的日历
+  - 高亮当前日期
+  - 根据RTC日期计算星期
+
+【3. 日期时间设置页面（ui_DateTimeSetPage）】
+  - 日期设置：年、月、日滚轮选择器
+  - 时间设置：时、分、秒滚轮选择器
+  - 确认后写入RTC
+
+【4. 计时器功能（ui_TimerPage）】
+  - 秒表功能
+  - 倒计时功能
+
+【5. 息屏时间设置（ui_OffTimePage）】
+  - 设置自动息屏时间
+
+【6. 数据保存任务（user_DataSaveTask）】
+  - 记录传感器数据时附带RTC时间戳
+  - 保存心率、血氧、计步等数据时标记采集时间
+
+【7. 蓝牙通信（user_MessageSendTask）】
+  - 接收手机设置的时间日期命令
+  - 向手机发送当前时间信息
+
+
+六、FreeRTOS软件定时器
+---------------------
+
+项目还使用了FreeRTOS的软件定时器功能（详见Middlewares/Third_Party/FreeRTOS/Source/timers.c）：
+
+【主要特性】
+  - 软件定时器不依赖硬件定时器
+  - 可创建一次性或周期性定时器
+  - 定时器回调函数在定时器服务任务中执行
+
+【应用】
+  - 屏幕刷新定时器
+  - 传感器更新定时器
+  - UI动画定时器
+
+
+七、LVGL图形库时间功能
+---------------------
+
+LVGL提供了动画和时间相关功能（详见Middlewares/LVGL/GUI/lvgl/src/misc/）：
+
+【lv_timer】（原lv_task）
+  - LVGL的任务/定时器机制
+  - 周期性调用回调函数
+  - 用于UI刷新、事件处理等
+
+【lv_anim_timeline】
+  - 动画时间轴
+  - 管理多个动画的播放时序
+
+
+八、系统时钟（SysTick）
+----------------------
+
+除了RTC，项目还使用了SysTick定时器：
+
+【配置】
+  - 由TIM1定时器溢出中断提供
+  - 每次中断调用HAL_IncTick()递增系统Tick计数
+
+【用途】
+  - HAL_Delay()延时函数
+  - 超时检测
+  - 系统运行时间统计
+
+
+九、注意事项
+------------
+
+1. RTC备份域
+   - RTC在VBAT引脚供电时可保持运行
+   - 首次上电需要配置LSE晶振稳定时间
+
+2. 时钟格式
+   - 内部使用BIN格式存储时间
+   - 方便C语言直接使用
+
+3. 星期计算
+   - 使用蔡勒公式计算，固定世纪数为20（适用于2000-2099年）
+   - 也可以直接从RTC获取星期（由RTC自动计算）
+
+4. 夏令时
+   - 本项目未启用夏令时功能
+   - DayLightSaving = RTC_DAYLIGHTSAVING_NONE
+
+5. 低功耗考虑
+   - RTC唤醒定时器用于周期性唤醒系统
+   - 可在不需要显示时让系统进入低功耗模式
+
+
+十、文件列表
+------------
+
+【核心文件】
+  Core/Src/rtc.c          - RTC驱动实现
+  Core/Inc/rtc.h          - RTC驱动头文件
+  Core/Src/stm32f4xx_it.c - 中断处理（RTC_WKUP_IRQHandler）
+
+【硬件访问层】
+  User/Func/Inc/HWDataAccess.h - 硬件接口定义
+  User/Func/Src/HWDataAccess.c - 硬件接口实现
+
+【用户界面】
+  User/GUI_App/Screens/Src/ui_HomePage.c      - 主页面（时间显示）
+  User/GUI_App/Screens/Src/ui_CalendarPage.c  - 日历页面
+  User/GUI_App/Screens/Src/ui_DateTimeSetPage.c - 日期时间设置
+  User/GUI_App/Screens/Src/ui_TimerPage.c      - 计时器页面
+
+【任务】
+  User/Tasks/Src/user_DataSaveTask.c      - 数据保存任务（带时间戳）
+  User/Tasks/Src/user_MessageSendTask.c   - 消息发送任务（蓝牙时间同步）
+
+
+================================================================================
+文档版本：V1.0
+创建日期：2026-03-23
+项目：OV_Watch 智能手表
+芯片：STM32F411CEUx
+================================================================================

@@ -1,0 +1,440 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"HrAlgorythm.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "BSP/EM7028/HrAlgorythm.c"
+  20              		.section	.text.HR_AlgoInit,"ax",%progbits
+  21              		.align	1
+  22              		.global	HR_AlgoInit
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	HR_AlgoInit:
+  28              	.LFB219:
+   1:BSP/EM7028/HrAlgorythm.c **** #include "HrAlgorythm.h"
+   2:BSP/EM7028/HrAlgorythm.c **** #include "string.h"
+   3:BSP/EM7028/HrAlgorythm.c **** 
+   4:BSP/EM7028/HrAlgorythm.c **** Queue datas;
+   5:BSP/EM7028/HrAlgorythm.c **** Queue times;
+   6:BSP/EM7028/HrAlgorythm.c **** Queue HR_List;
+   7:BSP/EM7028/HrAlgorythm.c **** 
+   8:BSP/EM7028/HrAlgorythm.c **** void HR_AlgoInit(void)
+   9:BSP/EM7028/HrAlgorythm.c **** {
+  29              		.loc 1 9 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  10:BSP/EM7028/HrAlgorythm.c **** 	initQueue(&datas);
+  38              		.loc 1 10 2 view .LVU1
+  39 0002 0548     		ldr	r0, .L3
+  40 0004 FFF7FEFF 		bl	initQueue
+  41              	.LVL0:
+  11:BSP/EM7028/HrAlgorythm.c **** 	initQueue(&times);
+  42              		.loc 1 11 2 view .LVU2
+  43 0008 0448     		ldr	r0, .L3+4
+  44 000a FFF7FEFF 		bl	initQueue
+  45              	.LVL1:
+  12:BSP/EM7028/HrAlgorythm.c **** 	initQueue(&HR_List);
+  46              		.loc 1 12 2 view .LVU3
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s 			page 2
+
+
+  47 000e 0448     		ldr	r0, .L3+8
+  48 0010 FFF7FEFF 		bl	initQueue
+  49              	.LVL2:
+  13:BSP/EM7028/HrAlgorythm.c **** }
+  50              		.loc 1 13 1 is_stmt 0 view .LVU4
+  51 0014 08BD     		pop	{r3, pc}
+  52              	.L4:
+  53 0016 00BF     		.align	2
+  54              	.L3:
+  55 0018 00000000 		.word	datas
+  56 001c 00000000 		.word	times
+  57 0020 00000000 		.word	HR_List
+  58              		.cfi_endproc
+  59              	.LFE219:
+  61              		.section	.text.Hr_Ave_Filter,"ax",%progbits
+  62              		.align	1
+  63              		.global	Hr_Ave_Filter
+  64              		.syntax unified
+  65              		.thumb
+  66              		.thumb_func
+  68              	Hr_Ave_Filter:
+  69              	.LVL3:
+  70              	.LFB220:
+  14:BSP/EM7028/HrAlgorythm.c **** 
+  15:BSP/EM7028/HrAlgorythm.c **** uint8_t Hr_Ave_Filter(uint32_t *HrList, uint8_t lenth)
+  16:BSP/EM7028/HrAlgorythm.c **** {
+  71              		.loc 1 16 1 is_stmt 1 view -0
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75              		@ link register save eliminated.
+  17:BSP/EM7028/HrAlgorythm.c **** 	uint32_t ave;
+  76              		.loc 1 17 2 view .LVU6
+  18:BSP/EM7028/HrAlgorythm.c **** 	uint8_t i;
+  77              		.loc 1 18 2 view .LVU7
+  19:BSP/EM7028/HrAlgorythm.c **** 	for(i = 0;i<lenth;i++)
+  78              		.loc 1 19 2 view .LVU8
+  79              		.loc 1 19 8 is_stmt 0 view .LVU9
+  80 0000 0023     		movs	r3, #0
+  81              		.loc 1 19 2 view .LVU10
+  82 0002 01E0     		b	.L6
+  83              	.LVL4:
+  84              	.L7:
+  20:BSP/EM7028/HrAlgorythm.c **** 	{
+  21:BSP/EM7028/HrAlgorythm.c **** 		ave += HrList[i];
+  85              		.loc 1 21 3 is_stmt 1 view .LVU11
+  19:BSP/EM7028/HrAlgorythm.c **** 	for(i = 0;i<lenth;i++)
+  86              		.loc 1 19 21 discriminator 3 view .LVU12
+  87 0004 0133     		adds	r3, r3, #1
+  88              	.LVL5:
+  19:BSP/EM7028/HrAlgorythm.c **** 	for(i = 0;i<lenth;i++)
+  89              		.loc 1 19 21 is_stmt 0 discriminator 3 view .LVU13
+  90 0006 DBB2     		uxtb	r3, r3
+  91              	.LVL6:
+  92              	.L6:
+  19:BSP/EM7028/HrAlgorythm.c **** 	for(i = 0;i<lenth;i++)
+  93              		.loc 1 19 13 is_stmt 1 discriminator 1 view .LVU14
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s 			page 3
+
+
+  94 0008 8B42     		cmp	r3, r1
+  95 000a FBD3     		bcc	.L7
+  22:BSP/EM7028/HrAlgorythm.c **** 	}
+  23:BSP/EM7028/HrAlgorythm.c **** 	ave /= lenth;
+  96              		.loc 1 23 2 view .LVU15
+  97              	.LVL7:
+  24:BSP/EM7028/HrAlgorythm.c **** }
+  98              		.loc 1 24 1 is_stmt 0 view .LVU16
+  99 000c 7047     		bx	lr
+ 100              		.cfi_endproc
+ 101              	.LFE220:
+ 103              		.section	.text.HR_Calculate,"ax",%progbits
+ 104              		.align	1
+ 105              		.global	HR_Calculate
+ 106              		.syntax unified
+ 107              		.thumb
+ 108              		.thumb_func
+ 110              	HR_Calculate:
+ 111              	.LVL8:
+ 112              	.LFB221:
+  25:BSP/EM7028/HrAlgorythm.c **** 
+  26:BSP/EM7028/HrAlgorythm.c **** uint16_t HR_Calculate(uint16_t present_dat,uint32_t present_time)
+  27:BSP/EM7028/HrAlgorythm.c **** {
+ 113              		.loc 1 27 1 is_stmt 1 view -0
+ 114              		.cfi_startproc
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117              		.loc 1 27 1 is_stmt 0 view .LVU18
+ 118 0000 70B5     		push	{r4, r5, r6, lr}
+ 119              	.LCFI1:
+ 120              		.cfi_def_cfa_offset 16
+ 121              		.cfi_offset 4, -16
+ 122              		.cfi_offset 5, -12
+ 123              		.cfi_offset 6, -8
+ 124              		.cfi_offset 14, -4
+ 125 0002 0646     		mov	r6, r0
+ 126 0004 0D46     		mov	r5, r1
+  28:BSP/EM7028/HrAlgorythm.c **** 
+  29:BSP/EM7028/HrAlgorythm.c **** 	static uint16_t peaks_time[]={0,0};
+ 127              		.loc 1 29 2 is_stmt 1 view .LVU19
+  30:BSP/EM7028/HrAlgorythm.c **** 	static uint8_t HR=0;
+ 128              		.loc 1 30 2 view .LVU20
+  31:BSP/EM7028/HrAlgorythm.c **** 
+  32:BSP/EM7028/HrAlgorythm.c **** 	if(isQueueFull(&datas))
+ 129              		.loc 1 32 2 view .LVU21
+ 130              		.loc 1 32 5 is_stmt 0 view .LVU22
+ 131 0006 2B48     		ldr	r0, .L18
+ 132              	.LVL9:
+ 133              		.loc 1 32 5 view .LVU23
+ 134 0008 FFF7FEFF 		bl	isQueueFull
+ 135              	.LVL10:
+ 136              		.loc 1 32 4 discriminator 1 view .LVU24
+ 137 000c 70BB     		cbnz	r0, .L14
+ 138              	.L9:
+  33:BSP/EM7028/HrAlgorythm.c **** 	{dequeue(&datas);}
+  34:BSP/EM7028/HrAlgorythm.c **** 	if(isQueueFull(&times))
+ 139              		.loc 1 34 2 is_stmt 1 view .LVU25
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s 			page 4
+
+
+ 140              		.loc 1 34 5 is_stmt 0 view .LVU26
+ 141 000e 2A48     		ldr	r0, .L18+4
+ 142 0010 FFF7FEFF 		bl	isQueueFull
+ 143              	.LVL11:
+ 144              		.loc 1 34 4 discriminator 1 view .LVU27
+ 145 0014 70BB     		cbnz	r0, .L15
+ 146              	.L10:
+  35:BSP/EM7028/HrAlgorythm.c **** 	{dequeue(&times);}
+  36:BSP/EM7028/HrAlgorythm.c **** 	if(isQueueFull(&HR_List))
+ 147              		.loc 1 36 2 is_stmt 1 view .LVU28
+ 148              		.loc 1 36 5 is_stmt 0 view .LVU29
+ 149 0016 2948     		ldr	r0, .L18+8
+ 150 0018 FFF7FEFF 		bl	isQueueFull
+ 151              	.LVL12:
+ 152              		.loc 1 36 4 discriminator 1 view .LVU30
+ 153 001c 70BB     		cbnz	r0, .L16
+ 154              	.L11:
+  37:BSP/EM7028/HrAlgorythm.c **** 	{dequeue(&HR_List);}
+  38:BSP/EM7028/HrAlgorythm.c **** 
+  39:BSP/EM7028/HrAlgorythm.c **** 	enqueue(&datas,present_dat);
+ 155              		.loc 1 39 2 is_stmt 1 view .LVU31
+ 156 001e 254C     		ldr	r4, .L18
+ 157 0020 3146     		mov	r1, r6
+ 158 0022 2046     		mov	r0, r4
+ 159 0024 FFF7FEFF 		bl	enqueue
+ 160              	.LVL13:
+  40:BSP/EM7028/HrAlgorythm.c **** 	enqueue(&times,present_time);
+ 161              		.loc 1 40 2 view .LVU32
+ 162 0028 2946     		mov	r1, r5
+ 163 002a 2348     		ldr	r0, .L18+4
+ 164 002c FFF7FEFF 		bl	enqueue
+ 165              	.LVL14:
+  41:BSP/EM7028/HrAlgorythm.c **** 
+  42:BSP/EM7028/HrAlgorythm.c **** 	if((datas.data[3]>=datas.data[2]) && (datas.data[3]>=datas.data[1]) && (datas.data[3]>datas.data[0
+ 166              		.loc 1 42 2 view .LVU33
+ 167              		.loc 1 42 16 is_stmt 0 view .LVU34
+ 168 0030 2369     		ldr	r3, [r4, #16]
+ 169              		.loc 1 42 31 view .LVU35
+ 170 0032 E268     		ldr	r2, [r4, #12]
+ 171              		.loc 1 42 4 view .LVU36
+ 172 0034 9342     		cmp	r3, r2
+ 173 0036 16D3     		bcc	.L12
+ 174              		.loc 1 42 65 discriminator 1 view .LVU37
+ 175 0038 A268     		ldr	r2, [r4, #8]
+ 176              		.loc 1 42 36 discriminator 1 view .LVU38
+ 177 003a 9342     		cmp	r3, r2
+ 178 003c 13D3     		bcc	.L12
+ 179              		.loc 1 42 98 discriminator 2 view .LVU39
+ 180 003e 6268     		ldr	r2, [r4, #4]
+ 181              		.loc 1 42 70 discriminator 2 view .LVU40
+ 182 0040 9342     		cmp	r3, r2
+ 183 0042 10D9     		bls	.L12
+  43:BSP/EM7028/HrAlgorythm.c **** 		&& (datas.data[3]>=datas.data[4]) && (datas.data[3]>=datas.data[5]) && (datas.data[3]>datas.data[
+ 184              		.loc 1 43 32 view .LVU41
+ 185 0044 6269     		ldr	r2, [r4, #20]
+ 186              		.loc 1 43 3 view .LVU42
+ 187 0046 9342     		cmp	r3, r2
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s 			page 5
+
+
+ 188 0048 0DD3     		bcc	.L12
+ 189              		.loc 1 43 66 discriminator 1 view .LVU43
+ 190 004a A269     		ldr	r2, [r4, #24]
+ 191              		.loc 1 43 37 discriminator 1 view .LVU44
+ 192 004c 9342     		cmp	r3, r2
+ 193 004e 0AD3     		bcc	.L12
+ 194              		.loc 1 43 99 discriminator 2 view .LVU45
+ 195 0050 E269     		ldr	r2, [r4, #28]
+ 196              		.loc 1 43 71 discriminator 2 view .LVU46
+ 197 0052 9342     		cmp	r3, r2
+ 198 0054 07D9     		bls	.L12
+  44:BSP/EM7028/HrAlgorythm.c **** 	{
+  45:BSP/EM7028/HrAlgorythm.c **** 			if((times.data[3]-peaks_time[0])>425)
+ 199              		.loc 1 45 4 is_stmt 1 view .LVU47
+ 200              		.loc 1 45 18 is_stmt 0 view .LVU48
+ 201 0056 184B     		ldr	r3, .L18+4
+ 202 0058 1B69     		ldr	r3, [r3, #16]
+ 203              		.loc 1 45 32 view .LVU49
+ 204 005a 194A     		ldr	r2, .L18+12
+ 205 005c 1288     		ldrh	r2, [r2]
+ 206              		.loc 1 45 21 view .LVU50
+ 207 005e 991A     		subs	r1, r3, r2
+ 208              		.loc 1 45 6 view .LVU51
+ 209 0060 B1F5D57F 		cmp	r1, #426
+ 210 0064 0ED2     		bcs	.L17
+ 211              	.L12:
+  46:BSP/EM7028/HrAlgorythm.c **** 			{
+  47:BSP/EM7028/HrAlgorythm.c **** 					peaks_time[1] = peaks_time[0];
+  48:BSP/EM7028/HrAlgorythm.c **** 					peaks_time[0] = times.data[3];
+  49:BSP/EM7028/HrAlgorythm.c **** 					enqueue(&HR_List,60000/(peaks_time[0]-peaks_time[1]));
+  50:BSP/EM7028/HrAlgorythm.c **** 					if(HR_List.data[6]!=0)
+  51:BSP/EM7028/HrAlgorythm.c **** 					{HR = Hr_Ave_Filter(HR_List.data,7);}
+  52:BSP/EM7028/HrAlgorythm.c **** 			}
+  53:BSP/EM7028/HrAlgorythm.c **** 	}
+  54:BSP/EM7028/HrAlgorythm.c **** 	return HR;
+ 212              		.loc 1 54 2 is_stmt 1 view .LVU52
+  55:BSP/EM7028/HrAlgorythm.c **** }
+ 213              		.loc 1 55 1 is_stmt 0 view .LVU53
+ 214 0066 174B     		ldr	r3, .L18+16
+ 215 0068 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 216 006a 70BD     		pop	{r4, r5, r6, pc}
+ 217              	.LVL15:
+ 218              	.L14:
+  33:BSP/EM7028/HrAlgorythm.c **** 	if(isQueueFull(&times))
+ 219              		.loc 1 33 3 is_stmt 1 view .LVU54
+ 220 006c 1148     		ldr	r0, .L18
+ 221 006e FFF7FEFF 		bl	dequeue
+ 222              	.LVL16:
+ 223 0072 CCE7     		b	.L9
+ 224              	.L15:
+  35:BSP/EM7028/HrAlgorythm.c **** 	if(isQueueFull(&HR_List))
+ 225              		.loc 1 35 3 view .LVU55
+ 226 0074 1048     		ldr	r0, .L18+4
+ 227 0076 FFF7FEFF 		bl	dequeue
+ 228              	.LVL17:
+ 229 007a CCE7     		b	.L10
+ 230              	.L16:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s 			page 6
+
+
+  37:BSP/EM7028/HrAlgorythm.c **** 
+ 231              		.loc 1 37 3 view .LVU56
+ 232 007c 0F48     		ldr	r0, .L18+8
+ 233 007e FFF7FEFF 		bl	dequeue
+ 234              	.LVL18:
+ 235 0082 CCE7     		b	.L11
+ 236              	.L17:
+  47:BSP/EM7028/HrAlgorythm.c **** 					peaks_time[0] = times.data[3];
+ 237              		.loc 1 47 6 view .LVU57
+  47:BSP/EM7028/HrAlgorythm.c **** 					peaks_time[0] = times.data[3];
+ 238              		.loc 1 47 20 is_stmt 0 view .LVU58
+ 239 0084 0E49     		ldr	r1, .L18+12
+ 240 0086 4A80     		strh	r2, [r1, #2]	@ movhi
+  48:BSP/EM7028/HrAlgorythm.c **** 					enqueue(&HR_List,60000/(peaks_time[0]-peaks_time[1]));
+ 241              		.loc 1 48 6 is_stmt 1 view .LVU59
+  48:BSP/EM7028/HrAlgorythm.c **** 					enqueue(&HR_List,60000/(peaks_time[0]-peaks_time[1]));
+ 242              		.loc 1 48 20 is_stmt 0 view .LVU60
+ 243 0088 0B80     		strh	r3, [r1]	@ movhi
+  49:BSP/EM7028/HrAlgorythm.c **** 					if(HR_List.data[6]!=0)
+ 244              		.loc 1 49 6 is_stmt 1 view .LVU61
+  49:BSP/EM7028/HrAlgorythm.c **** 					if(HR_List.data[6]!=0)
+ 245              		.loc 1 49 40 is_stmt 0 view .LVU62
+ 246 008a 9BB2     		uxth	r3, r3
+  49:BSP/EM7028/HrAlgorythm.c **** 					if(HR_List.data[6]!=0)
+ 247              		.loc 1 49 43 view .LVU63
+ 248 008c 9B1A     		subs	r3, r3, r2
+  49:BSP/EM7028/HrAlgorythm.c **** 					if(HR_List.data[6]!=0)
+ 249              		.loc 1 49 6 view .LVU64
+ 250 008e 0B4C     		ldr	r4, .L18+8
+ 251 0090 4EF66021 		movw	r1, #60000
+ 252 0094 91FBF3F1 		sdiv	r1, r1, r3
+ 253 0098 2046     		mov	r0, r4
+ 254 009a FFF7FEFF 		bl	enqueue
+ 255              	.LVL19:
+  50:BSP/EM7028/HrAlgorythm.c **** 					{HR = Hr_Ave_Filter(HR_List.data,7);}
+ 256              		.loc 1 50 6 is_stmt 1 view .LVU65
+  50:BSP/EM7028/HrAlgorythm.c **** 					{HR = Hr_Ave_Filter(HR_List.data,7);}
+ 257              		.loc 1 50 21 is_stmt 0 view .LVU66
+ 258 009e E369     		ldr	r3, [r4, #28]
+  50:BSP/EM7028/HrAlgorythm.c **** 					{HR = Hr_Ave_Filter(HR_List.data,7);}
+ 259              		.loc 1 50 8 view .LVU67
+ 260 00a0 002B     		cmp	r3, #0
+ 261 00a2 E0D0     		beq	.L12
+  51:BSP/EM7028/HrAlgorythm.c **** 			}
+ 262              		.loc 1 51 7 is_stmt 1 view .LVU68
+  51:BSP/EM7028/HrAlgorythm.c **** 			}
+ 263              		.loc 1 51 12 is_stmt 0 view .LVU69
+ 264 00a4 0721     		movs	r1, #7
+ 265 00a6 201D     		adds	r0, r4, #4
+ 266 00a8 FFF7FEFF 		bl	Hr_Ave_Filter
+ 267              	.LVL20:
+  51:BSP/EM7028/HrAlgorythm.c **** 			}
+ 268              		.loc 1 51 10 discriminator 1 view .LVU70
+ 269 00ac 054B     		ldr	r3, .L18+16
+ 270 00ae 1870     		strb	r0, [r3]
+ 271 00b0 D9E7     		b	.L12
+ 272              	.L19:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s 			page 7
+
+
+ 273 00b2 00BF     		.align	2
+ 274              	.L18:
+ 275 00b4 00000000 		.word	datas
+ 276 00b8 00000000 		.word	times
+ 277 00bc 00000000 		.word	HR_List
+ 278 00c0 00000000 		.word	peaks_time.1
+ 279 00c4 00000000 		.word	HR.0
+ 280              		.cfi_endproc
+ 281              	.LFE221:
+ 283              		.section	.bss.HR.0,"aw",%nobits
+ 286              	HR.0:
+ 287 0000 00       		.space	1
+ 288              		.section	.bss.peaks_time.1,"aw",%nobits
+ 289              		.align	2
+ 292              	peaks_time.1:
+ 293 0000 00000000 		.space	4
+ 294              		.global	HR_List
+ 295              		.section	.bss.HR_List,"aw",%nobits
+ 296              		.align	2
+ 299              	HR_List:
+ 300 0000 00000000 		.space	32
+ 300      00000000 
+ 300      00000000 
+ 300      00000000 
+ 300      00000000 
+ 301              		.global	times
+ 302              		.section	.bss.times,"aw",%nobits
+ 303              		.align	2
+ 306              	times:
+ 307 0000 00000000 		.space	32
+ 307      00000000 
+ 307      00000000 
+ 307      00000000 
+ 307      00000000 
+ 308              		.global	datas
+ 309              		.section	.bss.datas,"aw",%nobits
+ 310              		.align	2
+ 313              	datas:
+ 314 0000 00000000 		.space	32
+ 314      00000000 
+ 314      00000000 
+ 314      00000000 
+ 314      00000000 
+ 315              		.text
+ 316              	.Letext0:
+ 317              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 318              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 319              		.file 4 "BSP/EM7028/user_Queue.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 HrAlgorythm.c
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:21     .text.HR_AlgoInit:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:27     .text.HR_AlgoInit:00000000 HR_AlgoInit
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:55     .text.HR_AlgoInit:00000018 $d
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:313    .bss.datas:00000000 datas
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:306    .bss.times:00000000 times
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:299    .bss.HR_List:00000000 HR_List
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:62     .text.Hr_Ave_Filter:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:68     .text.Hr_Ave_Filter:00000000 Hr_Ave_Filter
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:104    .text.HR_Calculate:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:110    .text.HR_Calculate:00000000 HR_Calculate
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:275    .text.HR_Calculate:000000b4 $d
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:292    .bss.peaks_time.1:00000000 peaks_time.1
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:286    .bss.HR.0:00000000 HR.0
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:287    .bss.HR.0:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:289    .bss.peaks_time.1:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:296    .bss.HR_List:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:303    .bss.times:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccC6s6o8.s:310    .bss.datas:00000000 $d
+
+UNDEFINED SYMBOLS
+initQueue
+isQueueFull
+enqueue
+dequeue

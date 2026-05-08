@@ -1,0 +1,489 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cctS5iSY.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"user_RunModeTasks.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/Tasks/Src/user_RunModeTasks.c"
+  20              		.section	.text.IdleEnterTask,"ax",%progbits
+  21              		.align	1
+  22              		.global	IdleEnterTask
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	IdleEnterTask:
+  28              	.LVL0:
+  29              	.LFB416:
+   1:User/Tasks/Src/user_RunModeTasks.c **** /* Private includes -----------------------------------------------------------*/
+   2:User/Tasks/Src/user_RunModeTasks.c **** //includes
+   3:User/Tasks/Src/user_RunModeTasks.c **** #include "user_TasksInit.h"
+   4:User/Tasks/Src/user_RunModeTasks.c **** 
+   5:User/Tasks/Src/user_RunModeTasks.c **** #include "ui.h"
+   6:User/Tasks/Src/user_RunModeTasks.c **** #include "ui_HomePage.h"
+   7:User/Tasks/Src/user_RunModeTasks.c **** #include "ui_OffTimePage.h"
+   8:User/Tasks/Src/user_RunModeTasks.c **** 
+   9:User/Tasks/Src/user_RunModeTasks.c **** #include "main.h"
+  10:User/Tasks/Src/user_RunModeTasks.c **** #include "stm32f4xx_it.h"
+  11:User/Tasks/Src/user_RunModeTasks.c **** #include "usart.h"
+  12:User/Tasks/Src/user_RunModeTasks.c **** #include "lcd_init.h"
+  13:User/Tasks/Src/user_RunModeTasks.c **** #include "power.h"
+  14:User/Tasks/Src/user_RunModeTasks.c **** #include "CST816.h"
+  15:User/Tasks/Src/user_RunModeTasks.c **** #include "MPU6050.h"
+  16:User/Tasks/Src/user_RunModeTasks.c **** #include "key.h"
+  17:User/Tasks/Src/user_RunModeTasks.c **** #include "WDOG.h"
+  18:User/Tasks/Src/user_RunModeTasks.c **** 
+  19:User/Tasks/Src/user_RunModeTasks.c **** #include "HWDataAccess.h"
+  20:User/Tasks/Src/user_RunModeTasks.c **** /* Private typedef -----------------------------------------------------------*/
+  21:User/Tasks/Src/user_RunModeTasks.c **** 
+  22:User/Tasks/Src/user_RunModeTasks.c **** /* Private define ------------------------------------------------------------*/
+  23:User/Tasks/Src/user_RunModeTasks.c **** 
+  24:User/Tasks/Src/user_RunModeTasks.c **** /* Private variables ---------------------------------------------------------*/
+  25:User/Tasks/Src/user_RunModeTasks.c **** uint16_t IdleTimerCount = 0;
+  26:User/Tasks/Src/user_RunModeTasks.c **** 
+  27:User/Tasks/Src/user_RunModeTasks.c **** /* Private function prototypes -----------------------------------------------*/
+  28:User/Tasks/Src/user_RunModeTasks.c **** 
+  29:User/Tasks/Src/user_RunModeTasks.c **** /* Tasks ---------------------------------------------------------------------*/
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cctS5iSY.s 			page 2
+
+
+  30:User/Tasks/Src/user_RunModeTasks.c **** 
+  31:User/Tasks/Src/user_RunModeTasks.c **** /**
+  32:User/Tasks/Src/user_RunModeTasks.c **** 	* @brief  Enter Idle state
+  33:User/Tasks/Src/user_RunModeTasks.c ****   * @param  argument: Not used
+  34:User/Tasks/Src/user_RunModeTasks.c ****   * @retval None
+  35:User/Tasks/Src/user_RunModeTasks.c ****   */
+  36:User/Tasks/Src/user_RunModeTasks.c **** void IdleEnterTask(void *argument)
+  37:User/Tasks/Src/user_RunModeTasks.c **** {
+  30              		.loc 1 37 1 view -0
+  31              		.cfi_startproc
+  32              		@ Volatile: function does not return.
+  33              		@ args = 0, pretend = 0, frame = 8
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              		.loc 1 37 1 is_stmt 0 view .LVU1
+  36 0000 00B5     		push	{lr}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 4
+  39              		.cfi_offset 14, -4
+  40 0002 83B0     		sub	sp, sp, #12
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_offset 16
+  38:User/Tasks/Src/user_RunModeTasks.c **** 	uint8_t Idlestr=0;
+  43              		.loc 1 38 2 is_stmt 1 view .LVU2
+  44              		.loc 1 38 10 is_stmt 0 view .LVU3
+  45 0004 0023     		movs	r3, #0
+  46 0006 8DF80730 		strb	r3, [sp, #7]
+  39:User/Tasks/Src/user_RunModeTasks.c **** 	uint8_t IdleBreakstr=0;
+  47              		.loc 1 39 2 is_stmt 1 view .LVU4
+  48              		.loc 1 39 10 is_stmt 0 view .LVU5
+  49 000a 8DF80630 		strb	r3, [sp, #6]
+  40:User/Tasks/Src/user_RunModeTasks.c **** #if UI_DISPLAY_ALWAYS_ON
+  41:User/Tasks/Src/user_RunModeTasks.c **** 	LCD_Set_Light(ui_LightSliderValue);
+  50              		.loc 1 41 2 is_stmt 1 view .LVU6
+  51 000e 144B     		ldr	r3, .L8
+  52 0010 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  53              	.LVL1:
+  54              		.loc 1 41 2 is_stmt 0 view .LVU7
+  55 0012 FFF7FEFF 		bl	LCD_Set_Light
+  56              	.LVL2:
+  57 0016 0EE0     		b	.L4
+  58              	.L6:
+  42:User/Tasks/Src/user_RunModeTasks.c **** #endif
+  43:User/Tasks/Src/user_RunModeTasks.c **** 	while(1)
+  44:User/Tasks/Src/user_RunModeTasks.c **** 	{
+  45:User/Tasks/Src/user_RunModeTasks.c **** 		//light get dark
+  46:User/Tasks/Src/user_RunModeTasks.c **** 		if(osMessageQueueGet(Idle_MessageQueue,&Idlestr,NULL,1)==osOK)
+  47:User/Tasks/Src/user_RunModeTasks.c **** 		{
+  48:User/Tasks/Src/user_RunModeTasks.c **** #if UI_DISPLAY_ALWAYS_ON
+  49:User/Tasks/Src/user_RunModeTasks.c **** 			LCD_Set_Light(ui_LightSliderValue);
+  59              		.loc 1 49 4 is_stmt 1 view .LVU8
+  60 0018 114B     		ldr	r3, .L8
+  61 001a 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  62 001c FFF7FEFF 		bl	LCD_Set_Light
+  63              	.LVL3:
+  64 0020 13E0     		b	.L2
+  65              	.L7:
+  50:User/Tasks/Src/user_RunModeTasks.c **** #else
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cctS5iSY.s 			page 3
+
+
+  51:User/Tasks/Src/user_RunModeTasks.c **** 			LCD_Set_Light(5);
+  52:User/Tasks/Src/user_RunModeTasks.c **** #endif
+  53:User/Tasks/Src/user_RunModeTasks.c **** 		}
+  54:User/Tasks/Src/user_RunModeTasks.c **** 		//resume light if light got dark and idle state breaked by key pressing or screen touching
+  55:User/Tasks/Src/user_RunModeTasks.c **** 		if(osMessageQueueGet(IdleBreak_MessageQueue,&IdleBreakstr,NULL,1)==osOK)
+  56:User/Tasks/Src/user_RunModeTasks.c **** 		{
+  57:User/Tasks/Src/user_RunModeTasks.c **** 			IdleTimerCount = 0;
+  66              		.loc 1 57 4 view .LVU9
+  67              		.loc 1 57 19 is_stmt 0 view .LVU10
+  68 0022 104B     		ldr	r3, .L8+4
+  69 0024 0022     		movs	r2, #0
+  70 0026 1A80     		strh	r2, [r3]	@ movhi
+  58:User/Tasks/Src/user_RunModeTasks.c **** 			LCD_Set_Light(ui_LightSliderValue);
+  71              		.loc 1 58 4 is_stmt 1 view .LVU11
+  72 0028 0D4B     		ldr	r3, .L8
+  73 002a 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  74 002c FFF7FEFF 		bl	LCD_Set_Light
+  75              	.LVL4:
+  76              	.L3:
+  59:User/Tasks/Src/user_RunModeTasks.c **** 		}
+  60:User/Tasks/Src/user_RunModeTasks.c **** 		osDelay(10);
+  77              		.loc 1 60 3 view .LVU12
+  78 0030 0A20     		movs	r0, #10
+  79 0032 FFF7FEFF 		bl	osDelay
+  80              	.LVL5:
+  43:User/Tasks/Src/user_RunModeTasks.c **** 	{
+  81              		.loc 1 43 7 view .LVU13
+  82              	.L4:
+  43:User/Tasks/Src/user_RunModeTasks.c **** 	{
+  83              		.loc 1 43 2 view .LVU14
+  46:User/Tasks/Src/user_RunModeTasks.c **** 		{
+  84              		.loc 1 46 3 view .LVU15
+  46:User/Tasks/Src/user_RunModeTasks.c **** 		{
+  85              		.loc 1 46 6 is_stmt 0 view .LVU16
+  86 0036 0123     		movs	r3, #1
+  87 0038 0022     		movs	r2, #0
+  88 003a 0DF10701 		add	r1, sp, #7
+  89 003e 0A48     		ldr	r0, .L8+8
+  90 0040 0068     		ldr	r0, [r0]
+  91 0042 FFF7FEFF 		bl	osMessageQueueGet
+  92              	.LVL6:
+  46:User/Tasks/Src/user_RunModeTasks.c **** 		{
+  93              		.loc 1 46 5 discriminator 1 view .LVU17
+  94 0046 0028     		cmp	r0, #0
+  95 0048 E6D0     		beq	.L6
+  96              	.L2:
+  55:User/Tasks/Src/user_RunModeTasks.c **** 		{
+  97              		.loc 1 55 3 is_stmt 1 view .LVU18
+  55:User/Tasks/Src/user_RunModeTasks.c **** 		{
+  98              		.loc 1 55 6 is_stmt 0 view .LVU19
+  99 004a 0123     		movs	r3, #1
+ 100 004c 0022     		movs	r2, #0
+ 101 004e 0DF10601 		add	r1, sp, #6
+ 102 0052 0648     		ldr	r0, .L8+12
+ 103 0054 0068     		ldr	r0, [r0]
+ 104 0056 FFF7FEFF 		bl	osMessageQueueGet
+ 105              	.LVL7:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cctS5iSY.s 			page 4
+
+
+  55:User/Tasks/Src/user_RunModeTasks.c **** 		{
+ 106              		.loc 1 55 5 discriminator 1 view .LVU20
+ 107 005a 0028     		cmp	r0, #0
+ 108 005c E1D0     		beq	.L7
+ 109 005e E7E7     		b	.L3
+ 110              	.L9:
+ 111              		.align	2
+ 112              	.L8:
+ 113 0060 00000000 		.word	ui_LightSliderValue
+ 114 0064 00000000 		.word	IdleTimerCount
+ 115 0068 00000000 		.word	Idle_MessageQueue
+ 116 006c 00000000 		.word	IdleBreak_MessageQueue
+ 117              		.cfi_endproc
+ 118              	.LFE416:
+ 120              		.section	.text.StopEnterTask,"ax",%progbits
+ 121              		.align	1
+ 122              		.global	StopEnterTask
+ 123              		.syntax unified
+ 124              		.thumb
+ 125              		.thumb_func
+ 127              	StopEnterTask:
+ 128              	.LFB417:
+  61:User/Tasks/Src/user_RunModeTasks.c **** 	}
+  62:User/Tasks/Src/user_RunModeTasks.c **** }
+  63:User/Tasks/Src/user_RunModeTasks.c **** 
+  64:User/Tasks/Src/user_RunModeTasks.c **** /**
+  65:User/Tasks/Src/user_RunModeTasks.c ****   * @brief  enter the stop mode and resume
+  66:User/Tasks/Src/user_RunModeTasks.c ****   * @param  argument: Not used
+  67:User/Tasks/Src/user_RunModeTasks.c ****   * @retval None
+  68:User/Tasks/Src/user_RunModeTasks.c ****   */
+  69:User/Tasks/Src/user_RunModeTasks.c **** void StopEnterTask(void *argument)
+  70:User/Tasks/Src/user_RunModeTasks.c **** {
+ 129              		.loc 1 70 1 is_stmt 1 view -0
+ 130              		.cfi_startproc
+ 131              		@ args = 0, pretend = 0, frame = 8
+ 132              		@ frame_needed = 0, uses_anonymous_args = 0
+ 133              	.LVL8:
+ 134              		.loc 1 70 1 is_stmt 0 view .LVU22
+ 135 0000 00B5     		push	{lr}
+ 136              	.LCFI2:
+ 137              		.cfi_def_cfa_offset 4
+ 138              		.cfi_offset 14, -4
+ 139 0002 83B0     		sub	sp, sp, #12
+ 140              	.LCFI3:
+ 141              		.cfi_def_cfa_offset 16
+ 142 0004 06E0     		b	.L11
+ 143              	.LVL9:
+ 144              	.L15:
+ 145              	.LBB2:
+  71:User/Tasks/Src/user_RunModeTasks.c **** 	uint8_t Stopstr;
+  72:User/Tasks/Src/user_RunModeTasks.c **** 	uint8_t HomeUpdataStr;
+  73:User/Tasks/Src/user_RunModeTasks.c **** 	uint8_t Wrist_Flag=0;
+  74:User/Tasks/Src/user_RunModeTasks.c **** 	while(1)
+  75:User/Tasks/Src/user_RunModeTasks.c **** 	{
+  76:User/Tasks/Src/user_RunModeTasks.c **** 		if(osMessageQueueGet(Stop_MessageQueue,&Stopstr,NULL,0)==osOK)
+  77:User/Tasks/Src/user_RunModeTasks.c **** 		{
+  78:User/Tasks/Src/user_RunModeTasks.c **** #if UI_DISPLAY_ALWAYS_ON
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cctS5iSY.s 			page 5
+
+
+  79:User/Tasks/Src/user_RunModeTasks.c **** 			IdleTimerCount = 0;
+ 146              		.loc 1 79 4 is_stmt 1 view .LVU23
+ 147              		.loc 1 79 19 is_stmt 0 view .LVU24
+ 148 0006 0A4B     		ldr	r3, .L16
+ 149 0008 0022     		movs	r2, #0
+ 150 000a 1A80     		strh	r2, [r3]	@ movhi
+  80:User/Tasks/Src/user_RunModeTasks.c **** 			LCD_Set_Light(ui_LightSliderValue);
+ 151              		.loc 1 80 4 is_stmt 1 view .LVU25
+ 152 000c 094B     		ldr	r3, .L16+4
+ 153 000e 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 154 0010 FFF7FEFF 		bl	LCD_Set_Light
+ 155              	.LVL10:
+  81:User/Tasks/Src/user_RunModeTasks.c **** 			continue;
+ 156              		.loc 1 81 4 view .LVU26
+ 157              	.L11:
+ 158              	.LBE2:
+  74:User/Tasks/Src/user_RunModeTasks.c **** 	{
+ 159              		.loc 1 74 2 view .LVU27
+  76:User/Tasks/Src/user_RunModeTasks.c **** 		{
+ 160              		.loc 1 76 3 view .LVU28
+  76:User/Tasks/Src/user_RunModeTasks.c **** 		{
+ 161              		.loc 1 76 6 is_stmt 0 view .LVU29
+ 162 0014 0023     		movs	r3, #0
+ 163 0016 1A46     		mov	r2, r3
+ 164 0018 0DF10701 		add	r1, sp, #7
+ 165 001c 0648     		ldr	r0, .L16+8
+ 166 001e 0068     		ldr	r0, [r0]
+ 167 0020 FFF7FEFF 		bl	osMessageQueueGet
+ 168              	.LVL11:
+  76:User/Tasks/Src/user_RunModeTasks.c **** 		{
+ 169              		.loc 1 76 5 discriminator 1 view .LVU30
+ 170 0024 0028     		cmp	r0, #0
+ 171 0026 EED0     		beq	.L15
+  82:User/Tasks/Src/user_RunModeTasks.c **** #endif
+  83:User/Tasks/Src/user_RunModeTasks.c **** 
+  84:User/Tasks/Src/user_RunModeTasks.c **** 			/*************************** your operations before sleep***************************/
+  85:User/Tasks/Src/user_RunModeTasks.c **** 			sleep:
+  86:User/Tasks/Src/user_RunModeTasks.c **** 			IdleTimerCount = 0;
+  87:User/Tasks/Src/user_RunModeTasks.c **** 
+  88:User/Tasks/Src/user_RunModeTasks.c **** 			//sensors
+  89:User/Tasks/Src/user_RunModeTasks.c **** 
+  90:User/Tasks/Src/user_RunModeTasks.c **** 			//usart
+  91:User/Tasks/Src/user_RunModeTasks.c **** 			HAL_UART_MspDeInit(&huart1);
+  92:User/Tasks/Src/user_RunModeTasks.c **** 
+  93:User/Tasks/Src/user_RunModeTasks.c **** 			//lcd
+  94:User/Tasks/Src/user_RunModeTasks.c **** 			LCD_RES_Clr();
+  95:User/Tasks/Src/user_RunModeTasks.c **** 			LCD_Close_Light();
+  96:User/Tasks/Src/user_RunModeTasks.c **** 			//touch
+  97:User/Tasks/Src/user_RunModeTasks.c **** 			CST816_Sleep();
+  98:User/Tasks/Src/user_RunModeTasks.c **** 
+  99:User/Tasks/Src/user_RunModeTasks.c **** 			/***********************************************************************************/
+ 100:User/Tasks/Src/user_RunModeTasks.c **** 
+ 101:User/Tasks/Src/user_RunModeTasks.c **** 			/****************************** enter wakeup operations *****************************/
+ 102:User/Tasks/Src/user_RunModeTasks.c **** 
+ 103:User/Tasks/Src/user_RunModeTasks.c **** 			vTaskSuspendAll();
+ 104:User/Tasks/Src/user_RunModeTasks.c **** 			//Disnable Watch Dog
+ 105:User/Tasks/Src/user_RunModeTasks.c **** 			WDOG_Disnable();
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cctS5iSY.s 			page 6
+
+
+ 106:User/Tasks/Src/user_RunModeTasks.c **** 			//systick int
+ 107:User/Tasks/Src/user_RunModeTasks.c **** 			CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk);
+ 108:User/Tasks/Src/user_RunModeTasks.c **** 			//enter stop mode
+ 109:User/Tasks/Src/user_RunModeTasks.c **** 			HAL_PWR_EnterSTOPMode(PWR_MAINREGULATOR_ON,PWR_STOPENTRY_WFI);
+ 110:User/Tasks/Src/user_RunModeTasks.c **** 
+ 111:User/Tasks/Src/user_RunModeTasks.c **** 			//here is the sleep period
+ 112:User/Tasks/Src/user_RunModeTasks.c **** 
+ 113:User/Tasks/Src/user_RunModeTasks.c **** 			/***********************************************************************************/
+ 114:User/Tasks/Src/user_RunModeTasks.c **** 
+ 115:User/Tasks/Src/user_RunModeTasks.c **** 			/****************************** quit wakeup operations *****************************/
+ 116:User/Tasks/Src/user_RunModeTasks.c **** 
+ 117:User/Tasks/Src/user_RunModeTasks.c **** 			//resume run mode and reset the sysclk
+ 118:User/Tasks/Src/user_RunModeTasks.c **** 			SET_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk);
+ 119:User/Tasks/Src/user_RunModeTasks.c **** 			HAL_SYSTICK_Config(SystemCoreClock / (1000U / uwTickFreq));
+ 120:User/Tasks/Src/user_RunModeTasks.c **** 			SystemClock_Config();
+ 121:User/Tasks/Src/user_RunModeTasks.c **** 			WDOG_Feed();
+ 122:User/Tasks/Src/user_RunModeTasks.c **** 			xTaskResumeAll();
+ 123:User/Tasks/Src/user_RunModeTasks.c **** 
+ 124:User/Tasks/Src/user_RunModeTasks.c **** 			/***********************************************************************************/
+ 125:User/Tasks/Src/user_RunModeTasks.c **** 
+ 126:User/Tasks/Src/user_RunModeTasks.c **** 			/****************************** your wakeup operations *****************************/
+ 127:User/Tasks/Src/user_RunModeTasks.c **** 
+ 128:User/Tasks/Src/user_RunModeTasks.c **** 			//MPU Check
+ 129:User/Tasks/Src/user_RunModeTasks.c **** 			if(HWInterface.IMU.wrist_is_enabled)
+ 130:User/Tasks/Src/user_RunModeTasks.c **** 			{
+ 131:User/Tasks/Src/user_RunModeTasks.c **** 				uint8_t hor;
+ 132:User/Tasks/Src/user_RunModeTasks.c **** 				hor = MPU_isHorizontal();
+ 133:User/Tasks/Src/user_RunModeTasks.c **** 				if(hor && HWInterface.IMU.wrist_state == WRIST_DOWN)
+ 134:User/Tasks/Src/user_RunModeTasks.c **** 				{
+ 135:User/Tasks/Src/user_RunModeTasks.c **** 					HWInterface.IMU.wrist_state = WRIST_UP;
+ 136:User/Tasks/Src/user_RunModeTasks.c **** 					Wrist_Flag = 1;
+ 137:User/Tasks/Src/user_RunModeTasks.c **** 					//resume, go on
+ 138:User/Tasks/Src/user_RunModeTasks.c **** 				}
+ 139:User/Tasks/Src/user_RunModeTasks.c **** 				else if(!hor && HWInterface.IMU.wrist_state == WRIST_UP)
+ 140:User/Tasks/Src/user_RunModeTasks.c **** 				{
+ 141:User/Tasks/Src/user_RunModeTasks.c **** 					HWInterface.IMU.wrist_state = WRIST_DOWN;
+ 142:User/Tasks/Src/user_RunModeTasks.c **** 					IdleTimerCount  = 0;
+ 143:User/Tasks/Src/user_RunModeTasks.c **** 					goto sleep;
+ 144:User/Tasks/Src/user_RunModeTasks.c **** 				}
+ 145:User/Tasks/Src/user_RunModeTasks.c **** 			}
+ 146:User/Tasks/Src/user_RunModeTasks.c **** 
+ 147:User/Tasks/Src/user_RunModeTasks.c **** 			//
+ 148:User/Tasks/Src/user_RunModeTasks.c **** 			if(!KEY1 || KEY2 || HardInt_Charg_flag || Wrist_Flag)
+ 149:User/Tasks/Src/user_RunModeTasks.c **** 			{
+ 150:User/Tasks/Src/user_RunModeTasks.c **** 				Wrist_Flag = 0;
+ 151:User/Tasks/Src/user_RunModeTasks.c **** 				//resume, go on
+ 152:User/Tasks/Src/user_RunModeTasks.c **** 			}
+ 153:User/Tasks/Src/user_RunModeTasks.c **** 			else
+ 154:User/Tasks/Src/user_RunModeTasks.c **** 			{
+ 155:User/Tasks/Src/user_RunModeTasks.c **** 				IdleTimerCount  = 0;
+ 156:User/Tasks/Src/user_RunModeTasks.c **** 				goto sleep;
+ 157:User/Tasks/Src/user_RunModeTasks.c **** 			}
+ 158:User/Tasks/Src/user_RunModeTasks.c **** 
+ 159:User/Tasks/Src/user_RunModeTasks.c **** 			//usart
+ 160:User/Tasks/Src/user_RunModeTasks.c **** 			HAL_UART_MspInit(&huart1);
+ 161:User/Tasks/Src/user_RunModeTasks.c **** 			//lcd
+ 162:User/Tasks/Src/user_RunModeTasks.c **** 			LCD_Init();
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cctS5iSY.s 			page 7
+
+
+ 163:User/Tasks/Src/user_RunModeTasks.c **** 			LCD_Set_Light(ui_LightSliderValue);
+ 164:User/Tasks/Src/user_RunModeTasks.c **** 			//touch
+ 165:User/Tasks/Src/user_RunModeTasks.c **** 			CST816_Wakeup();
+ 166:User/Tasks/Src/user_RunModeTasks.c **** 			//check if is Charging
+ 167:User/Tasks/Src/user_RunModeTasks.c **** 			if(ChargeCheck())
+ 168:User/Tasks/Src/user_RunModeTasks.c **** 			{HardInt_Charg_flag = 1;}
+ 169:User/Tasks/Src/user_RunModeTasks.c **** 			//send the Home Updata message
+ 170:User/Tasks/Src/user_RunModeTasks.c **** 			osMessageQueuePut(HomeUpdata_MessageQueue, &HomeUpdataStr, 0, 1);
+ 171:User/Tasks/Src/user_RunModeTasks.c **** 
+ 172:User/Tasks/Src/user_RunModeTasks.c **** 			/**************************************************************************************/
+ 173:User/Tasks/Src/user_RunModeTasks.c **** 
+ 174:User/Tasks/Src/user_RunModeTasks.c **** 		}
+ 175:User/Tasks/Src/user_RunModeTasks.c **** 		osDelay(100);
+ 172              		.loc 1 175 3 is_stmt 1 view .LVU31
+ 173 0028 6420     		movs	r0, #100
+ 174 002a FFF7FEFF 		bl	osDelay
+ 175              	.LVL12:
+ 176 002e F1E7     		b	.L11
+ 177              	.L17:
+ 178              		.align	2
+ 179              	.L16:
+ 180 0030 00000000 		.word	IdleTimerCount
+ 181 0034 00000000 		.word	ui_LightSliderValue
+ 182 0038 00000000 		.word	Stop_MessageQueue
+ 183              		.cfi_endproc
+ 184              	.LFE417:
+ 186              		.section	.text.IdleTimerCallback,"ax",%progbits
+ 187              		.align	1
+ 188              		.global	IdleTimerCallback
+ 189              		.syntax unified
+ 190              		.thumb
+ 191              		.thumb_func
+ 193              	IdleTimerCallback:
+ 194              	.LVL13:
+ 195              	.LFB418:
+ 176:User/Tasks/Src/user_RunModeTasks.c **** 	}
+ 177:User/Tasks/Src/user_RunModeTasks.c **** }
+ 178:User/Tasks/Src/user_RunModeTasks.c **** 
+ 179:User/Tasks/Src/user_RunModeTasks.c **** void IdleTimerCallback(void *argument)
+ 180:User/Tasks/Src/user_RunModeTasks.c **** {
+ 196              		.loc 1 180 1 view -0
+ 197              		.cfi_startproc
+ 198              		@ args = 0, pretend = 0, frame = 0
+ 199              		@ frame_needed = 0, uses_anonymous_args = 0
+ 200              		@ link register save eliminated.
+ 181:User/Tasks/Src/user_RunModeTasks.c **** #if UI_DISPLAY_ALWAYS_ON
+ 182:User/Tasks/Src/user_RunModeTasks.c **** 	IdleTimerCount = 0;
+ 201              		.loc 1 182 2 view .LVU33
+ 202              		.loc 1 182 17 is_stmt 0 view .LVU34
+ 203 0000 014B     		ldr	r3, .L19
+ 204 0002 0022     		movs	r2, #0
+ 205 0004 1A80     		strh	r2, [r3]	@ movhi
+ 183:User/Tasks/Src/user_RunModeTasks.c **** 	return;
+ 206              		.loc 1 183 2 is_stmt 1 view .LVU35
+ 184:User/Tasks/Src/user_RunModeTasks.c **** #endif
+ 185:User/Tasks/Src/user_RunModeTasks.c **** 	IdleTimerCount+=1;
+ 186:User/Tasks/Src/user_RunModeTasks.c **** 	//make sure the LightOffTime<TurnOffTime
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cctS5iSY.s 			page 8
+
+
+ 187:User/Tasks/Src/user_RunModeTasks.c **** 	if(IdleTimerCount == (ui_LTimeValue*10))
+ 188:User/Tasks/Src/user_RunModeTasks.c **** 	{
+ 189:User/Tasks/Src/user_RunModeTasks.c **** 		uint8_t Idlestr=0;
+ 190:User/Tasks/Src/user_RunModeTasks.c **** 		//send the Light off message
+ 191:User/Tasks/Src/user_RunModeTasks.c **** 		osMessageQueuePut(Idle_MessageQueue, &Idlestr, 0, 1);
+ 192:User/Tasks/Src/user_RunModeTasks.c **** 
+ 193:User/Tasks/Src/user_RunModeTasks.c **** 	}
+ 194:User/Tasks/Src/user_RunModeTasks.c **** 	if(IdleTimerCount == (ui_TTimeValue*10))
+ 195:User/Tasks/Src/user_RunModeTasks.c **** 	{
+ 196:User/Tasks/Src/user_RunModeTasks.c **** 		uint8_t Stopstr = 1;
+ 197:User/Tasks/Src/user_RunModeTasks.c **** 		IdleTimerCount  = 0;
+ 198:User/Tasks/Src/user_RunModeTasks.c **** 		//send the Stop message
+ 199:User/Tasks/Src/user_RunModeTasks.c **** 		osMessageQueuePut(Stop_MessageQueue, &Stopstr, 0, 1);
+ 200:User/Tasks/Src/user_RunModeTasks.c **** 	}
+ 201:User/Tasks/Src/user_RunModeTasks.c **** }
+ 207              		.loc 1 201 1 is_stmt 0 view .LVU36
+ 208 0006 7047     		bx	lr
+ 209              	.L20:
+ 210              		.align	2
+ 211              	.L19:
+ 212 0008 00000000 		.word	IdleTimerCount
+ 213              		.cfi_endproc
+ 214              	.LFE418:
+ 216              		.global	IdleTimerCount
+ 217              		.section	.bss.IdleTimerCount,"aw",%nobits
+ 218              		.align	1
+ 221              	IdleTimerCount:
+ 222 0000 0000     		.space	2
+ 223              		.text
+ 224              	.Letext0:
+ 225              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 226              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 227              		.file 4 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ 228              		.file 5 "User/Tasks/Inc/user_TasksInit.h"
+ 229              		.file 6 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj.h"
+ 230              		.file 7 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_bar.h"
+ 231              		.file 8 "User/GUI_App/Screens/Inc/ui_HomePage.h"
+ 232              		.file 9 "Drivers/CMSIS/Include/core_cm4.h"
+ 233              		.file 10 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 234              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 235              		.file 12 "BSP/LCD/lcd_init.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\cctS5iSY.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 user_RunModeTasks.c
+C:\Users\chen\AppData\Local\Temp\cctS5iSY.s:21     .text.IdleEnterTask:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cctS5iSY.s:27     .text.IdleEnterTask:00000000 IdleEnterTask
+C:\Users\chen\AppData\Local\Temp\cctS5iSY.s:113    .text.IdleEnterTask:00000060 $d
+C:\Users\chen\AppData\Local\Temp\cctS5iSY.s:221    .bss.IdleTimerCount:00000000 IdleTimerCount
+C:\Users\chen\AppData\Local\Temp\cctS5iSY.s:121    .text.StopEnterTask:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cctS5iSY.s:127    .text.StopEnterTask:00000000 StopEnterTask
+C:\Users\chen\AppData\Local\Temp\cctS5iSY.s:180    .text.StopEnterTask:00000030 $d
+C:\Users\chen\AppData\Local\Temp\cctS5iSY.s:187    .text.IdleTimerCallback:00000000 $t
+C:\Users\chen\AppData\Local\Temp\cctS5iSY.s:193    .text.IdleTimerCallback:00000000 IdleTimerCallback
+C:\Users\chen\AppData\Local\Temp\cctS5iSY.s:212    .text.IdleTimerCallback:00000008 $d
+C:\Users\chen\AppData\Local\Temp\cctS5iSY.s:218    .bss.IdleTimerCount:00000000 $d
+
+UNDEFINED SYMBOLS
+LCD_Set_Light
+osDelay
+osMessageQueueGet
+ui_LightSliderValue
+Idle_MessageQueue
+IdleBreak_MessageQueue
+Stop_MessageQueue

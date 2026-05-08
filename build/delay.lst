@@ -1,0 +1,353 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"delay.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "SYSTEM/delay.c"
+  20              		.section	.text.delay_init,"ax",%progbits
+  21              		.align	1
+  22              		.global	delay_init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	delay_init:
+  28              	.LFB216:
+   1:SYSTEM/delay.c **** #include "delay.h"
+   2:SYSTEM/delay.c **** #include "sys.h"
+   3:SYSTEM/delay.c ****  
+   4:SYSTEM/delay.c **** /* 
+   5:SYSTEM/delay.c **** //roughly delay
+   6:SYSTEM/delay.c **** void delay_us(u32 nus)
+   7:SYSTEM/delay.c **** {		
+   8:SYSTEM/delay.c **** 	u32 i;
+   9:SYSTEM/delay.c **** 	u16 temp;
+  10:SYSTEM/delay.c **** 	temp = nus*SYS_CLK/15;
+  11:SYSTEM/delay.c **** 	for(i=0;i<temp;i++);
+  12:SYSTEM/delay.c **** }
+  13:SYSTEM/delay.c **** 
+  14:SYSTEM/delay.c **** //延时nms
+  15:SYSTEM/delay.c **** //nms:要延时的ms数
+  16:SYSTEM/delay.c **** void delay_ms(u16 nms)
+  17:SYSTEM/delay.c **** {
+  18:SYSTEM/delay.c **** 	u32 i;
+  19:SYSTEM/delay.c **** 	for(i=0;i<nms;i++) delay_us(1000);
+  20:SYSTEM/delay.c **** }
+  21:SYSTEM/delay.c **** */
+  22:SYSTEM/delay.c **** 
+  23:SYSTEM/delay.c **** void delay_init(void)
+  24:SYSTEM/delay.c **** {
+  29              		.loc 1 24 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s 			page 2
+
+
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  25:SYSTEM/delay.c **** 	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+  38              		.loc 1 25 2 view .LVU1
+  39 0002 0420     		movs	r0, #4
+  40 0004 FFF7FEFF 		bl	HAL_SYSTICK_CLKSourceConfig
+  41              	.LVL0:
+  26:SYSTEM/delay.c **** 	/* Configure the SysTick to have interrupt in 1ms time basis*/
+  27:SYSTEM/delay.c **** 	HAL_SYSTICK_Config(SystemCoreClock / (1000U / uwTickFreq));
+  42              		.loc 1 27 2 view .LVU2
+  43              		.loc 1 27 46 is_stmt 0 view .LVU3
+  44 0008 064B     		ldr	r3, .L3
+  45 000a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  46 000c 4FF47A73 		mov	r3, #1000
+  47 0010 B3FBF2F3 		udiv	r3, r3, r2
+  48              		.loc 1 27 2 view .LVU4
+  49 0014 044A     		ldr	r2, .L3+4
+  50 0016 1068     		ldr	r0, [r2]
+  51 0018 B0FBF3F0 		udiv	r0, r0, r3
+  52 001c FFF7FEFF 		bl	HAL_SYSTICK_Config
+  53              	.LVL1:
+  28:SYSTEM/delay.c **** }
+  54              		.loc 1 28 1 view .LVU5
+  55 0020 08BD     		pop	{r3, pc}
+  56              	.L4:
+  57 0022 00BF     		.align	2
+  58              	.L3:
+  59 0024 00000000 		.word	uwTickFreq
+  60 0028 00000000 		.word	SystemCoreClock
+  61              		.cfi_endproc
+  62              	.LFE216:
+  64              		.section	.text.delay_us,"ax",%progbits
+  65              		.align	1
+  66              		.global	delay_us
+  67              		.syntax unified
+  68              		.thumb
+  69              		.thumb_func
+  71              	delay_us:
+  72              	.LVL2:
+  73              	.LFB217:
+  29:SYSTEM/delay.c **** 
+  30:SYSTEM/delay.c **** #if OS_SUPPORT 						    								   
+  31:SYSTEM/delay.c **** void delay_us(u32 nus)
+  32:SYSTEM/delay.c **** {		
+  33:SYSTEM/delay.c **** 	u32 ticks;
+  34:SYSTEM/delay.c **** 	u32 told,tnow,tcnt=0;
+  35:SYSTEM/delay.c **** 	u32 reload=SysTick->LOAD;				   	 
+  36:SYSTEM/delay.c **** 	ticks=nus*SYS_CLK; 						 
+  37:SYSTEM/delay.c **** 	delay_osschedlock();					
+  38:SYSTEM/delay.c **** 	told=SysTick->VAL;        				
+  39:SYSTEM/delay.c **** 	while(1)
+  40:SYSTEM/delay.c **** 	{
+  41:SYSTEM/delay.c **** 		tnow=SysTick->VAL;	
+  42:SYSTEM/delay.c **** 		if(tnow!=told)
+  43:SYSTEM/delay.c **** 		{	    
+  44:SYSTEM/delay.c **** 			if(tnow<told)tcnt+=told-tnow;//这里注意一下SYSTICK是一个递减的计数器就可以了.	
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s 			page 3
+
+
+  45:SYSTEM/delay.c **** 			else tcnt+=reload-tnow+told;	    
+  46:SYSTEM/delay.c **** 			told=tnow;
+  47:SYSTEM/delay.c **** 			if(tcnt>=ticks)break;			
+  48:SYSTEM/delay.c **** 		}  
+  49:SYSTEM/delay.c **** 	};
+  50:SYSTEM/delay.c **** 	delay_osschedunlock();															    
+  51:SYSTEM/delay.c **** }  
+  52:SYSTEM/delay.c **** 
+  53:SYSTEM/delay.c **** void delay_ms(u16 nms)
+  54:SYSTEM/delay.c **** {	
+  55:SYSTEM/delay.c **** 	if(delay_osrunning&&delay_osintnesting==0)    
+  56:SYSTEM/delay.c **** 	{		 
+  57:SYSTEM/delay.c **** 		if(nms>=fac_ms)						
+  58:SYSTEM/delay.c **** 		{ 
+  59:SYSTEM/delay.c ****    			delay_ostimedly(nms/fac_ms);	
+  60:SYSTEM/delay.c **** 		}
+  61:SYSTEM/delay.c **** 		nms%=fac_ms;						 
+  62:SYSTEM/delay.c **** 	}
+  63:SYSTEM/delay.c **** 	delay_us((u32)(nms*1000));			
+  64:SYSTEM/delay.c **** }
+  65:SYSTEM/delay.c **** #else  
+  66:SYSTEM/delay.c **** 	 
+  67:SYSTEM/delay.c **** void delay_us(u32 nus)
+  68:SYSTEM/delay.c **** {		
+  74              		.loc 1 68 1 is_stmt 1 view -0
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78              		@ link register save eliminated.
+  79              		.loc 1 68 1 is_stmt 0 view .LVU7
+  80 0000 10B4     		push	{r4}
+  81              	.LCFI1:
+  82              		.cfi_def_cfa_offset 4
+  83              		.cfi_offset 4, -4
+  69:SYSTEM/delay.c **** 	u32 ticks;
+  84              		.loc 1 69 2 is_stmt 1 view .LVU8
+  70:SYSTEM/delay.c **** 	u32 told,tnow,tcnt=0;
+  85              		.loc 1 70 2 view .LVU9
+  86              	.LVL3:
+  71:SYSTEM/delay.c **** 	u32 reload=SysTick->LOAD;				    	 
+  87              		.loc 1 71 2 view .LVU10
+  88              		.loc 1 71 6 is_stmt 0 view .LVU11
+  89 0002 4FF0E023 		mov	r3, #-536813568
+  90 0006 5C69     		ldr	r4, [r3, #20]
+  91              	.LVL4:
+  72:SYSTEM/delay.c **** 	ticks=nus*SYS_CLK; 						
+  92              		.loc 1 72 2 is_stmt 1 view .LVU12
+  93              		.loc 1 72 7 is_stmt 0 view .LVU13
+  94 0008 6422     		movs	r2, #100
+  95 000a 02FB00FC 		mul	ip, r2, r0
+  96              	.LVL5:
+  73:SYSTEM/delay.c **** 	told=SysTick->VAL;        				
+  97              		.loc 1 73 2 is_stmt 1 view .LVU14
+  98              		.loc 1 73 6 is_stmt 0 view .LVU15
+  99 000e 9B69     		ldr	r3, [r3, #24]
+ 100              	.LVL6:
+  70:SYSTEM/delay.c **** 	u32 reload=SysTick->LOAD;				    	 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s 			page 4
+
+
+ 101              		.loc 1 70 16 view .LVU16
+ 102 0010 0021     		movs	r1, #0
+ 103 0012 04E0     		b	.L9
+ 104              	.LVL7:
+ 105              	.L7:
+  74:SYSTEM/delay.c **** 	while(1)
+  75:SYSTEM/delay.c **** 	{
+  76:SYSTEM/delay.c **** 		tnow=SysTick->VAL;	
+  77:SYSTEM/delay.c **** 		if(tnow!=told)
+  78:SYSTEM/delay.c **** 		{	    
+  79:SYSTEM/delay.c **** 			if(tnow<told)tcnt+=told-tnow;	
+  80:SYSTEM/delay.c **** 			else tcnt+=reload-tnow+told;	    
+ 106              		.loc 1 80 9 is_stmt 1 view .LVU17
+ 107              		.loc 1 80 21 is_stmt 0 view .LVU18
+ 108 0014 E01A     		subs	r0, r4, r3
+ 109              		.loc 1 80 26 view .LVU19
+ 110 0016 0244     		add	r2, r2, r0
+ 111              	.LVL8:
+ 112              		.loc 1 80 13 view .LVU20
+ 113 0018 1144     		add	r1, r1, r2
+ 114              	.LVL9:
+ 115              	.L8:
+  81:SYSTEM/delay.c **** 			told=tnow;
+ 116              		.loc 1 81 4 is_stmt 1 view .LVU21
+  82:SYSTEM/delay.c **** 			if(tcnt>=ticks)break;			
+ 117              		.loc 1 82 4 view .LVU22
+ 118              		.loc 1 82 6 is_stmt 0 view .LVU23
+ 119 001a 6145     		cmp	r1, ip
+ 120 001c 09D2     		bcs	.L11
+ 121              	.LVL10:
+ 122              	.L9:
+  70:SYSTEM/delay.c **** 	u32 reload=SysTick->LOAD;				    	 
+ 123              		.loc 1 70 16 view .LVU24
+ 124 001e 1A46     		mov	r2, r3
+ 125              	.LVL11:
+ 126              	.L6:
+  74:SYSTEM/delay.c **** 	{
+ 127              		.loc 1 74 2 is_stmt 1 view .LVU25
+  76:SYSTEM/delay.c **** 		if(tnow!=told)
+ 128              		.loc 1 76 3 view .LVU26
+  76:SYSTEM/delay.c **** 		if(tnow!=told)
+ 129              		.loc 1 76 7 is_stmt 0 view .LVU27
+ 130 0020 4FF0E023 		mov	r3, #-536813568
+ 131 0024 9B69     		ldr	r3, [r3, #24]
+ 132              	.LVL12:
+  77:SYSTEM/delay.c **** 		{	    
+ 133              		.loc 1 77 3 is_stmt 1 view .LVU28
+  77:SYSTEM/delay.c **** 		{	    
+ 134              		.loc 1 77 5 is_stmt 0 view .LVU29
+ 135 0026 9A42     		cmp	r2, r3
+ 136 0028 FAD0     		beq	.L6
+  79:SYSTEM/delay.c **** 			else tcnt+=reload-tnow+told;	    
+ 137              		.loc 1 79 4 is_stmt 1 view .LVU30
+  79:SYSTEM/delay.c **** 			else tcnt+=reload-tnow+told;	    
+ 138              		.loc 1 79 6 is_stmt 0 view .LVU31
+ 139 002a F3D9     		bls	.L7
+  79:SYSTEM/delay.c **** 			else tcnt+=reload-tnow+told;	    
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s 			page 5
+
+
+ 140              		.loc 1 79 17 is_stmt 1 discriminator 1 view .LVU32
+  79:SYSTEM/delay.c **** 			else tcnt+=reload-tnow+told;	    
+ 141              		.loc 1 79 27 is_stmt 0 discriminator 1 view .LVU33
+ 142 002c D21A     		subs	r2, r2, r3
+ 143              	.LVL13:
+  79:SYSTEM/delay.c **** 			else tcnt+=reload-tnow+told;	    
+ 144              		.loc 1 79 21 discriminator 1 view .LVU34
+ 145 002e 1144     		add	r1, r1, r2
+ 146              	.LVL14:
+  79:SYSTEM/delay.c **** 			else tcnt+=reload-tnow+told;	    
+ 147              		.loc 1 79 21 discriminator 1 view .LVU35
+ 148 0030 F3E7     		b	.L8
+ 149              	.LVL15:
+ 150              	.L11:
+  83:SYSTEM/delay.c **** 		}  
+  84:SYSTEM/delay.c **** 	}
+  85:SYSTEM/delay.c **** }
+ 151              		.loc 1 85 1 view .LVU36
+ 152 0032 5DF8044B 		ldr	r4, [sp], #4
+ 153              	.LCFI2:
+ 154              		.cfi_restore 4
+ 155              		.cfi_def_cfa_offset 0
+ 156              	.LVL16:
+ 157              		.loc 1 85 1 view .LVU37
+ 158 0036 7047     		bx	lr
+ 159              		.cfi_endproc
+ 160              	.LFE217:
+ 162              		.section	.text.delay_ms,"ax",%progbits
+ 163              		.align	1
+ 164              		.global	delay_ms
+ 165              		.syntax unified
+ 166              		.thumb
+ 167              		.thumb_func
+ 169              	delay_ms:
+ 170              	.LVL17:
+ 171              	.LFB218:
+  86:SYSTEM/delay.c **** 
+  87:SYSTEM/delay.c **** void delay_ms(u16 nms)
+  88:SYSTEM/delay.c **** {
+ 172              		.loc 1 88 1 is_stmt 1 view -0
+ 173              		.cfi_startproc
+ 174              		@ args = 0, pretend = 0, frame = 0
+ 175              		@ frame_needed = 0, uses_anonymous_args = 0
+ 176              		.loc 1 88 1 is_stmt 0 view .LVU39
+ 177 0000 38B5     		push	{r3, r4, r5, lr}
+ 178              	.LCFI3:
+ 179              		.cfi_def_cfa_offset 16
+ 180              		.cfi_offset 3, -16
+ 181              		.cfi_offset 4, -12
+ 182              		.cfi_offset 5, -8
+ 183              		.cfi_offset 14, -4
+ 184 0002 0546     		mov	r5, r0
+  89:SYSTEM/delay.c **** 	u32 i;
+ 185              		.loc 1 89 2 is_stmt 1 view .LVU40
+  90:SYSTEM/delay.c **** 	for(i=0;i<nms;i++) delay_us(1000);
+ 186              		.loc 1 90 2 view .LVU41
+ 187              	.LVL18:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s 			page 6
+
+
+ 188              		.loc 1 90 7 is_stmt 0 view .LVU42
+ 189 0004 0024     		movs	r4, #0
+ 190              		.loc 1 90 2 view .LVU43
+ 191 0006 04E0     		b	.L13
+ 192              	.LVL19:
+ 193              	.L14:
+ 194              		.loc 1 90 21 is_stmt 1 discriminator 3 view .LVU44
+ 195 0008 4FF47A70 		mov	r0, #1000
+ 196 000c FFF7FEFF 		bl	delay_us
+ 197              	.LVL20:
+ 198              		.loc 1 90 17 discriminator 3 view .LVU45
+ 199 0010 0134     		adds	r4, r4, #1
+ 200              	.LVL21:
+ 201              	.L13:
+ 202              		.loc 1 90 11 discriminator 2 view .LVU46
+ 203 0012 A542     		cmp	r5, r4
+ 204 0014 F8D8     		bhi	.L14
+  91:SYSTEM/delay.c **** }
+ 205              		.loc 1 91 1 is_stmt 0 view .LVU47
+ 206 0016 38BD     		pop	{r3, r4, r5, pc}
+ 207              		.loc 1 91 1 view .LVU48
+ 208              		.cfi_endproc
+ 209              	.LFE218:
+ 211              		.text
+ 212              	.Letext0:
+ 213              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 214              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 215              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 216              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ 217              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 218              		.file 7 "SYSTEM/sys.h"
+ 219              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 delay.c
+C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s:21     .text.delay_init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s:27     .text.delay_init:00000000 delay_init
+C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s:59     .text.delay_init:00000024 $d
+C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s:65     .text.delay_us:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s:71     .text.delay_us:00000000 delay_us
+C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s:163    .text.delay_ms:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccs8e2ae.s:169    .text.delay_ms:00000000 delay_ms
+
+UNDEFINED SYMBOLS
+HAL_SYSTICK_CLKSourceConfig
+HAL_SYSTICK_Config
+uwTickFreq
+SystemCoreClock

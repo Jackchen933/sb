@@ -1,0 +1,2502 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"ui_helpers.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/GUI_App/ui_helpers.c"
+  20              		.section	.text._ui_bar_set_property,"ax",%progbits
+  21              		.align	1
+  22              		.global	_ui_bar_set_property
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	_ui_bar_set_property:
+  28              	.LVL0:
+  29              	.LFB195:
+   1:User/GUI_App/ui_helpers.c **** // SquareLine LVGL GENERATED FILE
+   2:User/GUI_App/ui_helpers.c **** // EDITOR VERSION: SquareLine Studio 1.1.1
+   3:User/GUI_App/ui_helpers.c **** // LVGL VERSION: 8.2.0
+   4:User/GUI_App/ui_helpers.c **** // PROJECT: MenuPage
+   5:User/GUI_App/ui_helpers.c **** 
+   6:User/GUI_App/ui_helpers.c **** #include "ui_helpers.h"
+   7:User/GUI_App/ui_helpers.c **** 
+   8:User/GUI_App/ui_helpers.c **** void _ui_bar_set_property(lv_obj_t * target, int id, int val)
+   9:User/GUI_App/ui_helpers.c **** {
+  30              		.loc 1 9 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 9 1 is_stmt 0 view .LVU1
+  35 0000 70B5     		push	{r4, r5, r6, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 16
+  38              		.cfi_offset 4, -16
+  39              		.cfi_offset 5, -12
+  40              		.cfi_offset 6, -8
+  41              		.cfi_offset 14, -4
+  42 0002 0546     		mov	r5, r0
+  43 0004 0C46     		mov	r4, r1
+  44 0006 1646     		mov	r6, r2
+  10:User/GUI_App/ui_helpers.c ****     if(id == _UI_BAR_PROPERTY_VALUE_WITH_ANIM) lv_bar_set_value(target, val, LV_ANIM_ON);
+  45              		.loc 1 10 5 is_stmt 1 view .LVU2
+  46              		.loc 1 10 7 is_stmt 0 view .LVU3
+  47 0008 0129     		cmp	r1, #1
+  48 000a 01D0     		beq	.L5
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 2
+
+
+  49              	.LVL1:
+  50              	.L2:
+  11:User/GUI_App/ui_helpers.c ****     if(id == _UI_BAR_PROPERTY_VALUE) lv_bar_set_value(target, val, LV_ANIM_OFF);
+  51              		.loc 1 11 5 is_stmt 1 view .LVU4
+  52              		.loc 1 11 7 is_stmt 0 view .LVU5
+  53 000c 2CB1     		cbz	r4, .L6
+  54              	.L1:
+  12:User/GUI_App/ui_helpers.c **** }
+  55              		.loc 1 12 1 view .LVU6
+  56 000e 70BD     		pop	{r4, r5, r6, pc}
+  57              	.LVL2:
+  58              	.L5:
+  10:User/GUI_App/ui_helpers.c ****     if(id == _UI_BAR_PROPERTY_VALUE_WITH_ANIM) lv_bar_set_value(target, val, LV_ANIM_ON);
+  59              		.loc 1 10 48 is_stmt 1 discriminator 1 view .LVU7
+  60 0010 0122     		movs	r2, #1
+  61              	.LVL3:
+  10:User/GUI_App/ui_helpers.c ****     if(id == _UI_BAR_PROPERTY_VALUE_WITH_ANIM) lv_bar_set_value(target, val, LV_ANIM_ON);
+  62              		.loc 1 10 48 is_stmt 0 discriminator 1 view .LVU8
+  63 0012 3146     		mov	r1, r6
+  64              	.LVL4:
+  10:User/GUI_App/ui_helpers.c ****     if(id == _UI_BAR_PROPERTY_VALUE_WITH_ANIM) lv_bar_set_value(target, val, LV_ANIM_ON);
+  65              		.loc 1 10 48 discriminator 1 view .LVU9
+  66 0014 FFF7FEFF 		bl	lv_bar_set_value
+  67              	.LVL5:
+  10:User/GUI_App/ui_helpers.c ****     if(id == _UI_BAR_PROPERTY_VALUE_WITH_ANIM) lv_bar_set_value(target, val, LV_ANIM_ON);
+  68              		.loc 1 10 48 discriminator 1 view .LVU10
+  69 0018 F8E7     		b	.L2
+  70              	.L6:
+  11:User/GUI_App/ui_helpers.c ****     if(id == _UI_BAR_PROPERTY_VALUE) lv_bar_set_value(target, val, LV_ANIM_OFF);
+  71              		.loc 1 11 38 is_stmt 1 discriminator 1 view .LVU11
+  72 001a 0022     		movs	r2, #0
+  73 001c 3146     		mov	r1, r6
+  74 001e 2846     		mov	r0, r5
+  75 0020 FFF7FEFF 		bl	lv_bar_set_value
+  76              	.LVL6:
+  77              		.loc 1 12 1 is_stmt 0 view .LVU12
+  78 0024 F3E7     		b	.L1
+  79              		.cfi_endproc
+  80              	.LFE195:
+  82              		.section	.text._ui_basic_set_property,"ax",%progbits
+  83              		.align	1
+  84              		.global	_ui_basic_set_property
+  85              		.syntax unified
+  86              		.thumb
+  87              		.thumb_func
+  89              	_ui_basic_set_property:
+  90              	.LVL7:
+  91              	.LFB196:
+  13:User/GUI_App/ui_helpers.c **** 
+  14:User/GUI_App/ui_helpers.c **** void _ui_basic_set_property(lv_obj_t * target, int id, int val)
+  15:User/GUI_App/ui_helpers.c **** {
+  92              		.loc 1 15 1 is_stmt 1 view -0
+  93              		.cfi_startproc
+  94              		@ args = 0, pretend = 0, frame = 0
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  96              		.loc 1 15 1 is_stmt 0 view .LVU14
+  97 0000 70B5     		push	{r4, r5, r6, lr}
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 3
+
+
+  98              	.LCFI1:
+  99              		.cfi_def_cfa_offset 16
+ 100              		.cfi_offset 4, -16
+ 101              		.cfi_offset 5, -12
+ 102              		.cfi_offset 6, -8
+ 103              		.cfi_offset 14, -4
+ 104 0002 0546     		mov	r5, r0
+ 105 0004 1646     		mov	r6, r2
+  16:User/GUI_App/ui_helpers.c ****     if(id == _UI_BASIC_PROPERTY_POSITION_X) lv_obj_set_x(target, val);
+ 106              		.loc 1 16 5 is_stmt 1 view .LVU15
+ 107              		.loc 1 16 7 is_stmt 0 view .LVU16
+ 108 0006 0C46     		mov	r4, r1
+ 109 0008 31B1     		cbz	r1, .L13
+ 110              	.LVL8:
+ 111              	.L8:
+  17:User/GUI_App/ui_helpers.c ****     if(id == _UI_BASIC_PROPERTY_POSITION_Y) lv_obj_set_y(target, val);
+ 112              		.loc 1 17 5 is_stmt 1 view .LVU17
+ 113              		.loc 1 17 7 is_stmt 0 view .LVU18
+ 114 000a 012C     		cmp	r4, #1
+ 115 000c 08D0     		beq	.L14
+ 116              	.L9:
+  18:User/GUI_App/ui_helpers.c ****     if(id == _UI_BASIC_PROPERTY_WIDTH) lv_obj_set_width(target, val);
+ 117              		.loc 1 18 5 is_stmt 1 view .LVU19
+ 118              		.loc 1 18 7 is_stmt 0 view .LVU20
+ 119 000e 022C     		cmp	r4, #2
+ 120 0010 0BD0     		beq	.L15
+ 121              	.L10:
+  19:User/GUI_App/ui_helpers.c ****     if(id == _UI_BASIC_PROPERTY_HEIGHT) lv_obj_set_height(target, val);
+ 122              		.loc 1 19 5 is_stmt 1 view .LVU21
+ 123              		.loc 1 19 7 is_stmt 0 view .LVU22
+ 124 0012 032C     		cmp	r4, #3
+ 125 0014 0ED0     		beq	.L16
+ 126              	.L7:
+  20:User/GUI_App/ui_helpers.c **** }
+ 127              		.loc 1 20 1 view .LVU23
+ 128 0016 70BD     		pop	{r4, r5, r6, pc}
+ 129              	.LVL9:
+ 130              	.L13:
+  16:User/GUI_App/ui_helpers.c ****     if(id == _UI_BASIC_PROPERTY_POSITION_Y) lv_obj_set_y(target, val);
+ 131              		.loc 1 16 45 is_stmt 1 discriminator 1 view .LVU24
+ 132 0018 11B2     		sxth	r1, r2
+ 133              	.LVL10:
+  16:User/GUI_App/ui_helpers.c ****     if(id == _UI_BASIC_PROPERTY_POSITION_Y) lv_obj_set_y(target, val);
+ 134              		.loc 1 16 45 is_stmt 0 discriminator 1 view .LVU25
+ 135 001a FFF7FEFF 		bl	lv_obj_set_x
+ 136              	.LVL11:
+  16:User/GUI_App/ui_helpers.c ****     if(id == _UI_BASIC_PROPERTY_POSITION_Y) lv_obj_set_y(target, val);
+ 137              		.loc 1 16 45 discriminator 1 view .LVU26
+ 138 001e F4E7     		b	.L8
+ 139              	.L14:
+  17:User/GUI_App/ui_helpers.c ****     if(id == _UI_BASIC_PROPERTY_WIDTH) lv_obj_set_width(target, val);
+ 140              		.loc 1 17 45 is_stmt 1 discriminator 1 view .LVU27
+ 141 0020 31B2     		sxth	r1, r6
+ 142 0022 2846     		mov	r0, r5
+ 143 0024 FFF7FEFF 		bl	lv_obj_set_y
+ 144              	.LVL12:
+ 145 0028 F1E7     		b	.L9
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 4
+
+
+ 146              	.L15:
+  18:User/GUI_App/ui_helpers.c ****     if(id == _UI_BASIC_PROPERTY_HEIGHT) lv_obj_set_height(target, val);
+ 147              		.loc 1 18 40 discriminator 1 view .LVU28
+ 148 002a 31B2     		sxth	r1, r6
+ 149 002c 2846     		mov	r0, r5
+ 150 002e FFF7FEFF 		bl	lv_obj_set_width
+ 151              	.LVL13:
+ 152 0032 EEE7     		b	.L10
+ 153              	.L16:
+  19:User/GUI_App/ui_helpers.c **** }
+ 154              		.loc 1 19 41 discriminator 1 view .LVU29
+ 155 0034 31B2     		sxth	r1, r6
+ 156 0036 2846     		mov	r0, r5
+ 157 0038 FFF7FEFF 		bl	lv_obj_set_height
+ 158              	.LVL14:
+ 159              		.loc 1 20 1 is_stmt 0 view .LVU30
+ 160 003c EBE7     		b	.L7
+ 161              		.cfi_endproc
+ 162              	.LFE196:
+ 164              		.section	.text._ui_dropdown_set_property,"ax",%progbits
+ 165              		.align	1
+ 166              		.global	_ui_dropdown_set_property
+ 167              		.syntax unified
+ 168              		.thumb
+ 169              		.thumb_func
+ 171              	_ui_dropdown_set_property:
+ 172              	.LVL15:
+ 173              	.LFB197:
+  21:User/GUI_App/ui_helpers.c **** 
+  22:User/GUI_App/ui_helpers.c **** 
+  23:User/GUI_App/ui_helpers.c **** void _ui_dropdown_set_property(lv_obj_t * target, int id, int val)
+  24:User/GUI_App/ui_helpers.c **** {
+ 174              		.loc 1 24 1 is_stmt 1 view -0
+ 175              		.cfi_startproc
+ 176              		@ args = 0, pretend = 0, frame = 0
+ 177              		@ frame_needed = 0, uses_anonymous_args = 0
+  25:User/GUI_App/ui_helpers.c ****     if(id == _UI_DROPDOWN_PROPERTY_SELECTED) lv_dropdown_set_selected(target, val);
+ 178              		.loc 1 25 5 view .LVU32
+ 179              		.loc 1 25 7 is_stmt 0 view .LVU33
+ 180 0000 01B1     		cbz	r1, .L23
+ 181 0002 7047     		bx	lr
+ 182              	.L23:
+  24:User/GUI_App/ui_helpers.c ****     if(id == _UI_DROPDOWN_PROPERTY_SELECTED) lv_dropdown_set_selected(target, val);
+ 183              		.loc 1 24 1 view .LVU34
+ 184 0004 08B5     		push	{r3, lr}
+ 185              	.LCFI2:
+ 186              		.cfi_def_cfa_offset 8
+ 187              		.cfi_offset 3, -8
+ 188              		.cfi_offset 14, -4
+ 189              		.loc 1 25 46 is_stmt 1 discriminator 1 view .LVU35
+ 190 0006 91B2     		uxth	r1, r2
+ 191              	.LVL16:
+ 192              		.loc 1 25 46 is_stmt 0 discriminator 1 view .LVU36
+ 193 0008 FFF7FEFF 		bl	lv_dropdown_set_selected
+ 194              	.LVL17:
+  26:User/GUI_App/ui_helpers.c **** }
+ 195              		.loc 1 26 1 view .LVU37
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 5
+
+
+ 196 000c 08BD     		pop	{r3, pc}
+ 197              		.cfi_endproc
+ 198              	.LFE197:
+ 200              		.section	.text._ui_image_set_property,"ax",%progbits
+ 201              		.align	1
+ 202              		.global	_ui_image_set_property
+ 203              		.syntax unified
+ 204              		.thumb
+ 205              		.thumb_func
+ 207              	_ui_image_set_property:
+ 208              	.LVL18:
+ 209              	.LFB198:
+  27:User/GUI_App/ui_helpers.c **** 
+  28:User/GUI_App/ui_helpers.c **** void _ui_image_set_property(lv_obj_t * target, int id, uint8_t * val)
+  29:User/GUI_App/ui_helpers.c **** {
+ 210              		.loc 1 29 1 is_stmt 1 view -0
+ 211              		.cfi_startproc
+ 212              		@ args = 0, pretend = 0, frame = 0
+ 213              		@ frame_needed = 0, uses_anonymous_args = 0
+  30:User/GUI_App/ui_helpers.c ****     if(id == _UI_IMAGE_PROPERTY_IMAGE) lv_img_set_src(target, val);
+ 214              		.loc 1 30 5 view .LVU39
+ 215              		.loc 1 30 7 is_stmt 0 view .LVU40
+ 216 0000 01B1     		cbz	r1, .L30
+ 217 0002 7047     		bx	lr
+ 218              	.L30:
+  29:User/GUI_App/ui_helpers.c ****     if(id == _UI_IMAGE_PROPERTY_IMAGE) lv_img_set_src(target, val);
+ 219              		.loc 1 29 1 view .LVU41
+ 220 0004 08B5     		push	{r3, lr}
+ 221              	.LCFI3:
+ 222              		.cfi_def_cfa_offset 8
+ 223              		.cfi_offset 3, -8
+ 224              		.cfi_offset 14, -4
+ 225              		.loc 1 30 40 is_stmt 1 discriminator 1 view .LVU42
+ 226 0006 1146     		mov	r1, r2
+ 227              	.LVL19:
+ 228              		.loc 1 30 40 is_stmt 0 discriminator 1 view .LVU43
+ 229 0008 FFF7FEFF 		bl	lv_img_set_src
+ 230              	.LVL20:
+  31:User/GUI_App/ui_helpers.c **** }
+ 231              		.loc 1 31 1 view .LVU44
+ 232 000c 08BD     		pop	{r3, pc}
+ 233              		.cfi_endproc
+ 234              	.LFE198:
+ 236              		.section	.text._ui_label_set_property,"ax",%progbits
+ 237              		.align	1
+ 238              		.global	_ui_label_set_property
+ 239              		.syntax unified
+ 240              		.thumb
+ 241              		.thumb_func
+ 243              	_ui_label_set_property:
+ 244              	.LVL21:
+ 245              	.LFB199:
+  32:User/GUI_App/ui_helpers.c **** 
+  33:User/GUI_App/ui_helpers.c **** void _ui_label_set_property(lv_obj_t * target, int id, char * val)
+  34:User/GUI_App/ui_helpers.c **** {
+ 246              		.loc 1 34 1 is_stmt 1 view -0
+ 247              		.cfi_startproc
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 6
+
+
+ 248              		@ args = 0, pretend = 0, frame = 0
+ 249              		@ frame_needed = 0, uses_anonymous_args = 0
+  35:User/GUI_App/ui_helpers.c ****     if(id == _UI_LABEL_PROPERTY_TEXT) lv_label_set_text(target, val);
+ 250              		.loc 1 35 5 view .LVU46
+ 251              		.loc 1 35 7 is_stmt 0 view .LVU47
+ 252 0000 01B1     		cbz	r1, .L37
+ 253 0002 7047     		bx	lr
+ 254              	.L37:
+  34:User/GUI_App/ui_helpers.c ****     if(id == _UI_LABEL_PROPERTY_TEXT) lv_label_set_text(target, val);
+ 255              		.loc 1 34 1 view .LVU48
+ 256 0004 08B5     		push	{r3, lr}
+ 257              	.LCFI4:
+ 258              		.cfi_def_cfa_offset 8
+ 259              		.cfi_offset 3, -8
+ 260              		.cfi_offset 14, -4
+ 261              		.loc 1 35 39 is_stmt 1 discriminator 1 view .LVU49
+ 262 0006 1146     		mov	r1, r2
+ 263              	.LVL22:
+ 264              		.loc 1 35 39 is_stmt 0 discriminator 1 view .LVU50
+ 265 0008 FFF7FEFF 		bl	lv_label_set_text
+ 266              	.LVL23:
+  36:User/GUI_App/ui_helpers.c **** }
+ 267              		.loc 1 36 1 view .LVU51
+ 268 000c 08BD     		pop	{r3, pc}
+ 269              		.cfi_endproc
+ 270              	.LFE199:
+ 272              		.section	.text._ui_roller_set_property,"ax",%progbits
+ 273              		.align	1
+ 274              		.global	_ui_roller_set_property
+ 275              		.syntax unified
+ 276              		.thumb
+ 277              		.thumb_func
+ 279              	_ui_roller_set_property:
+ 280              	.LVL24:
+ 281              	.LFB200:
+  37:User/GUI_App/ui_helpers.c **** 
+  38:User/GUI_App/ui_helpers.c **** 
+  39:User/GUI_App/ui_helpers.c **** void _ui_roller_set_property(lv_obj_t * target, int id, int val)
+  40:User/GUI_App/ui_helpers.c **** {
+ 282              		.loc 1 40 1 is_stmt 1 view -0
+ 283              		.cfi_startproc
+ 284              		@ args = 0, pretend = 0, frame = 0
+ 285              		@ frame_needed = 0, uses_anonymous_args = 0
+ 286              		.loc 1 40 1 is_stmt 0 view .LVU53
+ 287 0000 70B5     		push	{r4, r5, r6, lr}
+ 288              	.LCFI5:
+ 289              		.cfi_def_cfa_offset 16
+ 290              		.cfi_offset 4, -16
+ 291              		.cfi_offset 5, -12
+ 292              		.cfi_offset 6, -8
+ 293              		.cfi_offset 14, -4
+ 294 0002 0546     		mov	r5, r0
+ 295 0004 0C46     		mov	r4, r1
+ 296 0006 1646     		mov	r6, r2
+  41:User/GUI_App/ui_helpers.c ****     if(id == _UI_ROLLER_PROPERTY_SELECTED_WITH_ANIM) lv_roller_set_selected(target, val, LV_ANIM_ON
+ 297              		.loc 1 41 5 is_stmt 1 view .LVU54
+ 298              		.loc 1 41 7 is_stmt 0 view .LVU55
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 7
+
+
+ 299 0008 0129     		cmp	r1, #1
+ 300 000a 01D0     		beq	.L42
+ 301              	.LVL25:
+ 302              	.L39:
+  42:User/GUI_App/ui_helpers.c ****     if(id == _UI_ROLLER_PROPERTY_SELECTED) lv_roller_set_selected(target, val, LV_ANIM_OFF);
+ 303              		.loc 1 42 5 is_stmt 1 view .LVU56
+ 304              		.loc 1 42 7 is_stmt 0 view .LVU57
+ 305 000c 2CB1     		cbz	r4, .L43
+ 306              	.L38:
+  43:User/GUI_App/ui_helpers.c **** }
+ 307              		.loc 1 43 1 view .LVU58
+ 308 000e 70BD     		pop	{r4, r5, r6, pc}
+ 309              	.LVL26:
+ 310              	.L42:
+  41:User/GUI_App/ui_helpers.c ****     if(id == _UI_ROLLER_PROPERTY_SELECTED_WITH_ANIM) lv_roller_set_selected(target, val, LV_ANIM_ON
+ 311              		.loc 1 41 54 is_stmt 1 discriminator 1 view .LVU59
+ 312 0010 0122     		movs	r2, #1
+ 313              	.LVL27:
+  41:User/GUI_App/ui_helpers.c ****     if(id == _UI_ROLLER_PROPERTY_SELECTED_WITH_ANIM) lv_roller_set_selected(target, val, LV_ANIM_ON
+ 314              		.loc 1 41 54 is_stmt 0 discriminator 1 view .LVU60
+ 315 0012 B1B2     		uxth	r1, r6
+ 316              	.LVL28:
+  41:User/GUI_App/ui_helpers.c ****     if(id == _UI_ROLLER_PROPERTY_SELECTED_WITH_ANIM) lv_roller_set_selected(target, val, LV_ANIM_ON
+ 317              		.loc 1 41 54 discriminator 1 view .LVU61
+ 318 0014 FFF7FEFF 		bl	lv_roller_set_selected
+ 319              	.LVL29:
+  41:User/GUI_App/ui_helpers.c ****     if(id == _UI_ROLLER_PROPERTY_SELECTED_WITH_ANIM) lv_roller_set_selected(target, val, LV_ANIM_ON
+ 320              		.loc 1 41 54 discriminator 1 view .LVU62
+ 321 0018 F8E7     		b	.L39
+ 322              	.L43:
+  42:User/GUI_App/ui_helpers.c ****     if(id == _UI_ROLLER_PROPERTY_SELECTED) lv_roller_set_selected(target, val, LV_ANIM_OFF);
+ 323              		.loc 1 42 44 is_stmt 1 discriminator 1 view .LVU63
+ 324 001a 0022     		movs	r2, #0
+ 325 001c B1B2     		uxth	r1, r6
+ 326 001e 2846     		mov	r0, r5
+ 327 0020 FFF7FEFF 		bl	lv_roller_set_selected
+ 328              	.LVL30:
+ 329              		.loc 1 43 1 is_stmt 0 view .LVU64
+ 330 0024 F3E7     		b	.L38
+ 331              		.cfi_endproc
+ 332              	.LFE200:
+ 334              		.section	.text._ui_slider_set_property,"ax",%progbits
+ 335              		.align	1
+ 336              		.global	_ui_slider_set_property
+ 337              		.syntax unified
+ 338              		.thumb
+ 339              		.thumb_func
+ 341              	_ui_slider_set_property:
+ 342              	.LVL31:
+ 343              	.LFB201:
+  44:User/GUI_App/ui_helpers.c **** 
+  45:User/GUI_App/ui_helpers.c **** void _ui_slider_set_property(lv_obj_t * target, int id, int val)
+  46:User/GUI_App/ui_helpers.c **** {
+ 344              		.loc 1 46 1 is_stmt 1 view -0
+ 345              		.cfi_startproc
+ 346              		@ args = 0, pretend = 0, frame = 0
+ 347              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 8
+
+
+ 348              		.loc 1 46 1 is_stmt 0 view .LVU66
+ 349 0000 70B5     		push	{r4, r5, r6, lr}
+ 350              	.LCFI6:
+ 351              		.cfi_def_cfa_offset 16
+ 352              		.cfi_offset 4, -16
+ 353              		.cfi_offset 5, -12
+ 354              		.cfi_offset 6, -8
+ 355              		.cfi_offset 14, -4
+ 356 0002 0546     		mov	r5, r0
+ 357 0004 0C46     		mov	r4, r1
+ 358 0006 1646     		mov	r6, r2
+  47:User/GUI_App/ui_helpers.c ****     if(id == _UI_SLIDER_PROPERTY_VALUE_WITH_ANIM) lv_slider_set_value(target, val, LV_ANIM_ON);
+ 359              		.loc 1 47 5 is_stmt 1 view .LVU67
+ 360              		.loc 1 47 7 is_stmt 0 view .LVU68
+ 361 0008 0129     		cmp	r1, #1
+ 362 000a 01D0     		beq	.L48
+ 363              	.LVL32:
+ 364              	.L45:
+  48:User/GUI_App/ui_helpers.c ****     if(id == _UI_SLIDER_PROPERTY_VALUE) lv_slider_set_value(target, val, LV_ANIM_OFF);
+ 365              		.loc 1 48 5 is_stmt 1 view .LVU69
+ 366              		.loc 1 48 7 is_stmt 0 view .LVU70
+ 367 000c 2CB1     		cbz	r4, .L49
+ 368              	.L44:
+  49:User/GUI_App/ui_helpers.c **** }
+ 369              		.loc 1 49 1 view .LVU71
+ 370 000e 70BD     		pop	{r4, r5, r6, pc}
+ 371              	.LVL33:
+ 372              	.L48:
+  47:User/GUI_App/ui_helpers.c ****     if(id == _UI_SLIDER_PROPERTY_VALUE_WITH_ANIM) lv_slider_set_value(target, val, LV_ANIM_ON);
+ 373              		.loc 1 47 51 is_stmt 1 discriminator 1 view .LVU72
+ 374              	.LBB14:
+ 375              	.LBI14:
+ 376              		.file 2 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h"
+   1:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /**
+   2:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @file lv_slider.h
+   3:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  *
+   4:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  */
+   5:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+   6:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** #ifndef LV_SLIDER_H
+   7:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** #define LV_SLIDER_H
+   8:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+   9:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** #ifdef __cplusplus
+  10:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** extern "C" {
+  11:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** #endif
+  12:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  13:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /*********************
+  14:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  *      INCLUDES
+  15:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  *********************/
+  16:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** #include "../lv_conf_internal.h"
+  17:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  18:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** #if LV_USE_SLIDER != 0
+  19:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  20:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /*Testing of dependencies*/
+  21:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** #if LV_USE_BAR == 0
+  22:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** #error "lv_slider: lv_bar is required. Enable it in lv_conf.h (LV_USE_BAR 1)"
+  23:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** #endif
+  24:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 9
+
+
+  25:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** #include "../core/lv_obj.h"
+  26:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** #include "lv_bar.h"
+  27:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  28:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /*********************
+  29:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  *      DEFINES
+  30:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  *********************/
+  31:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  32:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /**********************
+  33:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  *      TYPEDEFS
+  34:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  **********************/
+  35:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  36:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** enum {
+  37:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     LV_SLIDER_MODE_NORMAL = LV_BAR_MODE_NORMAL,
+  38:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     LV_SLIDER_MODE_SYMMETRICAL = LV_BAR_MODE_SYMMETRICAL,
+  39:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     LV_SLIDER_MODE_RANGE = LV_BAR_MODE_RANGE
+  40:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** };
+  41:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** typedef uint8_t lv_slider_mode_t;
+  42:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  43:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** typedef struct {
+  44:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     lv_bar_t bar;       /*Add the ancestor's type first*/
+  45:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     lv_area_t left_knob_area;
+  46:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     lv_area_t right_knob_area;
+  47:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     int32_t * value_to_set; /*Which bar value to set*/
+  48:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     uint8_t dragging : 1;       /*1: the slider is being dragged*/
+  49:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     uint8_t left_knob_focus : 1; /*1: with encoder now the right knob can be adjusted*/
+  50:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** } lv_slider_t;
+  51:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  52:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** extern const lv_obj_class_t lv_slider_class;
+  53:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  54:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /**
+  55:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * `type` field in `lv_obj_draw_part_dsc_t` if `class_p = lv_slider_class`
+  56:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * Used in `LV_EVENT_DRAW_PART_BEGIN` and `LV_EVENT_DRAW_PART_END`
+  57:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  */
+  58:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** typedef enum {
+  59:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     LV_SLIDER_DRAW_PART_KNOB,           /**< The main (right) knob's rectangle*/
+  60:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     LV_SLIDER_DRAW_PART_KNOB_LEFT,      /**< The left knob's rectangle*/
+  61:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** } lv_slider_draw_part_type_t;
+  62:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  63:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /**********************
+  64:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * GLOBAL PROTOTYPES
+  65:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  **********************/
+  66:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  67:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /**
+  68:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * Create a slider object
+  69:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @param parent    pointer to an object, it will be the parent of the new slider.
+  70:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @return          pointer to the created slider
+  71:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  */
+  72:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** lv_obj_t * lv_slider_create(lv_obj_t * parent);
+  73:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  74:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /*=====================
+  75:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * Setter functions
+  76:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  *====================*/
+  77:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  78:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /**
+  79:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * Set a new value on the slider
+  80:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @param obj       pointer to a slider object
+  81:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @param value     the new value
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 10
+
+
+  82:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @param anim      LV_ANIM_ON: set the value with an animation; LV_ANIM_OFF: change the value imme
+  83:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  */
+  84:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** static inline void lv_slider_set_value(lv_obj_t * obj, int32_t value, lv_anim_enable_t anim)
+ 377              		.loc 2 84 20 view .LVU73
+ 378              	.LBB15:
+  85:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** {
+  86:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     lv_bar_set_value(obj, value, anim);
+ 379              		.loc 2 86 5 view .LVU74
+ 380 0010 0122     		movs	r2, #1
+ 381              	.LVL34:
+ 382              		.loc 2 86 5 is_stmt 0 view .LVU75
+ 383 0012 3146     		mov	r1, r6
+ 384              	.LVL35:
+ 385              		.loc 2 86 5 view .LVU76
+ 386 0014 FFF7FEFF 		bl	lv_bar_set_value
+ 387              	.LVL36:
+  87:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** }
+ 388              		.loc 2 87 1 view .LVU77
+ 389 0018 F8E7     		b	.L45
+ 390              	.L49:
+ 391              		.loc 2 87 1 view .LVU78
+ 392              	.LBE15:
+ 393              	.LBE14:
+  48:User/GUI_App/ui_helpers.c **** }
+ 394              		.loc 1 48 41 is_stmt 1 discriminator 1 view .LVU79
+ 395              	.LVL37:
+ 396              	.LBB16:
+ 397              	.LBI16:
+  84:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** {
+ 398              		.loc 2 84 20 view .LVU80
+ 399              	.LBB17:
+  86:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** }
+ 400              		.loc 2 86 5 view .LVU81
+ 401 001a 0022     		movs	r2, #0
+ 402 001c 3146     		mov	r1, r6
+ 403 001e 2846     		mov	r0, r5
+ 404 0020 FFF7FEFF 		bl	lv_bar_set_value
+ 405              	.LVL38:
+  86:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** }
+ 406              		.loc 2 86 5 is_stmt 0 view .LVU82
+ 407              	.LBE17:
+ 408              	.LBE16:
+ 409              		.loc 1 49 1 view .LVU83
+ 410 0024 F3E7     		b	.L44
+ 411              		.cfi_endproc
+ 412              	.LFE201:
+ 414              		.section	.text._ui_screen_change,"ax",%progbits
+ 415              		.align	1
+ 416              		.global	_ui_screen_change
+ 417              		.syntax unified
+ 418              		.thumb
+ 419              		.thumb_func
+ 421              	_ui_screen_change:
+ 422              	.LVL39:
+ 423              	.LFB202:
+  50:User/GUI_App/ui_helpers.c **** 
+  51:User/GUI_App/ui_helpers.c **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 11
+
+
+  52:User/GUI_App/ui_helpers.c **** void _ui_screen_change(lv_obj_t * target, lv_scr_load_anim_t fademode, int spd, int delay)
+  53:User/GUI_App/ui_helpers.c **** {
+ 424              		.loc 1 53 1 is_stmt 1 view -0
+ 425              		.cfi_startproc
+ 426              		@ args = 0, pretend = 0, frame = 0
+ 427              		@ frame_needed = 0, uses_anonymous_args = 0
+ 428              		.loc 1 53 1 is_stmt 0 view .LVU85
+ 429 0000 10B5     		push	{r4, lr}
+ 430              	.LCFI7:
+ 431              		.cfi_def_cfa_offset 8
+ 432              		.cfi_offset 4, -8
+ 433              		.cfi_offset 14, -4
+ 434 0002 82B0     		sub	sp, sp, #8
+ 435              	.LCFI8:
+ 436              		.cfi_def_cfa_offset 16
+  54:User/GUI_App/ui_helpers.c ****     lv_scr_load_anim(target, fademode, spd, delay, false);
+ 437              		.loc 1 54 5 is_stmt 1 view .LVU86
+ 438 0004 0024     		movs	r4, #0
+ 439 0006 0094     		str	r4, [sp]
+ 440 0008 FFF7FEFF 		bl	lv_scr_load_anim
+ 441              	.LVL40:
+  55:User/GUI_App/ui_helpers.c **** }
+ 442              		.loc 1 55 1 is_stmt 0 view .LVU87
+ 443 000c 02B0     		add	sp, sp, #8
+ 444              	.LCFI9:
+ 445              		.cfi_def_cfa_offset 8
+ 446              		@ sp needed
+ 447 000e 10BD     		pop	{r4, pc}
+ 448              		.cfi_endproc
+ 449              	.LFE202:
+ 451              		.section	.text._ui_arc_increment,"ax",%progbits
+ 452              		.align	1
+ 453              		.global	_ui_arc_increment
+ 454              		.syntax unified
+ 455              		.thumb
+ 456              		.thumb_func
+ 458              	_ui_arc_increment:
+ 459              	.LVL41:
+ 460              	.LFB203:
+  56:User/GUI_App/ui_helpers.c **** 
+  57:User/GUI_App/ui_helpers.c **** void _ui_arc_increment(lv_obj_t * target, int val)
+  58:User/GUI_App/ui_helpers.c **** {
+ 461              		.loc 1 58 1 is_stmt 1 view -0
+ 462              		.cfi_startproc
+ 463              		@ args = 0, pretend = 0, frame = 0
+ 464              		@ frame_needed = 0, uses_anonymous_args = 0
+ 465              		.loc 1 58 1 is_stmt 0 view .LVU89
+ 466 0000 38B5     		push	{r3, r4, r5, lr}
+ 467              	.LCFI10:
+ 468              		.cfi_def_cfa_offset 16
+ 469              		.cfi_offset 3, -16
+ 470              		.cfi_offset 4, -12
+ 471              		.cfi_offset 5, -8
+ 472              		.cfi_offset 14, -4
+ 473 0002 0446     		mov	r4, r0
+ 474 0004 0D46     		mov	r5, r1
+  59:User/GUI_App/ui_helpers.c ****     int old = lv_arc_get_value(target);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 12
+
+
+ 475              		.loc 1 59 5 is_stmt 1 view .LVU90
+ 476              		.loc 1 59 15 is_stmt 0 view .LVU91
+ 477 0006 FFF7FEFF 		bl	lv_arc_get_value
+ 478              	.LVL42:
+  60:User/GUI_App/ui_helpers.c ****     lv_arc_set_value(target, old + val);
+ 479              		.loc 1 60 5 is_stmt 1 view .LVU92
+ 480              		.loc 1 60 34 is_stmt 0 view .LVU93
+ 481 000a 4119     		adds	r1, r0, r5
+ 482              		.loc 1 60 5 view .LVU94
+ 483 000c 09B2     		sxth	r1, r1
+ 484 000e 2046     		mov	r0, r4
+ 485              	.LVL43:
+ 486              		.loc 1 60 5 view .LVU95
+ 487 0010 FFF7FEFF 		bl	lv_arc_set_value
+ 488              	.LVL44:
+  61:User/GUI_App/ui_helpers.c **** }
+ 489              		.loc 1 61 1 view .LVU96
+ 490 0014 38BD     		pop	{r3, r4, r5, pc}
+ 491              		.loc 1 61 1 view .LVU97
+ 492              		.cfi_endproc
+ 493              	.LFE203:
+ 495              		.section	.text._ui_bar_increment,"ax",%progbits
+ 496              		.align	1
+ 497              		.global	_ui_bar_increment
+ 498              		.syntax unified
+ 499              		.thumb
+ 500              		.thumb_func
+ 502              	_ui_bar_increment:
+ 503              	.LVL45:
+ 504              	.LFB204:
+  62:User/GUI_App/ui_helpers.c **** 
+  63:User/GUI_App/ui_helpers.c **** void _ui_bar_increment(lv_obj_t * target, int val, int anm)
+  64:User/GUI_App/ui_helpers.c **** {
+ 505              		.loc 1 64 1 is_stmt 1 view -0
+ 506              		.cfi_startproc
+ 507              		@ args = 0, pretend = 0, frame = 0
+ 508              		@ frame_needed = 0, uses_anonymous_args = 0
+ 509              		.loc 1 64 1 is_stmt 0 view .LVU99
+ 510 0000 70B5     		push	{r4, r5, r6, lr}
+ 511              	.LCFI11:
+ 512              		.cfi_def_cfa_offset 16
+ 513              		.cfi_offset 4, -16
+ 514              		.cfi_offset 5, -12
+ 515              		.cfi_offset 6, -8
+ 516              		.cfi_offset 14, -4
+ 517 0002 0446     		mov	r4, r0
+ 518 0004 0D46     		mov	r5, r1
+ 519 0006 1646     		mov	r6, r2
+  65:User/GUI_App/ui_helpers.c ****     int old = lv_bar_get_value(target);
+ 520              		.loc 1 65 5 is_stmt 1 view .LVU100
+ 521              		.loc 1 65 15 is_stmt 0 view .LVU101
+ 522 0008 FFF7FEFF 		bl	lv_bar_get_value
+ 523              	.LVL46:
+  66:User/GUI_App/ui_helpers.c ****     lv_bar_set_value(target, old + val, anm);
+ 524              		.loc 1 66 5 is_stmt 1 view .LVU102
+ 525 000c F2B2     		uxtb	r2, r6
+ 526 000e 4119     		adds	r1, r0, r5
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 13
+
+
+ 527 0010 2046     		mov	r0, r4
+ 528              	.LVL47:
+ 529              		.loc 1 66 5 is_stmt 0 view .LVU103
+ 530 0012 FFF7FEFF 		bl	lv_bar_set_value
+ 531              	.LVL48:
+  67:User/GUI_App/ui_helpers.c **** }
+ 532              		.loc 1 67 1 view .LVU104
+ 533 0016 70BD     		pop	{r4, r5, r6, pc}
+ 534              		.loc 1 67 1 view .LVU105
+ 535              		.cfi_endproc
+ 536              	.LFE204:
+ 538              		.section	.text._ui_slider_increment,"ax",%progbits
+ 539              		.align	1
+ 540              		.global	_ui_slider_increment
+ 541              		.syntax unified
+ 542              		.thumb
+ 543              		.thumb_func
+ 545              	_ui_slider_increment:
+ 546              	.LVL49:
+ 547              	.LFB205:
+  68:User/GUI_App/ui_helpers.c **** 
+  69:User/GUI_App/ui_helpers.c **** void _ui_slider_increment(lv_obj_t * target, int val, int anm)
+  70:User/GUI_App/ui_helpers.c **** {
+ 548              		.loc 1 70 1 is_stmt 1 view -0
+ 549              		.cfi_startproc
+ 550              		@ args = 0, pretend = 0, frame = 0
+ 551              		@ frame_needed = 0, uses_anonymous_args = 0
+ 552              		.loc 1 70 1 is_stmt 0 view .LVU107
+ 553 0000 70B5     		push	{r4, r5, r6, lr}
+ 554              	.LCFI12:
+ 555              		.cfi_def_cfa_offset 16
+ 556              		.cfi_offset 4, -16
+ 557              		.cfi_offset 5, -12
+ 558              		.cfi_offset 6, -8
+ 559              		.cfi_offset 14, -4
+ 560 0002 0446     		mov	r4, r0
+ 561 0004 0D46     		mov	r5, r1
+ 562 0006 1646     		mov	r6, r2
+  71:User/GUI_App/ui_helpers.c ****     int old = lv_slider_get_value(target);
+ 563              		.loc 1 71 5 is_stmt 1 view .LVU108
+ 564              	.LVL50:
+ 565              	.LBB18:
+ 566              	.LBI18:
+  88:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+  89:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /**
+  90:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * Set a new value for the left knob of a slider
+  91:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @param obj       pointer to a slider object
+  92:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @param value     new value
+  93:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @param anim      LV_ANIM_ON: set the value with an animation; LV_ANIM_OFF: change the value imme
+  94:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  */
+  95:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** static inline void lv_slider_set_left_value(lv_obj_t * obj, int32_t value, lv_anim_enable_t anim)
+  96:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** {
+  97:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     lv_bar_set_start_value(obj, value, anim);
+  98:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** }
+  99:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+ 100:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /**
+ 101:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * Set minimum and the maximum values of a bar
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 14
+
+
+ 102:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @param obj       pointer to the slider object
+ 103:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @param min       minimum value
+ 104:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @param max       maximum value
+ 105:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  */
+ 106:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** static inline void lv_slider_set_range(lv_obj_t * obj, int32_t min, int32_t max)
+ 107:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** {
+ 108:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     lv_bar_set_range(obj, min, max);
+ 109:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** }
+ 110:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+ 111:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /**
+ 112:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * Set the mode of slider.
+ 113:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @param obj       pointer to a slider object
+ 114:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @param mode      the mode of the slider. See ::lv_slider_mode_t
+ 115:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  */
+ 116:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** static inline void lv_slider_set_mode(lv_obj_t * obj, lv_slider_mode_t mode)
+ 117:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** {
+ 118:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     lv_bar_set_mode(obj, (lv_bar_mode_t)mode);
+ 119:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** }
+ 120:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+ 121:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /*=====================
+ 122:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * Getter functions
+ 123:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  *====================*/
+ 124:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** 
+ 125:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** /**
+ 126:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * Get the value of the main knob of a slider
+ 127:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @param obj       pointer to a slider object
+ 128:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  * @return          the value of the main knob of the slider
+ 129:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****  */
+ 130:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** static inline int32_t lv_slider_get_value(const lv_obj_t * obj)
+ 567              		.loc 2 130 23 view .LVU109
+ 568              	.LBB19:
+ 131:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** {
+ 132:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h ****     return lv_bar_get_value(obj);
+ 569              		.loc 2 132 5 view .LVU110
+ 570              		.loc 2 132 12 is_stmt 0 view .LVU111
+ 571 0008 FFF7FEFF 		bl	lv_bar_get_value
+ 572              	.LVL51:
+ 573              		.loc 2 132 12 view .LVU112
+ 574              	.LBE19:
+ 575              	.LBE18:
+  72:User/GUI_App/ui_helpers.c ****     lv_slider_set_value(target, old + val, anm);
+ 576              		.loc 1 72 5 is_stmt 1 view .LVU113
+ 577              	.LBB20:
+ 578              	.LBI20:
+  84:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** {
+ 579              		.loc 2 84 20 view .LVU114
+ 580              	.LBB21:
+  86:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** }
+ 581              		.loc 2 86 5 view .LVU115
+ 582 000c F2B2     		uxtb	r2, r6
+ 583 000e 2918     		adds	r1, r5, r0
+ 584              	.LVL52:
+  86:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** }
+ 585              		.loc 2 86 5 is_stmt 0 view .LVU116
+ 586 0010 2046     		mov	r0, r4
+ 587              	.LVL53:
+  86:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** }
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 15
+
+
+ 588              		.loc 2 86 5 view .LVU117
+ 589 0012 FFF7FEFF 		bl	lv_bar_set_value
+ 590              	.LVL54:
+  86:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** }
+ 591              		.loc 2 86 5 view .LVU118
+ 592              	.LBE21:
+ 593              	.LBE20:
+  73:User/GUI_App/ui_helpers.c **** }
+ 594              		.loc 1 73 1 view .LVU119
+ 595 0016 70BD     		pop	{r4, r5, r6, pc}
+ 596              		.loc 1 73 1 view .LVU120
+ 597              		.cfi_endproc
+ 598              	.LFE205:
+ 600              		.section	.text._ui_flag_modify,"ax",%progbits
+ 601              		.align	1
+ 602              		.global	_ui_flag_modify
+ 603              		.syntax unified
+ 604              		.thumb
+ 605              		.thumb_func
+ 607              	_ui_flag_modify:
+ 608              	.LVL55:
+ 609              	.LFB206:
+  74:User/GUI_App/ui_helpers.c **** 
+  75:User/GUI_App/ui_helpers.c **** void _ui_flag_modify(lv_obj_t * target, int32_t flag, int value)
+  76:User/GUI_App/ui_helpers.c **** {
+ 610              		.loc 1 76 1 is_stmt 1 view -0
+ 611              		.cfi_startproc
+ 612              		@ args = 0, pretend = 0, frame = 0
+ 613              		@ frame_needed = 0, uses_anonymous_args = 0
+ 614              		.loc 1 76 1 is_stmt 0 view .LVU122
+ 615 0000 38B5     		push	{r3, r4, r5, lr}
+ 616              	.LCFI13:
+ 617              		.cfi_def_cfa_offset 16
+ 618              		.cfi_offset 3, -16
+ 619              		.cfi_offset 4, -12
+ 620              		.cfi_offset 5, -8
+ 621              		.cfi_offset 14, -4
+ 622 0002 0446     		mov	r4, r0
+ 623 0004 0D46     		mov	r5, r1
+  77:User/GUI_App/ui_helpers.c ****     if(value == _UI_MODIFY_FLAG_TOGGLE) {
+ 624              		.loc 1 77 5 is_stmt 1 view .LVU123
+ 625              		.loc 1 77 7 is_stmt 0 view .LVU124
+ 626 0006 022A     		cmp	r2, #2
+ 627 0008 03D0     		beq	.L64
+  78:User/GUI_App/ui_helpers.c ****         if(lv_obj_has_flag(target, flag)) lv_obj_clear_flag(target, flag);
+  79:User/GUI_App/ui_helpers.c ****         else lv_obj_add_flag(target, flag);
+  80:User/GUI_App/ui_helpers.c ****     }
+  81:User/GUI_App/ui_helpers.c ****     else if(value == _UI_MODIFY_FLAG_ADD) lv_obj_add_flag(target, flag);
+ 628              		.loc 1 81 10 is_stmt 1 view .LVU125
+ 629              		.loc 1 81 12 is_stmt 0 view .LVU126
+ 630 000a 7AB9     		cbnz	r2, .L62
+ 631              		.loc 1 81 43 is_stmt 1 discriminator 1 view .LVU127
+ 632 000c FFF7FEFF 		bl	lv_obj_add_flag
+ 633              	.LVL56:
+ 634              	.L58:
+  82:User/GUI_App/ui_helpers.c ****     else lv_obj_clear_flag(target, flag);
+  83:User/GUI_App/ui_helpers.c **** }
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 16
+
+
+ 635              		.loc 1 83 1 is_stmt 0 view .LVU128
+ 636 0010 38BD     		pop	{r3, r4, r5, pc}
+ 637              	.LVL57:
+ 638              	.L64:
+  78:User/GUI_App/ui_helpers.c ****         if(lv_obj_has_flag(target, flag)) lv_obj_clear_flag(target, flag);
+ 639              		.loc 1 78 9 is_stmt 1 view .LVU129
+  78:User/GUI_App/ui_helpers.c ****         if(lv_obj_has_flag(target, flag)) lv_obj_clear_flag(target, flag);
+ 640              		.loc 1 78 12 is_stmt 0 view .LVU130
+ 641 0012 FFF7FEFF 		bl	lv_obj_has_flag
+ 642              	.LVL58:
+  78:User/GUI_App/ui_helpers.c ****         if(lv_obj_has_flag(target, flag)) lv_obj_clear_flag(target, flag);
+ 643              		.loc 1 78 11 discriminator 1 view .LVU131
+ 644 0016 20B1     		cbz	r0, .L60
+  78:User/GUI_App/ui_helpers.c ****         if(lv_obj_has_flag(target, flag)) lv_obj_clear_flag(target, flag);
+ 645              		.loc 1 78 43 is_stmt 1 discriminator 1 view .LVU132
+ 646 0018 2946     		mov	r1, r5
+ 647 001a 2046     		mov	r0, r4
+ 648 001c FFF7FEFF 		bl	lv_obj_clear_flag
+ 649              	.LVL59:
+ 650 0020 F6E7     		b	.L58
+ 651              	.L60:
+  79:User/GUI_App/ui_helpers.c ****     }
+ 652              		.loc 1 79 14 view .LVU133
+ 653 0022 2946     		mov	r1, r5
+ 654 0024 2046     		mov	r0, r4
+ 655 0026 FFF7FEFF 		bl	lv_obj_add_flag
+ 656              	.LVL60:
+ 657 002a F1E7     		b	.L58
+ 658              	.LVL61:
+ 659              	.L62:
+  82:User/GUI_App/ui_helpers.c ****     else lv_obj_clear_flag(target, flag);
+ 660              		.loc 1 82 10 view .LVU134
+ 661 002c FFF7FEFF 		bl	lv_obj_clear_flag
+ 662              	.LVL62:
+ 663              		.loc 1 83 1 is_stmt 0 view .LVU135
+ 664 0030 EEE7     		b	.L58
+ 665              		.cfi_endproc
+ 666              	.LFE206:
+ 668              		.section	.text._ui_state_modify,"ax",%progbits
+ 669              		.align	1
+ 670              		.global	_ui_state_modify
+ 671              		.syntax unified
+ 672              		.thumb
+ 673              		.thumb_func
+ 675              	_ui_state_modify:
+ 676              	.LVL63:
+ 677              	.LFB207:
+  84:User/GUI_App/ui_helpers.c **** void _ui_state_modify(lv_obj_t * target, int32_t state, int value)
+  85:User/GUI_App/ui_helpers.c **** {
+ 678              		.loc 1 85 1 is_stmt 1 view -0
+ 679              		.cfi_startproc
+ 680              		@ args = 0, pretend = 0, frame = 0
+ 681              		@ frame_needed = 0, uses_anonymous_args = 0
+ 682              		.loc 1 85 1 is_stmt 0 view .LVU137
+ 683 0000 38B5     		push	{r3, r4, r5, lr}
+ 684              	.LCFI14:
+ 685              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 17
+
+
+ 686              		.cfi_offset 3, -16
+ 687              		.cfi_offset 4, -12
+ 688              		.cfi_offset 5, -8
+ 689              		.cfi_offset 14, -4
+ 690 0002 0546     		mov	r5, r0
+  86:User/GUI_App/ui_helpers.c ****     if(value == _UI_MODIFY_STATE_TOGGLE) {
+ 691              		.loc 1 86 5 is_stmt 1 view .LVU138
+ 692              		.loc 1 86 7 is_stmt 0 view .LVU139
+ 693 0004 022A     		cmp	r2, #2
+ 694 0006 04D0     		beq	.L71
+  87:User/GUI_App/ui_helpers.c ****         if(lv_obj_has_state(target, state)) lv_obj_clear_state(target, state);
+  88:User/GUI_App/ui_helpers.c ****         else lv_obj_add_state(target, state);
+  89:User/GUI_App/ui_helpers.c ****     }
+  90:User/GUI_App/ui_helpers.c ****     else if(value == _UI_MODIFY_STATE_ADD) lv_obj_add_state(target, state);
+ 695              		.loc 1 90 10 is_stmt 1 view .LVU140
+ 696              		.loc 1 90 12 is_stmt 0 view .LVU141
+ 697 0008 92B9     		cbnz	r2, .L69
+ 698              		.loc 1 90 44 is_stmt 1 discriminator 1 view .LVU142
+ 699 000a 89B2     		uxth	r1, r1
+ 700              	.LVL64:
+ 701              		.loc 1 90 44 is_stmt 0 discriminator 1 view .LVU143
+ 702 000c FFF7FEFF 		bl	lv_obj_add_state
+ 703              	.LVL65:
+ 704              	.L65:
+  91:User/GUI_App/ui_helpers.c ****     else lv_obj_clear_state(target, state);
+  92:User/GUI_App/ui_helpers.c **** }
+ 705              		.loc 1 92 1 view .LVU144
+ 706 0010 38BD     		pop	{r3, r4, r5, pc}
+ 707              	.LVL66:
+ 708              	.L71:
+  87:User/GUI_App/ui_helpers.c ****         if(lv_obj_has_state(target, state)) lv_obj_clear_state(target, state);
+ 709              		.loc 1 87 9 is_stmt 1 view .LVU145
+  87:User/GUI_App/ui_helpers.c ****         if(lv_obj_has_state(target, state)) lv_obj_clear_state(target, state);
+ 710              		.loc 1 87 12 is_stmt 0 view .LVU146
+ 711 0012 8CB2     		uxth	r4, r1
+ 712 0014 2146     		mov	r1, r4
+ 713              	.LVL67:
+  87:User/GUI_App/ui_helpers.c ****         if(lv_obj_has_state(target, state)) lv_obj_clear_state(target, state);
+ 714              		.loc 1 87 12 view .LVU147
+ 715 0016 FFF7FEFF 		bl	lv_obj_has_state
+ 716              	.LVL68:
+  87:User/GUI_App/ui_helpers.c ****         if(lv_obj_has_state(target, state)) lv_obj_clear_state(target, state);
+ 717              		.loc 1 87 11 discriminator 1 view .LVU148
+ 718 001a 20B1     		cbz	r0, .L67
+  87:User/GUI_App/ui_helpers.c ****         if(lv_obj_has_state(target, state)) lv_obj_clear_state(target, state);
+ 719              		.loc 1 87 45 is_stmt 1 discriminator 1 view .LVU149
+ 720 001c 2146     		mov	r1, r4
+ 721 001e 2846     		mov	r0, r5
+ 722 0020 FFF7FEFF 		bl	lv_obj_clear_state
+ 723              	.LVL69:
+ 724 0024 F4E7     		b	.L65
+ 725              	.L67:
+  88:User/GUI_App/ui_helpers.c ****     }
+ 726              		.loc 1 88 14 view .LVU150
+ 727 0026 2146     		mov	r1, r4
+ 728 0028 2846     		mov	r0, r5
+ 729 002a FFF7FEFF 		bl	lv_obj_add_state
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 18
+
+
+ 730              	.LVL70:
+ 731 002e EFE7     		b	.L65
+ 732              	.LVL71:
+ 733              	.L69:
+  91:User/GUI_App/ui_helpers.c ****     else lv_obj_clear_state(target, state);
+ 734              		.loc 1 91 10 view .LVU151
+ 735 0030 89B2     		uxth	r1, r1
+ 736              	.LVL72:
+  91:User/GUI_App/ui_helpers.c ****     else lv_obj_clear_state(target, state);
+ 737              		.loc 1 91 10 is_stmt 0 view .LVU152
+ 738 0032 FFF7FEFF 		bl	lv_obj_clear_state
+ 739              	.LVL73:
+ 740              		.loc 1 92 1 view .LVU153
+ 741 0036 EBE7     		b	.L65
+ 742              		.cfi_endproc
+ 743              	.LFE207:
+ 745              		.section	.text._ui_opacity_set,"ax",%progbits
+ 746              		.align	1
+ 747              		.global	_ui_opacity_set
+ 748              		.syntax unified
+ 749              		.thumb
+ 750              		.thumb_func
+ 752              	_ui_opacity_set:
+ 753              	.LVL74:
+ 754              	.LFB208:
+  93:User/GUI_App/ui_helpers.c **** 
+  94:User/GUI_App/ui_helpers.c **** void _ui_opacity_set(lv_obj_t * target, int val)
+  95:User/GUI_App/ui_helpers.c **** {
+ 755              		.loc 1 95 1 is_stmt 1 view -0
+ 756              		.cfi_startproc
+ 757              		@ args = 0, pretend = 0, frame = 0
+ 758              		@ frame_needed = 0, uses_anonymous_args = 0
+ 759              		.loc 1 95 1 is_stmt 0 view .LVU155
+ 760 0000 08B5     		push	{r3, lr}
+ 761              	.LCFI15:
+ 762              		.cfi_def_cfa_offset 8
+ 763              		.cfi_offset 3, -8
+ 764              		.cfi_offset 14, -4
+  96:User/GUI_App/ui_helpers.c ****     lv_obj_set_style_opa(target, val, 0);
+ 765              		.loc 1 96 5 is_stmt 1 view .LVU156
+ 766 0002 0022     		movs	r2, #0
+ 767 0004 C9B2     		uxtb	r1, r1
+ 768              	.LVL75:
+ 769              		.loc 1 96 5 is_stmt 0 view .LVU157
+ 770 0006 FFF7FEFF 		bl	lv_obj_set_style_opa
+ 771              	.LVL76:
+  97:User/GUI_App/ui_helpers.c **** }
+ 772              		.loc 1 97 1 view .LVU158
+ 773 000a 08BD     		pop	{r3, pc}
+ 774              		.cfi_endproc
+ 775              	.LFE208:
+ 777              		.section	.text._ui_anim_callback_set_x,"ax",%progbits
+ 778              		.align	1
+ 779              		.global	_ui_anim_callback_set_x
+ 780              		.syntax unified
+ 781              		.thumb
+ 782              		.thumb_func
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 19
+
+
+ 784              	_ui_anim_callback_set_x:
+ 785              	.LVL77:
+ 786              	.LFB209:
+  98:User/GUI_App/ui_helpers.c **** 
+  99:User/GUI_App/ui_helpers.c **** void _ui_anim_callback_set_x(lv_anim_t * a, int32_t v)
+ 100:User/GUI_App/ui_helpers.c **** {
+ 787              		.loc 1 100 1 is_stmt 1 view -0
+ 788              		.cfi_startproc
+ 789              		@ args = 0, pretend = 0, frame = 0
+ 790              		@ frame_needed = 0, uses_anonymous_args = 0
+ 791              		.loc 1 100 1 is_stmt 0 view .LVU160
+ 792 0000 08B5     		push	{r3, lr}
+ 793              	.LCFI16:
+ 794              		.cfi_def_cfa_offset 8
+ 795              		.cfi_offset 3, -8
+ 796              		.cfi_offset 14, -4
+ 101:User/GUI_App/ui_helpers.c ****     lv_obj_set_x((lv_obj_t *)a->user_data, v);
+ 797              		.loc 1 101 5 is_stmt 1 view .LVU161
+ 798 0002 09B2     		sxth	r1, r1
+ 799              	.LVL78:
+ 800              		.loc 1 101 5 is_stmt 0 view .LVU162
+ 801 0004 4069     		ldr	r0, [r0, #20]
+ 802              	.LVL79:
+ 803              		.loc 1 101 5 view .LVU163
+ 804 0006 FFF7FEFF 		bl	lv_obj_set_x
+ 805              	.LVL80:
+ 102:User/GUI_App/ui_helpers.c **** }
+ 806              		.loc 1 102 1 view .LVU164
+ 807 000a 08BD     		pop	{r3, pc}
+ 808              		.cfi_endproc
+ 809              	.LFE209:
+ 811              		.section	.text._ui_anim_callback_set_y,"ax",%progbits
+ 812              		.align	1
+ 813              		.global	_ui_anim_callback_set_y
+ 814              		.syntax unified
+ 815              		.thumb
+ 816              		.thumb_func
+ 818              	_ui_anim_callback_set_y:
+ 819              	.LVL81:
+ 820              	.LFB210:
+ 103:User/GUI_App/ui_helpers.c **** 
+ 104:User/GUI_App/ui_helpers.c **** void _ui_anim_callback_set_y(lv_anim_t * a, int32_t v)
+ 105:User/GUI_App/ui_helpers.c **** {
+ 821              		.loc 1 105 1 is_stmt 1 view -0
+ 822              		.cfi_startproc
+ 823              		@ args = 0, pretend = 0, frame = 0
+ 824              		@ frame_needed = 0, uses_anonymous_args = 0
+ 825              		.loc 1 105 1 is_stmt 0 view .LVU166
+ 826 0000 08B5     		push	{r3, lr}
+ 827              	.LCFI17:
+ 828              		.cfi_def_cfa_offset 8
+ 829              		.cfi_offset 3, -8
+ 830              		.cfi_offset 14, -4
+ 106:User/GUI_App/ui_helpers.c ****     lv_obj_set_y((lv_obj_t *)a->user_data, v);
+ 831              		.loc 1 106 5 is_stmt 1 view .LVU167
+ 832 0002 09B2     		sxth	r1, r1
+ 833              	.LVL82:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 20
+
+
+ 834              		.loc 1 106 5 is_stmt 0 view .LVU168
+ 835 0004 4069     		ldr	r0, [r0, #20]
+ 836              	.LVL83:
+ 837              		.loc 1 106 5 view .LVU169
+ 838 0006 FFF7FEFF 		bl	lv_obj_set_y
+ 839              	.LVL84:
+ 107:User/GUI_App/ui_helpers.c **** }
+ 840              		.loc 1 107 1 view .LVU170
+ 841 000a 08BD     		pop	{r3, pc}
+ 842              		.cfi_endproc
+ 843              	.LFE210:
+ 845              		.section	.text._ui_anim_callback_set_width,"ax",%progbits
+ 846              		.align	1
+ 847              		.global	_ui_anim_callback_set_width
+ 848              		.syntax unified
+ 849              		.thumb
+ 850              		.thumb_func
+ 852              	_ui_anim_callback_set_width:
+ 853              	.LVL85:
+ 854              	.LFB211:
+ 108:User/GUI_App/ui_helpers.c **** 
+ 109:User/GUI_App/ui_helpers.c **** void _ui_anim_callback_set_width(lv_anim_t * a, int32_t v)
+ 110:User/GUI_App/ui_helpers.c **** {
+ 855              		.loc 1 110 1 is_stmt 1 view -0
+ 856              		.cfi_startproc
+ 857              		@ args = 0, pretend = 0, frame = 0
+ 858              		@ frame_needed = 0, uses_anonymous_args = 0
+ 859              		.loc 1 110 1 is_stmt 0 view .LVU172
+ 860 0000 08B5     		push	{r3, lr}
+ 861              	.LCFI18:
+ 862              		.cfi_def_cfa_offset 8
+ 863              		.cfi_offset 3, -8
+ 864              		.cfi_offset 14, -4
+ 111:User/GUI_App/ui_helpers.c ****     lv_obj_set_width((lv_obj_t *)a->user_data, v);
+ 865              		.loc 1 111 5 is_stmt 1 view .LVU173
+ 866 0002 09B2     		sxth	r1, r1
+ 867              	.LVL86:
+ 868              		.loc 1 111 5 is_stmt 0 view .LVU174
+ 869 0004 4069     		ldr	r0, [r0, #20]
+ 870              	.LVL87:
+ 871              		.loc 1 111 5 view .LVU175
+ 872 0006 FFF7FEFF 		bl	lv_obj_set_width
+ 873              	.LVL88:
+ 112:User/GUI_App/ui_helpers.c **** }
+ 874              		.loc 1 112 1 view .LVU176
+ 875 000a 08BD     		pop	{r3, pc}
+ 876              		.cfi_endproc
+ 877              	.LFE211:
+ 879              		.section	.text._ui_anim_callback_set_height,"ax",%progbits
+ 880              		.align	1
+ 881              		.global	_ui_anim_callback_set_height
+ 882              		.syntax unified
+ 883              		.thumb
+ 884              		.thumb_func
+ 886              	_ui_anim_callback_set_height:
+ 887              	.LVL89:
+ 888              	.LFB212:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 21
+
+
+ 113:User/GUI_App/ui_helpers.c **** 
+ 114:User/GUI_App/ui_helpers.c **** void _ui_anim_callback_set_height(lv_anim_t * a, int32_t v)
+ 115:User/GUI_App/ui_helpers.c **** {
+ 889              		.loc 1 115 1 is_stmt 1 view -0
+ 890              		.cfi_startproc
+ 891              		@ args = 0, pretend = 0, frame = 0
+ 892              		@ frame_needed = 0, uses_anonymous_args = 0
+ 893              		.loc 1 115 1 is_stmt 0 view .LVU178
+ 894 0000 08B5     		push	{r3, lr}
+ 895              	.LCFI19:
+ 896              		.cfi_def_cfa_offset 8
+ 897              		.cfi_offset 3, -8
+ 898              		.cfi_offset 14, -4
+ 116:User/GUI_App/ui_helpers.c ****     lv_obj_set_height((lv_obj_t *)a->user_data, v);
+ 899              		.loc 1 116 5 is_stmt 1 view .LVU179
+ 900 0002 09B2     		sxth	r1, r1
+ 901              	.LVL90:
+ 902              		.loc 1 116 5 is_stmt 0 view .LVU180
+ 903 0004 4069     		ldr	r0, [r0, #20]
+ 904              	.LVL91:
+ 905              		.loc 1 116 5 view .LVU181
+ 906 0006 FFF7FEFF 		bl	lv_obj_set_height
+ 907              	.LVL92:
+ 117:User/GUI_App/ui_helpers.c **** }
+ 908              		.loc 1 117 1 view .LVU182
+ 909 000a 08BD     		pop	{r3, pc}
+ 910              		.cfi_endproc
+ 911              	.LFE212:
+ 913              		.section	.text._ui_anim_callback_set_opacity,"ax",%progbits
+ 914              		.align	1
+ 915              		.global	_ui_anim_callback_set_opacity
+ 916              		.syntax unified
+ 917              		.thumb
+ 918              		.thumb_func
+ 920              	_ui_anim_callback_set_opacity:
+ 921              	.LVL93:
+ 922              	.LFB213:
+ 118:User/GUI_App/ui_helpers.c **** 
+ 119:User/GUI_App/ui_helpers.c **** void _ui_anim_callback_set_opacity(lv_anim_t * a, int32_t v)
+ 120:User/GUI_App/ui_helpers.c **** {
+ 923              		.loc 1 120 1 is_stmt 1 view -0
+ 924              		.cfi_startproc
+ 925              		@ args = 0, pretend = 0, frame = 0
+ 926              		@ frame_needed = 0, uses_anonymous_args = 0
+ 927              		.loc 1 120 1 is_stmt 0 view .LVU184
+ 928 0000 08B5     		push	{r3, lr}
+ 929              	.LCFI20:
+ 930              		.cfi_def_cfa_offset 8
+ 931              		.cfi_offset 3, -8
+ 932              		.cfi_offset 14, -4
+ 121:User/GUI_App/ui_helpers.c ****     lv_obj_set_style_opa((lv_obj_t *)a->user_data, v, 0);
+ 933              		.loc 1 121 5 is_stmt 1 view .LVU185
+ 934 0002 0022     		movs	r2, #0
+ 935 0004 C9B2     		uxtb	r1, r1
+ 936              	.LVL94:
+ 937              		.loc 1 121 5 is_stmt 0 view .LVU186
+ 938 0006 4069     		ldr	r0, [r0, #20]
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 22
+
+
+ 939              	.LVL95:
+ 940              		.loc 1 121 5 view .LVU187
+ 941 0008 FFF7FEFF 		bl	lv_obj_set_style_opa
+ 942              	.LVL96:
+ 122:User/GUI_App/ui_helpers.c **** }
+ 943              		.loc 1 122 1 view .LVU188
+ 944 000c 08BD     		pop	{r3, pc}
+ 945              		.cfi_endproc
+ 946              	.LFE213:
+ 948              		.section	.text._ui_anim_callback_set_image_zoom,"ax",%progbits
+ 949              		.align	1
+ 950              		.global	_ui_anim_callback_set_image_zoom
+ 951              		.syntax unified
+ 952              		.thumb
+ 953              		.thumb_func
+ 955              	_ui_anim_callback_set_image_zoom:
+ 956              	.LVL97:
+ 957              	.LFB214:
+ 123:User/GUI_App/ui_helpers.c **** 
+ 124:User/GUI_App/ui_helpers.c **** void _ui_anim_callback_set_image_zoom(lv_anim_t * a, int32_t v)
+ 125:User/GUI_App/ui_helpers.c **** {
+ 958              		.loc 1 125 1 is_stmt 1 view -0
+ 959              		.cfi_startproc
+ 960              		@ args = 0, pretend = 0, frame = 0
+ 961              		@ frame_needed = 0, uses_anonymous_args = 0
+ 962              		.loc 1 125 1 is_stmt 0 view .LVU190
+ 963 0000 08B5     		push	{r3, lr}
+ 964              	.LCFI21:
+ 965              		.cfi_def_cfa_offset 8
+ 966              		.cfi_offset 3, -8
+ 967              		.cfi_offset 14, -4
+ 126:User/GUI_App/ui_helpers.c ****     lv_img_set_zoom((lv_obj_t *)a->user_data, v);
+ 968              		.loc 1 126 5 is_stmt 1 view .LVU191
+ 969 0002 89B2     		uxth	r1, r1
+ 970              	.LVL98:
+ 971              		.loc 1 126 5 is_stmt 0 view .LVU192
+ 972 0004 4069     		ldr	r0, [r0, #20]
+ 973              	.LVL99:
+ 974              		.loc 1 126 5 view .LVU193
+ 975 0006 FFF7FEFF 		bl	lv_img_set_zoom
+ 976              	.LVL100:
+ 127:User/GUI_App/ui_helpers.c **** }
+ 977              		.loc 1 127 1 view .LVU194
+ 978 000a 08BD     		pop	{r3, pc}
+ 979              		.cfi_endproc
+ 980              	.LFE214:
+ 982              		.section	.text._ui_anim_callback_set_image_angle,"ax",%progbits
+ 983              		.align	1
+ 984              		.global	_ui_anim_callback_set_image_angle
+ 985              		.syntax unified
+ 986              		.thumb
+ 987              		.thumb_func
+ 989              	_ui_anim_callback_set_image_angle:
+ 990              	.LVL101:
+ 991              	.LFB215:
+ 128:User/GUI_App/ui_helpers.c **** 
+ 129:User/GUI_App/ui_helpers.c **** void _ui_anim_callback_set_image_angle(lv_anim_t * a, int32_t v)
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 23
+
+
+ 130:User/GUI_App/ui_helpers.c **** {
+ 992              		.loc 1 130 1 is_stmt 1 view -0
+ 993              		.cfi_startproc
+ 994              		@ args = 0, pretend = 0, frame = 0
+ 995              		@ frame_needed = 0, uses_anonymous_args = 0
+ 996              		.loc 1 130 1 is_stmt 0 view .LVU196
+ 997 0000 08B5     		push	{r3, lr}
+ 998              	.LCFI22:
+ 999              		.cfi_def_cfa_offset 8
+ 1000              		.cfi_offset 3, -8
+ 1001              		.cfi_offset 14, -4
+ 131:User/GUI_App/ui_helpers.c ****     lv_img_set_angle((lv_obj_t *)a->user_data, v);
+ 1002              		.loc 1 131 5 is_stmt 1 view .LVU197
+ 1003 0002 09B2     		sxth	r1, r1
+ 1004              	.LVL102:
+ 1005              		.loc 1 131 5 is_stmt 0 view .LVU198
+ 1006 0004 4069     		ldr	r0, [r0, #20]
+ 1007              	.LVL103:
+ 1008              		.loc 1 131 5 view .LVU199
+ 1009 0006 FFF7FEFF 		bl	lv_img_set_angle
+ 1010              	.LVL104:
+ 132:User/GUI_App/ui_helpers.c **** }
+ 1011              		.loc 1 132 1 view .LVU200
+ 1012 000a 08BD     		pop	{r3, pc}
+ 1013              		.cfi_endproc
+ 1014              	.LFE215:
+ 1016              		.section	.text._ui_anim_callback_get_x,"ax",%progbits
+ 1017              		.align	1
+ 1018              		.global	_ui_anim_callback_get_x
+ 1019              		.syntax unified
+ 1020              		.thumb
+ 1021              		.thumb_func
+ 1023              	_ui_anim_callback_get_x:
+ 1024              	.LVL105:
+ 1025              	.LFB216:
+ 133:User/GUI_App/ui_helpers.c **** 
+ 134:User/GUI_App/ui_helpers.c **** 
+ 135:User/GUI_App/ui_helpers.c **** int32_t _ui_anim_callback_get_x(lv_anim_t * a)
+ 136:User/GUI_App/ui_helpers.c **** {
+ 1026              		.loc 1 136 1 is_stmt 1 view -0
+ 1027              		.cfi_startproc
+ 1028              		@ args = 0, pretend = 0, frame = 0
+ 1029              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1030              		.loc 1 136 1 is_stmt 0 view .LVU202
+ 1031 0000 08B5     		push	{r3, lr}
+ 1032              	.LCFI23:
+ 1033              		.cfi_def_cfa_offset 8
+ 1034              		.cfi_offset 3, -8
+ 1035              		.cfi_offset 14, -4
+ 137:User/GUI_App/ui_helpers.c ****     return lv_obj_get_x_aligned((lv_obj_t *)a->user_data);
+ 1036              		.loc 1 137 5 is_stmt 1 view .LVU203
+ 1037              		.loc 1 137 12 is_stmt 0 view .LVU204
+ 1038 0002 4069     		ldr	r0, [r0, #20]
+ 1039              	.LVL106:
+ 1040              		.loc 1 137 12 view .LVU205
+ 1041 0004 FFF7FEFF 		bl	lv_obj_get_x_aligned
+ 1042              	.LVL107:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 24
+
+
+ 138:User/GUI_App/ui_helpers.c **** }
+ 1043              		.loc 1 138 1 view .LVU206
+ 1044 0008 08BD     		pop	{r3, pc}
+ 1045              		.cfi_endproc
+ 1046              	.LFE216:
+ 1048              		.section	.text._ui_anim_callback_get_y,"ax",%progbits
+ 1049              		.align	1
+ 1050              		.global	_ui_anim_callback_get_y
+ 1051              		.syntax unified
+ 1052              		.thumb
+ 1053              		.thumb_func
+ 1055              	_ui_anim_callback_get_y:
+ 1056              	.LVL108:
+ 1057              	.LFB217:
+ 139:User/GUI_App/ui_helpers.c **** 
+ 140:User/GUI_App/ui_helpers.c **** int32_t _ui_anim_callback_get_y(lv_anim_t * a)
+ 141:User/GUI_App/ui_helpers.c **** {
+ 1058              		.loc 1 141 1 is_stmt 1 view -0
+ 1059              		.cfi_startproc
+ 1060              		@ args = 0, pretend = 0, frame = 0
+ 1061              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1062              		.loc 1 141 1 is_stmt 0 view .LVU208
+ 1063 0000 08B5     		push	{r3, lr}
+ 1064              	.LCFI24:
+ 1065              		.cfi_def_cfa_offset 8
+ 1066              		.cfi_offset 3, -8
+ 1067              		.cfi_offset 14, -4
+ 142:User/GUI_App/ui_helpers.c ****     return lv_obj_get_y_aligned((lv_obj_t *)a->user_data);
+ 1068              		.loc 1 142 5 is_stmt 1 view .LVU209
+ 1069              		.loc 1 142 12 is_stmt 0 view .LVU210
+ 1070 0002 4069     		ldr	r0, [r0, #20]
+ 1071              	.LVL109:
+ 1072              		.loc 1 142 12 view .LVU211
+ 1073 0004 FFF7FEFF 		bl	lv_obj_get_y_aligned
+ 1074              	.LVL110:
+ 143:User/GUI_App/ui_helpers.c **** }
+ 1075              		.loc 1 143 1 view .LVU212
+ 1076 0008 08BD     		pop	{r3, pc}
+ 1077              		.cfi_endproc
+ 1078              	.LFE217:
+ 1080              		.section	.text._ui_anim_callback_get_width,"ax",%progbits
+ 1081              		.align	1
+ 1082              		.global	_ui_anim_callback_get_width
+ 1083              		.syntax unified
+ 1084              		.thumb
+ 1085              		.thumb_func
+ 1087              	_ui_anim_callback_get_width:
+ 1088              	.LVL111:
+ 1089              	.LFB218:
+ 144:User/GUI_App/ui_helpers.c **** 
+ 145:User/GUI_App/ui_helpers.c **** int32_t _ui_anim_callback_get_width(lv_anim_t * a)
+ 146:User/GUI_App/ui_helpers.c **** {
+ 1090              		.loc 1 146 1 is_stmt 1 view -0
+ 1091              		.cfi_startproc
+ 1092              		@ args = 0, pretend = 0, frame = 0
+ 1093              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1094              		.loc 1 146 1 is_stmt 0 view .LVU214
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 25
+
+
+ 1095 0000 08B5     		push	{r3, lr}
+ 1096              	.LCFI25:
+ 1097              		.cfi_def_cfa_offset 8
+ 1098              		.cfi_offset 3, -8
+ 1099              		.cfi_offset 14, -4
+ 147:User/GUI_App/ui_helpers.c ****     return lv_obj_get_width((lv_obj_t *)a->user_data);
+ 1100              		.loc 1 147 5 is_stmt 1 view .LVU215
+ 1101              		.loc 1 147 12 is_stmt 0 view .LVU216
+ 1102 0002 4069     		ldr	r0, [r0, #20]
+ 1103              	.LVL112:
+ 1104              		.loc 1 147 12 view .LVU217
+ 1105 0004 FFF7FEFF 		bl	lv_obj_get_width
+ 1106              	.LVL113:
+ 148:User/GUI_App/ui_helpers.c **** }
+ 1107              		.loc 1 148 1 view .LVU218
+ 1108 0008 08BD     		pop	{r3, pc}
+ 1109              		.cfi_endproc
+ 1110              	.LFE218:
+ 1112              		.section	.text._ui_anim_callback_get_height,"ax",%progbits
+ 1113              		.align	1
+ 1114              		.global	_ui_anim_callback_get_height
+ 1115              		.syntax unified
+ 1116              		.thumb
+ 1117              		.thumb_func
+ 1119              	_ui_anim_callback_get_height:
+ 1120              	.LVL114:
+ 1121              	.LFB219:
+ 149:User/GUI_App/ui_helpers.c **** 
+ 150:User/GUI_App/ui_helpers.c **** int32_t _ui_anim_callback_get_height(lv_anim_t * a)
+ 151:User/GUI_App/ui_helpers.c **** {
+ 1122              		.loc 1 151 1 is_stmt 1 view -0
+ 1123              		.cfi_startproc
+ 1124              		@ args = 0, pretend = 0, frame = 0
+ 1125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1126              		.loc 1 151 1 is_stmt 0 view .LVU220
+ 1127 0000 08B5     		push	{r3, lr}
+ 1128              	.LCFI26:
+ 1129              		.cfi_def_cfa_offset 8
+ 1130              		.cfi_offset 3, -8
+ 1131              		.cfi_offset 14, -4
+ 152:User/GUI_App/ui_helpers.c ****     return lv_obj_get_height((lv_obj_t *)a->user_data);
+ 1132              		.loc 1 152 5 is_stmt 1 view .LVU221
+ 1133              		.loc 1 152 12 is_stmt 0 view .LVU222
+ 1134 0002 4069     		ldr	r0, [r0, #20]
+ 1135              	.LVL115:
+ 1136              		.loc 1 152 12 view .LVU223
+ 1137 0004 FFF7FEFF 		bl	lv_obj_get_height
+ 1138              	.LVL116:
+ 153:User/GUI_App/ui_helpers.c **** }
+ 1139              		.loc 1 153 1 view .LVU224
+ 1140 0008 08BD     		pop	{r3, pc}
+ 1141              		.cfi_endproc
+ 1142              	.LFE219:
+ 1144              		.section	.text._ui_anim_callback_get_opacity,"ax",%progbits
+ 1145              		.align	1
+ 1146              		.global	_ui_anim_callback_get_opacity
+ 1147              		.syntax unified
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 26
+
+
+ 1148              		.thumb
+ 1149              		.thumb_func
+ 1151              	_ui_anim_callback_get_opacity:
+ 1152              	.LVL117:
+ 1153              	.LFB220:
+ 154:User/GUI_App/ui_helpers.c **** 
+ 155:User/GUI_App/ui_helpers.c **** int32_t _ui_anim_callback_get_opacity(lv_anim_t * a)
+ 156:User/GUI_App/ui_helpers.c **** {
+ 1154              		.loc 1 156 1 is_stmt 1 view -0
+ 1155              		.cfi_startproc
+ 1156              		@ args = 0, pretend = 0, frame = 0
+ 1157              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1158              		.loc 1 156 1 is_stmt 0 view .LVU226
+ 1159 0000 08B5     		push	{r3, lr}
+ 1160              	.LCFI27:
+ 1161              		.cfi_def_cfa_offset 8
+ 1162              		.cfi_offset 3, -8
+ 1163              		.cfi_offset 14, -4
+ 157:User/GUI_App/ui_helpers.c ****     return lv_obj_get_style_opa((lv_obj_t *)a->user_data, 0);
+ 1164              		.loc 1 157 5 is_stmt 1 view .LVU227
+ 1165              	.LVL118:
+ 1166              	.LBB22:
+ 1167              	.LBI22:
+ 1168              		.file 3 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h"
+   1:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_width(const struct _lv_obj_t * obj, uint32_t part)
+   2:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+   3:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_WIDTH);
+   4:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+   5:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+   6:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+   7:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_min_width(const struct _lv_obj_t * obj, uint32_t part)
+   8:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+   9:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MIN_WIDTH);
+  10:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  11:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  12:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  13:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_max_width(const struct _lv_obj_t * obj, uint32_t part)
+  14:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  15:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MAX_WIDTH);
+  16:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  17:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  18:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  19:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_height(const struct _lv_obj_t * obj, uint32_t part)
+  20:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  21:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_HEIGHT);
+  22:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  23:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  24:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  25:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_min_height(const struct _lv_obj_t * obj, uint32_t part)
+  26:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  27:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MIN_HEIGHT);
+  28:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  29:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  30:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  31:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_max_height(const struct _lv_obj_t * obj, uint32_t part)
+  32:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  33:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MAX_HEIGHT);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 27
+
+
+  34:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  35:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  36:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  37:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_x(const struct _lv_obj_t * obj, uint32_t part)
+  38:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  39:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_X);
+  40:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  41:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  42:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  43:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_y(const struct _lv_obj_t * obj, uint32_t part)
+  44:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  45:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_Y);
+  46:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  47:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  48:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  49:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_align_t lv_obj_get_style_align(const struct _lv_obj_t * obj, uint32_t part)
+  50:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  51:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ALIGN);
+  52:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_align_t)v.num;
+  53:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  54:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  55:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_transform_width(const struct _lv_obj_t * obj, uint32_t pa
+  56:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  57:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_WIDTH);
+  58:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  59:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  60:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  61:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_transform_height(const struct _lv_obj_t * obj, uint32_t p
+  62:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  63:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_HEIGHT);
+  64:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  65:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  66:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  67:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_translate_x(const struct _lv_obj_t * obj, uint32_t part)
+  68:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  69:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSLATE_X);
+  70:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  71:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  72:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  73:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_translate_y(const struct _lv_obj_t * obj, uint32_t part)
+  74:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  75:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSLATE_Y);
+  76:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  77:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  78:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  79:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_transform_zoom(const struct _lv_obj_t * obj, uint32_t par
+  80:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  81:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_ZOOM);
+  82:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  83:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  84:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  85:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_transform_angle(const struct _lv_obj_t * obj, uint32_t pa
+  86:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  87:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_ANGLE);
+  88:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  89:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  90:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 28
+
+
+  91:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_pad_top(const struct _lv_obj_t * obj, uint32_t part)
+  92:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  93:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_TOP);
+  94:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+  95:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+  96:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+  97:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_pad_bottom(const struct _lv_obj_t * obj, uint32_t part)
+  98:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+  99:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_BOTTOM);
+ 100:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 101:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 102:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 103:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_pad_left(const struct _lv_obj_t * obj, uint32_t part)
+ 104:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 105:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_LEFT);
+ 106:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 107:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 108:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 109:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_pad_right(const struct _lv_obj_t * obj, uint32_t part)
+ 110:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 111:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_RIGHT);
+ 112:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 113:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 114:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 115:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_pad_row(const struct _lv_obj_t * obj, uint32_t part)
+ 116:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 117:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_ROW);
+ 118:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 119:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 120:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 121:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_pad_column(const struct _lv_obj_t * obj, uint32_t part)
+ 122:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 123:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_COLUMN);
+ 124:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 125:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 126:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 127:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_bg_color(const struct _lv_obj_t * obj, uint32_t part)
+ 128:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 129:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_COLOR);
+ 130:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 131:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 132:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 133:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_bg_color_filtered(const struct _lv_obj_t * obj, uint32_t 
+ 134:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 135:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_COLOR_FILTERED);
+ 136:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 137:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 138:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 139:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_bg_opa(const struct _lv_obj_t * obj, uint32_t part)
+ 140:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 141:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_OPA);
+ 142:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 143:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 144:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 145:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_bg_grad_color(const struct _lv_obj_t * obj, uint32_t part
+ 146:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 147:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_COLOR);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 29
+
+
+ 148:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 149:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 150:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 151:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_bg_grad_color_filtered(const struct _lv_obj_t * obj, uint
+ 152:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 153:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_COLOR_FILTERED);
+ 154:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 155:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 156:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 157:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_grad_dir_t lv_obj_get_style_bg_grad_dir(const struct _lv_obj_t * obj, uint32_t par
+ 158:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 159:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_DIR);
+ 160:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_grad_dir_t)v.num;
+ 161:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 162:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 163:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_bg_main_stop(const struct _lv_obj_t * obj, uint32_t part)
+ 164:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 165:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_MAIN_STOP);
+ 166:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 167:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 168:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 169:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_bg_grad_stop(const struct _lv_obj_t * obj, uint32_t part)
+ 170:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 171:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_STOP);
+ 172:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 173:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 174:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 175:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline const lv_grad_dsc_t * lv_obj_get_style_bg_grad(const struct _lv_obj_t * obj, uint32_t
+ 176:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 177:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD);
+ 178:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (const lv_grad_dsc_t *)v.ptr;
+ 179:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 180:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 181:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_dither_mode_t lv_obj_get_style_bg_dither_mode(const struct _lv_obj_t * obj, uint32
+ 182:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 183:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_DITHER_MODE);
+ 184:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_dither_mode_t)v.num;
+ 185:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 186:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 187:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline const void * lv_obj_get_style_bg_img_src(const struct _lv_obj_t * obj, uint32_t part)
+ 188:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 189:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMG_SRC);
+ 190:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (const void *)v.ptr;
+ 191:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 192:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 193:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_bg_img_opa(const struct _lv_obj_t * obj, uint32_t part)
+ 194:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 195:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMG_OPA);
+ 196:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 197:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 198:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 199:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_bg_img_recolor(const struct _lv_obj_t * obj, uint32_t par
+ 200:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 201:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMG_RECOLOR);
+ 202:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 203:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 204:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 30
+
+
+ 205:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_bg_img_recolor_filtered(const struct _lv_obj_t * obj, uin
+ 206:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 207:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMG_RECOLOR_FILTERED);
+ 208:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 209:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 210:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 211:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_bg_img_recolor_opa(const struct _lv_obj_t * obj, uint32_t p
+ 212:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 213:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMG_RECOLOR_OPA);
+ 214:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 215:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 216:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 217:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline bool lv_obj_get_style_bg_img_tiled(const struct _lv_obj_t * obj, uint32_t part)
+ 218:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 219:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMG_TILED);
+ 220:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (bool)v.num;
+ 221:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 222:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 223:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_border_color(const struct _lv_obj_t * obj, uint32_t part)
+ 224:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 225:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_COLOR);
+ 226:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 227:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 228:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 229:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_border_color_filtered(const struct _lv_obj_t * obj, uint3
+ 230:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 231:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_COLOR_FILTERED);
+ 232:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 233:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 234:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 235:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_border_opa(const struct _lv_obj_t * obj, uint32_t part)
+ 236:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 237:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_OPA);
+ 238:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 239:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 240:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 241:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_border_width(const struct _lv_obj_t * obj, uint32_t part)
+ 242:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 243:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_WIDTH);
+ 244:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 245:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 246:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 247:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_border_side_t lv_obj_get_style_border_side(const struct _lv_obj_t * obj, uint32_t 
+ 248:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 249:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_SIDE);
+ 250:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_border_side_t)v.num;
+ 251:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 252:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 253:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline bool lv_obj_get_style_border_post(const struct _lv_obj_t * obj, uint32_t part)
+ 254:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 255:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_POST);
+ 256:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (bool)v.num;
+ 257:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 258:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 259:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_outline_width(const struct _lv_obj_t * obj, uint32_t part
+ 260:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 261:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_WIDTH);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 31
+
+
+ 262:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 263:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 264:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 265:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_outline_color(const struct _lv_obj_t * obj, uint32_t part
+ 266:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 267:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_COLOR);
+ 268:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 269:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 270:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 271:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_outline_color_filtered(const struct _lv_obj_t * obj, uint
+ 272:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 273:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_COLOR_FILTERED);
+ 274:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 275:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 276:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 277:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_outline_opa(const struct _lv_obj_t * obj, uint32_t part)
+ 278:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 279:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_OPA);
+ 280:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 281:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 282:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 283:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_outline_pad(const struct _lv_obj_t * obj, uint32_t part)
+ 284:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 285:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_PAD);
+ 286:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 287:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 288:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 289:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_shadow_width(const struct _lv_obj_t * obj, uint32_t part)
+ 290:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 291:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_WIDTH);
+ 292:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 293:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 294:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 295:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_shadow_ofs_x(const struct _lv_obj_t * obj, uint32_t part)
+ 296:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 297:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_OFS_X);
+ 298:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 299:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 300:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 301:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_shadow_ofs_y(const struct _lv_obj_t * obj, uint32_t part)
+ 302:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 303:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_OFS_Y);
+ 304:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 305:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 306:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 307:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_shadow_spread(const struct _lv_obj_t * obj, uint32_t part
+ 308:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 309:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_SPREAD);
+ 310:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 311:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 312:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 313:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_shadow_color(const struct _lv_obj_t * obj, uint32_t part)
+ 314:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 315:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_COLOR);
+ 316:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 317:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 318:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 32
+
+
+ 319:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_shadow_color_filtered(const struct _lv_obj_t * obj, uint3
+ 320:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 321:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_COLOR_FILTERED);
+ 322:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 323:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 324:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 325:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_shadow_opa(const struct _lv_obj_t * obj, uint32_t part)
+ 326:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 327:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_OPA);
+ 328:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 329:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 330:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 331:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_img_opa(const struct _lv_obj_t * obj, uint32_t part)
+ 332:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 333:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_IMG_OPA);
+ 334:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 335:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 336:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 337:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_img_recolor(const struct _lv_obj_t * obj, uint32_t part)
+ 338:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 339:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_IMG_RECOLOR);
+ 340:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 341:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 342:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 343:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_img_recolor_filtered(const struct _lv_obj_t * obj, uint32
+ 344:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 345:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_IMG_RECOLOR_FILTERED);
+ 346:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 347:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 348:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 349:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_img_recolor_opa(const struct _lv_obj_t * obj, uint32_t part
+ 350:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 351:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_IMG_RECOLOR_OPA);
+ 352:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 353:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 354:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 355:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_line_width(const struct _lv_obj_t * obj, uint32_t part)
+ 356:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 357:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_WIDTH);
+ 358:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 359:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 360:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 361:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_line_dash_width(const struct _lv_obj_t * obj, uint32_t pa
+ 362:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 363:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_DASH_WIDTH);
+ 364:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 365:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 366:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 367:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_line_dash_gap(const struct _lv_obj_t * obj, uint32_t part
+ 368:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 369:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_DASH_GAP);
+ 370:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 371:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 372:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 373:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline bool lv_obj_get_style_line_rounded(const struct _lv_obj_t * obj, uint32_t part)
+ 374:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 375:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_ROUNDED);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 33
+
+
+ 376:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (bool)v.num;
+ 377:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 378:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 379:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_line_color(const struct _lv_obj_t * obj, uint32_t part)
+ 380:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 381:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_COLOR);
+ 382:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 383:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 384:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 385:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_line_color_filtered(const struct _lv_obj_t * obj, uint32_
+ 386:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 387:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_COLOR_FILTERED);
+ 388:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 389:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 390:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 391:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_line_opa(const struct _lv_obj_t * obj, uint32_t part)
+ 392:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 393:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_OPA);
+ 394:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 395:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 396:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 397:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_arc_width(const struct _lv_obj_t * obj, uint32_t part)
+ 398:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 399:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_WIDTH);
+ 400:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 401:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 402:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 403:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline bool lv_obj_get_style_arc_rounded(const struct _lv_obj_t * obj, uint32_t part)
+ 404:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 405:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_ROUNDED);
+ 406:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (bool)v.num;
+ 407:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 408:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 409:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_arc_color(const struct _lv_obj_t * obj, uint32_t part)
+ 410:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 411:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_COLOR);
+ 412:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 413:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 414:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 415:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_arc_color_filtered(const struct _lv_obj_t * obj, uint32_t
+ 416:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 417:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_COLOR_FILTERED);
+ 418:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 419:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 420:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 421:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_arc_opa(const struct _lv_obj_t * obj, uint32_t part)
+ 422:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 423:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_OPA);
+ 424:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 425:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 426:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 427:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline const void * lv_obj_get_style_arc_img_src(const struct _lv_obj_t * obj, uint32_t part
+ 428:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 429:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_IMG_SRC);
+ 430:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (const void *)v.ptr;
+ 431:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 432:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 34
+
+
+ 433:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_text_color(const struct _lv_obj_t * obj, uint32_t part)
+ 434:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 435:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_COLOR);
+ 436:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 437:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 438:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 439:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_text_color_filtered(const struct _lv_obj_t * obj, uint32_
+ 440:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 441:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_COLOR_FILTERED);
+ 442:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return v.color;
+ 443:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 444:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 445:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_text_opa(const struct _lv_obj_t * obj, uint32_t part)
+ 446:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 447:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_OPA);
+ 448:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 449:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 450:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 451:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline const lv_font_t * lv_obj_get_style_text_font(const struct _lv_obj_t * obj, uint32_t p
+ 452:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 453:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_FONT);
+ 454:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (const lv_font_t *)v.ptr;
+ 455:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 456:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 457:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_text_letter_space(const struct _lv_obj_t * obj, uint32_t 
+ 458:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 459:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_LETTER_SPACE);
+ 460:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 461:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 462:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 463:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_text_line_space(const struct _lv_obj_t * obj, uint32_t pa
+ 464:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 465:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_LINE_SPACE);
+ 466:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 467:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 468:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 469:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_text_decor_t lv_obj_get_style_text_decor(const struct _lv_obj_t * obj, uint32_t pa
+ 470:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 471:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_DECOR);
+ 472:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_text_decor_t)v.num;
+ 473:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 474:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 475:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_text_align_t lv_obj_get_style_text_align(const struct _lv_obj_t * obj, uint32_t pa
+ 476:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 477:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_ALIGN);
+ 478:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_text_align_t)v.num;
+ 479:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 480:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 481:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_coord_t lv_obj_get_style_radius(const struct _lv_obj_t * obj, uint32_t part)
+ 482:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 483:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_RADIUS);
+ 484:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_coord_t)v.num;
+ 485:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 486:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 487:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline bool lv_obj_get_style_clip_corner(const struct _lv_obj_t * obj, uint32_t part)
+ 488:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 489:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_CLIP_CORNER);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 35
+
+
+ 490:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (bool)v.num;
+ 491:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** }
+ 492:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** 
+ 493:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_opa(const struct _lv_obj_t * obj, uint32_t part)
+ 1169              		.loc 3 493 24 view .LVU228
+ 1170              	.LBB23:
+ 494:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h **** {
+ 495:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OPA);
+ 1171              		.loc 3 495 5 view .LVU229
+ 1172              		.loc 3 495 26 is_stmt 0 view .LVU230
+ 1173 0002 40F26242 		movw	r2, #1122
+ 1174 0006 0021     		movs	r1, #0
+ 1175 0008 4069     		ldr	r0, [r0, #20]
+ 1176              	.LVL119:
+ 1177              		.loc 3 495 26 view .LVU231
+ 1178 000a FFF7FEFF 		bl	lv_obj_get_style_prop
+ 1179              	.LVL120:
+ 496:Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 1180              		.loc 3 496 5 is_stmt 1 view .LVU232
+ 1181              		.loc 3 496 5 is_stmt 0 view .LVU233
+ 1182              	.LBE23:
+ 1183              	.LBE22:
+ 158:User/GUI_App/ui_helpers.c **** }
+ 1184              		.loc 1 158 1 view .LVU234
+ 1185 000e C0B2     		uxtb	r0, r0
+ 1186 0010 08BD     		pop	{r3, pc}
+ 1187              		.cfi_endproc
+ 1188              	.LFE220:
+ 1190              		.section	.text._ui_anim_callback_get_image_zoom,"ax",%progbits
+ 1191              		.align	1
+ 1192              		.global	_ui_anim_callback_get_image_zoom
+ 1193              		.syntax unified
+ 1194              		.thumb
+ 1195              		.thumb_func
+ 1197              	_ui_anim_callback_get_image_zoom:
+ 1198              	.LVL121:
+ 1199              	.LFB221:
+ 159:User/GUI_App/ui_helpers.c **** 
+ 160:User/GUI_App/ui_helpers.c **** int32_t _ui_anim_callback_get_image_zoom(lv_anim_t * a)
+ 161:User/GUI_App/ui_helpers.c **** {
+ 1200              		.loc 1 161 1 is_stmt 1 view -0
+ 1201              		.cfi_startproc
+ 1202              		@ args = 0, pretend = 0, frame = 0
+ 1203              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1204              		.loc 1 161 1 is_stmt 0 view .LVU236
+ 1205 0000 08B5     		push	{r3, lr}
+ 1206              	.LCFI28:
+ 1207              		.cfi_def_cfa_offset 8
+ 1208              		.cfi_offset 3, -8
+ 1209              		.cfi_offset 14, -4
+ 162:User/GUI_App/ui_helpers.c ****     return lv_img_get_zoom((lv_obj_t *)a->user_data);
+ 1210              		.loc 1 162 5 is_stmt 1 view .LVU237
+ 1211              		.loc 1 162 12 is_stmt 0 view .LVU238
+ 1212 0002 4069     		ldr	r0, [r0, #20]
+ 1213              	.LVL122:
+ 1214              		.loc 1 162 12 view .LVU239
+ 1215 0004 FFF7FEFF 		bl	lv_img_get_zoom
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 36
+
+
+ 1216              	.LVL123:
+ 163:User/GUI_App/ui_helpers.c **** }
+ 1217              		.loc 1 163 1 view .LVU240
+ 1218 0008 08BD     		pop	{r3, pc}
+ 1219              		.cfi_endproc
+ 1220              	.LFE221:
+ 1222              		.section	.text._ui_anim_callback_get_image_angle,"ax",%progbits
+ 1223              		.align	1
+ 1224              		.global	_ui_anim_callback_get_image_angle
+ 1225              		.syntax unified
+ 1226              		.thumb
+ 1227              		.thumb_func
+ 1229              	_ui_anim_callback_get_image_angle:
+ 1230              	.LVL124:
+ 1231              	.LFB222:
+ 164:User/GUI_App/ui_helpers.c **** 
+ 165:User/GUI_App/ui_helpers.c **** int32_t _ui_anim_callback_get_image_angle(lv_anim_t * a)
+ 166:User/GUI_App/ui_helpers.c **** {
+ 1232              		.loc 1 166 1 is_stmt 1 view -0
+ 1233              		.cfi_startproc
+ 1234              		@ args = 0, pretend = 0, frame = 0
+ 1235              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1236              		.loc 1 166 1 is_stmt 0 view .LVU242
+ 1237 0000 08B5     		push	{r3, lr}
+ 1238              	.LCFI29:
+ 1239              		.cfi_def_cfa_offset 8
+ 1240              		.cfi_offset 3, -8
+ 1241              		.cfi_offset 14, -4
+ 167:User/GUI_App/ui_helpers.c ****     return lv_img_get_angle((lv_obj_t *)a->user_data);
+ 1242              		.loc 1 167 5 is_stmt 1 view .LVU243
+ 1243              		.loc 1 167 12 is_stmt 0 view .LVU244
+ 1244 0002 4069     		ldr	r0, [r0, #20]
+ 1245              	.LVL125:
+ 1246              		.loc 1 167 12 view .LVU245
+ 1247 0004 FFF7FEFF 		bl	lv_img_get_angle
+ 1248              	.LVL126:
+ 168:User/GUI_App/ui_helpers.c **** }
+ 1249              		.loc 1 168 1 view .LVU246
+ 1250 0008 08BD     		pop	{r3, pc}
+ 1251              		.cfi_endproc
+ 1252              	.LFE222:
+ 1254              		.section	.rodata._ui_arc_set_text_value.str1.4,"aMS",%progbits,1
+ 1255              		.align	2
+ 1256              	.LC0:
+ 1257 0000 25732564 		.ascii	"%s%d%s\000"
+ 1257      257300
+ 1258              		.section	.text._ui_arc_set_text_value,"ax",%progbits
+ 1259              		.align	1
+ 1260              		.global	_ui_arc_set_text_value
+ 1261              		.syntax unified
+ 1262              		.thumb
+ 1263              		.thumb_func
+ 1265              	_ui_arc_set_text_value:
+ 1266              	.LVL127:
+ 1267              	.LFB223:
+ 169:User/GUI_App/ui_helpers.c **** 
+ 170:User/GUI_App/ui_helpers.c **** void _ui_arc_set_text_value(lv_obj_t * trg, lv_obj_t * src, char * prefix, char * postfix)
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 37
+
+
+ 171:User/GUI_App/ui_helpers.c **** {
+ 1268              		.loc 1 171 1 is_stmt 1 view -0
+ 1269              		.cfi_startproc
+ 1270              		@ args = 0, pretend = 0, frame = 32
+ 1271              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1272              		.loc 1 171 1 is_stmt 0 view .LVU248
+ 1273 0000 70B5     		push	{r4, r5, r6, lr}
+ 1274              	.LCFI30:
+ 1275              		.cfi_def_cfa_offset 16
+ 1276              		.cfi_offset 4, -16
+ 1277              		.cfi_offset 5, -12
+ 1278              		.cfi_offset 6, -8
+ 1279              		.cfi_offset 14, -4
+ 1280 0002 8AB0     		sub	sp, sp, #40
+ 1281              	.LCFI31:
+ 1282              		.cfi_def_cfa_offset 56
+ 1283 0004 0446     		mov	r4, r0
+ 1284 0006 1546     		mov	r5, r2
+ 1285 0008 1E46     		mov	r6, r3
+ 172:User/GUI_App/ui_helpers.c ****     char buf[_UI_TEMPORARY_STRING_BUFFER_SIZE];
+ 1286              		.loc 1 172 5 is_stmt 1 view .LVU249
+ 173:User/GUI_App/ui_helpers.c ****     lv_snprintf(buf, sizeof(buf), "%s%d%s", prefix, (int)lv_arc_get_value(src), postfix);
+ 1287              		.loc 1 173 5 view .LVU250
+ 1288              		.loc 1 173 58 is_stmt 0 view .LVU251
+ 1289 000a 0846     		mov	r0, r1
+ 1290              	.LVL128:
+ 1291              		.loc 1 173 58 view .LVU252
+ 1292 000c FFF7FEFF 		bl	lv_arc_get_value
+ 1293              	.LVL129:
+ 1294              		.loc 1 173 5 discriminator 1 view .LVU253
+ 1295 0010 0196     		str	r6, [sp, #4]
+ 1296 0012 0090     		str	r0, [sp]
+ 1297 0014 2B46     		mov	r3, r5
+ 1298 0016 054A     		ldr	r2, .L104
+ 1299 0018 2021     		movs	r1, #32
+ 1300 001a 02A8     		add	r0, sp, #8
+ 1301 001c FFF7FEFF 		bl	lv_snprintf
+ 1302              	.LVL130:
+ 174:User/GUI_App/ui_helpers.c ****     lv_label_set_text(trg, buf);
+ 1303              		.loc 1 174 5 is_stmt 1 view .LVU254
+ 1304 0020 02A9     		add	r1, sp, #8
+ 1305 0022 2046     		mov	r0, r4
+ 1306 0024 FFF7FEFF 		bl	lv_label_set_text
+ 1307              	.LVL131:
+ 175:User/GUI_App/ui_helpers.c **** }
+ 1308              		.loc 1 175 1 is_stmt 0 view .LVU255
+ 1309 0028 0AB0     		add	sp, sp, #40
+ 1310              	.LCFI32:
+ 1311              		.cfi_def_cfa_offset 16
+ 1312              		@ sp needed
+ 1313 002a 70BD     		pop	{r4, r5, r6, pc}
+ 1314              	.LVL132:
+ 1315              	.L105:
+ 1316              		.loc 1 175 1 view .LVU256
+ 1317              		.align	2
+ 1318              	.L104:
+ 1319 002c 00000000 		.word	.LC0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 38
+
+
+ 1320              		.cfi_endproc
+ 1321              	.LFE223:
+ 1323              		.section	.text._ui_slider_set_text_value,"ax",%progbits
+ 1324              		.align	1
+ 1325              		.global	_ui_slider_set_text_value
+ 1326              		.syntax unified
+ 1327              		.thumb
+ 1328              		.thumb_func
+ 1330              	_ui_slider_set_text_value:
+ 1331              	.LVL133:
+ 1332              	.LFB224:
+ 176:User/GUI_App/ui_helpers.c **** 
+ 177:User/GUI_App/ui_helpers.c **** void _ui_slider_set_text_value(lv_obj_t * trg, lv_obj_t * src, char * prefix, char * postfix)
+ 178:User/GUI_App/ui_helpers.c **** {
+ 1333              		.loc 1 178 1 is_stmt 1 view -0
+ 1334              		.cfi_startproc
+ 1335              		@ args = 0, pretend = 0, frame = 32
+ 1336              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1337              		.loc 1 178 1 is_stmt 0 view .LVU258
+ 1338 0000 70B5     		push	{r4, r5, r6, lr}
+ 1339              	.LCFI33:
+ 1340              		.cfi_def_cfa_offset 16
+ 1341              		.cfi_offset 4, -16
+ 1342              		.cfi_offset 5, -12
+ 1343              		.cfi_offset 6, -8
+ 1344              		.cfi_offset 14, -4
+ 1345 0002 8AB0     		sub	sp, sp, #40
+ 1346              	.LCFI34:
+ 1347              		.cfi_def_cfa_offset 56
+ 1348 0004 0446     		mov	r4, r0
+ 1349 0006 1546     		mov	r5, r2
+ 1350 0008 1E46     		mov	r6, r3
+ 179:User/GUI_App/ui_helpers.c ****     char buf[_UI_TEMPORARY_STRING_BUFFER_SIZE];
+ 1351              		.loc 1 179 5 is_stmt 1 view .LVU259
+ 180:User/GUI_App/ui_helpers.c ****     lv_snprintf(buf, sizeof(buf), "%s%d%s", prefix, (int)lv_slider_get_value(src), postfix);
+ 1352              		.loc 1 180 5 view .LVU260
+ 1353              	.LVL134:
+ 1354              	.LBB24:
+ 1355              	.LBI24:
+ 130:Middlewares/LVGL/GUI/lvgl/src/widgets/lv_slider.h **** {
+ 1356              		.loc 2 130 23 view .LVU261
+ 1357              	.LBB25:
+ 1358              		.loc 2 132 5 view .LVU262
+ 1359              		.loc 2 132 12 is_stmt 0 view .LVU263
+ 1360 000a 0846     		mov	r0, r1
+ 1361              	.LVL135:
+ 1362              		.loc 2 132 12 view .LVU264
+ 1363 000c FFF7FEFF 		bl	lv_bar_get_value
+ 1364              	.LVL136:
+ 1365              		.loc 2 132 12 view .LVU265
+ 1366              	.LBE25:
+ 1367              	.LBE24:
+ 1368              		.loc 1 180 5 discriminator 1 view .LVU266
+ 1369 0010 0196     		str	r6, [sp, #4]
+ 1370 0012 0090     		str	r0, [sp]
+ 1371 0014 2B46     		mov	r3, r5
+ 1372 0016 054A     		ldr	r2, .L108
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 39
+
+
+ 1373 0018 2021     		movs	r1, #32
+ 1374 001a 02A8     		add	r0, sp, #8
+ 1375 001c FFF7FEFF 		bl	lv_snprintf
+ 1376              	.LVL137:
+ 181:User/GUI_App/ui_helpers.c ****     lv_label_set_text(trg, buf);
+ 1377              		.loc 1 181 5 is_stmt 1 view .LVU267
+ 1378 0020 02A9     		add	r1, sp, #8
+ 1379 0022 2046     		mov	r0, r4
+ 1380 0024 FFF7FEFF 		bl	lv_label_set_text
+ 1381              	.LVL138:
+ 182:User/GUI_App/ui_helpers.c **** }
+ 1382              		.loc 1 182 1 is_stmt 0 view .LVU268
+ 1383 0028 0AB0     		add	sp, sp, #40
+ 1384              	.LCFI35:
+ 1385              		.cfi_def_cfa_offset 16
+ 1386              		@ sp needed
+ 1387 002a 70BD     		pop	{r4, r5, r6, pc}
+ 1388              	.LVL139:
+ 1389              	.L109:
+ 1390              		.loc 1 182 1 view .LVU269
+ 1391              		.align	2
+ 1392              	.L108:
+ 1393 002c 00000000 		.word	.LC0
+ 1394              		.cfi_endproc
+ 1395              	.LFE224:
+ 1397              		.section	.text._ui_checked_set_text_value,"ax",%progbits
+ 1398              		.align	1
+ 1399              		.global	_ui_checked_set_text_value
+ 1400              		.syntax unified
+ 1401              		.thumb
+ 1402              		.thumb_func
+ 1404              	_ui_checked_set_text_value:
+ 1405              	.LVL140:
+ 1406              	.LFB225:
+ 183:User/GUI_App/ui_helpers.c **** void _ui_checked_set_text_value(lv_obj_t * trg, lv_obj_t * src, char * txt_on, char * txt_off)
+ 184:User/GUI_App/ui_helpers.c **** {
+ 1407              		.loc 1 184 1 is_stmt 1 view -0
+ 1408              		.cfi_startproc
+ 1409              		@ args = 0, pretend = 0, frame = 0
+ 1410              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1411              		.loc 1 184 1 is_stmt 0 view .LVU271
+ 1412 0000 70B5     		push	{r4, r5, r6, lr}
+ 1413              	.LCFI36:
+ 1414              		.cfi_def_cfa_offset 16
+ 1415              		.cfi_offset 4, -16
+ 1416              		.cfi_offset 5, -12
+ 1417              		.cfi_offset 6, -8
+ 1418              		.cfi_offset 14, -4
+ 1419 0002 0446     		mov	r4, r0
+ 1420 0004 0846     		mov	r0, r1
+ 1421              	.LVL141:
+ 1422              		.loc 1 184 1 view .LVU272
+ 1423 0006 1646     		mov	r6, r2
+ 1424 0008 1D46     		mov	r5, r3
+ 185:User/GUI_App/ui_helpers.c ****     if(lv_obj_has_state(src, LV_STATE_CHECKED)) lv_label_set_text(trg, txt_on);
+ 1425              		.loc 1 185 5 is_stmt 1 view .LVU273
+ 1426              		.loc 1 185 8 is_stmt 0 view .LVU274
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 40
+
+
+ 1427 000a 0121     		movs	r1, #1
+ 1428              	.LVL142:
+ 1429              		.loc 1 185 8 view .LVU275
+ 1430 000c FFF7FEFF 		bl	lv_obj_has_state
+ 1431              	.LVL143:
+ 1432              		.loc 1 185 7 discriminator 1 view .LVU276
+ 1433 0010 20B1     		cbz	r0, .L111
+ 1434              		.loc 1 185 49 is_stmt 1 discriminator 1 view .LVU277
+ 1435 0012 3146     		mov	r1, r6
+ 1436 0014 2046     		mov	r0, r4
+ 1437 0016 FFF7FEFF 		bl	lv_label_set_text
+ 1438              	.LVL144:
+ 1439              	.L110:
+ 186:User/GUI_App/ui_helpers.c ****     else lv_label_set_text(trg, txt_off);
+ 187:User/GUI_App/ui_helpers.c **** }
+ 1440              		.loc 1 187 1 is_stmt 0 view .LVU278
+ 1441 001a 70BD     		pop	{r4, r5, r6, pc}
+ 1442              	.LVL145:
+ 1443              	.L111:
+ 186:User/GUI_App/ui_helpers.c ****     else lv_label_set_text(trg, txt_off);
+ 1444              		.loc 1 186 10 is_stmt 1 view .LVU279
+ 1445 001c 2946     		mov	r1, r5
+ 1446 001e 2046     		mov	r0, r4
+ 1447 0020 FFF7FEFF 		bl	lv_label_set_text
+ 1448              	.LVL146:
+ 1449              		.loc 1 187 1 is_stmt 0 view .LVU280
+ 1450 0024 F9E7     		b	.L110
+ 1451              		.cfi_endproc
+ 1452              	.LFE225:
+ 1454              		.text
+ 1455              	.Letext0:
+ 1456              		.file 4 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1457              		.file 5 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1458              		.file 6 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 1459              		.file 7 "Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.h"
+ 1460              		.file 8 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/../font/../misc/lv_area.h"
+ 1461              		.file 9 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h"
+ 1462              		.file 10 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_style.h"
+ 1463              		.file 11 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj.h"
+ 1464              		.file 12 "Middlewares/LVGL/GUI/lvgl/src/hal/../misc/lv_ll.h"
+ 1465              		.file 13 "Middlewares/LVGL/GUI/lvgl/src/core/lv_group.h"
+ 1466              		.file 14 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_scroll.h"
+ 1467              		.file 15 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style.h"
+ 1468              		.file 16 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_class.h"
+ 1469              		.file 17 "Middlewares/LVGL/GUI/lvgl/src/core/lv_event.h"
+ 1470              		.file 18 "Middlewares/LVGL/GUI/lvgl/src/core/lv_disp.h"
+ 1471              		.file 19 "Middlewares/LVGL/GUI/lvgl/src/misc/lv_printf.h"
+ 1472              		.file 20 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_img.h"
+ 1473              		.file 21 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/sw/../../core/lv_obj_pos.h"
+ 1474              		.file 22 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_bar.h"
+ 1475              		.file 23 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_arc.h"
+ 1476              		.file 24 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_roller.h"
+ 1477              		.file 25 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_label.h"
+ 1478              		.file 26 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_dropdown.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 41
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ui_helpers.c
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:21     .text._ui_bar_set_property:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:27     .text._ui_bar_set_property:00000000 _ui_bar_set_property
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:83     .text._ui_basic_set_property:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:89     .text._ui_basic_set_property:00000000 _ui_basic_set_property
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:165    .text._ui_dropdown_set_property:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:171    .text._ui_dropdown_set_property:00000000 _ui_dropdown_set_property
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:201    .text._ui_image_set_property:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:207    .text._ui_image_set_property:00000000 _ui_image_set_property
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:237    .text._ui_label_set_property:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:243    .text._ui_label_set_property:00000000 _ui_label_set_property
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:273    .text._ui_roller_set_property:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:279    .text._ui_roller_set_property:00000000 _ui_roller_set_property
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:335    .text._ui_slider_set_property:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:341    .text._ui_slider_set_property:00000000 _ui_slider_set_property
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:415    .text._ui_screen_change:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:421    .text._ui_screen_change:00000000 _ui_screen_change
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:452    .text._ui_arc_increment:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:458    .text._ui_arc_increment:00000000 _ui_arc_increment
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:496    .text._ui_bar_increment:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:502    .text._ui_bar_increment:00000000 _ui_bar_increment
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:539    .text._ui_slider_increment:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:545    .text._ui_slider_increment:00000000 _ui_slider_increment
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:601    .text._ui_flag_modify:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:607    .text._ui_flag_modify:00000000 _ui_flag_modify
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:669    .text._ui_state_modify:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:675    .text._ui_state_modify:00000000 _ui_state_modify
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:746    .text._ui_opacity_set:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:752    .text._ui_opacity_set:00000000 _ui_opacity_set
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:778    .text._ui_anim_callback_set_x:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:784    .text._ui_anim_callback_set_x:00000000 _ui_anim_callback_set_x
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:812    .text._ui_anim_callback_set_y:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:818    .text._ui_anim_callback_set_y:00000000 _ui_anim_callback_set_y
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:846    .text._ui_anim_callback_set_width:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:852    .text._ui_anim_callback_set_width:00000000 _ui_anim_callback_set_width
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:880    .text._ui_anim_callback_set_height:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:886    .text._ui_anim_callback_set_height:00000000 _ui_anim_callback_set_height
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:914    .text._ui_anim_callback_set_opacity:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:920    .text._ui_anim_callback_set_opacity:00000000 _ui_anim_callback_set_opacity
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:949    .text._ui_anim_callback_set_image_zoom:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:955    .text._ui_anim_callback_set_image_zoom:00000000 _ui_anim_callback_set_image_zoom
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:983    .text._ui_anim_callback_set_image_angle:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:989    .text._ui_anim_callback_set_image_angle:00000000 _ui_anim_callback_set_image_angle
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1017   .text._ui_anim_callback_get_x:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1023   .text._ui_anim_callback_get_x:00000000 _ui_anim_callback_get_x
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1049   .text._ui_anim_callback_get_y:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1055   .text._ui_anim_callback_get_y:00000000 _ui_anim_callback_get_y
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1081   .text._ui_anim_callback_get_width:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1087   .text._ui_anim_callback_get_width:00000000 _ui_anim_callback_get_width
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1113   .text._ui_anim_callback_get_height:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1119   .text._ui_anim_callback_get_height:00000000 _ui_anim_callback_get_height
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1145   .text._ui_anim_callback_get_opacity:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1151   .text._ui_anim_callback_get_opacity:00000000 _ui_anim_callback_get_opacity
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1191   .text._ui_anim_callback_get_image_zoom:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1197   .text._ui_anim_callback_get_image_zoom:00000000 _ui_anim_callback_get_image_zoom
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1223   .text._ui_anim_callback_get_image_angle:00000000 $t
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s 			page 42
+
+
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1229   .text._ui_anim_callback_get_image_angle:00000000 _ui_anim_callback_get_image_angle
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1255   .rodata._ui_arc_set_text_value.str1.4:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1259   .text._ui_arc_set_text_value:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1265   .text._ui_arc_set_text_value:00000000 _ui_arc_set_text_value
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1319   .text._ui_arc_set_text_value:0000002c $d
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1324   .text._ui_slider_set_text_value:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1330   .text._ui_slider_set_text_value:00000000 _ui_slider_set_text_value
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1393   .text._ui_slider_set_text_value:0000002c $d
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1398   .text._ui_checked_set_text_value:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccpkHqDs.s:1404   .text._ui_checked_set_text_value:00000000 _ui_checked_set_text_value
+
+UNDEFINED SYMBOLS
+lv_bar_set_value
+lv_obj_set_x
+lv_obj_set_y
+lv_obj_set_width
+lv_obj_set_height
+lv_dropdown_set_selected
+lv_img_set_src
+lv_label_set_text
+lv_roller_set_selected
+lv_scr_load_anim
+lv_arc_get_value
+lv_arc_set_value
+lv_bar_get_value
+lv_obj_add_flag
+lv_obj_has_flag
+lv_obj_clear_flag
+lv_obj_add_state
+lv_obj_has_state
+lv_obj_clear_state
+lv_obj_set_style_opa
+lv_img_set_zoom
+lv_img_set_angle
+lv_obj_get_x_aligned
+lv_obj_get_y_aligned
+lv_obj_get_width
+lv_obj_get_height
+lv_obj_get_style_prop
+lv_img_get_zoom
+lv_img_get_angle
+lv_snprintf

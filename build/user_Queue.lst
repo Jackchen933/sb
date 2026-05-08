@@ -1,0 +1,371 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"user_Queue.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "BSP/EM7028/user_Queue.c"
+  20              		.section	.text.initQueue,"ax",%progbits
+  21              		.align	1
+  22              		.global	initQueue
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	initQueue:
+  28              	.LVL0:
+  29              	.LFB219:
+   1:BSP/EM7028/user_Queue.c **** #include "user_Queue.h"
+   2:BSP/EM7028/user_Queue.c **** 
+   3:BSP/EM7028/user_Queue.c **** 
+   4:BSP/EM7028/user_Queue.c **** // 初始化队列
+   5:BSP/EM7028/user_Queue.c **** void initQueue(Queue *queue) 
+   6:BSP/EM7028/user_Queue.c **** {
+  30              		.loc 1 6 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+   7:BSP/EM7028/user_Queue.c ****     queue->front = 0;
+  35              		.loc 1 7 5 view .LVU1
+  36              		.loc 1 7 18 is_stmt 0 view .LVU2
+  37 0000 0023     		movs	r3, #0
+  38 0002 0370     		strb	r3, [r0]
+   8:BSP/EM7028/user_Queue.c ****     queue->rear = -1;
+  39              		.loc 1 8 5 is_stmt 1 view .LVU3
+  40              		.loc 1 8 17 is_stmt 0 view .LVU4
+  41 0004 FF22     		movs	r2, #255
+  42 0006 4270     		strb	r2, [r0, #1]
+   9:BSP/EM7028/user_Queue.c ****     queue->size = 0;
+  43              		.loc 1 9 5 is_stmt 1 view .LVU5
+  44              		.loc 1 9 17 is_stmt 0 view .LVU6
+  45 0008 8370     		strb	r3, [r0, #2]
+  10:BSP/EM7028/user_Queue.c **** }
+  46              		.loc 1 10 1 view .LVU7
+  47 000a 7047     		bx	lr
+  48              		.cfi_endproc
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s 			page 2
+
+
+  49              	.LFE219:
+  51              		.section	.text.isQueueEmpty,"ax",%progbits
+  52              		.align	1
+  53              		.global	isQueueEmpty
+  54              		.syntax unified
+  55              		.thumb
+  56              		.thumb_func
+  58              	isQueueEmpty:
+  59              	.LVL1:
+  60              	.LFB220:
+  11:BSP/EM7028/user_Queue.c **** 
+  12:BSP/EM7028/user_Queue.c **** // 判断队列是否为空
+  13:BSP/EM7028/user_Queue.c **** bool isQueueEmpty(Queue *queue) 
+  14:BSP/EM7028/user_Queue.c **** {
+  61              		.loc 1 14 1 is_stmt 1 view -0
+  62              		.cfi_startproc
+  63              		@ args = 0, pretend = 0, frame = 0
+  64              		@ frame_needed = 0, uses_anonymous_args = 0
+  65              		@ link register save eliminated.
+  15:BSP/EM7028/user_Queue.c ****     return queue->size == 0;
+  66              		.loc 1 15 5 view .LVU9
+  67              		.loc 1 15 17 is_stmt 0 view .LVU10
+  68 0000 90F90200 		ldrsb	r0, [r0, #2]
+  69              	.LVL2:
+  16:BSP/EM7028/user_Queue.c **** }
+  70              		.loc 1 16 1 view .LVU11
+  71 0004 B0FA80F0 		clz	r0, r0
+  72 0008 4009     		lsrs	r0, r0, #5
+  73 000a 7047     		bx	lr
+  74              		.cfi_endproc
+  75              	.LFE220:
+  77              		.section	.text.isQueueFull,"ax",%progbits
+  78              		.align	1
+  79              		.global	isQueueFull
+  80              		.syntax unified
+  81              		.thumb
+  82              		.thumb_func
+  84              	isQueueFull:
+  85              	.LVL3:
+  86              	.LFB221:
+  17:BSP/EM7028/user_Queue.c **** 
+  18:BSP/EM7028/user_Queue.c **** // 判断队列是否已满
+  19:BSP/EM7028/user_Queue.c **** bool isQueueFull(Queue *queue) 
+  20:BSP/EM7028/user_Queue.c **** {
+  87              		.loc 1 20 1 is_stmt 1 view -0
+  88              		.cfi_startproc
+  89              		@ args = 0, pretend = 0, frame = 0
+  90              		@ frame_needed = 0, uses_anonymous_args = 0
+  91              		@ link register save eliminated.
+  21:BSP/EM7028/user_Queue.c ****     return queue->size == QUEUE_SIZE;
+  92              		.loc 1 21 5 view .LVU13
+  93              		.loc 1 21 17 is_stmt 0 view .LVU14
+  94 0000 90F90200 		ldrsb	r0, [r0, #2]
+  95              	.LVL4:
+  22:BSP/EM7028/user_Queue.c **** }
+  96              		.loc 1 22 1 view .LVU15
+  97 0004 0728     		cmp	r0, #7
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s 			page 3
+
+
+  98 0006 14BF     		ite	ne
+  99 0008 0020     		movne	r0, #0
+ 100 000a 0120     		moveq	r0, #1
+ 101 000c 7047     		bx	lr
+ 102              		.cfi_endproc
+ 103              	.LFE221:
+ 105              		.section	.rodata.enqueue.str1.4,"aMS",%progbits,1
+ 106              		.align	2
+ 107              	.LC0:
+ 108 0000 E9989FE5 		.ascii	"\351\230\237\345\210\227\345\267\262\346\273\241\357"
+ 108      8897E5B7 
+ 108      B2E6BBA1 
+ 108      EF
+ 109 000d BC8CE697 		.ascii	"\274\214\346\227\240\346\263\225\345\205\245\351\230"
+ 109      A0E6B395 
+ 109      E585A5E9 
+ 109      98
+ 110 001a 9FEFBC81 		.ascii	"\237\357\274\201\000"
+ 110      00
+ 111              		.section	.text.enqueue,"ax",%progbits
+ 112              		.align	1
+ 113              		.global	enqueue
+ 114              		.syntax unified
+ 115              		.thumb
+ 116              		.thumb_func
+ 118              	enqueue:
+ 119              	.LVL5:
+ 120              	.LFB222:
+  23:BSP/EM7028/user_Queue.c **** 
+  24:BSP/EM7028/user_Queue.c **** // 入队
+  25:BSP/EM7028/user_Queue.c **** void enqueue(Queue *queue, unsigned long item) 
+  26:BSP/EM7028/user_Queue.c **** {
+ 121              		.loc 1 26 1 is_stmt 1 view -0
+ 122              		.cfi_startproc
+ 123              		@ args = 0, pretend = 0, frame = 0
+ 124              		@ frame_needed = 0, uses_anonymous_args = 0
+ 125              		.loc 1 26 1 is_stmt 0 view .LVU17
+ 126 0000 38B5     		push	{r3, r4, r5, lr}
+ 127              	.LCFI0:
+ 128              		.cfi_def_cfa_offset 16
+ 129              		.cfi_offset 3, -16
+ 130              		.cfi_offset 4, -12
+ 131              		.cfi_offset 5, -8
+ 132              		.cfi_offset 14, -4
+ 133 0002 0446     		mov	r4, r0
+ 134 0004 0D46     		mov	r5, r1
+  27:BSP/EM7028/user_Queue.c ****     if (isQueueFull(queue)) 
+ 135              		.loc 1 27 5 is_stmt 1 view .LVU18
+ 136              		.loc 1 27 9 is_stmt 0 view .LVU19
+ 137 0006 FFF7FEFF 		bl	isQueueFull
+ 138              	.LVL6:
+ 139              		.loc 1 27 8 discriminator 1 view .LVU20
+ 140 000a B0B9     		cbnz	r0, .L8
+  28:BSP/EM7028/user_Queue.c ****     {
+  29:BSP/EM7028/user_Queue.c ****         printf("队列已满，无法入队！\n");
+  30:BSP/EM7028/user_Queue.c ****         return;
+  31:BSP/EM7028/user_Queue.c ****     }
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s 			page 4
+
+
+  32:BSP/EM7028/user_Queue.c ****     queue->rear = (queue->rear + 1) % QUEUE_SIZE;
+ 141              		.loc 1 32 5 is_stmt 1 view .LVU21
+ 142              		.loc 1 32 25 is_stmt 0 view .LVU22
+ 143 000c 94F90120 		ldrsb	r2, [r4, #1]
+ 144              		.loc 1 32 32 view .LVU23
+ 145 0010 0132     		adds	r2, r2, #1
+ 146              		.loc 1 32 37 view .LVU24
+ 147 0012 0C49     		ldr	r1, .L9
+ 148 0014 81FB0231 		smull	r3, r1, r1, r2
+ 149 0018 1144     		add	r1, r1, r2
+ 150 001a D317     		asrs	r3, r2, #31
+ 151 001c C3EBA103 		rsb	r3, r3, r1, asr #2
+ 152 0020 C3EBC303 		rsb	r3, r3, r3, lsl #3
+ 153 0024 D31A     		subs	r3, r2, r3
+ 154              		.loc 1 32 17 view .LVU25
+ 155 0026 5BB2     		sxtb	r3, r3
+ 156 0028 6370     		strb	r3, [r4, #1]
+  33:BSP/EM7028/user_Queue.c ****     queue->data[queue->rear] = item;
+ 157              		.loc 1 33 5 is_stmt 1 view .LVU26
+ 158              		.loc 1 33 30 is_stmt 0 view .LVU27
+ 159 002a 04EB8303 		add	r3, r4, r3, lsl #2
+ 160 002e 5D60     		str	r5, [r3, #4]
+  34:BSP/EM7028/user_Queue.c ****     queue->size++;
+ 161              		.loc 1 34 5 is_stmt 1 view .LVU28
+ 162              		.loc 1 34 10 is_stmt 0 view .LVU29
+ 163 0030 94F90230 		ldrsb	r3, [r4, #2]
+ 164              		.loc 1 34 16 view .LVU30
+ 165 0034 0133     		adds	r3, r3, #1
+ 166 0036 A370     		strb	r3, [r4, #2]
+ 167              	.L4:
+  35:BSP/EM7028/user_Queue.c **** }
+ 168              		.loc 1 35 1 view .LVU31
+ 169 0038 38BD     		pop	{r3, r4, r5, pc}
+ 170              	.LVL7:
+ 171              	.L8:
+  29:BSP/EM7028/user_Queue.c ****         return;
+ 172              		.loc 1 29 9 is_stmt 1 view .LVU32
+ 173 003a 0348     		ldr	r0, .L9+4
+ 174 003c FFF7FEFF 		bl	puts
+ 175              	.LVL8:
+  30:BSP/EM7028/user_Queue.c ****     }
+ 176              		.loc 1 30 9 view .LVU33
+ 177 0040 FAE7     		b	.L4
+ 178              	.L10:
+ 179 0042 00BF     		.align	2
+ 180              	.L9:
+ 181 0044 93244992 		.word	-1840700269
+ 182 0048 00000000 		.word	.LC0
+ 183              		.cfi_endproc
+ 184              	.LFE222:
+ 186              		.section	.rodata.dequeue.str1.4,"aMS",%progbits,1
+ 187              		.align	2
+ 188              	.LC1:
+ 189 0000 E9989FE5 		.ascii	"\351\230\237\345\210\227\344\270\272\347\251\272\357"
+ 189      8897E4B8 
+ 189      BAE7A9BA 
+ 189      EF
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s 			page 5
+
+
+ 190 000d BC8CE697 		.ascii	"\274\214\346\227\240\346\263\225\345\207\272\351\230"
+ 190      A0E6B395 
+ 190      E587BAE9 
+ 190      98
+ 191 001a 9FEFBC81 		.ascii	"\237\357\274\201\000"
+ 191      00
+ 192              		.section	.text.dequeue,"ax",%progbits
+ 193              		.align	1
+ 194              		.global	dequeue
+ 195              		.syntax unified
+ 196              		.thumb
+ 197              		.thumb_func
+ 199              	dequeue:
+ 200              	.LVL9:
+ 201              	.LFB223:
+  36:BSP/EM7028/user_Queue.c **** 
+  37:BSP/EM7028/user_Queue.c **** // 出队
+  38:BSP/EM7028/user_Queue.c **** uint32_t dequeue(Queue *queue) 
+  39:BSP/EM7028/user_Queue.c **** {
+ 202              		.loc 1 39 1 view -0
+ 203              		.cfi_startproc
+ 204              		@ args = 0, pretend = 0, frame = 0
+ 205              		@ frame_needed = 0, uses_anonymous_args = 0
+ 206              		.loc 1 39 1 is_stmt 0 view .LVU35
+ 207 0000 10B5     		push	{r4, lr}
+ 208              	.LCFI1:
+ 209              		.cfi_def_cfa_offset 8
+ 210              		.cfi_offset 4, -8
+ 211              		.cfi_offset 14, -4
+ 212 0002 0446     		mov	r4, r0
+  40:BSP/EM7028/user_Queue.c ****     if (isQueueEmpty(queue)) 
+ 213              		.loc 1 40 5 is_stmt 1 view .LVU36
+ 214              		.loc 1 40 9 is_stmt 0 view .LVU37
+ 215 0004 FFF7FEFF 		bl	isQueueEmpty
+ 216              	.LVL10:
+ 217              		.loc 1 40 8 discriminator 1 view .LVU38
+ 218 0008 A8B9     		cbnz	r0, .L15
+  41:BSP/EM7028/user_Queue.c ****     {
+  42:BSP/EM7028/user_Queue.c ****         printf("队列为空，无法出队！\n");
+  43:BSP/EM7028/user_Queue.c ****         return 0;
+  44:BSP/EM7028/user_Queue.c ****     }
+  45:BSP/EM7028/user_Queue.c ****     unsigned long item = queue->data[queue->front];
+ 219              		.loc 1 45 5 is_stmt 1 view .LVU39
+ 220              		.loc 1 45 43 is_stmt 0 view .LVU40
+ 221 000a 94F90020 		ldrsb	r2, [r4]
+ 222              		.loc 1 45 19 view .LVU41
+ 223 000e 04EB8203 		add	r3, r4, r2, lsl #2
+ 224 0012 5868     		ldr	r0, [r3, #4]
+ 225              	.LVL11:
+  46:BSP/EM7028/user_Queue.c ****     queue->front = (queue->front + 1) % QUEUE_SIZE;
+ 226              		.loc 1 46 5 is_stmt 1 view .LVU42
+ 227              		.loc 1 46 34 is_stmt 0 view .LVU43
+ 228 0014 0132     		adds	r2, r2, #1
+ 229              		.loc 1 46 39 view .LVU44
+ 230 0016 0A49     		ldr	r1, .L16
+ 231 0018 81FB0231 		smull	r3, r1, r1, r2
+ 232 001c 1144     		add	r1, r1, r2
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s 			page 6
+
+
+ 233 001e D317     		asrs	r3, r2, #31
+ 234 0020 C3EBA103 		rsb	r3, r3, r1, asr #2
+ 235 0024 C3EBC303 		rsb	r3, r3, r3, lsl #3
+ 236 0028 D31A     		subs	r3, r2, r3
+ 237              		.loc 1 46 18 view .LVU45
+ 238 002a 2370     		strb	r3, [r4]
+  47:BSP/EM7028/user_Queue.c ****     queue->size--;
+ 239              		.loc 1 47 5 is_stmt 1 view .LVU46
+ 240              		.loc 1 47 10 is_stmt 0 view .LVU47
+ 241 002c 94F90230 		ldrsb	r3, [r4, #2]
+ 242              		.loc 1 47 16 view .LVU48
+ 243 0030 013B     		subs	r3, r3, #1
+ 244 0032 A370     		strb	r3, [r4, #2]
+  48:BSP/EM7028/user_Queue.c ****     return item;
+ 245              		.loc 1 48 5 is_stmt 1 view .LVU49
+ 246              	.LVL12:
+ 247              	.L11:
+  49:BSP/EM7028/user_Queue.c **** }
+ 248              		.loc 1 49 1 is_stmt 0 view .LVU50
+ 249 0034 10BD     		pop	{r4, pc}
+ 250              	.LVL13:
+ 251              	.L15:
+  42:BSP/EM7028/user_Queue.c ****         return 0;
+ 252              		.loc 1 42 9 is_stmt 1 view .LVU51
+ 253 0036 0348     		ldr	r0, .L16+4
+ 254 0038 FFF7FEFF 		bl	puts
+ 255              	.LVL14:
+  43:BSP/EM7028/user_Queue.c ****     }
+ 256              		.loc 1 43 9 view .LVU52
+  43:BSP/EM7028/user_Queue.c ****     }
+ 257              		.loc 1 43 16 is_stmt 0 view .LVU53
+ 258 003c 0020     		movs	r0, #0
+ 259 003e F9E7     		b	.L11
+ 260              	.L17:
+ 261              		.align	2
+ 262              	.L16:
+ 263 0040 93244992 		.word	-1840700269
+ 264 0044 00000000 		.word	.LC1
+ 265              		.cfi_endproc
+ 266              	.LFE223:
+ 268              		.text
+ 269              	.Letext0:
+ 270              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 271              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 272              		.file 4 "BSP/EM7028/user_Queue.h"
+ 273              		.file 5 "<built-in>"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 user_Queue.c
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:21     .text.initQueue:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:27     .text.initQueue:00000000 initQueue
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:52     .text.isQueueEmpty:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:58     .text.isQueueEmpty:00000000 isQueueEmpty
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:78     .text.isQueueFull:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:84     .text.isQueueFull:00000000 isQueueFull
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:106    .rodata.enqueue.str1.4:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:112    .text.enqueue:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:118    .text.enqueue:00000000 enqueue
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:181    .text.enqueue:00000044 $d
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:187    .rodata.dequeue.str1.4:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:193    .text.dequeue:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:199    .text.dequeue:00000000 dequeue
+C:\Users\chen\AppData\Local\Temp\ccVBXJa0.s:263    .text.dequeue:00000040 $d
+
+UNDEFINED SYMBOLS
+puts

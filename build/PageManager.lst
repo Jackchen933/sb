@@ -1,0 +1,799 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"PageManager.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/Func/Src/PageManager.c"
+  20              		.section	.text.page_stack_init,"ax",%progbits
+  21              		.align	1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	page_stack_init:
+  27              	.LVL0:
+  28              	.LFB195:
+   1:User/Func/Src/PageManager.c **** ﻿#include "../Inc/PageManager.h"
+   2:User/Func/Src/PageManager.c **** #include "../../GUI_App/Screens/Inc/ui_HomePage.h"
+   3:User/Func/Src/PageManager.c **** #include "../../GUI_App/Screens/Inc/ui_MenuPage.h"
+   4:User/Func/Src/PageManager.c **** #include "../../GUI_App/Screens/Inc/ui_WatchFacePage.h"
+   5:User/Func/Src/PageManager.c **** #include "../../GUI_App/Screens/Inc/ui_QuickAppsPage.h"
+   6:User/Func/Src/PageManager.c **** #include "../../GUI_App/Screens/Inc/ui_FitnessPage.h"
+   7:User/Func/Src/PageManager.c **** #include "../../GUI_App/Screens/Inc/ui_WatchFacePicker.h"
+   8:User/Func/Src/PageManager.c **** 
+   9:User/Func/Src/PageManager.c **** PageStack_t PageStack;
+  10:User/Func/Src/PageManager.c **** 
+  11:User/Func/Src/PageManager.c **** static void page_stack_init(PageStack_t *stack)
+  12:User/Func/Src/PageManager.c **** {
+  29              		.loc 1 12 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  13:User/Func/Src/PageManager.c ****     stack->top = 0;
+  34              		.loc 1 13 5 view .LVU1
+  35              		.loc 1 13 16 is_stmt 0 view .LVU2
+  36 0000 0023     		movs	r3, #0
+  37 0002 0376     		strb	r3, [r0, #24]
+  14:User/Func/Src/PageManager.c **** }
+  38              		.loc 1 14 1 view .LVU3
+  39 0004 7047     		bx	lr
+  40              		.cfi_endproc
+  41              	.LFE195:
+  43              		.section	.text.page_stack_push,"ax",%progbits
+  44              		.align	1
+  45              		.syntax unified
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 2
+
+
+  46              		.thumb
+  47              		.thumb_func
+  49              	page_stack_push:
+  50              	.LVL1:
+  51              	.LFB196:
+  15:User/Func/Src/PageManager.c **** 
+  16:User/Func/Src/PageManager.c **** static uint8_t page_stack_push(PageStack_t *stack, Page_t *page)
+  17:User/Func/Src/PageManager.c **** {
+  52              		.loc 1 17 1 is_stmt 1 view -0
+  53              		.cfi_startproc
+  54              		@ args = 0, pretend = 0, frame = 0
+  55              		@ frame_needed = 0, uses_anonymous_args = 0
+  56              		@ link register save eliminated.
+  18:User/Func/Src/PageManager.c ****     if(stack->top >= MAX_DEPTH) return 1;
+  57              		.loc 1 18 5 view .LVU5
+  58              		.loc 1 18 13 is_stmt 0 view .LVU6
+  59 0000 037E     		ldrb	r3, [r0, #24]	@ zero_extendqisi2
+  60              		.loc 1 18 7 view .LVU7
+  61 0002 052B     		cmp	r3, #5
+  62 0004 05D8     		bhi	.L4
+  19:User/Func/Src/PageManager.c ****     stack->pages[stack->top++] = page;
+  63              		.loc 1 19 5 is_stmt 1 view .LVU8
+  64              		.loc 1 19 28 is_stmt 0 view .LVU9
+  65 0006 5A1C     		adds	r2, r3, #1
+  66 0008 0276     		strb	r2, [r0, #24]
+  67              		.loc 1 19 32 view .LVU10
+  68 000a 40F82310 		str	r1, [r0, r3, lsl #2]
+  20:User/Func/Src/PageManager.c ****     return 0;
+  69              		.loc 1 20 5 is_stmt 1 view .LVU11
+  70              		.loc 1 20 12 is_stmt 0 view .LVU12
+  71 000e 0020     		movs	r0, #0
+  72              	.LVL2:
+  73              		.loc 1 20 12 view .LVU13
+  74 0010 7047     		bx	lr
+  75              	.LVL3:
+  76              	.L4:
+  18:User/Func/Src/PageManager.c ****     if(stack->top >= MAX_DEPTH) return 1;
+  77              		.loc 1 18 40 discriminator 1 view .LVU14
+  78 0012 0120     		movs	r0, #1
+  79              	.LVL4:
+  21:User/Func/Src/PageManager.c **** }
+  80              		.loc 1 21 1 view .LVU15
+  81 0014 7047     		bx	lr
+  82              		.cfi_endproc
+  83              	.LFE196:
+  85              		.section	.text.page_stack_pop,"ax",%progbits
+  86              		.align	1
+  87              		.syntax unified
+  88              		.thumb
+  89              		.thumb_func
+  91              	page_stack_pop:
+  92              	.LVL5:
+  93              	.LFB197:
+  22:User/Func/Src/PageManager.c **** 
+  23:User/Func/Src/PageManager.c **** static uint8_t page_stack_pop(PageStack_t *stack)
+  24:User/Func/Src/PageManager.c **** {
+  94              		.loc 1 24 1 is_stmt 1 view -0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 3
+
+
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98              		.loc 1 24 1 is_stmt 0 view .LVU17
+  99 0000 08B5     		push	{r3, lr}
+ 100              	.LCFI0:
+ 101              		.cfi_def_cfa_offset 8
+ 102              		.cfi_offset 3, -8
+ 103              		.cfi_offset 14, -4
+  25:User/Func/Src/PageManager.c ****     if(stack->top == 0) return 1;
+ 104              		.loc 1 25 5 is_stmt 1 view .LVU18
+ 105              		.loc 1 25 13 is_stmt 0 view .LVU19
+ 106 0002 037E     		ldrb	r3, [r0, #24]	@ zero_extendqisi2
+ 107              		.loc 1 25 7 view .LVU20
+ 108 0004 43B1     		cbz	r3, .L7
+  26:User/Func/Src/PageManager.c ****     stack->pages[--stack->top]->deinit();
+ 109              		.loc 1 26 5 is_stmt 1 view .LVU21
+ 110              		.loc 1 26 18 is_stmt 0 view .LVU22
+ 111 0006 013B     		subs	r3, r3, #1
+ 112 0008 DBB2     		uxtb	r3, r3
+ 113              		.loc 1 26 5 view .LVU23
+ 114 000a 0376     		strb	r3, [r0, #24]
+ 115              		.loc 1 26 17 view .LVU24
+ 116 000c 50F82330 		ldr	r3, [r0, r3, lsl #2]
+ 117              		.loc 1 26 31 view .LVU25
+ 118 0010 5B68     		ldr	r3, [r3, #4]
+ 119              		.loc 1 26 5 view .LVU26
+ 120 0012 9847     		blx	r3
+ 121              	.LVL6:
+  27:User/Func/Src/PageManager.c ****     return 0;
+ 122              		.loc 1 27 5 is_stmt 1 view .LVU27
+ 123              		.loc 1 27 12 is_stmt 0 view .LVU28
+ 124 0014 0020     		movs	r0, #0
+ 125              	.L6:
+  28:User/Func/Src/PageManager.c **** }
+ 126              		.loc 1 28 1 view .LVU29
+ 127 0016 08BD     		pop	{r3, pc}
+ 128              	.LVL7:
+ 129              	.L7:
+  25:User/Func/Src/PageManager.c ****     stack->pages[--stack->top]->deinit();
+ 130              		.loc 1 25 32 discriminator 1 view .LVU30
+ 131 0018 0120     		movs	r0, #1
+ 132              	.LVL8:
+  25:User/Func/Src/PageManager.c ****     stack->pages[--stack->top]->deinit();
+ 133              		.loc 1 25 32 discriminator 1 view .LVU31
+ 134 001a FCE7     		b	.L6
+ 135              		.cfi_endproc
+ 136              	.LFE197:
+ 138              		.section	.text.page_stack_is_empty,"ax",%progbits
+ 139              		.align	1
+ 140              		.syntax unified
+ 141              		.thumb
+ 142              		.thumb_func
+ 144              	page_stack_is_empty:
+ 145              	.LVL9:
+ 146              	.LFB198:
+  29:User/Func/Src/PageManager.c **** 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 4
+
+
+  30:User/Func/Src/PageManager.c **** static uint8_t page_stack_is_empty(const PageStack_t *stack)
+  31:User/Func/Src/PageManager.c **** {
+ 147              		.loc 1 31 1 is_stmt 1 view -0
+ 148              		.cfi_startproc
+ 149              		@ args = 0, pretend = 0, frame = 0
+ 150              		@ frame_needed = 0, uses_anonymous_args = 0
+ 151              		@ link register save eliminated.
+  32:User/Func/Src/PageManager.c ****     return stack->top == 0;
+ 152              		.loc 1 32 5 view .LVU33
+ 153              		.loc 1 32 17 is_stmt 0 view .LVU34
+ 154 0000 007E     		ldrb	r0, [r0, #24]	@ zero_extendqisi2
+ 155              	.LVL10:
+  33:User/Func/Src/PageManager.c **** }
+ 156              		.loc 1 33 1 view .LVU35
+ 157 0002 B0FA80F0 		clz	r0, r0
+ 158 0006 4009     		lsrs	r0, r0, #5
+ 159 0008 7047     		bx	lr
+ 160              		.cfi_endproc
+ 161              	.LFE198:
+ 163              		.section	.text.get_top_page,"ax",%progbits
+ 164              		.align	1
+ 165              		.syntax unified
+ 166              		.thumb
+ 167              		.thumb_func
+ 169              	get_top_page:
+ 170              	.LVL11:
+ 171              	.LFB199:
+  34:User/Func/Src/PageManager.c **** 
+  35:User/Func/Src/PageManager.c **** static Page_t *get_top_page(PageStack_t *stack)
+  36:User/Func/Src/PageManager.c **** {
+ 172              		.loc 1 36 1 is_stmt 1 view -0
+ 173              		.cfi_startproc
+ 174              		@ args = 0, pretend = 0, frame = 0
+ 175              		@ frame_needed = 0, uses_anonymous_args = 0
+ 176              		@ link register save eliminated.
+  37:User/Func/Src/PageManager.c ****     if(stack->top == 0) return NULL;
+ 177              		.loc 1 37 5 view .LVU37
+ 178              		.loc 1 37 13 is_stmt 0 view .LVU38
+ 179 0000 037E     		ldrb	r3, [r0, #24]	@ zero_extendqisi2
+ 180              		.loc 1 37 7 view .LVU39
+ 181 0002 1BB1     		cbz	r3, .L12
+  38:User/Func/Src/PageManager.c ****     return stack->pages[stack->top - 1];
+ 182              		.loc 1 38 5 is_stmt 1 view .LVU40
+ 183              		.loc 1 38 36 is_stmt 0 view .LVU41
+ 184 0004 013B     		subs	r3, r3, #1
+ 185              		.loc 1 38 24 view .LVU42
+ 186 0006 50F82300 		ldr	r0, [r0, r3, lsl #2]
+ 187              	.LVL12:
+ 188              		.loc 1 38 24 view .LVU43
+ 189 000a 7047     		bx	lr
+ 190              	.LVL13:
+ 191              	.L12:
+  37:User/Func/Src/PageManager.c ****     if(stack->top == 0) return NULL;
+ 192              		.loc 1 37 32 discriminator 1 view .LVU44
+ 193 000c 0020     		movs	r0, #0
+ 194              	.LVL14:
+  39:User/Func/Src/PageManager.c **** }
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 5
+
+
+ 195              		.loc 1 39 1 view .LVU45
+ 196 000e 7047     		bx	lr
+ 197              		.cfi_endproc
+ 198              	.LFE199:
+ 200              		.section	.text.Page_Get_NowPage,"ax",%progbits
+ 201              		.align	1
+ 202              		.global	Page_Get_NowPage
+ 203              		.syntax unified
+ 204              		.thumb
+ 205              		.thumb_func
+ 207              	Page_Get_NowPage:
+ 208              	.LFB200:
+  40:User/Func/Src/PageManager.c **** 
+  41:User/Func/Src/PageManager.c **** Page_t *Page_Get_NowPage(void)
+  42:User/Func/Src/PageManager.c **** {
+ 209              		.loc 1 42 1 is_stmt 1 view -0
+ 210              		.cfi_startproc
+ 211              		@ args = 0, pretend = 0, frame = 0
+ 212              		@ frame_needed = 0, uses_anonymous_args = 0
+ 213 0000 08B5     		push	{r3, lr}
+ 214              	.LCFI1:
+ 215              		.cfi_def_cfa_offset 8
+ 216              		.cfi_offset 3, -8
+ 217              		.cfi_offset 14, -4
+  43:User/Func/Src/PageManager.c ****     return get_top_page(&PageStack);
+ 218              		.loc 1 43 5 view .LVU47
+ 219              		.loc 1 43 12 is_stmt 0 view .LVU48
+ 220 0002 0248     		ldr	r0, .L15
+ 221 0004 FFF7FEFF 		bl	get_top_page
+ 222              	.LVL15:
+  44:User/Func/Src/PageManager.c **** }
+ 223              		.loc 1 44 1 view .LVU49
+ 224 0008 08BD     		pop	{r3, pc}
+ 225              	.L16:
+ 226 000a 00BF     		.align	2
+ 227              	.L15:
+ 228 000c 00000000 		.word	PageStack
+ 229              		.cfi_endproc
+ 230              	.LFE200:
+ 232              		.section	.text.Page_Back,"ax",%progbits
+ 233              		.align	1
+ 234              		.global	Page_Back
+ 235              		.syntax unified
+ 236              		.thumb
+ 237              		.thumb_func
+ 239              	Page_Back:
+ 240              	.LFB201:
+  45:User/Func/Src/PageManager.c **** 
+  46:User/Func/Src/PageManager.c **** void Page_Back(void)
+  47:User/Func/Src/PageManager.c **** {
+ 241              		.loc 1 47 1 is_stmt 1 view -0
+ 242              		.cfi_startproc
+ 243              		@ args = 0, pretend = 0, frame = 0
+ 244              		@ frame_needed = 0, uses_anonymous_args = 0
+ 245 0000 30B5     		push	{r4, r5, lr}
+ 246              	.LCFI2:
+ 247              		.cfi_def_cfa_offset 12
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 6
+
+
+ 248              		.cfi_offset 4, -12
+ 249              		.cfi_offset 5, -8
+ 250              		.cfi_offset 14, -4
+ 251 0002 83B0     		sub	sp, sp, #12
+ 252              	.LCFI3:
+ 253              		.cfi_def_cfa_offset 24
+  48:User/Func/Src/PageManager.c ****     Page_t *previous_page;
+ 254              		.loc 1 48 5 view .LVU51
+  49:User/Func/Src/PageManager.c **** 
+  50:User/Func/Src/PageManager.c ****     if(page_stack_is_empty(&PageStack)) return;
+ 255              		.loc 1 50 5 view .LVU52
+ 256              		.loc 1 50 8 is_stmt 0 view .LVU53
+ 257 0004 1A48     		ldr	r0, .L23
+ 258 0006 FFF7FEFF 		bl	page_stack_is_empty
+ 259              	.LVL16:
+ 260              		.loc 1 50 7 discriminator 1 view .LVU54
+ 261 000a 08B1     		cbz	r0, .L21
+ 262              	.L17:
+  51:User/Func/Src/PageManager.c **** 
+  52:User/Func/Src/PageManager.c ****     page_stack_pop(&PageStack);
+  53:User/Func/Src/PageManager.c **** 
+  54:User/Func/Src/PageManager.c ****     if(page_stack_is_empty(&PageStack)) {
+  55:User/Func/Src/PageManager.c ****         page_stack_push(&PageStack, &Page_Home);
+  56:User/Func/Src/PageManager.c ****         page_stack_push(&PageStack, &Page_Menu);
+  57:User/Func/Src/PageManager.c ****         Page_Menu.init();
+  58:User/Func/Src/PageManager.c ****         lv_scr_load_anim(*Page_Menu.page_obj, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0, true);
+  59:User/Func/Src/PageManager.c ****         return;
+  60:User/Func/Src/PageManager.c ****     }
+  61:User/Func/Src/PageManager.c **** 
+  62:User/Func/Src/PageManager.c ****     previous_page = PageStack.pages[PageStack.top - 1];
+  63:User/Func/Src/PageManager.c ****     previous_page->init();
+  64:User/Func/Src/PageManager.c ****     lv_scr_load_anim(*previous_page->page_obj, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0, true);
+  65:User/Func/Src/PageManager.c **** }
+ 263              		.loc 1 65 1 view .LVU55
+ 264 000c 03B0     		add	sp, sp, #12
+ 265              	.LCFI4:
+ 266              		.cfi_remember_state
+ 267              		.cfi_def_cfa_offset 12
+ 268              		@ sp needed
+ 269 000e 30BD     		pop	{r4, r5, pc}
+ 270              	.L21:
+ 271              	.LCFI5:
+ 272              		.cfi_restore_state
+  52:User/Func/Src/PageManager.c **** 
+ 273              		.loc 1 52 5 is_stmt 1 view .LVU56
+ 274 0010 174C     		ldr	r4, .L23
+ 275 0012 2046     		mov	r0, r4
+ 276 0014 FFF7FEFF 		bl	page_stack_pop
+ 277              	.LVL17:
+  54:User/Func/Src/PageManager.c ****         page_stack_push(&PageStack, &Page_Home);
+ 278              		.loc 1 54 5 view .LVU57
+  54:User/Func/Src/PageManager.c ****         page_stack_push(&PageStack, &Page_Home);
+ 279              		.loc 1 54 8 is_stmt 0 view .LVU58
+ 280 0018 2046     		mov	r0, r4
+ 281 001a FFF7FEFF 		bl	page_stack_is_empty
+ 282              	.LVL18:
+  54:User/Func/Src/PageManager.c ****         page_stack_push(&PageStack, &Page_Home);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 7
+
+
+ 283              		.loc 1 54 7 discriminator 1 view .LVU59
+ 284 001e 80B9     		cbnz	r0, .L22
+  62:User/Func/Src/PageManager.c ****     previous_page->init();
+ 285              		.loc 1 62 5 is_stmt 1 view .LVU60
+  62:User/Func/Src/PageManager.c ****     previous_page->init();
+ 286              		.loc 1 62 46 is_stmt 0 view .LVU61
+ 287 0020 134A     		ldr	r2, .L23
+ 288 0022 137E     		ldrb	r3, [r2, #24]	@ zero_extendqisi2
+  62:User/Func/Src/PageManager.c ****     previous_page->init();
+ 289              		.loc 1 62 51 view .LVU62
+ 290 0024 013B     		subs	r3, r3, #1
+  62:User/Func/Src/PageManager.c ****     previous_page->init();
+ 291              		.loc 1 62 19 view .LVU63
+ 292 0026 52F82340 		ldr	r4, [r2, r3, lsl #2]
+ 293              	.LVL19:
+  63:User/Func/Src/PageManager.c ****     lv_scr_load_anim(*previous_page->page_obj, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0, true);
+ 294              		.loc 1 63 5 is_stmt 1 view .LVU64
+  63:User/Func/Src/PageManager.c ****     lv_scr_load_anim(*previous_page->page_obj, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0, true);
+ 295              		.loc 1 63 18 is_stmt 0 view .LVU65
+ 296 002a 2368     		ldr	r3, [r4]
+  63:User/Func/Src/PageManager.c ****     lv_scr_load_anim(*previous_page->page_obj, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0, true);
+ 297              		.loc 1 63 5 view .LVU66
+ 298 002c 9847     		blx	r3
+ 299              	.LVL20:
+  64:User/Func/Src/PageManager.c **** }
+ 300              		.loc 1 64 5 is_stmt 1 view .LVU67
+  64:User/Func/Src/PageManager.c **** }
+ 301              		.loc 1 64 36 is_stmt 0 view .LVU68
+ 302 002e A368     		ldr	r3, [r4, #8]
+  64:User/Func/Src/PageManager.c **** }
+ 303              		.loc 1 64 5 view .LVU69
+ 304 0030 1868     		ldr	r0, [r3]
+ 305 0032 0123     		movs	r3, #1
+ 306 0034 0093     		str	r3, [sp]
+ 307 0036 0023     		movs	r3, #0
+ 308 0038 6422     		movs	r2, #100
+ 309 003a 0621     		movs	r1, #6
+ 310 003c FFF7FEFF 		bl	lv_scr_load_anim
+ 311              	.LVL21:
+ 312 0040 E4E7     		b	.L17
+ 313              	.LVL22:
+ 314              	.L22:
+  55:User/Func/Src/PageManager.c ****         page_stack_push(&PageStack, &Page_Menu);
+ 315              		.loc 1 55 9 is_stmt 1 view .LVU70
+ 316 0042 2546     		mov	r5, r4
+ 317 0044 0B49     		ldr	r1, .L23+4
+ 318 0046 2046     		mov	r0, r4
+ 319 0048 FFF7FEFF 		bl	page_stack_push
+ 320              	.LVL23:
+  56:User/Func/Src/PageManager.c ****         Page_Menu.init();
+ 321              		.loc 1 56 9 view .LVU71
+ 322 004c 0A4C     		ldr	r4, .L23+8
+ 323 004e 2146     		mov	r1, r4
+ 324 0050 2846     		mov	r0, r5
+ 325 0052 FFF7FEFF 		bl	page_stack_push
+ 326              	.LVL24:
+  57:User/Func/Src/PageManager.c ****         lv_scr_load_anim(*Page_Menu.page_obj, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0, true);
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 8
+
+
+ 327              		.loc 1 57 9 view .LVU72
+  57:User/Func/Src/PageManager.c ****         lv_scr_load_anim(*Page_Menu.page_obj, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0, true);
+ 328              		.loc 1 57 18 is_stmt 0 view .LVU73
+ 329 0056 2368     		ldr	r3, [r4]
+  57:User/Func/Src/PageManager.c ****         lv_scr_load_anim(*Page_Menu.page_obj, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0, true);
+ 330              		.loc 1 57 9 view .LVU74
+ 331 0058 9847     		blx	r3
+ 332              	.LVL25:
+  58:User/Func/Src/PageManager.c ****         return;
+ 333              		.loc 1 58 9 is_stmt 1 view .LVU75
+  58:User/Func/Src/PageManager.c ****         return;
+ 334              		.loc 1 58 36 is_stmt 0 view .LVU76
+ 335 005a A368     		ldr	r3, [r4, #8]
+  58:User/Func/Src/PageManager.c ****         return;
+ 336              		.loc 1 58 9 view .LVU77
+ 337 005c 1868     		ldr	r0, [r3]
+ 338 005e 0123     		movs	r3, #1
+ 339 0060 0093     		str	r3, [sp]
+ 340 0062 0023     		movs	r3, #0
+ 341 0064 6422     		movs	r2, #100
+ 342 0066 0621     		movs	r1, #6
+ 343 0068 FFF7FEFF 		bl	lv_scr_load_anim
+ 344              	.LVL26:
+  59:User/Func/Src/PageManager.c ****     }
+ 345              		.loc 1 59 9 is_stmt 1 view .LVU78
+ 346 006c CEE7     		b	.L17
+ 347              	.L24:
+ 348 006e 00BF     		.align	2
+ 349              	.L23:
+ 350 0070 00000000 		.word	PageStack
+ 351 0074 00000000 		.word	Page_Home
+ 352 0078 00000000 		.word	Page_Menu
+ 353              		.cfi_endproc
+ 354              	.LFE201:
+ 356              		.section	.text.Page_Back_Bottom,"ax",%progbits
+ 357              		.align	1
+ 358              		.global	Page_Back_Bottom
+ 359              		.syntax unified
+ 360              		.thumb
+ 361              		.thumb_func
+ 363              	Page_Back_Bottom:
+ 364              	.LFB202:
+  66:User/Func/Src/PageManager.c **** 
+  67:User/Func/Src/PageManager.c **** void Page_Back_Bottom(void)
+  68:User/Func/Src/PageManager.c **** {
+ 365              		.loc 1 68 1 view -0
+ 366              		.cfi_startproc
+ 367              		@ args = 0, pretend = 0, frame = 0
+ 368              		@ frame_needed = 0, uses_anonymous_args = 0
+ 369 0000 10B5     		push	{r4, lr}
+ 370              	.LCFI6:
+ 371              		.cfi_def_cfa_offset 8
+ 372              		.cfi_offset 4, -8
+ 373              		.cfi_offset 14, -4
+ 374 0002 82B0     		sub	sp, sp, #8
+ 375              	.LCFI7:
+ 376              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 9
+
+
+  69:User/Func/Src/PageManager.c ****     if(page_stack_is_empty(&PageStack)) return;
+ 377              		.loc 1 69 5 view .LVU80
+ 378              		.loc 1 69 8 is_stmt 0 view .LVU81
+ 379 0004 1048     		ldr	r0, .L30
+ 380 0006 FFF7FEFF 		bl	page_stack_is_empty
+ 381              	.LVL27:
+ 382              		.loc 1 69 7 discriminator 1 view .LVU82
+ 383 000a 18B1     		cbz	r0, .L27
+ 384 000c 19E0     		b	.L25
+ 385              	.L28:
+  70:User/Func/Src/PageManager.c **** 
+  71:User/Func/Src/PageManager.c ****     while(PageStack.top > 1) {
+  72:User/Func/Src/PageManager.c ****         page_stack_pop(&PageStack);
+ 386              		.loc 1 72 9 is_stmt 1 view .LVU83
+ 387 000e 0E48     		ldr	r0, .L30
+ 388 0010 FFF7FEFF 		bl	page_stack_pop
+ 389              	.LVL28:
+ 390              	.L27:
+  71:User/Func/Src/PageManager.c ****         page_stack_pop(&PageStack);
+ 391              		.loc 1 71 25 view .LVU84
+  71:User/Func/Src/PageManager.c ****         page_stack_pop(&PageStack);
+ 392              		.loc 1 71 20 is_stmt 0 view .LVU85
+ 393 0014 0C4B     		ldr	r3, .L30
+ 394 0016 1B7E     		ldrb	r3, [r3, #24]	@ zero_extendqisi2
+  71:User/Func/Src/PageManager.c ****         page_stack_pop(&PageStack);
+ 395              		.loc 1 71 25 view .LVU86
+ 396 0018 012B     		cmp	r3, #1
+ 397 001a F8D8     		bhi	.L28
+  73:User/Func/Src/PageManager.c ****     }
+  74:User/Func/Src/PageManager.c **** 
+  75:User/Func/Src/PageManager.c ****     PageStack.pages[PageStack.top - 1]->init();
+ 398              		.loc 1 75 5 is_stmt 1 view .LVU87
+ 399              		.loc 1 75 35 is_stmt 0 view .LVU88
+ 400 001c 013B     		subs	r3, r3, #1
+ 401              		.loc 1 75 20 view .LVU89
+ 402 001e 0A4C     		ldr	r4, .L30
+ 403 0020 54F82330 		ldr	r3, [r4, r3, lsl #2]
+ 404              		.loc 1 75 39 view .LVU90
+ 405 0024 1B68     		ldr	r3, [r3]
+ 406              		.loc 1 75 5 view .LVU91
+ 407 0026 9847     		blx	r3
+ 408              	.LVL29:
+  76:User/Func/Src/PageManager.c ****     lv_scr_load_anim(*PageStack.pages[PageStack.top - 1]->page_obj,
+ 409              		.loc 1 76 5 is_stmt 1 view .LVU92
+ 410              		.loc 1 76 48 is_stmt 0 view .LVU93
+ 411 0028 237E     		ldrb	r3, [r4, #24]	@ zero_extendqisi2
+ 412              		.loc 1 76 53 view .LVU94
+ 413 002a 013B     		subs	r3, r3, #1
+ 414              		.loc 1 76 38 view .LVU95
+ 415 002c 54F82330 		ldr	r3, [r4, r3, lsl #2]
+ 416              		.loc 1 76 57 view .LVU96
+ 417 0030 9B68     		ldr	r3, [r3, #8]
+ 418              		.loc 1 76 5 view .LVU97
+ 419 0032 1868     		ldr	r0, [r3]
+ 420 0034 0123     		movs	r3, #1
+ 421 0036 0093     		str	r3, [sp]
+ 422 0038 0023     		movs	r3, #0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 10
+
+
+ 423 003a 6422     		movs	r2, #100
+ 424 003c 0621     		movs	r1, #6
+ 425 003e FFF7FEFF 		bl	lv_scr_load_anim
+ 426              	.LVL30:
+ 427              	.L25:
+  77:User/Func/Src/PageManager.c ****                      LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0, true);
+  78:User/Func/Src/PageManager.c **** }
+ 428              		.loc 1 78 1 view .LVU98
+ 429 0042 02B0     		add	sp, sp, #8
+ 430              	.LCFI8:
+ 431              		.cfi_def_cfa_offset 8
+ 432              		@ sp needed
+ 433 0044 10BD     		pop	{r4, pc}
+ 434              	.L31:
+ 435 0046 00BF     		.align	2
+ 436              	.L30:
+ 437 0048 00000000 		.word	PageStack
+ 438              		.cfi_endproc
+ 439              	.LFE202:
+ 441              		.section	.text.Page_Load,"ax",%progbits
+ 442              		.align	1
+ 443              		.global	Page_Load
+ 444              		.syntax unified
+ 445              		.thumb
+ 446              		.thumb_func
+ 448              	Page_Load:
+ 449              	.LVL31:
+ 450              	.LFB203:
+  79:User/Func/Src/PageManager.c **** 
+  80:User/Func/Src/PageManager.c **** void Page_Load(Page_t *newPage)
+  81:User/Func/Src/PageManager.c **** {
+ 451              		.loc 1 81 1 is_stmt 1 view -0
+ 452              		.cfi_startproc
+ 453              		@ args = 0, pretend = 0, frame = 0
+ 454              		@ frame_needed = 0, uses_anonymous_args = 0
+  82:User/Func/Src/PageManager.c ****     if(PageStack.top >= MAX_DEPTH - 1) return;
+ 455              		.loc 1 82 5 view .LVU100
+ 456              		.loc 1 82 17 is_stmt 0 view .LVU101
+ 457 0000 0F4B     		ldr	r3, .L39
+ 458 0002 1B7E     		ldrb	r3, [r3, #24]	@ zero_extendqisi2
+ 459              		.loc 1 82 7 view .LVU102
+ 460 0004 042B     		cmp	r3, #4
+ 461 0006 1AD8     		bhi	.L36
+  81:User/Func/Src/PageManager.c ****     if(PageStack.top >= MAX_DEPTH - 1) return;
+ 462              		.loc 1 81 1 view .LVU103
+ 463 0008 10B5     		push	{r4, lr}
+ 464              	.LCFI9:
+ 465              		.cfi_def_cfa_offset 8
+ 466              		.cfi_offset 4, -8
+ 467              		.cfi_offset 14, -4
+ 468 000a 82B0     		sub	sp, sp, #8
+ 469              	.LCFI10:
+ 470              		.cfi_def_cfa_offset 16
+ 471 000c 0446     		mov	r4, r0
+  83:User/Func/Src/PageManager.c **** 
+  84:User/Func/Src/PageManager.c ****     if(PageStack.top > 0) {
+ 472              		.loc 1 84 5 is_stmt 1 view .LVU104
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 11
+
+
+ 473              		.loc 1 84 7 is_stmt 0 view .LVU105
+ 474 000e 2BB1     		cbz	r3, .L34
+  85:User/Func/Src/PageManager.c ****         PageStack.pages[PageStack.top - 1]->deinit();
+ 475              		.loc 1 85 9 is_stmt 1 view .LVU106
+ 476              		.loc 1 85 39 is_stmt 0 view .LVU107
+ 477 0010 013B     		subs	r3, r3, #1
+ 478              		.loc 1 85 24 view .LVU108
+ 479 0012 0B4A     		ldr	r2, .L39
+ 480 0014 52F82330 		ldr	r3, [r2, r3, lsl #2]
+ 481              		.loc 1 85 43 view .LVU109
+ 482 0018 5B68     		ldr	r3, [r3, #4]
+ 483              		.loc 1 85 9 view .LVU110
+ 484 001a 9847     		blx	r3
+ 485              	.LVL32:
+ 486              	.L34:
+  86:User/Func/Src/PageManager.c ****     }
+  87:User/Func/Src/PageManager.c **** 
+  88:User/Func/Src/PageManager.c ****     page_stack_push(&PageStack, newPage);
+ 487              		.loc 1 88 5 is_stmt 1 view .LVU111
+ 488 001c 2146     		mov	r1, r4
+ 489 001e 0848     		ldr	r0, .L39
+ 490 0020 FFF7FEFF 		bl	page_stack_push
+ 491              	.LVL33:
+  89:User/Func/Src/PageManager.c ****     newPage->init();
+ 492              		.loc 1 89 5 view .LVU112
+ 493              		.loc 1 89 12 is_stmt 0 view .LVU113
+ 494 0024 2368     		ldr	r3, [r4]
+ 495              		.loc 1 89 5 view .LVU114
+ 496 0026 9847     		blx	r3
+ 497              	.LVL34:
+  90:User/Func/Src/PageManager.c ****     lv_scr_load_anim(*newPage->page_obj, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0, true);
+ 498              		.loc 1 90 5 is_stmt 1 view .LVU115
+ 499              		.loc 1 90 30 is_stmt 0 view .LVU116
+ 500 0028 A368     		ldr	r3, [r4, #8]
+ 501              		.loc 1 90 5 view .LVU117
+ 502 002a 1868     		ldr	r0, [r3]
+ 503 002c 0123     		movs	r3, #1
+ 504 002e 0093     		str	r3, [sp]
+ 505 0030 0023     		movs	r3, #0
+ 506 0032 6422     		movs	r2, #100
+ 507 0034 0621     		movs	r1, #6
+ 508 0036 FFF7FEFF 		bl	lv_scr_load_anim
+ 509              	.LVL35:
+  91:User/Func/Src/PageManager.c **** }
+ 510              		.loc 1 91 1 view .LVU118
+ 511 003a 02B0     		add	sp, sp, #8
+ 512              	.LCFI11:
+ 513              		.cfi_def_cfa_offset 8
+ 514              		@ sp needed
+ 515 003c 10BD     		pop	{r4, pc}
+ 516              	.LVL36:
+ 517              	.L36:
+ 518              	.LCFI12:
+ 519              		.cfi_def_cfa_offset 0
+ 520              		.cfi_restore 4
+ 521              		.cfi_restore 14
+ 522              		.loc 1 91 1 view .LVU119
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 12
+
+
+ 523 003e 7047     		bx	lr
+ 524              	.L40:
+ 525              		.align	2
+ 526              	.L39:
+ 527 0040 00000000 		.word	PageStack
+ 528              		.cfi_endproc
+ 529              	.LFE203:
+ 531              		.section	.text.Pages_init,"ax",%progbits
+ 532              		.align	1
+ 533              		.global	Pages_init
+ 534              		.syntax unified
+ 535              		.thumb
+ 536              		.thumb_func
+ 538              	Pages_init:
+ 539              	.LFB204:
+  92:User/Func/Src/PageManager.c **** 
+  93:User/Func/Src/PageManager.c **** void Pages_init(void)
+  94:User/Func/Src/PageManager.c **** {
+ 540              		.loc 1 94 1 is_stmt 1 view -0
+ 541              		.cfi_startproc
+ 542              		@ args = 0, pretend = 0, frame = 0
+ 543              		@ frame_needed = 0, uses_anonymous_args = 0
+ 544 0000 38B5     		push	{r3, r4, r5, lr}
+ 545              	.LCFI13:
+ 546              		.cfi_def_cfa_offset 16
+ 547              		.cfi_offset 3, -16
+ 548              		.cfi_offset 4, -12
+ 549              		.cfi_offset 5, -8
+ 550              		.cfi_offset 14, -4
+  95:User/Func/Src/PageManager.c ****     page_stack_init(&PageStack);
+ 551              		.loc 1 95 5 view .LVU121
+ 552 0002 084D     		ldr	r5, .L43
+ 553 0004 2846     		mov	r0, r5
+ 554 0006 FFF7FEFF 		bl	page_stack_init
+ 555              	.LVL37:
+  96:User/Func/Src/PageManager.c ****     page_stack_push(&PageStack, &Page_Home);
+ 556              		.loc 1 96 5 view .LVU122
+ 557 000a 074C     		ldr	r4, .L43+4
+ 558 000c 2146     		mov	r1, r4
+ 559 000e 2846     		mov	r0, r5
+ 560 0010 FFF7FEFF 		bl	page_stack_push
+ 561              	.LVL38:
+  97:User/Func/Src/PageManager.c ****     Page_Home.init();
+ 562              		.loc 1 97 5 view .LVU123
+ 563              		.loc 1 97 14 is_stmt 0 view .LVU124
+ 564 0014 2368     		ldr	r3, [r4]
+ 565              		.loc 1 97 5 view .LVU125
+ 566 0016 9847     		blx	r3
+ 567              	.LVL39:
+  98:User/Func/Src/PageManager.c ****     lv_disp_load_scr(*Page_Home.page_obj);
+ 568              		.loc 1 98 5 is_stmt 1 view .LVU126
+ 569              		.loc 1 98 32 is_stmt 0 view .LVU127
+ 570 0018 A368     		ldr	r3, [r4, #8]
+ 571              		.loc 1 98 5 view .LVU128
+ 572 001a 1868     		ldr	r0, [r3]
+ 573 001c FFF7FEFF 		bl	lv_disp_load_scr
+ 574              	.LVL40:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 13
+
+
+  99:User/Func/Src/PageManager.c **** }
+ 575              		.loc 1 99 1 view .LVU129
+ 576 0020 38BD     		pop	{r3, r4, r5, pc}
+ 577              	.L44:
+ 578 0022 00BF     		.align	2
+ 579              	.L43:
+ 580 0024 00000000 		.word	PageStack
+ 581 0028 00000000 		.word	Page_Home
+ 582              		.cfi_endproc
+ 583              	.LFE204:
+ 585              		.global	PageStack
+ 586              		.section	.bss.PageStack,"aw",%nobits
+ 587              		.align	2
+ 590              	PageStack:
+ 591 0000 00000000 		.space	28
+ 591      00000000 
+ 591      00000000 
+ 591      00000000 
+ 591      00000000 
+ 592              		.text
+ 593              	.Letext0:
+ 594              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 595              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 596              		.file 4 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/../font/../misc/lv_area.h"
+ 597              		.file 5 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_color.h"
+ 598              		.file 6 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/lv_style.h"
+ 599              		.file 7 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj.h"
+ 600              		.file 8 "Middlewares/LVGL/GUI/lvgl/src/hal/../misc/lv_ll.h"
+ 601              		.file 9 "Middlewares/LVGL/GUI/lvgl/src/core/lv_group.h"
+ 602              		.file 10 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_scroll.h"
+ 603              		.file 11 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style.h"
+ 604              		.file 12 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_class.h"
+ 605              		.file 13 "Middlewares/LVGL/GUI/lvgl/src/core/lv_event.h"
+ 606              		.file 14 "Middlewares/LVGL/GUI/lvgl/src/core/lv_disp.h"
+ 607              		.file 15 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_bar.h"
+ 608              		.file 16 "User/Func/Src/../Inc/PageManager.h"
+ 609              		.file 17 "User/Func/Src/../../GUI_App/Screens/Inc/ui_HomePage.h"
+ 610              		.file 18 "User/Func/Src/../../GUI_App/Screens/Inc/ui_MenuPage.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMSZybC.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 PageManager.c
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:21     .text.page_stack_init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:26     .text.page_stack_init:00000000 page_stack_init
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:44     .text.page_stack_push:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:49     .text.page_stack_push:00000000 page_stack_push
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:86     .text.page_stack_pop:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:91     .text.page_stack_pop:00000000 page_stack_pop
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:139    .text.page_stack_is_empty:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:144    .text.page_stack_is_empty:00000000 page_stack_is_empty
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:164    .text.get_top_page:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:169    .text.get_top_page:00000000 get_top_page
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:201    .text.Page_Get_NowPage:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:207    .text.Page_Get_NowPage:00000000 Page_Get_NowPage
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:228    .text.Page_Get_NowPage:0000000c $d
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:590    .bss.PageStack:00000000 PageStack
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:233    .text.Page_Back:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:239    .text.Page_Back:00000000 Page_Back
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:350    .text.Page_Back:00000070 $d
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:357    .text.Page_Back_Bottom:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:363    .text.Page_Back_Bottom:00000000 Page_Back_Bottom
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:437    .text.Page_Back_Bottom:00000048 $d
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:442    .text.Page_Load:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:448    .text.Page_Load:00000000 Page_Load
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:527    .text.Page_Load:00000040 $d
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:532    .text.Pages_init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:538    .text.Pages_init:00000000 Pages_init
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:580    .text.Pages_init:00000024 $d
+C:\Users\chen\AppData\Local\Temp\ccMSZybC.s:587    .bss.PageStack:00000000 $d
+
+UNDEFINED SYMBOLS
+lv_scr_load_anim
+Page_Home
+Page_Menu
+lv_disp_load_scr

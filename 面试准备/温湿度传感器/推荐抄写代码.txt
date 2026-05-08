@@ -1,0 +1,150 @@
+==================== 推荐抄写的代码 ====================
+
+抄写顺序（按重要程度）：
+  第一遍：AHT_Read()      - 最核心，I2C通信流程 + 数据拼接计算
+  第二遍：AHT_Read()      - 巩固
+  第三遍：AHT_Init()      - 初始化步骤 + 校准检查
+  第四遍：AHT_Init()      - 巩固
+  第五遍：传感器更新任务   - 数据校验 + 中间层调用方式
+
+==================== 文件路径 ====================
+
+AHT_Read() + AHT_Init():
+  文件：BSP/AHT21/AHT21.c
+  AHT_Read()：第 71~136 行
+  AHT_Init()：第 45~69 行
+
+传感器更新任务：
+  文件：User/Tasks/Src/user_SensUpdateTask.c
+  第 177~193 行（Env Page 部分）
+
+
+==================== AHT_Init() 代码 ====================
+
+uint8_t AHT_Init(void)
+{
+    AHT_CLK_ENABLE;                 // 使能 GPIOB 时钟
+    IICInit(&AHT_bus);              // 初始化 I2C 引脚为推挽输出
+
+    delay_ms(40);                   // 等待传感器上电稳定
+
+    // 检查校准使能位，未校准则发送初始化命令
+    if(AHT_Read_Status()&&0x08!=0x08)
+    {
+        IICStart(&AHT_bus);
+        IICSendByte(&AHT_bus,0x70);     // 写地址 0x38 << 1 | 0
+        IICWaitAck(&AHT_bus);
+        IICSendByte(&AHT_bus,0xBE);     // 触发校准命令
+        IICWaitAck(&AHT_bus);
+        IICSendByte(&AHT_bus,0x08);     // 参数
+        IICWaitAck(&AHT_bus);
+        IICSendByte(&AHT_bus,0x00);     // 参数
+        IICWaitAck(&AHT_bus);
+        IICStop(&AHT_bus);
+        delay_ms(10);
+    }
+
+    return 0;
+}
+
+
+==================== AHT_Read() 代码 ====================
+
+uint8_t AHT_Read(float *humi, float *temp)
+{
+    uint8_t cnt=5;
+    uint8_t  Byte_1th=0;
+    uint8_t  Byte_2th=0;
+    uint8_t  Byte_3th=0;
+    uint8_t  Byte_4th=0;
+    uint8_t  Byte_5th=0;
+    uint8_t  Byte_6th=0;
+    uint32_t RetuData = 0;
+
+    // ---------- 第一步：触发测量 ----------
+    IICStart(&AHT_bus);
+    IICSendByte(&AHT_bus,0x70);      // 写地址
+    IICWaitAck(&AHT_bus);
+    IICSendByte(&AHT_bus,0xAC);      // 触发测量命令
+    IICWaitAck(&AHT_bus);
+    IICSendByte(&AHT_bus,0x33);      // 参数1
+    IICWaitAck(&AHT_bus);
+    IICSendByte(&AHT_bus,0x00);      // 参数2
+    IICWaitAck(&AHT_bus);
+    IICStop(&AHT_bus);
+
+    // ---------- 第二步：等待测量完成 ----------
+    delay_ms(80);                    // 等待至少 80ms
+    while(AHT_Read_Status()&0x80==0x80 && cnt)  // bit7=1 表示忙
+    {
+        delay_ms(5);
+        cnt--;
+        AHT_Read_Status();
+    }
+    if(!cnt)
+    {return 1;}
+
+    // ---------- 第三步：读取 6 字节数据 ----------
+    IICStart(&AHT_bus);
+    IICSendByte(&AHT_bus,0x71);      // 读地址
+    IICWaitAck(&AHT_bus);
+    Byte_1th = IICReceiveByte(&AHT_bus);  // 状态字节
+    IICSendAck(&AHT_bus);
+    Byte_2th = IICReceiveByte(&AHT_bus);  // 湿度 Byte2
+    IICSendAck(&AHT_bus);
+    Byte_3th = IICReceiveByte(&AHT_bus);  // 湿度 Byte3
+    IICSendAck(&AHT_bus);
+    Byte_4th = IICReceiveByte(&AHT_bus);  // 湿度 Byte4 + 温度 Byte1
+    IICSendAck(&AHT_bus);
+    Byte_5th = IICReceiveByte(&AHT_bus);  // 温度 Byte2
+    IICSendAck(&AHT_bus);
+    Byte_6th = IICReceiveByte(&AHT_bus);  // 温度 Byte3
+    IICSendNotAck(&AHT_bus);              // 最后一位发 NACK
+    IICStop(&AHT_bus);
+
+    // ---------- 第四步：计算湿度 ----------
+    // 湿度：Byte2[7:0] + Byte3[7:0] + Byte4[7:4]，共 20 位
+    RetuData = (RetuData|Byte_2th)<<8;
+    RetuData = (RetuData|Byte_3th)<<8;
+    RetuData = (RetuData|Byte_4th);
+    RetuData = RetuData >> 4;                      // 去掉 Byte4 低 4 位
+    *humi = (RetuData * 1000 >> 20);              // *100 / 2^20
+    *humi /= 10;
+
+    // ---------- 第五步：计算温度 ----------
+    // 温度：Byte4[3:0] + Byte5[7:0] + Byte6[7:0]，共 20 位
+    RetuData = 0;
+    RetuData = (RetuData|(Byte_4th&0x0f))<<8;    // 取 Byte4 低 4 位
+    RetuData = (RetuData|Byte_5th)<<8;
+    RetuData = (RetuData|Byte_6th);
+    RetuData = RetuData & 0xfffff;                // 确保 20 位
+    *temp = ((RetuData * 2000 >> 20) - 500);     // *200/2^20 - 50
+    *temp /= 10;
+
+    return 0;
+}
+
+
+==================== 传感器更新任务代码 ====================
+
+// 文件：User/Tasks/Src/user_SensUpdateTask.c
+// 第 177~193 行
+
+// Env Page - 当用户在环境监测页面时
+else if(Page_Get_NowPage()->page_obj == &ui_EnvPage)
+{
+    osMessageQueuePut(IdleBreak_MessageQueue, &IdleBreakstr, 0, 1);  // 防止息屏
+
+    if(!HWInterface.AHT21.ConnectionError)  // 先检查传感器是否正常
+    {
+        float humi, temp;
+        HWInterface.AHT21.GetHumiTemp(&humi, &temp);  // 读取传感器数据
+
+        // 数据合法性校验，防止异常数据
+        if(temp > -10 && temp < 50 && humi > 0 && humi < 100)
+        {
+            HWInterface.AHT21.temperature = (int8_t)temp;
+            HWInterface.AHT21.humidity = (int8_t)humi;
+        }
+    }
+}

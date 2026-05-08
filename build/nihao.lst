@@ -1,0 +1,275 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"nihao.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/GUI_App/Fonts/nihao.c"
+  20              		.global	nihao
+  21              		.section	.rodata.nihao,"a"
+  22              		.align	2
+  25              	nihao:
+  26 0000 00000000 		.word	lv_font_get_glyph_dsc_fmt_txt
+  27 0004 00000000 		.word	lv_font_get_bitmap_fmt_txt
+  28 0008 2300     		.short	35
+  29 000a 0400     		.short	4
+  30 000c 00       		.byte	0
+  31 000d FC       		.byte	-4
+  32 000e 02       		.byte	2
+  33 000f 00       		.space	1
+  34 0010 00000000 		.word	font_dsc
+  35 0014 00000000 		.space	8
+  35      00000000 
+  36              		.section	.rodata.font_dsc,"a"
+  37              		.align	2
+  40              	font_dsc:
+  41 0000 00000000 		.word	glyph_bitmap
+  42 0004 00000000 		.word	glyph_dsc
+  43 0008 00000000 		.word	cmaps
+  44 000c 00000000 		.word	0
+  45 0010 0000     		.short	0
+  46 0012 01       		.byte	1
+  47 0013 02       		.byte	2
+  48 0014 00000000 		.word	cache
+  49              		.section	.bss.cache,"aw",%nobits
+  50              		.align	2
+  53              	cache:
+  54 0000 00000000 		.space	8
+  54      00000000 
+  55              		.section	.rodata.cmaps,"a"
+  56              		.align	2
+  59              	cmaps:
+  60 0000 1F4F0000 		.word	20255
+  61 0004 FA02     		.short	762
+  62 0006 0100     		.short	1
+  63 0008 00000000 		.word	unicode_list_0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s 			page 2
+
+
+  64 000c 00000000 		.word	0
+  65 0010 0300     		.short	3
+  66 0012 03       		.byte	3
+  67 0013 00       		.space	1
+  68              		.section	.rodata.unicode_list_0,"a"
+  69              		.align	2
+  72              	unicode_list_0:
+  73 0000 0000     		.short	0
+  74 0002 5400     		.short	84
+  75 0004 F902     		.short	761
+  76              		.section	.rodata.glyph_dsc,"a"
+  77              		.align	2
+  80              	glyph_dsc:
+  81 0000 00       		.byte	0
+  82 0001 00       		.byte	0
+  83 0002 00       		.byte	0
+  84 0003 00       		.byte	0
+  85 0004 00       		.byte	0
+  86 0005 00       		.byte	0
+  87 0006 00       		.byte	0
+  88 0007 00       		.byte	0
+  89 0008 00       		.byte	0
+  90 0009 00       		.byte	0
+  91 000a 00       		.byte	0
+  92 000b 26       		.byte	38
+  93 000c 22       		.byte	34
+  94 000d 22       		.byte	34
+  95 000e 01       		.byte	1
+  96 000f FC       		.byte	-4
+  97 0010 91       		.byte	145
+  98 0011 00       		.byte	0
+  99 0012 00       		.byte	0
+ 100 0013 26       		.byte	38
+ 101 0014 23       		.byte	35
+ 102 0015 23       		.byte	35
+ 103 0016 02       		.byte	2
+ 104 0017 FC       		.byte	-4
+ 105 0018 2B       		.byte	43
+ 106 0019 01       		.byte	1
+ 107 001a 00       		.byte	0
+ 108 001b 26       		.byte	38
+ 109 001c 21       		.byte	33
+ 110 001d 23       		.byte	35
+ 111 001e 01       		.byte	1
+ 112 001f FC       		.byte	-4
+ 113              		.section	.rodata.glyph_bitmap,"a"
+ 114              		.align	2
+ 117              	glyph_bitmap:
+ 118 0000 00400400 		.ascii	"\000@\004\000\0000\001\000\000\010\000@\000\002\000"
+ 118      00300100 
+ 118      00080040 
+ 118      000200
+ 119 000f 1000011F 		.ascii	"\020\000\001\037\377\377\300@\001\000\000 \000@\000"
+ 119      FFFFC040 
+ 119      01000020 
+ 119      004000
+ 120 001e 08001000 		.ascii	"\010\000\020\000\004\000\004\000\001\000\001\000\000"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s 			page 3
+
+
+ 120      04000400 
+ 120      01000100 
+ 120      00
+ 121 002b C0004000 		.ascii	"\300\000@\0000\000\020\000\024\037\377\377\205\000\001"
+ 121      30001000 
+ 121      141FFFFF 
+ 121      850001
+ 122 003a 00024000 		.ascii	"\000\002@\000@\001\220\000\020\000D\000\004\000!\000"
+ 122      40019000 
+ 122      10004400 
+ 122      04002100 
+ 123 004a 01000040 		.ascii	"\001\000\000@\000@\000\020\000\020\000\004?\377\377"
+ 123      00400010 
+ 123      00100004 
+ 123      3FFFFF
+ 124 0059 C1000100 		.ascii	"\301\000\001\000\020@\000@\004\020\000\020\001\004\000"
+ 124      10400040 
+ 124      04100010 
+ 124      010400
+ 125 0068 04004100 		.ascii	"\004\000A\000\001\000\020@\000@\004\020\000\020\001"
+ 125      01001040 
+ 125      00400410 
+ 125      001001
+ 126 0077 04000400 		.ascii	"\004\000\004\000A\000\001\000\020@\000@|\020\000\020"
+ 126      41000100 
+ 126      10400040 
+ 126      7C100010 
+ 127 0087 00040004 		.ascii	"\000\004\000\004\000\001\000\001\000\000\000\000\002"
+ 127      00010001 
+ 127      00000000 
+ 127      02
+ 128 0094 00000800 		.ascii	"\000\000\010\000@\000\002\000\010\000\000@\001\000\000"
+ 128      40000200 
+ 128      08000040 
+ 128      010000
+ 129 00a3 08FFFFF8 		.ascii	"\010\377\377\370\002\000\004\000\000@\000\200\000\020"
+ 129      02000400 
+ 129      00400080 
+ 129      0010
+ 130 00b1 00100002 		.ascii	"\000\020\000\002\000\002\000\000\200\000@\000\020\000"
+ 130      00020000 
+ 130      80004000 
+ 130      1000
+ 131 00bf 08000400 		.ascii	"\010\000\004\000\001\000\000\300\000 \000(\000\004\000"
+ 131      010000C0 
+ 131      00200028 
+ 131      000400
+ 132 00ce 0507FFFF 		.ascii	"\005\007\377\377\371 \000\000\000$\000\000\000\010\200"
+ 132      F9200000 
+ 132      00240000 
+ 132      000880
+ 133 00dd 00000110 		.ascii	"\000\000\001\020\000\010\000B\000\001\000\000@\000 "
+ 133      00080042 
+ 133      00010000 
+ 133      400020
+ 134 00ec 00080004 		.ascii	"\000\010\000\004\000\001\000\000\200\000 \377\377\376"
+ 134      00010000 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s 			page 4
+
+
+ 134      800020FF 
+ 134      FFFE
+ 135 00fa 04000200 		.ascii	"\004\000\002\000\000\200\000@\000\020\000\010\000\002"
+ 135      00800040 
+ 135      00100008 
+ 135      0002
+ 136 0108 00010000 		.ascii	"\000\001\000\000@\000 \000\010\000\004\000\001\000\000"
+ 136      40002000 
+ 136      08000400 
+ 136      010000
+ 137 0117 80002000 		.ascii	"\200\000 \000\020\000\004\000\002\000\000\207\377\377"
+ 137      10000400 
+ 137      02000087 
+ 137      FFFF
+ 138 0125 FC100000 		.ascii	"\374\020\000\000\000\000\000 \000\000\000\020\000\000"
+ 138      00000020 
+ 138      00000010 
+ 138      0000
+ 139 0133 40080000 		.ascii	"@\010\000\000 \004\000 \020\002\000\020\010\001\000"
+ 139      20040020 
+ 139      10020010 
+ 139      080100
+ 140 0142 0807FFFF 		.ascii	"\010\007\377\377\304\002\020\001\002\001\010\000\201"
+ 140      C4021001 
+ 140      02010800 
+ 140      81
+ 141 014f 00840040 		.ascii	"\000\204\000@\200B\000 @!\000\020 \020\200\010\020\010"
+ 141      80420020 
+ 141      40210010 
+ 141      20108008 
+ 141      1008
+ 142 0161 40040804 		.ascii	"@\004\010\004 \002\004\002\020\001\002\001\014\001\001"
+ 142      20020402 
+ 142      10010201 
+ 142      0C0101
+ 143 0170 00820080 		.ascii	"\000\202\000\200\200A\000@@ \200  \020  \020\010\020"
+ 143      80410040 
+ 143      40208020 
+ 143      20102020 
+ 143      100810
+ 144 0183 10080408 		.ascii	"\020\010\004\010\030\004\002\002\010\002\001\001\214"
+ 144      18040202 
+ 144      08020101 
+ 144      8C
+ 145 0190 01008044 		.ascii	"\001\000\200D\000\200@\024\000@ \014\000 \020\007\000"
+ 145      00804014 
+ 145      0040200C 
+ 145      00201007 
+ 145      00
+ 146 01a1 000804C0 		.ascii	"\000\010\004\300\000\004\0040\000\002\014\004\000\001"
+ 146      00040430 
+ 146      00020C04 
+ 146      0001
+ 147 01af 08018000 		.ascii	"\010\001\200\000\230\0000\000p\000\014\003\340"
+ 147      98003000 
+ 147      70000C03 
+ 147      E0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s 			page 5
+
+
+ 148              		.text
+ 149              	.Letext0:
+ 150              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 151              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 152              		.file 4 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/../misc/../font/../misc/lv_area.h"
+ 153              		.file 5 "Middlewares/LVGL/GUI/lvgl/src/../src/hal/../draw/../misc/../font/lv_font.h"
+ 154              		.file 6 "Middlewares/LVGL/GUI/lvgl/src/../src/core/lv_obj.h"
+ 155              		.file 7 "Middlewares/LVGL/GUI/lvgl/src/../src/font/lv_font_fmt_txt.h"
+ 156              		.file 8 "Middlewares/LVGL/GUI/lvgl/src/../src/widgets/lv_bar.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 nihao.c
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:25     .rodata.nihao:00000000 nihao
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:22     .rodata.nihao:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:40     .rodata.font_dsc:00000000 font_dsc
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:37     .rodata.font_dsc:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:117    .rodata.glyph_bitmap:00000000 glyph_bitmap
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:80     .rodata.glyph_dsc:00000000 glyph_dsc
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:59     .rodata.cmaps:00000000 cmaps
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:53     .bss.cache:00000000 cache
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:50     .bss.cache:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:56     .rodata.cmaps:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:72     .rodata.unicode_list_0:00000000 unicode_list_0
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:69     .rodata.unicode_list_0:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:77     .rodata.glyph_dsc:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccMQAuYJ.s:114    .rodata.glyph_bitmap:00000000 $d
+
+UNDEFINED SYMBOLS
+lv_font_get_glyph_dsc_fmt_txt
+lv_font_get_bitmap_fmt_txt

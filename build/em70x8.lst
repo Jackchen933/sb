@@ -1,0 +1,622 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"em70x8.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "BSP/EM7028/em70x8.c"
+  20              		.section	.text.EM7028_ReadOneReg,"ax",%progbits
+  21              		.align	1
+  22              		.global	EM7028_ReadOneReg
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	EM7028_ReadOneReg:
+  28              	.LVL0:
+  29              	.LFB216:
+   1:BSP/EM7028/em70x8.c **** #include "em70x8.h"
+   2:BSP/EM7028/em70x8.c **** 
+   3:BSP/EM7028/em70x8.c **** #define CLK_ENABLE __HAL_RCC_GPIOB_CLK_ENABLE();
+   4:BSP/EM7028/em70x8.c **** iic_bus_t EM7028_bus = 
+   5:BSP/EM7028/em70x8.c **** {
+   6:BSP/EM7028/em70x8.c **** 	.IIC_SDA_PORT = GPIOB,
+   7:BSP/EM7028/em70x8.c **** 	.IIC_SCL_PORT = GPIOB,
+   8:BSP/EM7028/em70x8.c **** 	.IIC_SDA_PIN  = GPIO_PIN_13,
+   9:BSP/EM7028/em70x8.c **** 	.IIC_SCL_PIN  = GPIO_PIN_14,
+  10:BSP/EM7028/em70x8.c **** };
+  11:BSP/EM7028/em70x8.c **** 
+  12:BSP/EM7028/em70x8.c **** uint8_t  EM7028_ReadOneReg(unsigned char RegAddr)
+  13:BSP/EM7028/em70x8.c **** {
+  30              		.loc 1 13 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 13 1 is_stmt 0 view .LVU1
+  35 0000 08B5     		push	{r3, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 3, -8
+  39              		.cfi_offset 14, -4
+  40 0002 0246     		mov	r2, r0
+  14:BSP/EM7028/em70x8.c **** 	unsigned char dat;
+  41              		.loc 1 14 2 is_stmt 1 view .LVU2
+  15:BSP/EM7028/em70x8.c **** 	dat = IIC_Read_One_Byte(&EM7028_bus, EM7028_ADDR, RegAddr);
+  42              		.loc 1 15 2 view .LVU3
+  43              		.loc 1 15 8 is_stmt 0 view .LVU4
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s 			page 2
+
+
+  44 0004 2421     		movs	r1, #36
+  45 0006 0248     		ldr	r0, .L3
+  46              	.LVL1:
+  47              		.loc 1 15 8 view .LVU5
+  48 0008 FFF7FEFF 		bl	IIC_Read_One_Byte
+  49              	.LVL2:
+  16:BSP/EM7028/em70x8.c **** 	return dat;
+  50              		.loc 1 16 2 is_stmt 1 view .LVU6
+  17:BSP/EM7028/em70x8.c **** }
+  51              		.loc 1 17 1 is_stmt 0 view .LVU7
+  52 000c 08BD     		pop	{r3, pc}
+  53              	.L4:
+  54 000e 00BF     		.align	2
+  55              	.L3:
+  56 0010 00000000 		.word	EM7028_bus
+  57              		.cfi_endproc
+  58              	.LFE216:
+  60              		.section	.text.EM7028_WriteOneReg,"ax",%progbits
+  61              		.align	1
+  62              		.global	EM7028_WriteOneReg
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  67              	EM7028_WriteOneReg:
+  68              	.LVL3:
+  69              	.LFB217:
+  18:BSP/EM7028/em70x8.c **** 
+  19:BSP/EM7028/em70x8.c **** void  EM7028_WriteOneReg(unsigned char RegAddr, unsigned char dat)
+  20:BSP/EM7028/em70x8.c **** {
+  70              		.loc 1 20 1 is_stmt 1 view -0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74              		.loc 1 20 1 is_stmt 0 view .LVU9
+  75 0000 08B5     		push	{r3, lr}
+  76              	.LCFI1:
+  77              		.cfi_def_cfa_offset 8
+  78              		.cfi_offset 3, -8
+  79              		.cfi_offset 14, -4
+  80 0002 0246     		mov	r2, r0
+  81 0004 0B46     		mov	r3, r1
+  21:BSP/EM7028/em70x8.c **** 	IIC_Write_One_Byte(&EM7028_bus, EM7028_ADDR, RegAddr, dat);
+  82              		.loc 1 21 2 is_stmt 1 view .LVU10
+  83 0006 2421     		movs	r1, #36
+  84              	.LVL4:
+  85              		.loc 1 21 2 is_stmt 0 view .LVU11
+  86 0008 0148     		ldr	r0, .L7
+  87              	.LVL5:
+  88              		.loc 1 21 2 view .LVU12
+  89 000a FFF7FEFF 		bl	IIC_Write_One_Byte
+  90              	.LVL6:
+  22:BSP/EM7028/em70x8.c **** }
+  91              		.loc 1 22 1 view .LVU13
+  92 000e 08BD     		pop	{r3, pc}
+  93              	.L8:
+  94              		.align	2
+  95              	.L7:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s 			page 3
+
+
+  96 0010 00000000 		.word	EM7028_bus
+  97              		.cfi_endproc
+  98              	.LFE217:
+ 100              		.section	.text.EM7028_Get_ID,"ax",%progbits
+ 101              		.align	1
+ 102              		.global	EM7028_Get_ID
+ 103              		.syntax unified
+ 104              		.thumb
+ 105              		.thumb_func
+ 107              	EM7028_Get_ID:
+ 108              	.LFB218:
+  23:BSP/EM7028/em70x8.c **** 
+  24:BSP/EM7028/em70x8.c **** uint8_t EM7028_Get_ID()
+  25:BSP/EM7028/em70x8.c **** {
+ 109              		.loc 1 25 1 is_stmt 1 view -0
+ 110              		.cfi_startproc
+ 111              		@ args = 0, pretend = 0, frame = 0
+ 112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 113 0000 08B5     		push	{r3, lr}
+ 114              	.LCFI2:
+ 115              		.cfi_def_cfa_offset 8
+ 116              		.cfi_offset 3, -8
+ 117              		.cfi_offset 14, -4
+  26:BSP/EM7028/em70x8.c **** 	return EM7028_ReadOneReg(ID_REG);
+ 118              		.loc 1 26 2 view .LVU15
+ 119              		.loc 1 26 9 is_stmt 0 view .LVU16
+ 120 0002 0020     		movs	r0, #0
+ 121 0004 FFF7FEFF 		bl	EM7028_ReadOneReg
+ 122              	.LVL7:
+  27:BSP/EM7028/em70x8.c **** }
+ 123              		.loc 1 27 1 view .LVU17
+ 124 0008 08BD     		pop	{r3, pc}
+ 125              		.cfi_endproc
+ 126              	.LFE218:
+ 128              		.section	.text.EM7028_hrs_init,"ax",%progbits
+ 129              		.align	1
+ 130              		.global	EM7028_hrs_init
+ 131              		.syntax unified
+ 132              		.thumb
+ 133              		.thumb_func
+ 135              	EM7028_hrs_init:
+ 136              	.LFB219:
+  28:BSP/EM7028/em70x8.c **** 
+  29:BSP/EM7028/em70x8.c **** uint8_t EM7028_hrs_init()
+  30:BSP/EM7028/em70x8.c **** {
+ 137              		.loc 1 30 1 is_stmt 1 view -0
+ 138              		.cfi_startproc
+ 139              		@ args = 0, pretend = 0, frame = 8
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141 0000 10B5     		push	{r4, lr}
+ 142              	.LCFI3:
+ 143              		.cfi_def_cfa_offset 8
+ 144              		.cfi_offset 4, -8
+ 145              		.cfi_offset 14, -4
+ 146 0002 82B0     		sub	sp, sp, #8
+ 147              	.LCFI4:
+ 148              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s 			page 4
+
+
+  31:BSP/EM7028/em70x8.c **** 	uint8_t i = 5;
+ 149              		.loc 1 31 2 view .LVU19
+ 150              	.LVL8:
+  32:BSP/EM7028/em70x8.c **** 	
+  33:BSP/EM7028/em70x8.c **** 	CLK_ENABLE;
+ 151              		.loc 1 33 2 view .LVU20
+ 152              	.LBB2:
+ 153              		.loc 1 33 2 view .LVU21
+ 154 0004 0023     		movs	r3, #0
+ 155 0006 0193     		str	r3, [sp, #4]
+ 156              		.loc 1 33 2 view .LVU22
+ 157 0008 194B     		ldr	r3, .L19
+ 158 000a 1A6B     		ldr	r2, [r3, #48]
+ 159 000c 42F00202 		orr	r2, r2, #2
+ 160 0010 1A63     		str	r2, [r3, #48]
+ 161              		.loc 1 33 2 view .LVU23
+ 162 0012 1B6B     		ldr	r3, [r3, #48]
+ 163 0014 03F00203 		and	r3, r3, #2
+ 164 0018 0193     		str	r3, [sp, #4]
+ 165              		.loc 1 33 2 view .LVU24
+ 166 001a 019B     		ldr	r3, [sp, #4]
+ 167              	.LBE2:
+ 168              		.loc 1 33 2 view .LVU25
+ 169              		.loc 1 33 12 view .LVU26
+  34:BSP/EM7028/em70x8.c **** 	IICInit(&EM7028_bus);
+ 170              		.loc 1 34 2 view .LVU27
+ 171 001c 1548     		ldr	r0, .L19+4
+ 172 001e FFF7FEFF 		bl	IICInit
+ 173              	.LVL9:
+  35:BSP/EM7028/em70x8.c **** 	
+  36:BSP/EM7028/em70x8.c **** 	while(EM7028_Get_ID() != 0x36 && i)
+ 174              		.loc 1 36 2 view .LVU28
+  31:BSP/EM7028/em70x8.c **** 	
+ 175              		.loc 1 31 10 is_stmt 0 view .LVU29
+ 176 0022 0524     		movs	r4, #5
+ 177              		.loc 1 36 7 view .LVU30
+ 178 0024 04E0     		b	.L12
+ 179              	.LVL10:
+ 180              	.L14:
+  37:BSP/EM7028/em70x8.c **** 	{
+  38:BSP/EM7028/em70x8.c **** 		HAL_Delay(100);
+ 181              		.loc 1 38 3 is_stmt 1 view .LVU31
+ 182 0026 6420     		movs	r0, #100
+ 183 0028 FFF7FEFF 		bl	HAL_Delay
+ 184              	.LVL11:
+  39:BSP/EM7028/em70x8.c **** 		i--;
+ 185              		.loc 1 39 3 view .LVU32
+ 186              		.loc 1 39 4 is_stmt 0 view .LVU33
+ 187 002c 013C     		subs	r4, r4, #1
+ 188              	.LVL12:
+ 189              		.loc 1 39 4 view .LVU34
+ 190 002e E4B2     		uxtb	r4, r4
+ 191              	.LVL13:
+ 192              	.L12:
+  36:BSP/EM7028/em70x8.c **** 	{
+ 193              		.loc 1 36 32 is_stmt 1 view .LVU35
+  36:BSP/EM7028/em70x8.c **** 	{
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s 			page 5
+
+
+ 194              		.loc 1 36 8 is_stmt 0 view .LVU36
+ 195 0030 FFF7FEFF 		bl	EM7028_Get_ID
+ 196              	.LVL14:
+  36:BSP/EM7028/em70x8.c **** 	{
+ 197              		.loc 1 36 32 discriminator 1 view .LVU37
+ 198 0034 3628     		cmp	r0, #54
+ 199 0036 01D0     		beq	.L13
+ 200 0038 002C     		cmp	r4, #0
+ 201 003a F4D1     		bne	.L14
+ 202              	.L13:
+  40:BSP/EM7028/em70x8.c **** 	}
+  41:BSP/EM7028/em70x8.c **** 	if(!i)
+ 203              		.loc 1 41 2 is_stmt 1 view .LVU38
+ 204              		.loc 1 41 4 is_stmt 0 view .LVU39
+ 205 003c 14B9     		cbnz	r4, .L18
+  42:BSP/EM7028/em70x8.c **** 	{return 1;}
+ 206              		.loc 1 42 10 view .LVU40
+ 207 003e 0120     		movs	r0, #1
+ 208              	.L15:
+  43:BSP/EM7028/em70x8.c **** 	EM7028_WriteOneReg(HRS_CFG,0x00);				
+  44:BSP/EM7028/em70x8.c **** 	//HRS1_EN, HRS2_dis
+  45:BSP/EM7028/em70x8.c **** 	//Heart Beat Measurement is enabled with LED1 turned on and only Red Light Sensor and IR sensor en
+  46:BSP/EM7028/em70x8.c **** 	//When LED1 turned on, the result stores to HRS_DATA0;
+  47:BSP/EM7028/em70x8.c **** 	EM7028_WriteOneReg(HRS2_DATA_OFFSET, 0x00);
+  48:BSP/EM7028/em70x8.c **** 	//0 offset
+  49:BSP/EM7028/em70x8.c **** 	EM7028_WriteOneReg(HRS2_GAIN_CTRL, 0x7f);		
+  50:BSP/EM7028/em70x8.c **** 	//HRS2 GAIN = 1
+  51:BSP/EM7028/em70x8.c **** 	EM7028_WriteOneReg(HRS1_CTRL, 0x47);
+  52:BSP/EM7028/em70x8.c **** 	//HRS1 GAIN =1, HRS1 RANGE =8, HRS1 FREQ = 2.62144MHz (1.5625ms), HRS1 RES = 16 bits, HRS1 mode
+  53:BSP/EM7028/em70x8.c **** 	EM7028_WriteOneReg(INT_CTRL, 0x00);
+  54:BSP/EM7028/em70x8.c **** 	//LED programmed current = 2.5mA
+  55:BSP/EM7028/em70x8.c **** 	return 0;
+  56:BSP/EM7028/em70x8.c **** }
+ 209              		.loc 1 56 1 view .LVU41
+ 210 0040 02B0     		add	sp, sp, #8
+ 211              	.LCFI5:
+ 212              		.cfi_remember_state
+ 213              		.cfi_def_cfa_offset 8
+ 214              		@ sp needed
+ 215 0042 10BD     		pop	{r4, pc}
+ 216              	.LVL15:
+ 217              	.L18:
+ 218              	.LCFI6:
+ 219              		.cfi_restore_state
+  43:BSP/EM7028/em70x8.c **** 	EM7028_WriteOneReg(HRS_CFG,0x00);				
+ 220              		.loc 1 43 2 is_stmt 1 view .LVU42
+ 221 0044 0021     		movs	r1, #0
+ 222 0046 0120     		movs	r0, #1
+ 223 0048 FFF7FEFF 		bl	EM7028_WriteOneReg
+ 224              	.LVL16:
+  47:BSP/EM7028/em70x8.c **** 	//0 offset
+ 225              		.loc 1 47 2 view .LVU43
+ 226 004c 0021     		movs	r1, #0
+ 227 004e 0820     		movs	r0, #8
+ 228 0050 FFF7FEFF 		bl	EM7028_WriteOneReg
+ 229              	.LVL17:
+  49:BSP/EM7028/em70x8.c **** 	//HRS2 GAIN = 1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s 			page 6
+
+
+ 230              		.loc 1 49 2 view .LVU44
+ 231 0054 7F21     		movs	r1, #127
+ 232 0056 0A20     		movs	r0, #10
+ 233 0058 FFF7FEFF 		bl	EM7028_WriteOneReg
+ 234              	.LVL18:
+  51:BSP/EM7028/em70x8.c **** 	//HRS1 GAIN =1, HRS1 RANGE =8, HRS1 FREQ = 2.62144MHz (1.5625ms), HRS1 RES = 16 bits, HRS1 mode
+ 235              		.loc 1 51 2 view .LVU45
+ 236 005c 4721     		movs	r1, #71
+ 237 005e 0D20     		movs	r0, #13
+ 238 0060 FFF7FEFF 		bl	EM7028_WriteOneReg
+ 239              	.LVL19:
+  53:BSP/EM7028/em70x8.c **** 	//LED programmed current = 2.5mA
+ 240              		.loc 1 53 2 view .LVU46
+ 241 0064 0021     		movs	r1, #0
+ 242 0066 0E20     		movs	r0, #14
+ 243 0068 FFF7FEFF 		bl	EM7028_WriteOneReg
+ 244              	.LVL20:
+  55:BSP/EM7028/em70x8.c **** }
+ 245              		.loc 1 55 2 view .LVU47
+  55:BSP/EM7028/em70x8.c **** }
+ 246              		.loc 1 55 9 is_stmt 0 view .LVU48
+ 247 006c 0020     		movs	r0, #0
+ 248 006e E7E7     		b	.L15
+ 249              	.L20:
+ 250              		.align	2
+ 251              	.L19:
+ 252 0070 00380240 		.word	1073887232
+ 253 0074 00000000 		.word	EM7028_bus
+ 254              		.cfi_endproc
+ 255              	.LFE219:
+ 257              		.section	.text.EM7028_hrs_Enable,"ax",%progbits
+ 258              		.align	1
+ 259              		.global	EM7028_hrs_Enable
+ 260              		.syntax unified
+ 261              		.thumb
+ 262              		.thumb_func
+ 264              	EM7028_hrs_Enable:
+ 265              	.LFB220:
+  57:BSP/EM7028/em70x8.c **** 
+  58:BSP/EM7028/em70x8.c **** uint8_t EM7028_hrs_Enable()
+  59:BSP/EM7028/em70x8.c **** {
+ 266              		.loc 1 59 1 is_stmt 1 view -0
+ 267              		.cfi_startproc
+ 268              		@ args = 0, pretend = 0, frame = 0
+ 269              		@ frame_needed = 0, uses_anonymous_args = 0
+ 270 0000 10B5     		push	{r4, lr}
+ 271              	.LCFI7:
+ 272              		.cfi_def_cfa_offset 8
+ 273              		.cfi_offset 4, -8
+ 274              		.cfi_offset 14, -4
+  60:BSP/EM7028/em70x8.c **** 	uint8_t i = 5;
+ 275              		.loc 1 60 2 view .LVU50
+ 276              	.LVL21:
+  61:BSP/EM7028/em70x8.c **** 	while(EM7028_Get_ID() != 0x36 && i)
+ 277              		.loc 1 61 2 view .LVU51
+  60:BSP/EM7028/em70x8.c **** 	uint8_t i = 5;
+ 278              		.loc 1 60 10 is_stmt 0 view .LVU52
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s 			page 7
+
+
+ 279 0002 0524     		movs	r4, #5
+ 280              		.loc 1 61 7 view .LVU53
+ 281 0004 04E0     		b	.L22
+ 282              	.LVL22:
+ 283              	.L24:
+  62:BSP/EM7028/em70x8.c **** 	{
+  63:BSP/EM7028/em70x8.c **** 		HAL_Delay(100);
+ 284              		.loc 1 63 3 is_stmt 1 view .LVU54
+ 285 0006 6420     		movs	r0, #100
+ 286 0008 FFF7FEFF 		bl	HAL_Delay
+ 287              	.LVL23:
+  64:BSP/EM7028/em70x8.c **** 		i--;
+ 288              		.loc 1 64 3 view .LVU55
+ 289              		.loc 1 64 4 is_stmt 0 view .LVU56
+ 290 000c 013C     		subs	r4, r4, #1
+ 291              	.LVL24:
+ 292              		.loc 1 64 4 view .LVU57
+ 293 000e E4B2     		uxtb	r4, r4
+ 294              	.LVL25:
+ 295              	.L22:
+  61:BSP/EM7028/em70x8.c **** 	while(EM7028_Get_ID() != 0x36 && i)
+ 296              		.loc 1 61 32 is_stmt 1 view .LVU58
+  61:BSP/EM7028/em70x8.c **** 	while(EM7028_Get_ID() != 0x36 && i)
+ 297              		.loc 1 61 8 is_stmt 0 view .LVU59
+ 298 0010 FFF7FEFF 		bl	EM7028_Get_ID
+ 299              	.LVL26:
+  61:BSP/EM7028/em70x8.c **** 	while(EM7028_Get_ID() != 0x36 && i)
+ 300              		.loc 1 61 32 discriminator 1 view .LVU60
+ 301 0014 3628     		cmp	r0, #54
+ 302 0016 01D0     		beq	.L23
+ 303 0018 002C     		cmp	r4, #0
+ 304 001a F4D1     		bne	.L24
+ 305              	.L23:
+  65:BSP/EM7028/em70x8.c **** 	}
+  66:BSP/EM7028/em70x8.c **** 	if(!i)
+ 306              		.loc 1 66 2 is_stmt 1 view .LVU61
+ 307              		.loc 1 66 4 is_stmt 0 view .LVU62
+ 308 001c 0CB9     		cbnz	r4, .L28
+  67:BSP/EM7028/em70x8.c **** 	{return 1;}
+ 309              		.loc 1 67 10 view .LVU63
+ 310 001e 0120     		movs	r0, #1
+ 311              	.L25:
+  68:BSP/EM7028/em70x8.c **** 	EM7028_WriteOneReg(HRS_CFG,0x08);
+  69:BSP/EM7028/em70x8.c **** 	return 0;
+  70:BSP/EM7028/em70x8.c **** }
+ 312              		.loc 1 70 1 view .LVU64
+ 313 0020 10BD     		pop	{r4, pc}
+ 314              	.LVL27:
+ 315              	.L28:
+  68:BSP/EM7028/em70x8.c **** 	EM7028_WriteOneReg(HRS_CFG,0x08);
+ 316              		.loc 1 68 2 is_stmt 1 view .LVU65
+ 317 0022 0821     		movs	r1, #8
+ 318 0024 0120     		movs	r0, #1
+ 319 0026 FFF7FEFF 		bl	EM7028_WriteOneReg
+ 320              	.LVL28:
+  69:BSP/EM7028/em70x8.c **** }
+ 321              		.loc 1 69 2 view .LVU66
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s 			page 8
+
+
+  69:BSP/EM7028/em70x8.c **** }
+ 322              		.loc 1 69 9 is_stmt 0 view .LVU67
+ 323 002a 0020     		movs	r0, #0
+ 324 002c F8E7     		b	.L25
+ 325              		.cfi_endproc
+ 326              	.LFE220:
+ 328              		.section	.text.EM7028_hrs_DisEnable,"ax",%progbits
+ 329              		.align	1
+ 330              		.global	EM7028_hrs_DisEnable
+ 331              		.syntax unified
+ 332              		.thumb
+ 333              		.thumb_func
+ 335              	EM7028_hrs_DisEnable:
+ 336              	.LFB221:
+  71:BSP/EM7028/em70x8.c **** 
+  72:BSP/EM7028/em70x8.c **** uint8_t EM7028_hrs_DisEnable()
+  73:BSP/EM7028/em70x8.c **** {
+ 337              		.loc 1 73 1 is_stmt 1 view -0
+ 338              		.cfi_startproc
+ 339              		@ args = 0, pretend = 0, frame = 0
+ 340              		@ frame_needed = 0, uses_anonymous_args = 0
+ 341 0000 10B5     		push	{r4, lr}
+ 342              	.LCFI8:
+ 343              		.cfi_def_cfa_offset 8
+ 344              		.cfi_offset 4, -8
+ 345              		.cfi_offset 14, -4
+  74:BSP/EM7028/em70x8.c **** 	uint8_t i = 5;
+ 346              		.loc 1 74 2 view .LVU69
+ 347              	.LVL29:
+  75:BSP/EM7028/em70x8.c **** 	while(EM7028_Get_ID() != 0x36 && i)
+ 348              		.loc 1 75 2 view .LVU70
+  74:BSP/EM7028/em70x8.c **** 	uint8_t i = 5;
+ 349              		.loc 1 74 10 is_stmt 0 view .LVU71
+ 350 0002 0524     		movs	r4, #5
+ 351              		.loc 1 75 7 view .LVU72
+ 352 0004 04E0     		b	.L30
+ 353              	.LVL30:
+ 354              	.L32:
+  76:BSP/EM7028/em70x8.c **** 	{
+  77:BSP/EM7028/em70x8.c **** 		HAL_Delay(100);
+ 355              		.loc 1 77 3 is_stmt 1 view .LVU73
+ 356 0006 6420     		movs	r0, #100
+ 357 0008 FFF7FEFF 		bl	HAL_Delay
+ 358              	.LVL31:
+  78:BSP/EM7028/em70x8.c **** 		i--;
+ 359              		.loc 1 78 3 view .LVU74
+ 360              		.loc 1 78 4 is_stmt 0 view .LVU75
+ 361 000c 013C     		subs	r4, r4, #1
+ 362              	.LVL32:
+ 363              		.loc 1 78 4 view .LVU76
+ 364 000e E4B2     		uxtb	r4, r4
+ 365              	.LVL33:
+ 366              	.L30:
+  75:BSP/EM7028/em70x8.c **** 	while(EM7028_Get_ID() != 0x36 && i)
+ 367              		.loc 1 75 32 is_stmt 1 view .LVU77
+  75:BSP/EM7028/em70x8.c **** 	while(EM7028_Get_ID() != 0x36 && i)
+ 368              		.loc 1 75 8 is_stmt 0 view .LVU78
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s 			page 9
+
+
+ 369 0010 FFF7FEFF 		bl	EM7028_Get_ID
+ 370              	.LVL34:
+  75:BSP/EM7028/em70x8.c **** 	while(EM7028_Get_ID() != 0x36 && i)
+ 371              		.loc 1 75 32 discriminator 1 view .LVU79
+ 372 0014 3628     		cmp	r0, #54
+ 373 0016 01D0     		beq	.L31
+ 374 0018 002C     		cmp	r4, #0
+ 375 001a F4D1     		bne	.L32
+ 376              	.L31:
+  79:BSP/EM7028/em70x8.c **** 	}
+  80:BSP/EM7028/em70x8.c **** 	if(!i)
+ 377              		.loc 1 80 2 is_stmt 1 view .LVU80
+ 378              		.loc 1 80 4 is_stmt 0 view .LVU81
+ 379 001c 0CB9     		cbnz	r4, .L36
+  81:BSP/EM7028/em70x8.c **** 	{return 1;}
+ 380              		.loc 1 81 10 view .LVU82
+ 381 001e 0120     		movs	r0, #1
+ 382              	.L33:
+  82:BSP/EM7028/em70x8.c **** 	EM7028_WriteOneReg(HRS_CFG,0x00);
+  83:BSP/EM7028/em70x8.c **** 	return 0;
+  84:BSP/EM7028/em70x8.c **** }
+ 383              		.loc 1 84 1 view .LVU83
+ 384 0020 10BD     		pop	{r4, pc}
+ 385              	.LVL35:
+ 386              	.L36:
+  82:BSP/EM7028/em70x8.c **** 	EM7028_WriteOneReg(HRS_CFG,0x00);
+ 387              		.loc 1 82 2 is_stmt 1 view .LVU84
+ 388 0022 0021     		movs	r1, #0
+ 389 0024 0120     		movs	r0, #1
+ 390 0026 FFF7FEFF 		bl	EM7028_WriteOneReg
+ 391              	.LVL36:
+  83:BSP/EM7028/em70x8.c **** }
+ 392              		.loc 1 83 2 view .LVU85
+  83:BSP/EM7028/em70x8.c **** }
+ 393              		.loc 1 83 9 is_stmt 0 view .LVU86
+ 394 002a 0020     		movs	r0, #0
+ 395 002c F8E7     		b	.L33
+ 396              		.cfi_endproc
+ 397              	.LFE221:
+ 399              		.section	.text.EM7028_Get_HRS1,"ax",%progbits
+ 400              		.align	1
+ 401              		.global	EM7028_Get_HRS1
+ 402              		.syntax unified
+ 403              		.thumb
+ 404              		.thumb_func
+ 406              	EM7028_Get_HRS1:
+ 407              	.LFB222:
+  85:BSP/EM7028/em70x8.c **** 
+  86:BSP/EM7028/em70x8.c **** uint16_t EM7028_Get_HRS1(void)
+  87:BSP/EM7028/em70x8.c **** {
+ 408              		.loc 1 87 1 is_stmt 1 view -0
+ 409              		.cfi_startproc
+ 410              		@ args = 0, pretend = 0, frame = 0
+ 411              		@ frame_needed = 0, uses_anonymous_args = 0
+ 412 0000 10B5     		push	{r4, lr}
+ 413              	.LCFI9:
+ 414              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s 			page 10
+
+
+ 415              		.cfi_offset 4, -8
+ 416              		.cfi_offset 14, -4
+  88:BSP/EM7028/em70x8.c **** 	uint16_t dat;
+ 417              		.loc 1 88 2 view .LVU88
+  89:BSP/EM7028/em70x8.c **** 	dat = EM7028_ReadOneReg(HRS1_DATA0_H);
+ 418              		.loc 1 89 2 view .LVU89
+ 419              		.loc 1 89 8 is_stmt 0 view .LVU90
+ 420 0002 2920     		movs	r0, #41
+ 421 0004 FFF7FEFF 		bl	EM7028_ReadOneReg
+ 422              	.LVL37:
+  90:BSP/EM7028/em70x8.c **** 	dat <<= 8;
+ 423              		.loc 1 90 2 is_stmt 1 view .LVU91
+ 424              		.loc 1 90 6 is_stmt 0 view .LVU92
+ 425 0008 0402     		lsls	r4, r0, #8
+ 426 000a A4B2     		uxth	r4, r4
+ 427              	.LVL38:
+  91:BSP/EM7028/em70x8.c **** 	dat |= EM7028_ReadOneReg(HRS1_DATA0_L);
+ 428              		.loc 1 91 2 is_stmt 1 view .LVU93
+ 429              		.loc 1 91 9 is_stmt 0 view .LVU94
+ 430 000c 2820     		movs	r0, #40
+ 431 000e FFF7FEFF 		bl	EM7028_ReadOneReg
+ 432              	.LVL39:
+ 433              		.loc 1 91 6 discriminator 1 view .LVU95
+ 434 0012 2043     		orrs	r0, r0, r4
+ 435              	.LVL40:
+  92:BSP/EM7028/em70x8.c **** 	return dat;
+ 436              		.loc 1 92 2 is_stmt 1 view .LVU96
+  93:BSP/EM7028/em70x8.c **** }
+ 437              		.loc 1 93 1 is_stmt 0 view .LVU97
+ 438 0014 80B2     		uxth	r0, r0
+ 439              		.loc 1 93 1 view .LVU98
+ 440 0016 10BD     		pop	{r4, pc}
+ 441              		.cfi_endproc
+ 442              	.LFE222:
+ 444              		.global	EM7028_bus
+ 445              		.section	.data.EM7028_bus,"aw"
+ 446              		.align	2
+ 449              	EM7028_bus:
+ 450 0000 00040240 		.word	1073873920
+ 451 0004 00040240 		.word	1073873920
+ 452 0008 0020     		.short	8192
+ 453 000a 0040     		.short	16384
+ 454              		.text
+ 455              	.Letext0:
+ 456              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 457              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 458              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 459              		.file 5 "BSP/IIC/iic_hal.h"
+ 460              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 em70x8.c
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:21     .text.EM7028_ReadOneReg:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:27     .text.EM7028_ReadOneReg:00000000 EM7028_ReadOneReg
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:56     .text.EM7028_ReadOneReg:00000010 $d
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:449    .data.EM7028_bus:00000000 EM7028_bus
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:61     .text.EM7028_WriteOneReg:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:67     .text.EM7028_WriteOneReg:00000000 EM7028_WriteOneReg
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:96     .text.EM7028_WriteOneReg:00000010 $d
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:101    .text.EM7028_Get_ID:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:107    .text.EM7028_Get_ID:00000000 EM7028_Get_ID
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:129    .text.EM7028_hrs_init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:135    .text.EM7028_hrs_init:00000000 EM7028_hrs_init
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:252    .text.EM7028_hrs_init:00000070 $d
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:258    .text.EM7028_hrs_Enable:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:264    .text.EM7028_hrs_Enable:00000000 EM7028_hrs_Enable
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:329    .text.EM7028_hrs_DisEnable:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:335    .text.EM7028_hrs_DisEnable:00000000 EM7028_hrs_DisEnable
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:400    .text.EM7028_Get_HRS1:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:406    .text.EM7028_Get_HRS1:00000000 EM7028_Get_HRS1
+C:\Users\chen\AppData\Local\Temp\ccwpNJhf.s:446    .data.EM7028_bus:00000000 $d
+
+UNDEFINED SYMBOLS
+IIC_Read_One_Byte
+IIC_Write_One_Byte
+IICInit
+HAL_Delay

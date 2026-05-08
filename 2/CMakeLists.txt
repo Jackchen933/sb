@@ -1,0 +1,18 @@
+SET(SOURCES screens/ui_HomePage.c
+    screens/ui_MenuPage.c
+    screens/ui_uiAboutPage.c
+    screens/ui_uiCalendarPagec.c
+    ui.c
+    components/ui_comp_hook.c
+    ui_helpers.c
+    ui_events.c
+    images/ui_img_sb_png.c
+    images/ui_img_zz_png.c
+    images/ui_img_sz_png.c
+    images/ui_img_1337270863.c
+    fonts/ui_font_Font1.c
+    fonts/ui_font_Font2.c
+    fonts/ui_font_tubiao1.c
+    fonts/ui_font_about.c)
+
+add_library(ui ${SOURCES})

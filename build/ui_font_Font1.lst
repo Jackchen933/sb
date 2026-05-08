@@ -1,0 +1,179 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"ui_font_Font1.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "2/fonts/ui_font_Font1.c"
+  20              		.global	ui_font_Font1
+  21              		.section	.rodata.ui_font_Font1,"a"
+  22              		.align	2
+  25              	ui_font_Font1:
+  26 0000 00000000 		.word	lv_font_get_glyph_dsc_fmt_txt
+  27 0004 00000000 		.word	lv_font_get_bitmap_fmt_txt
+  28 0008 1400     		.short	20
+  29 000a 0100     		.short	1
+  30 000c 00       		.byte	0
+  31 000d 00       		.byte	0
+  32 000e 00       		.byte	0
+  33 000f 00       		.space	1
+  34 0010 00000000 		.word	font_dsc
+  35 0014 00000000 		.word	0
+  36 0018 00000000 		.word	0
+  37              		.section	.rodata.font_dsc,"a"
+  38              		.align	2
+  41              	font_dsc:
+  42 0000 00000000 		.word	glyph_bitmap
+  43 0004 00000000 		.word	glyph_dsc
+  44 0008 00000000 		.word	cmaps
+  45 000c 00000000 		.word	0
+  46 0010 0000     		.short	0
+  47 0012 01       		.byte	1
+  48 0013 08       		.byte	8
+  49 0014 00000000 		.word	cache
+  50              		.section	.bss.cache,"aw",%nobits
+  51              		.align	2
+  54              	cache:
+  55 0000 00000000 		.space	8
+  55      00000000 
+  56              		.section	.rodata.cmaps,"a"
+  57              		.align	2
+  60              	cmaps:
+  61 0000 83E60000 		.word	59011
+  62 0004 0100     		.short	1
+  63 0006 0100     		.short	1
+  64 0008 00000000 		.word	0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s 			page 2
+
+
+  65 000c 00000000 		.word	0
+  66 0010 0000     		.short	0
+  67 0012 02       		.byte	2
+  68 0013 00       		.space	1
+  69              		.section	.rodata.glyph_dsc,"a"
+  70              		.align	2
+  73              	glyph_dsc:
+  74 0000 00       		.byte	0
+  75 0001 00       		.byte	0
+  76 0002 00       		.byte	0
+  77 0003 00       		.byte	0
+  78 0004 00       		.byte	0
+  79 0005 00       		.byte	0
+  80 0006 00       		.byte	0
+  81 0007 00       		.byte	0
+  82 0008 00       		.byte	0
+  83 0009 00       		.byte	0
+  84 000a 00       		.byte	0
+  85 000b 18       		.byte	24
+  86 000c 14       		.byte	20
+  87 000d 14       		.byte	20
+  88 000e 02       		.byte	2
+  89 000f FF       		.byte	-1
+  90              		.section	.rodata.glyph_bitmap,"a"
+  91              		.align	2
+  94              	glyph_bitmap:
+  95 0000 00000580 		.ascii	"\000\000\005\200\011@9\020\000\000\000\000\010\340\017"
+  95      09403910 
+  95      00000000 
+  95      08E00F
+  96 000f 705F2000 		.ascii	"p_ \000\000\000\000\010\340\017p_ \000\000\000\016\377"
+  96      00000008 
+  96      E00F705F 
+  96      20000000 
+  96      0EFF
+  97 0021 FFFFFFFF 		.ascii	"\377\377\377\377\377\340\000\000\016\267wwww{\340\000"
+  97      FFE00000 
+  97      0EB77777 
+  97      77777BE0 
+  97      00
+  98 0032 355F8000 		.ascii	"5_\200\000\000\000\000\010\365S\237\377\200\003330\010"
+  98      00000008 
+  98      F5539FFF 
+  98      80033333 
+  98      3008
+  99 0044 FFF8011E 		.ascii	"\377\370\001\036\200?\377\377\362\010\341\020\000\016"
+  99      803FFFFF 
+  99      F208E110 
+  99      000E
+ 100 0052 803F3115 		.ascii	"\200?1\025\362\010\340\000\237\377\200? \004\362\010"
+ 100      F208E000 
+ 100      9FFF803F 
+ 100      2004F208 
+ 101 0062 FFF8477F 		.ascii	"\377\370G\177\200? \004\362\010\367t\000\016\200?uX"
+ 101      803F2004 
+ 101      F208F774 
+ 101      000E803F 
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s 			page 3
+
+
+ 101      7558
+ 102 0074 F208E000 		.ascii	"\362\010\340\000\001\036\200?\377\377\362\010\341\020"
+ 102      011E803F 
+ 102      FFFFF208 
+ 102      E110
+ 103 0082 9FFF8003 		.ascii	"\237\377\200\003330\010\377\3705_\200\000\000\000\000"
+ 103      33333008 
+ 103      FFF8355F 
+ 103      80000000 
+ 103      00
+ 104 0093 08F55200 		.ascii	"\010\365R\000\016\267wwww{\340\000\000\016\377\377\377"
+ 104      0EB77777 
+ 104      77777BE0 
+ 104      00000EFF 
+ 104      FFFF
+ 105 00a5 FFFFFFE0 		.ascii	"\377\377\377\340\000\000\000\010\340\017p_ \000\000"
+ 105      00000008 
+ 105      E00F705F 
+ 105      200000
+ 106 00b4 000008E0 		.ascii	"\000\000\010\340\017p_ \000\000\000\000\005\200\011"
+ 106      0F705F20 
+ 106      00000000 
+ 106      058009
+ 107 00c3 40391000 		.ascii	"@9\020\000\000"
+ 107      00
+ 108              		.text
+ 109              	.Letext0:
+ 110              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 111              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 112              		.file 4 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/../font/../misc/lv_area.h"
+ 113              		.file 5 "Middlewares/LVGL/GUI/lvgl/src/hal/../draw/../misc/../font/lv_font.h"
+ 114              		.file 6 "Middlewares/LVGL/GUI/lvgl/src/core/lv_obj.h"
+ 115              		.file 7 "Middlewares/LVGL/GUI/lvgl/src/font/lv_font_fmt_txt.h"
+ 116              		.file 8 "Middlewares/LVGL/GUI/lvgl/src/widgets/lv_bar.h"
+ 117              		.file 9 "2/fonts/../ui.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ui_font_Font1.c
+C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s:25     .rodata.ui_font_Font1:00000000 ui_font_Font1
+C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s:22     .rodata.ui_font_Font1:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s:41     .rodata.font_dsc:00000000 font_dsc
+C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s:38     .rodata.font_dsc:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s:94     .rodata.glyph_bitmap:00000000 glyph_bitmap
+C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s:73     .rodata.glyph_dsc:00000000 glyph_dsc
+C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s:60     .rodata.cmaps:00000000 cmaps
+C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s:54     .bss.cache:00000000 cache
+C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s:51     .bss.cache:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s:57     .rodata.cmaps:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s:70     .rodata.glyph_dsc:00000000 $d
+C:\Users\chen\AppData\Local\Temp\ccr4mTsP.s:91     .rodata.glyph_bitmap:00000000 $d
+
+UNDEFINED SYMBOLS
+lv_font_get_glyph_dsc_fmt_txt
+lv_font_get_bitmap_fmt_txt

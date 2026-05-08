@@ -1,0 +1,1619 @@
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"HWDataAccess.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "User/Func/Src/HWDataAccess.c"
+  20              		.section	.text.HW_weekday_calculate,"ax",%progbits
+  21              		.align	1
+  22              		.global	HW_weekday_calculate
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	HW_weekday_calculate:
+  28              	.LVL0:
+  29              	.LFB219:
+   1:User/Func/Src/HWDataAccess.c **** /**
+   2:User/Func/Src/HWDataAccess.c ****  *  @addtogroup  Hareware Middle Layer
+   3:User/Func/Src/HWDataAccess.c ****  *  @brief       Hardware Middle Layer, to access data from BSP and STM32 HAL Library
+   4:User/Func/Src/HWDataAccess.c ****  *
+   5:User/Func/Src/HWDataAccess.c ****  *  @{
+   6:User/Func/Src/HWDataAccess.c ****  *      @file       HWDataAccess.c
+   7:User/Func/Src/HWDataAccess.c ****  *      @brief      middleware, for UI and APP Layer to get the hardware data
+   8:User/Func/Src/HWDataAccess.c ****  *      @details    you can enable or disable in .h file.
+   9:User/Func/Src/HWDataAccess.c ****  * 					加这个文件就是为了方便UI移植, 比如你要把工程移植到PC仿真,
+  10:User/Func/Src/HWDataAccess.c ****  *   				直接把MidFunc中的文件和UI文件都复制过去,
+  11:User/Func/Src/HWDataAccess.c ****  * 					然后直接把.h文件中的HW_USE_HARDWARE变成0就行了.
+  12:User/Func/Src/HWDataAccess.c ****  */
+  13:User/Func/Src/HWDataAccess.c **** 
+  14:User/Func/Src/HWDataAccess.c **** #include "../Inc/HWDataAccess.h"
+  15:User/Func/Src/HWDataAccess.c **** 
+  16:User/Func/Src/HWDataAccess.c **** 
+  17:User/Func/Src/HWDataAccess.c **** /***************************
+  18:User/Func/Src/HWDataAccess.c ****  *  RTC Fucntions
+  19:User/Func/Src/HWDataAccess.c ****  ***************************/
+  20:User/Func/Src/HWDataAccess.c **** 
+  21:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+  22:User/Func/Src/HWDataAccess.c **** /*!
+  23:User/Func/Src/HWDataAccess.c ****     @brief  to get the real time clock from the hardware
+  24:User/Func/Src/HWDataAccess.c **** 
+  25:User/Func/Src/HWDataAccess.c ****     @param  nowdatetime to storge the data&time
+  26:User/Func/Src/HWDataAccess.c **** 
+  27:User/Func/Src/HWDataAccess.c **** 	@return None
+  28:User/Func/Src/HWDataAccess.c **** */
+  29:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 2
+
+
+  30:User/Func/Src/HWDataAccess.c **** void HW_RTC_Get_TimeDate(HW_DateTimeTypeDef * nowdatetime)
+  31:User/Func/Src/HWDataAccess.c **** {
+  32:User/Func/Src/HWDataAccess.c **** 
+  33:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_RTC
+  34:User/Func/Src/HWDataAccess.c **** 		if (nowdatetime != NULL)
+  35:User/Func/Src/HWDataAccess.c **** 		{
+  36:User/Func/Src/HWDataAccess.c ****             RTC_DateTypeDef nowdate;
+  37:User/Func/Src/HWDataAccess.c ****             RTC_TimeTypeDef nowtime;
+  38:User/Func/Src/HWDataAccess.c **** 			HAL_RTC_GetTime(&hrtc, &nowtime, RTC_FORMAT_BIN);
+  39:User/Func/Src/HWDataAccess.c **** 			HAL_RTC_GetDate(&hrtc, &nowdate, RTC_FORMAT_BIN);
+  40:User/Func/Src/HWDataAccess.c ****             nowdatetime->Year = nowdate.Year;
+  41:User/Func/Src/HWDataAccess.c ****             nowdatetime->Month = nowdate.Month;
+  42:User/Func/Src/HWDataAccess.c ****             nowdatetime->Date = nowdate.Date;
+  43:User/Func/Src/HWDataAccess.c **** 			nowdatetime->WeekDay = weekday_calculate(nowdatetime->Year, nowdatetime->Month, nowdatetime->Dat
+  44:User/Func/Src/HWDataAccess.c ****             nowdatetime->Hours = nowtime.Hours;
+  45:User/Func/Src/HWDataAccess.c ****             nowdatetime->Minutes = nowtime.Minutes;
+  46:User/Func/Src/HWDataAccess.c ****             nowdatetime->Seconds = nowtime.Seconds;
+  47:User/Func/Src/HWDataAccess.c **** 		}
+  48:User/Func/Src/HWDataAccess.c **** 	#else
+  49:User/Func/Src/HWDataAccess.c **** 		nowdatetime->Year = 24;
+  50:User/Func/Src/HWDataAccess.c **** 		nowdatetime->Month = 6;
+  51:User/Func/Src/HWDataAccess.c **** 		nowdatetime->Date = 23;
+  52:User/Func/Src/HWDataAccess.c **** 		nowdatetime->WeekDay = 7;
+  53:User/Func/Src/HWDataAccess.c **** 		nowdatetime->Hours = 11;
+  54:User/Func/Src/HWDataAccess.c **** 		nowdatetime->Minutes = 59;
+  55:User/Func/Src/HWDataAccess.c **** 		nowdatetime->Seconds = 55;
+  56:User/Func/Src/HWDataAccess.c **** 	#endif
+  57:User/Func/Src/HWDataAccess.c **** }
+  58:User/Func/Src/HWDataAccess.c **** 
+  59:User/Func/Src/HWDataAccess.c **** 
+  60:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+  61:User/Func/Src/HWDataAccess.c **** /*!
+  62:User/Func/Src/HWDataAccess.c ****     @brief  to set the RTC Date to hardware
+  63:User/Func/Src/HWDataAccess.c **** 
+  64:User/Func/Src/HWDataAccess.c ****     @param  nowdatetime to storge the data&time
+  65:User/Func/Src/HWDataAccess.c **** 
+  66:User/Func/Src/HWDataAccess.c **** 	@return None
+  67:User/Func/Src/HWDataAccess.c **** */
+  68:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+  69:User/Func/Src/HWDataAccess.c **** void HW_RTC_Set_Date(uint8_t year, uint8_t month, uint8_t date)
+  70:User/Func/Src/HWDataAccess.c **** {
+  71:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_RTC
+  72:User/Func/Src/HWDataAccess.c **** 		RTC_SetDate(year, month, date);
+  73:User/Func/Src/HWDataAccess.c **** 	#endif
+  74:User/Func/Src/HWDataAccess.c **** }
+  75:User/Func/Src/HWDataAccess.c **** 
+  76:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+  77:User/Func/Src/HWDataAccess.c **** /*!
+  78:User/Func/Src/HWDataAccess.c ****     @brief  to set the RTC Date to hardware
+  79:User/Func/Src/HWDataAccess.c **** 
+  80:User/Func/Src/HWDataAccess.c ****     @param  nowdatetime to storge the data&time
+  81:User/Func/Src/HWDataAccess.c **** 
+  82:User/Func/Src/HWDataAccess.c **** 	@return None
+  83:User/Func/Src/HWDataAccess.c **** */
+  84:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+  85:User/Func/Src/HWDataAccess.c **** void HW_RTC_Set_Time(uint8_t hours, uint8_t minutes, uint8_t seconds)
+  86:User/Func/Src/HWDataAccess.c **** {
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 3
+
+
+  87:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_RTC
+  88:User/Func/Src/HWDataAccess.c **** 		RTC_SetTime(hours, minutes, seconds);
+  89:User/Func/Src/HWDataAccess.c **** 	#endif
+  90:User/Func/Src/HWDataAccess.c **** }
+  91:User/Func/Src/HWDataAccess.c **** 
+  92:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+  93:User/Func/Src/HWDataAccess.c **** /*!
+  94:User/Func/Src/HWDataAccess.c ****     @brief  to calculate the weekday
+  95:User/Func/Src/HWDataAccess.c **** 
+  96:User/Func/Src/HWDataAccess.c ****     @param  nowdatetime to storge the data&time
+  97:User/Func/Src/HWDataAccess.c **** 
+  98:User/Func/Src/HWDataAccess.c **** 	@return None
+  99:User/Func/Src/HWDataAccess.c **** */
+ 100:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 101:User/Func/Src/HWDataAccess.c **** uint8_t HW_weekday_calculate(uint8_t setyear, uint8_t setmonth, uint8_t setday, uint8_t century)
+ 102:User/Func/Src/HWDataAccess.c **** {
+  30              		.loc 1 102 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  35              		.loc 1 102 1 is_stmt 0 view .LVU1
+  36 0000 10B4     		push	{r4}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 4
+  39              		.cfi_offset 4, -4
+ 103:User/Func/Src/HWDataAccess.c **** 	int w;
+  40              		.loc 1 103 2 is_stmt 1 view .LVU2
+ 104:User/Func/Src/HWDataAccess.c **** 	if (setmonth == 1 || setmonth == 2)
+  41              		.loc 1 104 2 view .LVU3
+  42              		.loc 1 104 20 is_stmt 0 view .LVU4
+  43 0002 4C1E     		subs	r4, r1, #1
+  44 0004 E4B2     		uxtb	r4, r4
+  45              		.loc 1 104 5 view .LVU5
+  46 0006 012C     		cmp	r4, #1
+  47 0008 13D9     		bls	.L8
+  48              	.L2:
+ 105:User/Func/Src/HWDataAccess.c **** 	{setyear--, setmonth += 12;}
+ 106:User/Func/Src/HWDataAccess.c **** 	w = setyear + setyear / 4 + century / 4  + 26*(setmonth + 1)/10 + setday - 1 - 2 * century;
+  49              		.loc 1 106 2 is_stmt 1 view .LVU6
+  50              		.loc 1 106 14 is_stmt 0 view .LVU7
+  51 000a 00EB9000 		add	r0, r0, r0, lsr #2
+  52              	.LVL1:
+  53              		.loc 1 106 28 view .LVU8
+  54 000e 00EB9300 		add	r0, r0, r3, lsr #2
+  55              		.loc 1 106 47 view .LVU9
+  56 0012 4FF01A0C 		mov	ip, #26
+  57 0016 01FB0CC1 		mla	r1, r1, ip, ip
+  58              	.LVL2:
+  59              		.loc 1 106 62 view .LVU10
+  60 001a 124C     		ldr	r4, .L9
+  61 001c 84FB014C 		smull	r4, ip, r4, r1
+  62 0020 C917     		asrs	r1, r1, #31
+  63 0022 C1EBAC01 		rsb	r1, r1, ip, asr #2
+  64              		.loc 1 106 43 view .LVU11
+  65 0026 0844     		add	r0, r0, r1
+  66              		.loc 1 106 66 view .LVU12
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 4
+
+
+  67 0028 0244     		add	r2, r2, r0
+  68              	.LVL3:
+  69              		.loc 1 106 75 view .LVU13
+  70 002a 013A     		subs	r2, r2, #1
+  71              		.loc 1 106 4 view .LVU14
+  72 002c A2EB4303 		sub	r3, r2, r3, lsl #1
+  73              	.LVL4:
+ 107:User/Func/Src/HWDataAccess.c **** 	while(w<0)
+  74              		.loc 1 107 2 is_stmt 1 view .LVU15
+  75              		.loc 1 107 7 is_stmt 0 view .LVU16
+  76 0030 05E0     		b	.L3
+  77              	.LVL5:
+  78              	.L8:
+ 105:User/Func/Src/HWDataAccess.c **** 	{setyear--, setmonth += 12;}
+  79              		.loc 1 105 3 is_stmt 1 view .LVU17
+ 105:User/Func/Src/HWDataAccess.c **** 	{setyear--, setmonth += 12;}
+  80              		.loc 1 105 10 is_stmt 0 view .LVU18
+  81 0032 0138     		subs	r0, r0, #1
+  82              	.LVL6:
+ 105:User/Func/Src/HWDataAccess.c **** 	{setyear--, setmonth += 12;}
+  83              		.loc 1 105 10 view .LVU19
+  84 0034 C0B2     		uxtb	r0, r0
+  85              	.LVL7:
+ 105:User/Func/Src/HWDataAccess.c **** 	{setyear--, setmonth += 12;}
+  86              		.loc 1 105 23 view .LVU20
+  87 0036 0C31     		adds	r1, r1, #12
+  88              	.LVL8:
+ 105:User/Func/Src/HWDataAccess.c **** 	{setyear--, setmonth += 12;}
+  89              		.loc 1 105 23 view .LVU21
+  90 0038 C9B2     		uxtb	r1, r1
+  91              	.LVL9:
+ 105:User/Func/Src/HWDataAccess.c **** 	{setyear--, setmonth += 12;}
+  92              		.loc 1 105 23 view .LVU22
+  93 003a E6E7     		b	.L2
+  94              	.LVL10:
+  95              	.L4:
+ 108:User/Func/Src/HWDataAccess.c **** 		w+=7;
+  96              		.loc 1 108 3 is_stmt 1 view .LVU23
+  97              		.loc 1 108 4 is_stmt 0 view .LVU24
+  98 003c 0733     		adds	r3, r3, #7
+  99              	.LVL11:
+ 100              	.L3:
+ 107:User/Func/Src/HWDataAccess.c **** 	while(w<0)
+ 101              		.loc 1 107 9 is_stmt 1 view .LVU25
+ 102 003e 002B     		cmp	r3, #0
+ 103 0040 FCDB     		blt	.L4
+ 109:User/Func/Src/HWDataAccess.c **** 	w%=7;
+ 104              		.loc 1 109 2 view .LVU26
+ 105              		.loc 1 109 3 is_stmt 0 view .LVU27
+ 106 0042 094A     		ldr	r2, .L9+4
+ 107 0044 82FB0312 		smull	r1, r2, r2, r3
+ 108 0048 1A44     		add	r2, r2, r3
+ 109 004a D817     		asrs	r0, r3, #31
+ 110 004c C0EBA200 		rsb	r0, r0, r2, asr #2
+ 111 0050 C0EBC000 		rsb	r0, r0, r0, lsl #3
+ 112              	.LVL12:
+ 110:User/Func/Src/HWDataAccess.c **** 	w=(w==0)?7:w;
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 5
+
+
+ 113              		.loc 1 110 2 is_stmt 1 view .LVU28
+ 114              		.loc 1 110 12 is_stmt 0 view .LVU29
+ 115 0054 181A     		subs	r0, r3, r0
+ 116              	.LVL13:
+ 117              		.loc 1 110 12 view .LVU30
+ 118 0056 00D1     		bne	.L5
+ 119              		.loc 1 110 12 discriminator 2 view .LVU31
+ 120 0058 0720     		movs	r0, #7
+ 121              	.LVL14:
+ 122              	.L5:
+ 111:User/Func/Src/HWDataAccess.c **** 	return w;
+ 123              		.loc 1 111 2 is_stmt 1 view .LVU32
+ 112:User/Func/Src/HWDataAccess.c **** }
+ 124              		.loc 1 112 1 is_stmt 0 view .LVU33
+ 125 005a C0B2     		uxtb	r0, r0
+ 126              	.LVL15:
+ 127              		.loc 1 112 1 view .LVU34
+ 128 005c 5DF8044B 		ldr	r4, [sp], #4
+ 129              	.LCFI1:
+ 130              		.cfi_restore 4
+ 131              		.cfi_def_cfa_offset 0
+ 132 0060 7047     		bx	lr
+ 133              	.L10:
+ 134 0062 00BF     		.align	2
+ 135              	.L9:
+ 136 0064 67666666 		.word	1717986919
+ 137 0068 93244992 		.word	-1840700269
+ 138              		.cfi_endproc
+ 139              	.LFE219:
+ 141              		.section	.text.HW_MPU_Wrist_Enable,"ax",%progbits
+ 142              		.align	1
+ 143              		.global	HW_MPU_Wrist_Enable
+ 144              		.syntax unified
+ 145              		.thumb
+ 146              		.thumb_func
+ 148              	HW_MPU_Wrist_Enable:
+ 149              	.LFB228:
+ 113:User/Func/Src/HWDataAccess.c **** 
+ 114:User/Func/Src/HWDataAccess.c **** 
+ 115:User/Func/Src/HWDataAccess.c **** 
+ 116:User/Func/Src/HWDataAccess.c **** /***************************
+ 117:User/Func/Src/HWDataAccess.c ****  *  Power Fucntions
+ 118:User/Func/Src/HWDataAccess.c ****  ***************************/
+ 119:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 120:User/Func/Src/HWDataAccess.c **** /*!
+ 121:User/Func/Src/HWDataAccess.c ****     @brief initialize the power
+ 122:User/Func/Src/HWDataAccess.c **** 
+ 123:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 124:User/Func/Src/HWDataAccess.c **** 
+ 125:User/Func/Src/HWDataAccess.c **** 	@return NULL
+ 126:User/Func/Src/HWDataAccess.c **** */
+ 127:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 128:User/Func/Src/HWDataAccess.c **** void HW_Power_Init(void)
+ 129:User/Func/Src/HWDataAccess.c **** {
+ 130:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_BAT
+ 131:User/Func/Src/HWDataAccess.c **** 		Power_Init();
+ 132:User/Func/Src/HWDataAccess.c **** 	#endif
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 6
+
+
+ 133:User/Func/Src/HWDataAccess.c **** }
+ 134:User/Func/Src/HWDataAccess.c **** 
+ 135:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 136:User/Func/Src/HWDataAccess.c **** /*!
+ 137:User/Func/Src/HWDataAccess.c ****     @brief shutdown the power
+ 138:User/Func/Src/HWDataAccess.c **** 
+ 139:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 140:User/Func/Src/HWDataAccess.c **** 
+ 141:User/Func/Src/HWDataAccess.c **** 	@return NULL
+ 142:User/Func/Src/HWDataAccess.c **** */
+ 143:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 144:User/Func/Src/HWDataAccess.c **** void HW_Power_Shutdown(void)
+ 145:User/Func/Src/HWDataAccess.c **** {
+ 146:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_BAT
+ 147:User/Func/Src/HWDataAccess.c **** 		Power_DisEnable();
+ 148:User/Func/Src/HWDataAccess.c **** 	#endif
+ 149:User/Func/Src/HWDataAccess.c **** }
+ 150:User/Func/Src/HWDataAccess.c **** 
+ 151:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 152:User/Func/Src/HWDataAccess.c **** /*!
+ 153:User/Func/Src/HWDataAccess.c ****     @brief	calculate the battery power remain
+ 154:User/Func/Src/HWDataAccess.c **** 
+ 155:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 156:User/Func/Src/HWDataAccess.c **** 
+ 157:User/Func/Src/HWDataAccess.c **** 	@return bat power remain
+ 158:User/Func/Src/HWDataAccess.c **** */
+ 159:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 160:User/Func/Src/HWDataAccess.c **** uint8_t HW_Power_BatCalculate(void)
+ 161:User/Func/Src/HWDataAccess.c **** {
+ 162:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_BAT
+ 163:User/Func/Src/HWDataAccess.c **** 		return PowerCalculate();
+ 164:User/Func/Src/HWDataAccess.c **** 	#endif
+ 165:User/Func/Src/HWDataAccess.c **** 		return 0;
+ 166:User/Func/Src/HWDataAccess.c **** }
+ 167:User/Func/Src/HWDataAccess.c **** 
+ 168:User/Func/Src/HWDataAccess.c **** 
+ 169:User/Func/Src/HWDataAccess.c **** /***************************
+ 170:User/Func/Src/HWDataAccess.c ****  *  BLE Fucntions
+ 171:User/Func/Src/HWDataAccess.c ****  ***************************/
+ 172:User/Func/Src/HWDataAccess.c **** 
+ 173:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 174:User/Func/Src/HWDataAccess.c **** /*!
+ 175:User/Func/Src/HWDataAccess.c **** 	@brief  initialize the BLE
+ 176:User/Func/Src/HWDataAccess.c **** 
+ 177:User/Func/Src/HWDataAccess.c **** 	@param	NULL
+ 178:User/Func/Src/HWDataAccess.c **** 
+ 179:User/Func/Src/HWDataAccess.c **** 	@return NULL
+ 180:User/Func/Src/HWDataAccess.c **** */
+ 181:User/Func/Src/HWDataAccess.c **** void HW_BLE_Init(void)
+ 182:User/Func/Src/HWDataAccess.c **** {
+ 183:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_BLE
+ 184:User/Func/Src/HWDataAccess.c **** 		KT6328_GPIO_Init();
+ 185:User/Func/Src/HWDataAccess.c **** 	#endif
+ 186:User/Func/Src/HWDataAccess.c **** }
+ 187:User/Func/Src/HWDataAccess.c **** 
+ 188:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 189:User/Func/Src/HWDataAccess.c **** /*!
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 7
+
+
+ 190:User/Func/Src/HWDataAccess.c ****     @brief  enable BLE
+ 191:User/Func/Src/HWDataAccess.c **** 
+ 192:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 193:User/Func/Src/HWDataAccess.c **** 
+ 194:User/Func/Src/HWDataAccess.c **** 	@return NULL
+ 195:User/Func/Src/HWDataAccess.c **** */
+ 196:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 197:User/Func/Src/HWDataAccess.c **** void HW_BLE_Enable(void)
+ 198:User/Func/Src/HWDataAccess.c **** {
+ 199:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_BLE
+ 200:User/Func/Src/HWDataAccess.c **** 		KT6328_Enable();
+ 201:User/Func/Src/HWDataAccess.c **** 	#endif
+ 202:User/Func/Src/HWDataAccess.c **** }
+ 203:User/Func/Src/HWDataAccess.c **** 
+ 204:User/Func/Src/HWDataAccess.c **** 
+ 205:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 206:User/Func/Src/HWDataAccess.c **** /*!
+ 207:User/Func/Src/HWDataAccess.c ****     @brief  disable BLE
+ 208:User/Func/Src/HWDataAccess.c **** 
+ 209:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 210:User/Func/Src/HWDataAccess.c **** 
+ 211:User/Func/Src/HWDataAccess.c **** 	@return NULL
+ 212:User/Func/Src/HWDataAccess.c **** */
+ 213:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 214:User/Func/Src/HWDataAccess.c **** void HW_BLE_Disable(void)
+ 215:User/Func/Src/HWDataAccess.c **** {
+ 216:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_BLE
+ 217:User/Func/Src/HWDataAccess.c **** 		KT6328_Disable();
+ 218:User/Func/Src/HWDataAccess.c **** 	#endif
+ 219:User/Func/Src/HWDataAccess.c **** }
+ 220:User/Func/Src/HWDataAccess.c **** 
+ 221:User/Func/Src/HWDataAccess.c **** 
+ 222:User/Func/Src/HWDataAccess.c **** 
+ 223:User/Func/Src/HWDataAccess.c **** /***************************
+ 224:User/Func/Src/HWDataAccess.c ****  *  LCD Fucntions
+ 225:User/Func/Src/HWDataAccess.c ****  ***************************/
+ 226:User/Func/Src/HWDataAccess.c **** 
+ 227:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 228:User/Func/Src/HWDataAccess.c **** /*!
+ 229:User/Func/Src/HWDataAccess.c ****     @brief set the lcd light
+ 230:User/Func/Src/HWDataAccess.c **** 
+ 231:User/Func/Src/HWDataAccess.c ****     @param	dc the LCD light
+ 232:User/Func/Src/HWDataAccess.c **** 
+ 233:User/Func/Src/HWDataAccess.c **** 	@return NULL
+ 234:User/Func/Src/HWDataAccess.c **** */
+ 235:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 236:User/Func/Src/HWDataAccess.c **** void HW_LCD_Set_Light(uint8_t dc)
+ 237:User/Func/Src/HWDataAccess.c **** {
+ 238:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_LCD
+ 239:User/Func/Src/HWDataAccess.c **** 		LCD_Set_Light(dc);
+ 240:User/Func/Src/HWDataAccess.c **** 	#endif
+ 241:User/Func/Src/HWDataAccess.c **** }
+ 242:User/Func/Src/HWDataAccess.c **** 
+ 243:User/Func/Src/HWDataAccess.c **** 
+ 244:User/Func/Src/HWDataAccess.c **** /***************************
+ 245:User/Func/Src/HWDataAccess.c ****  *  IMU Fucntions
+ 246:User/Func/Src/HWDataAccess.c ****  ***************************/
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 8
+
+
+ 247:User/Func/Src/HWDataAccess.c **** 
+ 248:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 249:User/Func/Src/HWDataAccess.c **** /*!
+ 250:User/Func/Src/HWDataAccess.c ****     @brief  initialize the MPU6050
+ 251:User/Func/Src/HWDataAccess.c **** 
+ 252:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 253:User/Func/Src/HWDataAccess.c **** 
+ 254:User/Func/Src/HWDataAccess.c **** 	@return 0 if successful
+ 255:User/Func/Src/HWDataAccess.c **** */
+ 256:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 257:User/Func/Src/HWDataAccess.c **** uint8_t HW_MPU_Init(void)
+ 258:User/Func/Src/HWDataAccess.c **** {
+ 259:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_IMU
+ 260:User/Func/Src/HWDataAccess.c **** 		return mpu_dmp_init();
+ 261:User/Func/Src/HWDataAccess.c **** 	#endif
+ 262:User/Func/Src/HWDataAccess.c **** 	return -1;
+ 263:User/Func/Src/HWDataAccess.c **** }
+ 264:User/Func/Src/HWDataAccess.c **** 
+ 265:User/Func/Src/HWDataAccess.c **** 
+ 266:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 267:User/Func/Src/HWDataAccess.c **** /*!
+ 268:User/Func/Src/HWDataAccess.c ****     @brief  set the MPU Wrist wake up to enabled
+ 269:User/Func/Src/HWDataAccess.c **** 
+ 270:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 271:User/Func/Src/HWDataAccess.c **** 
+ 272:User/Func/Src/HWDataAccess.c **** 	@return NULL
+ 273:User/Func/Src/HWDataAccess.c **** */
+ 274:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 275:User/Func/Src/HWDataAccess.c **** void HW_MPU_Wrist_Enable(void)
+ 276:User/Func/Src/HWDataAccess.c **** {
+ 150              		.loc 1 276 1 is_stmt 1 view -0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 0
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154              		@ link register save eliminated.
+ 277:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_IMU
+ 278:User/Func/Src/HWDataAccess.c **** 		HWInterface.IMU.wrist_is_enabled = 1;
+ 155              		.loc 1 278 3 view .LVU36
+ 156              		.loc 1 278 36 is_stmt 0 view .LVU37
+ 157 0000 024B     		ldr	r3, .L12
+ 158 0002 0122     		movs	r2, #1
+ 159 0004 83F83520 		strb	r2, [r3, #53]
+ 279:User/Func/Src/HWDataAccess.c **** 	#endif
+ 280:User/Func/Src/HWDataAccess.c **** }
+ 160              		.loc 1 280 1 view .LVU38
+ 161 0008 7047     		bx	lr
+ 162              	.L13:
+ 163 000a 00BF     		.align	2
+ 164              	.L12:
+ 165 000c 00000000 		.word	HWInterface
+ 166              		.cfi_endproc
+ 167              	.LFE228:
+ 169              		.section	.text.HW_MPU_Wrist_Disable,"ax",%progbits
+ 170              		.align	1
+ 171              		.global	HW_MPU_Wrist_Disable
+ 172              		.syntax unified
+ 173              		.thumb
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 9
+
+
+ 174              		.thumb_func
+ 176              	HW_MPU_Wrist_Disable:
+ 177              	.LFB229:
+ 281:User/Func/Src/HWDataAccess.c **** 
+ 282:User/Func/Src/HWDataAccess.c **** 
+ 283:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 284:User/Func/Src/HWDataAccess.c **** /*!
+ 285:User/Func/Src/HWDataAccess.c ****     @brief  set the MPU Wrist wake up to disabled
+ 286:User/Func/Src/HWDataAccess.c **** 
+ 287:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 288:User/Func/Src/HWDataAccess.c **** 
+ 289:User/Func/Src/HWDataAccess.c **** 	@return NULL
+ 290:User/Func/Src/HWDataAccess.c **** */
+ 291:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 292:User/Func/Src/HWDataAccess.c **** void HW_MPU_Wrist_Disable(void)
+ 293:User/Func/Src/HWDataAccess.c **** {
+ 178              		.loc 1 293 1 is_stmt 1 view -0
+ 179              		.cfi_startproc
+ 180              		@ args = 0, pretend = 0, frame = 0
+ 181              		@ frame_needed = 0, uses_anonymous_args = 0
+ 182              		@ link register save eliminated.
+ 294:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_IMU
+ 295:User/Func/Src/HWDataAccess.c **** 		HWInterface.IMU.wrist_is_enabled = 0;
+ 183              		.loc 1 295 3 view .LVU40
+ 184              		.loc 1 295 36 is_stmt 0 view .LVU41
+ 185 0000 024B     		ldr	r3, .L15
+ 186 0002 0022     		movs	r2, #0
+ 187 0004 83F83520 		strb	r2, [r3, #53]
+ 296:User/Func/Src/HWDataAccess.c **** 	#endif
+ 297:User/Func/Src/HWDataAccess.c **** }
+ 188              		.loc 1 297 1 view .LVU42
+ 189 0008 7047     		bx	lr
+ 190              	.L16:
+ 191 000a 00BF     		.align	2
+ 192              	.L15:
+ 193 000c 00000000 		.word	HWInterface
+ 194              		.cfi_endproc
+ 195              	.LFE229:
+ 197              		.section	.text.HW_RTC_Get_TimeDate,"ax",%progbits
+ 198              		.align	1
+ 199              		.global	HW_RTC_Get_TimeDate
+ 200              		.syntax unified
+ 201              		.thumb
+ 202              		.thumb_func
+ 204              	HW_RTC_Get_TimeDate:
+ 205              	.LVL16:
+ 206              	.LFB216:
+  31:User/Func/Src/HWDataAccess.c **** 
+ 207              		.loc 1 31 1 is_stmt 1 view -0
+ 208              		.cfi_startproc
+ 209              		@ args = 0, pretend = 0, frame = 24
+ 210              		@ frame_needed = 0, uses_anonymous_args = 0
+  34:User/Func/Src/HWDataAccess.c **** 		{
+ 211              		.loc 1 34 3 view .LVU44
+  34:User/Func/Src/HWDataAccess.c **** 		{
+ 212              		.loc 1 34 6 is_stmt 0 view .LVU45
+ 213 0000 28B3     		cbz	r0, .L20
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 10
+
+
+  31:User/Func/Src/HWDataAccess.c **** 
+ 214              		.loc 1 31 1 view .LVU46
+ 215 0002 30B5     		push	{r4, r5, lr}
+ 216              	.LCFI2:
+ 217              		.cfi_def_cfa_offset 12
+ 218              		.cfi_offset 4, -12
+ 219              		.cfi_offset 5, -8
+ 220              		.cfi_offset 14, -4
+ 221 0004 87B0     		sub	sp, sp, #28
+ 222              	.LCFI3:
+ 223              		.cfi_def_cfa_offset 40
+ 224 0006 0446     		mov	r4, r0
+ 225              	.LBB2:
+  36:User/Func/Src/HWDataAccess.c ****             RTC_TimeTypeDef nowtime;
+ 226              		.loc 1 36 13 is_stmt 1 view .LVU47
+  37:User/Func/Src/HWDataAccess.c **** 			HAL_RTC_GetTime(&hrtc, &nowtime, RTC_FORMAT_BIN);
+ 227              		.loc 1 37 13 view .LVU48
+  38:User/Func/Src/HWDataAccess.c **** 			HAL_RTC_GetDate(&hrtc, &nowdate, RTC_FORMAT_BIN);
+ 228              		.loc 1 38 4 view .LVU49
+ 229 0008 114D     		ldr	r5, .L23
+ 230 000a 0022     		movs	r2, #0
+ 231 000c 01A9     		add	r1, sp, #4
+ 232 000e 2846     		mov	r0, r5
+ 233              	.LVL17:
+  38:User/Func/Src/HWDataAccess.c **** 			HAL_RTC_GetDate(&hrtc, &nowdate, RTC_FORMAT_BIN);
+ 234              		.loc 1 38 4 is_stmt 0 view .LVU50
+ 235 0010 FFF7FEFF 		bl	HAL_RTC_GetTime
+ 236              	.LVL18:
+  39:User/Func/Src/HWDataAccess.c ****             nowdatetime->Year = nowdate.Year;
+ 237              		.loc 1 39 4 is_stmt 1 view .LVU51
+ 238 0014 0022     		movs	r2, #0
+ 239 0016 6946     		mov	r1, sp
+ 240 0018 2846     		mov	r0, r5
+ 241 001a FFF7FEFF 		bl	HAL_RTC_GetDate
+ 242              	.LVL19:
+  40:User/Func/Src/HWDataAccess.c ****             nowdatetime->Month = nowdate.Month;
+ 243              		.loc 1 40 13 view .LVU52
+  40:User/Func/Src/HWDataAccess.c ****             nowdatetime->Month = nowdate.Month;
+ 244              		.loc 1 40 40 is_stmt 0 view .LVU53
+ 245 001e 9DF80300 		ldrb	r0, [sp, #3]	@ zero_extendqisi2
+  40:User/Func/Src/HWDataAccess.c ****             nowdatetime->Month = nowdate.Month;
+ 246              		.loc 1 40 31 view .LVU54
+ 247 0022 E070     		strb	r0, [r4, #3]
+  41:User/Func/Src/HWDataAccess.c ****             nowdatetime->Date = nowdate.Date;
+ 248              		.loc 1 41 13 is_stmt 1 view .LVU55
+  41:User/Func/Src/HWDataAccess.c ****             nowdatetime->Date = nowdate.Date;
+ 249              		.loc 1 41 41 is_stmt 0 view .LVU56
+ 250 0024 9DF80110 		ldrb	r1, [sp, #1]	@ zero_extendqisi2
+  41:User/Func/Src/HWDataAccess.c ****             nowdatetime->Date = nowdate.Date;
+ 251              		.loc 1 41 32 view .LVU57
+ 252 0028 6170     		strb	r1, [r4, #1]
+  42:User/Func/Src/HWDataAccess.c **** 			nowdatetime->WeekDay = weekday_calculate(nowdatetime->Year, nowdatetime->Month, nowdatetime->Dat
+ 253              		.loc 1 42 13 is_stmt 1 view .LVU58
+  42:User/Func/Src/HWDataAccess.c **** 			nowdatetime->WeekDay = weekday_calculate(nowdatetime->Year, nowdatetime->Month, nowdatetime->Dat
+ 254              		.loc 1 42 40 is_stmt 0 view .LVU59
+ 255 002a 9DF80220 		ldrb	r2, [sp, #2]	@ zero_extendqisi2
+  42:User/Func/Src/HWDataAccess.c **** 			nowdatetime->WeekDay = weekday_calculate(nowdatetime->Year, nowdatetime->Month, nowdatetime->Dat
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 11
+
+
+ 256              		.loc 1 42 31 view .LVU60
+ 257 002e A270     		strb	r2, [r4, #2]
+  43:User/Func/Src/HWDataAccess.c ****             nowdatetime->Hours = nowtime.Hours;
+ 258              		.loc 1 43 4 is_stmt 1 view .LVU61
+  43:User/Func/Src/HWDataAccess.c ****             nowdatetime->Hours = nowtime.Hours;
+ 259              		.loc 1 43 27 is_stmt 0 view .LVU62
+ 260 0030 1423     		movs	r3, #20
+ 261 0032 FFF7FEFF 		bl	weekday_calculate
+ 262              	.LVL20:
+  43:User/Func/Src/HWDataAccess.c ****             nowdatetime->Hours = nowtime.Hours;
+ 263              		.loc 1 43 25 discriminator 1 view .LVU63
+ 264 0036 2070     		strb	r0, [r4]
+  44:User/Func/Src/HWDataAccess.c ****             nowdatetime->Minutes = nowtime.Minutes;
+ 265              		.loc 1 44 13 is_stmt 1 view .LVU64
+  44:User/Func/Src/HWDataAccess.c ****             nowdatetime->Minutes = nowtime.Minutes;
+ 266              		.loc 1 44 41 is_stmt 0 view .LVU65
+ 267 0038 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+  44:User/Func/Src/HWDataAccess.c ****             nowdatetime->Minutes = nowtime.Minutes;
+ 268              		.loc 1 44 32 view .LVU66
+ 269 003c 2371     		strb	r3, [r4, #4]
+  45:User/Func/Src/HWDataAccess.c ****             nowdatetime->Seconds = nowtime.Seconds;
+ 270              		.loc 1 45 13 is_stmt 1 view .LVU67
+  45:User/Func/Src/HWDataAccess.c ****             nowdatetime->Seconds = nowtime.Seconds;
+ 271              		.loc 1 45 43 is_stmt 0 view .LVU68
+ 272 003e 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+  45:User/Func/Src/HWDataAccess.c ****             nowdatetime->Seconds = nowtime.Seconds;
+ 273              		.loc 1 45 34 view .LVU69
+ 274 0042 6371     		strb	r3, [r4, #5]
+  46:User/Func/Src/HWDataAccess.c **** 		}
+ 275              		.loc 1 46 13 is_stmt 1 view .LVU70
+  46:User/Func/Src/HWDataAccess.c **** 		}
+ 276              		.loc 1 46 43 is_stmt 0 view .LVU71
+ 277 0044 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+  46:User/Func/Src/HWDataAccess.c **** 		}
+ 278              		.loc 1 46 34 view .LVU72
+ 279 0048 A371     		strb	r3, [r4, #6]
+ 280              	.LBE2:
+  57:User/Func/Src/HWDataAccess.c **** 
+ 281              		.loc 1 57 1 view .LVU73
+ 282 004a 07B0     		add	sp, sp, #28
+ 283              	.LCFI4:
+ 284              		.cfi_def_cfa_offset 12
+ 285              		@ sp needed
+ 286 004c 30BD     		pop	{r4, r5, pc}
+ 287              	.LVL21:
+ 288              	.L20:
+ 289              	.LCFI5:
+ 290              		.cfi_def_cfa_offset 0
+ 291              		.cfi_restore 4
+ 292              		.cfi_restore 5
+ 293              		.cfi_restore 14
+  57:User/Func/Src/HWDataAccess.c **** 
+ 294              		.loc 1 57 1 view .LVU74
+ 295 004e 7047     		bx	lr
+ 296              	.L24:
+ 297              		.align	2
+ 298              	.L23:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 12
+
+
+ 299 0050 00000000 		.word	hrtc
+ 300              		.cfi_endproc
+ 301              	.LFE216:
+ 303              		.section	.text.HW_RTC_Set_Date,"ax",%progbits
+ 304              		.align	1
+ 305              		.global	HW_RTC_Set_Date
+ 306              		.syntax unified
+ 307              		.thumb
+ 308              		.thumb_func
+ 310              	HW_RTC_Set_Date:
+ 311              	.LVL22:
+ 312              	.LFB217:
+  70:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_RTC
+ 313              		.loc 1 70 1 is_stmt 1 view -0
+ 314              		.cfi_startproc
+ 315              		@ args = 0, pretend = 0, frame = 0
+ 316              		@ frame_needed = 0, uses_anonymous_args = 0
+  70:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_RTC
+ 317              		.loc 1 70 1 is_stmt 0 view .LVU76
+ 318 0000 08B5     		push	{r3, lr}
+ 319              	.LCFI6:
+ 320              		.cfi_def_cfa_offset 8
+ 321              		.cfi_offset 3, -8
+ 322              		.cfi_offset 14, -4
+  72:User/Func/Src/HWDataAccess.c **** 	#endif
+ 323              		.loc 1 72 3 is_stmt 1 view .LVU77
+ 324 0002 FFF7FEFF 		bl	RTC_SetDate
+ 325              	.LVL23:
+  74:User/Func/Src/HWDataAccess.c **** 
+ 326              		.loc 1 74 1 is_stmt 0 view .LVU78
+ 327 0006 08BD     		pop	{r3, pc}
+ 328              		.cfi_endproc
+ 329              	.LFE217:
+ 331              		.section	.text.HW_RTC_Set_Time,"ax",%progbits
+ 332              		.align	1
+ 333              		.global	HW_RTC_Set_Time
+ 334              		.syntax unified
+ 335              		.thumb
+ 336              		.thumb_func
+ 338              	HW_RTC_Set_Time:
+ 339              	.LVL24:
+ 340              	.LFB218:
+  86:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_RTC
+ 341              		.loc 1 86 1 is_stmt 1 view -0
+ 342              		.cfi_startproc
+ 343              		@ args = 0, pretend = 0, frame = 0
+ 344              		@ frame_needed = 0, uses_anonymous_args = 0
+  86:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_RTC
+ 345              		.loc 1 86 1 is_stmt 0 view .LVU80
+ 346 0000 08B5     		push	{r3, lr}
+ 347              	.LCFI7:
+ 348              		.cfi_def_cfa_offset 8
+ 349              		.cfi_offset 3, -8
+ 350              		.cfi_offset 14, -4
+  88:User/Func/Src/HWDataAccess.c **** 	#endif
+ 351              		.loc 1 88 3 is_stmt 1 view .LVU81
+ 352 0002 FFF7FEFF 		bl	RTC_SetTime
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 13
+
+
+ 353              	.LVL25:
+  90:User/Func/Src/HWDataAccess.c **** 
+ 354              		.loc 1 90 1 is_stmt 0 view .LVU82
+ 355 0006 08BD     		pop	{r3, pc}
+ 356              		.cfi_endproc
+ 357              	.LFE218:
+ 359              		.section	.text.HW_Power_Init,"ax",%progbits
+ 360              		.align	1
+ 361              		.global	HW_Power_Init
+ 362              		.syntax unified
+ 363              		.thumb
+ 364              		.thumb_func
+ 366              	HW_Power_Init:
+ 367              	.LFB220:
+ 129:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_BAT
+ 368              		.loc 1 129 1 is_stmt 1 view -0
+ 369              		.cfi_startproc
+ 370              		@ args = 0, pretend = 0, frame = 0
+ 371              		@ frame_needed = 0, uses_anonymous_args = 0
+ 372 0000 08B5     		push	{r3, lr}
+ 373              	.LCFI8:
+ 374              		.cfi_def_cfa_offset 8
+ 375              		.cfi_offset 3, -8
+ 376              		.cfi_offset 14, -4
+ 131:User/Func/Src/HWDataAccess.c **** 	#endif
+ 377              		.loc 1 131 3 view .LVU84
+ 378 0002 FFF7FEFF 		bl	Power_Init
+ 379              	.LVL26:
+ 133:User/Func/Src/HWDataAccess.c **** 
+ 380              		.loc 1 133 1 is_stmt 0 view .LVU85
+ 381 0006 08BD     		pop	{r3, pc}
+ 382              		.cfi_endproc
+ 383              	.LFE220:
+ 385              		.section	.text.HW_Power_Shutdown,"ax",%progbits
+ 386              		.align	1
+ 387              		.global	HW_Power_Shutdown
+ 388              		.syntax unified
+ 389              		.thumb
+ 390              		.thumb_func
+ 392              	HW_Power_Shutdown:
+ 393              	.LFB221:
+ 145:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_BAT
+ 394              		.loc 1 145 1 is_stmt 1 view -0
+ 395              		.cfi_startproc
+ 396              		@ args = 0, pretend = 0, frame = 0
+ 397              		@ frame_needed = 0, uses_anonymous_args = 0
+ 398 0000 08B5     		push	{r3, lr}
+ 399              	.LCFI9:
+ 400              		.cfi_def_cfa_offset 8
+ 401              		.cfi_offset 3, -8
+ 402              		.cfi_offset 14, -4
+ 147:User/Func/Src/HWDataAccess.c **** 	#endif
+ 403              		.loc 1 147 3 view .LVU87
+ 404 0002 FFF7FEFF 		bl	Power_DisEnable
+ 405              	.LVL27:
+ 149:User/Func/Src/HWDataAccess.c **** 
+ 406              		.loc 1 149 1 is_stmt 0 view .LVU88
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 14
+
+
+ 407 0006 08BD     		pop	{r3, pc}
+ 408              		.cfi_endproc
+ 409              	.LFE221:
+ 411              		.section	.text.HW_Power_BatCalculate,"ax",%progbits
+ 412              		.align	1
+ 413              		.global	HW_Power_BatCalculate
+ 414              		.syntax unified
+ 415              		.thumb
+ 416              		.thumb_func
+ 418              	HW_Power_BatCalculate:
+ 419              	.LFB222:
+ 161:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_BAT
+ 420              		.loc 1 161 1 is_stmt 1 view -0
+ 421              		.cfi_startproc
+ 422              		@ args = 0, pretend = 0, frame = 0
+ 423              		@ frame_needed = 0, uses_anonymous_args = 0
+ 424 0000 08B5     		push	{r3, lr}
+ 425              	.LCFI10:
+ 426              		.cfi_def_cfa_offset 8
+ 427              		.cfi_offset 3, -8
+ 428              		.cfi_offset 14, -4
+ 163:User/Func/Src/HWDataAccess.c **** 	#endif
+ 429              		.loc 1 163 3 view .LVU90
+ 163:User/Func/Src/HWDataAccess.c **** 	#endif
+ 430              		.loc 1 163 10 is_stmt 0 view .LVU91
+ 431 0002 FFF7FEFF 		bl	PowerCalculate
+ 432              	.LVL28:
+ 166:User/Func/Src/HWDataAccess.c **** 
+ 433              		.loc 1 166 1 view .LVU92
+ 434 0006 08BD     		pop	{r3, pc}
+ 435              		.cfi_endproc
+ 436              	.LFE222:
+ 438              		.section	.text.HW_BLE_Init,"ax",%progbits
+ 439              		.align	1
+ 440              		.global	HW_BLE_Init
+ 441              		.syntax unified
+ 442              		.thumb
+ 443              		.thumb_func
+ 445              	HW_BLE_Init:
+ 446              	.LFB223:
+ 182:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_BLE
+ 447              		.loc 1 182 1 is_stmt 1 view -0
+ 448              		.cfi_startproc
+ 449              		@ args = 0, pretend = 0, frame = 0
+ 450              		@ frame_needed = 0, uses_anonymous_args = 0
+ 451 0000 08B5     		push	{r3, lr}
+ 452              	.LCFI11:
+ 453              		.cfi_def_cfa_offset 8
+ 454              		.cfi_offset 3, -8
+ 455              		.cfi_offset 14, -4
+ 184:User/Func/Src/HWDataAccess.c **** 	#endif
+ 456              		.loc 1 184 3 view .LVU94
+ 457 0002 FFF7FEFF 		bl	KT6328_GPIO_Init
+ 458              	.LVL29:
+ 186:User/Func/Src/HWDataAccess.c **** 
+ 459              		.loc 1 186 1 is_stmt 0 view .LVU95
+ 460 0006 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 15
+
+
+ 461              		.cfi_endproc
+ 462              	.LFE223:
+ 464              		.section	.text.HW_BLE_Enable,"ax",%progbits
+ 465              		.align	1
+ 466              		.global	HW_BLE_Enable
+ 467              		.syntax unified
+ 468              		.thumb
+ 469              		.thumb_func
+ 471              	HW_BLE_Enable:
+ 472              	.LFB224:
+ 198:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_BLE
+ 473              		.loc 1 198 1 is_stmt 1 view -0
+ 474              		.cfi_startproc
+ 475              		@ args = 0, pretend = 0, frame = 0
+ 476              		@ frame_needed = 0, uses_anonymous_args = 0
+ 477 0000 08B5     		push	{r3, lr}
+ 478              	.LCFI12:
+ 479              		.cfi_def_cfa_offset 8
+ 480              		.cfi_offset 3, -8
+ 481              		.cfi_offset 14, -4
+ 200:User/Func/Src/HWDataAccess.c **** 	#endif
+ 482              		.loc 1 200 3 view .LVU97
+ 483 0002 FFF7FEFF 		bl	KT6328_Enable
+ 484              	.LVL30:
+ 202:User/Func/Src/HWDataAccess.c **** 
+ 485              		.loc 1 202 1 is_stmt 0 view .LVU98
+ 486 0006 08BD     		pop	{r3, pc}
+ 487              		.cfi_endproc
+ 488              	.LFE224:
+ 490              		.section	.text.HW_BLE_Disable,"ax",%progbits
+ 491              		.align	1
+ 492              		.global	HW_BLE_Disable
+ 493              		.syntax unified
+ 494              		.thumb
+ 495              		.thumb_func
+ 497              	HW_BLE_Disable:
+ 498              	.LFB225:
+ 215:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_BLE
+ 499              		.loc 1 215 1 is_stmt 1 view -0
+ 500              		.cfi_startproc
+ 501              		@ args = 0, pretend = 0, frame = 0
+ 502              		@ frame_needed = 0, uses_anonymous_args = 0
+ 503 0000 08B5     		push	{r3, lr}
+ 504              	.LCFI13:
+ 505              		.cfi_def_cfa_offset 8
+ 506              		.cfi_offset 3, -8
+ 507              		.cfi_offset 14, -4
+ 217:User/Func/Src/HWDataAccess.c **** 	#endif
+ 508              		.loc 1 217 3 view .LVU100
+ 509 0002 FFF7FEFF 		bl	KT6328_Disable
+ 510              	.LVL31:
+ 219:User/Func/Src/HWDataAccess.c **** 
+ 511              		.loc 1 219 1 is_stmt 0 view .LVU101
+ 512 0006 08BD     		pop	{r3, pc}
+ 513              		.cfi_endproc
+ 514              	.LFE225:
+ 516              		.section	.text.HW_LCD_Set_Light,"ax",%progbits
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 16
+
+
+ 517              		.align	1
+ 518              		.global	HW_LCD_Set_Light
+ 519              		.syntax unified
+ 520              		.thumb
+ 521              		.thumb_func
+ 523              	HW_LCD_Set_Light:
+ 524              	.LVL32:
+ 525              	.LFB226:
+ 237:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_LCD
+ 526              		.loc 1 237 1 is_stmt 1 view -0
+ 527              		.cfi_startproc
+ 528              		@ args = 0, pretend = 0, frame = 0
+ 529              		@ frame_needed = 0, uses_anonymous_args = 0
+ 237:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_LCD
+ 530              		.loc 1 237 1 is_stmt 0 view .LVU103
+ 531 0000 08B5     		push	{r3, lr}
+ 532              	.LCFI14:
+ 533              		.cfi_def_cfa_offset 8
+ 534              		.cfi_offset 3, -8
+ 535              		.cfi_offset 14, -4
+ 239:User/Func/Src/HWDataAccess.c **** 	#endif
+ 536              		.loc 1 239 3 is_stmt 1 view .LVU104
+ 537 0002 FFF7FEFF 		bl	LCD_Set_Light
+ 538              	.LVL33:
+ 241:User/Func/Src/HWDataAccess.c **** 
+ 539              		.loc 1 241 1 is_stmt 0 view .LVU105
+ 540 0006 08BD     		pop	{r3, pc}
+ 541              		.cfi_endproc
+ 542              	.LFE226:
+ 544              		.section	.text.HW_MPU_Init,"ax",%progbits
+ 545              		.align	1
+ 546              		.global	HW_MPU_Init
+ 547              		.syntax unified
+ 548              		.thumb
+ 549              		.thumb_func
+ 551              	HW_MPU_Init:
+ 552              	.LFB227:
+ 258:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_IMU
+ 553              		.loc 1 258 1 is_stmt 1 view -0
+ 554              		.cfi_startproc
+ 555              		@ args = 0, pretend = 0, frame = 0
+ 556              		@ frame_needed = 0, uses_anonymous_args = 0
+ 557 0000 08B5     		push	{r3, lr}
+ 558              	.LCFI15:
+ 559              		.cfi_def_cfa_offset 8
+ 560              		.cfi_offset 3, -8
+ 561              		.cfi_offset 14, -4
+ 260:User/Func/Src/HWDataAccess.c **** 	#endif
+ 562              		.loc 1 260 3 view .LVU107
+ 260:User/Func/Src/HWDataAccess.c **** 	#endif
+ 563              		.loc 1 260 10 is_stmt 0 view .LVU108
+ 564 0002 FFF7FEFF 		bl	mpu_dmp_init
+ 565              	.LVL34:
+ 263:User/Func/Src/HWDataAccess.c **** 
+ 566              		.loc 1 263 1 view .LVU109
+ 567 0006 08BD     		pop	{r3, pc}
+ 568              		.cfi_endproc
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 17
+
+
+ 569              	.LFE227:
+ 571              		.section	.text.HW_MPU_Get_Steps,"ax",%progbits
+ 572              		.align	1
+ 573              		.global	HW_MPU_Get_Steps
+ 574              		.syntax unified
+ 575              		.thumb
+ 576              		.thumb_func
+ 578              	HW_MPU_Get_Steps:
+ 579              	.LFB230:
+ 298:User/Func/Src/HWDataAccess.c **** 
+ 299:User/Func/Src/HWDataAccess.c **** 
+ 300:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 301:User/Func/Src/HWDataAccess.c **** /*!
+ 302:User/Func/Src/HWDataAccess.c ****     @brief  get the MPU steps
+ 303:User/Func/Src/HWDataAccess.c **** 
+ 304:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 305:User/Func/Src/HWDataAccess.c **** 
+ 306:User/Func/Src/HWDataAccess.c **** 	@return the steps
+ 307:User/Func/Src/HWDataAccess.c **** */
+ 308:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 309:User/Func/Src/HWDataAccess.c **** uint16_t HW_MPU_Get_Steps(void)
+ 310:User/Func/Src/HWDataAccess.c **** {
+ 580              		.loc 1 310 1 is_stmt 1 view -0
+ 581              		.cfi_startproc
+ 582              		@ args = 0, pretend = 0, frame = 8
+ 583              		@ frame_needed = 0, uses_anonymous_args = 0
+ 584 0000 00B5     		push	{lr}
+ 585              	.LCFI16:
+ 586              		.cfi_def_cfa_offset 4
+ 587              		.cfi_offset 14, -4
+ 588 0002 83B0     		sub	sp, sp, #12
+ 589              	.LCFI17:
+ 590              		.cfi_def_cfa_offset 16
+ 311:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_IMU
+ 312:User/Func/Src/HWDataAccess.c **** 		unsigned long STEPS = 0;
+ 591              		.loc 1 312 3 view .LVU111
+ 592              		.loc 1 312 17 is_stmt 0 view .LVU112
+ 593 0004 0023     		movs	r3, #0
+ 594 0006 0193     		str	r3, [sp, #4]
+ 313:User/Func/Src/HWDataAccess.c **** 		if(!HWInterface.IMU.ConnectionError)
+ 595              		.loc 1 313 3 is_stmt 1 view .LVU113
+ 596              		.loc 1 313 22 is_stmt 0 view .LVU114
+ 597 0008 064B     		ldr	r3, .L49
+ 598 000a 93F83030 		ldrb	r3, [r3, #48]	@ zero_extendqisi2
+ 599              		.loc 1 313 5 view .LVU115
+ 600 000e 23B1     		cbz	r3, .L48
+ 601              	.L46:
+ 314:User/Func/Src/HWDataAccess.c **** 			dmp_get_pedometer_step_count(&STEPS);
+ 315:User/Func/Src/HWDataAccess.c **** 		return (uint16_t)STEPS;
+ 602              		.loc 1 315 3 is_stmt 1 view .LVU116
+ 316:User/Func/Src/HWDataAccess.c **** 	#endif
+ 317:User/Func/Src/HWDataAccess.c **** 		return 0;
+ 318:User/Func/Src/HWDataAccess.c **** }
+ 603              		.loc 1 318 1 is_stmt 0 view .LVU117
+ 604 0010 BDF80400 		ldrh	r0, [sp, #4]
+ 605 0014 03B0     		add	sp, sp, #12
+ 606              	.LCFI18:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 18
+
+
+ 607              		.cfi_remember_state
+ 608              		.cfi_def_cfa_offset 4
+ 609              		@ sp needed
+ 610 0016 5DF804FB 		ldr	pc, [sp], #4
+ 611              	.L48:
+ 612              	.LCFI19:
+ 613              		.cfi_restore_state
+ 314:User/Func/Src/HWDataAccess.c **** 			dmp_get_pedometer_step_count(&STEPS);
+ 614              		.loc 1 314 4 is_stmt 1 view .LVU118
+ 615 001a 01A8     		add	r0, sp, #4
+ 616 001c FFF7FEFF 		bl	dmp_get_pedometer_step_count
+ 617              	.LVL35:
+ 618 0020 F6E7     		b	.L46
+ 619              	.L50:
+ 620 0022 00BF     		.align	2
+ 621              	.L49:
+ 622 0024 00000000 		.word	HWInterface
+ 623              		.cfi_endproc
+ 624              	.LFE230:
+ 626              		.section	.text.HW_MPU_Set_Steps,"ax",%progbits
+ 627              		.align	1
+ 628              		.global	HW_MPU_Set_Steps
+ 629              		.syntax unified
+ 630              		.thumb
+ 631              		.thumb_func
+ 633              	HW_MPU_Set_Steps:
+ 634              	.LVL36:
+ 635              	.LFB231:
+ 319:User/Func/Src/HWDataAccess.c **** 
+ 320:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 321:User/Func/Src/HWDataAccess.c **** /*!
+ 322:User/Func/Src/HWDataAccess.c ****     @brief	set the MPU steps
+ 323:User/Func/Src/HWDataAccess.c **** 
+ 324:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 325:User/Func/Src/HWDataAccess.c **** 
+ 326:User/Func/Src/HWDataAccess.c **** 	@return 0 if successful
+ 327:User/Func/Src/HWDataAccess.c **** */
+ 328:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 329:User/Func/Src/HWDataAccess.c **** int HW_MPU_Set_Steps(unsigned long count)
+ 330:User/Func/Src/HWDataAccess.c **** {
+ 636              		.loc 1 330 1 view -0
+ 637              		.cfi_startproc
+ 638              		@ args = 0, pretend = 0, frame = 0
+ 639              		@ frame_needed = 0, uses_anonymous_args = 0
+ 640              		.loc 1 330 1 is_stmt 0 view .LVU120
+ 641 0000 08B5     		push	{r3, lr}
+ 642              	.LCFI20:
+ 643              		.cfi_def_cfa_offset 8
+ 644              		.cfi_offset 3, -8
+ 645              		.cfi_offset 14, -4
+ 331:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_IMU
+ 332:User/Func/Src/HWDataAccess.c **** 		if(!HWInterface.IMU.ConnectionError)
+ 646              		.loc 1 332 3 is_stmt 1 view .LVU121
+ 647              		.loc 1 332 22 is_stmt 0 view .LVU122
+ 648 0002 054B     		ldr	r3, .L55
+ 649 0004 93F83030 		ldrb	r3, [r3, #48]	@ zero_extendqisi2
+ 650              		.loc 1 332 5 view .LVU123
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 19
+
+
+ 651 0008 13B9     		cbnz	r3, .L53
+ 333:User/Func/Src/HWDataAccess.c **** 			return dmp_set_pedometer_step_count(count);
+ 652              		.loc 1 333 4 is_stmt 1 view .LVU124
+ 653              		.loc 1 333 11 is_stmt 0 view .LVU125
+ 654 000a FFF7FEFF 		bl	dmp_set_pedometer_step_count
+ 655              	.LVL37:
+ 656              	.L51:
+ 334:User/Func/Src/HWDataAccess.c **** 	#endif
+ 335:User/Func/Src/HWDataAccess.c **** 		return -1;
+ 336:User/Func/Src/HWDataAccess.c **** }
+ 657              		.loc 1 336 1 view .LVU126
+ 658 000e 08BD     		pop	{r3, pc}
+ 659              	.LVL38:
+ 660              	.L53:
+ 335:User/Func/Src/HWDataAccess.c **** }
+ 661              		.loc 1 335 10 view .LVU127
+ 662 0010 4FF0FF30 		mov	r0, #-1
+ 663              	.LVL39:
+ 335:User/Func/Src/HWDataAccess.c **** }
+ 664              		.loc 1 335 10 view .LVU128
+ 665 0014 FBE7     		b	.L51
+ 666              	.L56:
+ 667 0016 00BF     		.align	2
+ 668              	.L55:
+ 669 0018 00000000 		.word	HWInterface
+ 670              		.cfi_endproc
+ 671              	.LFE231:
+ 673              		.section	.text.HW_AHT21_Init,"ax",%progbits
+ 674              		.align	1
+ 675              		.global	HW_AHT21_Init
+ 676              		.syntax unified
+ 677              		.thumb
+ 678              		.thumb_func
+ 680              	HW_AHT21_Init:
+ 681              	.LFB232:
+ 337:User/Func/Src/HWDataAccess.c **** 
+ 338:User/Func/Src/HWDataAccess.c **** /***************************
+ 339:User/Func/Src/HWDataAccess.c ****  *  temprature & humidity Fucntions
+ 340:User/Func/Src/HWDataAccess.c ****  ***************************/
+ 341:User/Func/Src/HWDataAccess.c **** 
+ 342:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 343:User/Func/Src/HWDataAccess.c **** /*!
+ 344:User/Func/Src/HWDataAccess.c ****     @brief  initialize the AHT21 - temprature & humidity sensor
+ 345:User/Func/Src/HWDataAccess.c **** 
+ 346:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 347:User/Func/Src/HWDataAccess.c **** 
+ 348:User/Func/Src/HWDataAccess.c **** 	@return 0 if successful
+ 349:User/Func/Src/HWDataAccess.c **** */
+ 350:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 351:User/Func/Src/HWDataAccess.c **** uint8_t HW_AHT21_Init(void)
+ 352:User/Func/Src/HWDataAccess.c **** {
+ 682              		.loc 1 352 1 is_stmt 1 view -0
+ 683              		.cfi_startproc
+ 684              		@ args = 0, pretend = 0, frame = 0
+ 685              		@ frame_needed = 0, uses_anonymous_args = 0
+ 686 0000 08B5     		push	{r3, lr}
+ 687              	.LCFI21:
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 20
+
+
+ 688              		.cfi_def_cfa_offset 8
+ 689              		.cfi_offset 3, -8
+ 690              		.cfi_offset 14, -4
+ 353:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_AHT21
+ 354:User/Func/Src/HWDataAccess.c **** 		return AHT_Init();
+ 691              		.loc 1 354 3 view .LVU130
+ 692              		.loc 1 354 10 is_stmt 0 view .LVU131
+ 693 0002 FFF7FEFF 		bl	AHT_Init
+ 694              	.LVL40:
+ 355:User/Func/Src/HWDataAccess.c **** 	#endif
+ 356:User/Func/Src/HWDataAccess.c **** 	return -1;
+ 357:User/Func/Src/HWDataAccess.c **** }
+ 695              		.loc 1 357 1 view .LVU132
+ 696 0006 08BD     		pop	{r3, pc}
+ 697              		.cfi_endproc
+ 698              	.LFE232:
+ 700              		.section	.text.HW_AHT21_Get_Humi_Temp,"ax",%progbits
+ 701              		.align	1
+ 702              		.global	HW_AHT21_Get_Humi_Temp
+ 703              		.syntax unified
+ 704              		.thumb
+ 705              		.thumb_func
+ 707              	HW_AHT21_Get_Humi_Temp:
+ 708              	.LVL41:
+ 709              	.LFB233:
+ 358:User/Func/Src/HWDataAccess.c **** 
+ 359:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 360:User/Func/Src/HWDataAccess.c **** /*!
+ 361:User/Func/Src/HWDataAccess.c ****     @brief  get the temperature and humidity data for the aht21 sensor
+ 362:User/Func/Src/HWDataAccess.c **** 
+ 363:User/Func/Src/HWDataAccess.c ****     @param	humi humidity
+ 364:User/Func/Src/HWDataAccess.c **** 	@param	temp temperature
+ 365:User/Func/Src/HWDataAccess.c **** 
+ 366:User/Func/Src/HWDataAccess.c **** 	@return NULL
+ 367:User/Func/Src/HWDataAccess.c **** */
+ 368:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 369:User/Func/Src/HWDataAccess.c **** void HW_AHT21_Get_Humi_Temp(float *humi, float *temp)
+ 370:User/Func/Src/HWDataAccess.c **** {
+ 710              		.loc 1 370 1 is_stmt 1 view -0
+ 711              		.cfi_startproc
+ 712              		@ args = 0, pretend = 0, frame = 0
+ 713              		@ frame_needed = 0, uses_anonymous_args = 0
+ 714              		.loc 1 370 1 is_stmt 0 view .LVU134
+ 715 0000 08B5     		push	{r3, lr}
+ 716              	.LCFI22:
+ 717              		.cfi_def_cfa_offset 8
+ 718              		.cfi_offset 3, -8
+ 719              		.cfi_offset 14, -4
+ 371:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_AHT21
+ 372:User/Func/Src/HWDataAccess.c **** 		//temp and humi messure
+ 373:User/Func/Src/HWDataAccess.c **** 		if(!HWInterface.AHT21.ConnectionError)
+ 720              		.loc 1 373 3 is_stmt 1 view .LVU135
+ 721              		.loc 1 373 24 is_stmt 0 view .LVU136
+ 722 0002 044B     		ldr	r3, .L63
+ 723 0004 93F84C30 		ldrb	r3, [r3, #76]	@ zero_extendqisi2
+ 724              		.loc 1 373 5 view .LVU137
+ 725 0008 03B1     		cbz	r3, .L62
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 21
+
+
+ 726              	.LVL42:
+ 727              	.L59:
+ 374:User/Func/Src/HWDataAccess.c **** 			AHT_Read(humi,temp);
+ 375:User/Func/Src/HWDataAccess.c **** 	#endif
+ 376:User/Func/Src/HWDataAccess.c **** }
+ 728              		.loc 1 376 1 view .LVU138
+ 729 000a 08BD     		pop	{r3, pc}
+ 730              	.LVL43:
+ 731              	.L62:
+ 374:User/Func/Src/HWDataAccess.c **** 			AHT_Read(humi,temp);
+ 732              		.loc 1 374 4 is_stmt 1 view .LVU139
+ 733 000c FFF7FEFF 		bl	AHT_Read
+ 734              	.LVL44:
+ 735              		.loc 1 376 1 is_stmt 0 view .LVU140
+ 736 0010 FBE7     		b	.L59
+ 737              	.L64:
+ 738 0012 00BF     		.align	2
+ 739              	.L63:
+ 740 0014 00000000 		.word	HWInterface
+ 741              		.cfi_endproc
+ 742              	.LFE233:
+ 744              		.section	.text.HW_Barometer_Init,"ax",%progbits
+ 745              		.align	1
+ 746              		.global	HW_Barometer_Init
+ 747              		.syntax unified
+ 748              		.thumb
+ 749              		.thumb_func
+ 751              	HW_Barometer_Init:
+ 752              	.LFB234:
+ 377:User/Func/Src/HWDataAccess.c **** 
+ 378:User/Func/Src/HWDataAccess.c **** 
+ 379:User/Func/Src/HWDataAccess.c **** /***************************
+ 380:User/Func/Src/HWDataAccess.c ****  *  Barometer Fucntions - SPL06-001
+ 381:User/Func/Src/HWDataAccess.c ****  ***************************/
+ 382:User/Func/Src/HWDataAccess.c **** 
+ 383:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 384:User/Func/Src/HWDataAccess.c **** /*!
+ 385:User/Func/Src/HWDataAccess.c ****     @brief  initialize the SPL06-001 Barometer sensor
+ 386:User/Func/Src/HWDataAccess.c **** 
+ 387:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 388:User/Func/Src/HWDataAccess.c **** 
+ 389:User/Func/Src/HWDataAccess.c **** 	@return 0 if successful
+ 390:User/Func/Src/HWDataAccess.c **** */
+ 391:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 392:User/Func/Src/HWDataAccess.c **** uint8_t HW_Barometer_Init(void)
+ 393:User/Func/Src/HWDataAccess.c **** {
+ 753              		.loc 1 393 1 is_stmt 1 view -0
+ 754              		.cfi_startproc
+ 755              		@ args = 0, pretend = 0, frame = 0
+ 756              		@ frame_needed = 0, uses_anonymous_args = 0
+ 757 0000 08B5     		push	{r3, lr}
+ 758              	.LCFI23:
+ 759              		.cfi_def_cfa_offset 8
+ 760              		.cfi_offset 3, -8
+ 761              		.cfi_offset 14, -4
+ 394:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_SPL06
+ 395:User/Func/Src/HWDataAccess.c **** 		return SPL_init();
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 22
+
+
+ 762              		.loc 1 395 3 view .LVU142
+ 763              		.loc 1 395 10 is_stmt 0 view .LVU143
+ 764 0002 FFF7FEFF 		bl	SPL_init
+ 765              	.LVL45:
+ 396:User/Func/Src/HWDataAccess.c **** 	#endif
+ 397:User/Func/Src/HWDataAccess.c **** 
+ 398:User/Func/Src/HWDataAccess.c **** 	return -1;
+ 399:User/Func/Src/HWDataAccess.c **** }
+ 766              		.loc 1 399 1 view .LVU144
+ 767 0006 08BD     		pop	{r3, pc}
+ 768              		.cfi_endproc
+ 769              	.LFE234:
+ 771              		.section	.text.HW_Ecompass_Init,"ax",%progbits
+ 772              		.align	1
+ 773              		.global	HW_Ecompass_Init
+ 774              		.syntax unified
+ 775              		.thumb
+ 776              		.thumb_func
+ 778              	HW_Ecompass_Init:
+ 779              	.LFB235:
+ 400:User/Func/Src/HWDataAccess.c **** 
+ 401:User/Func/Src/HWDataAccess.c **** 
+ 402:User/Func/Src/HWDataAccess.c **** /***************************
+ 403:User/Func/Src/HWDataAccess.c ****  *  E-compass Fucntions - LSM303
+ 404:User/Func/Src/HWDataAccess.c ****  ***************************/
+ 405:User/Func/Src/HWDataAccess.c **** 
+ 406:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 407:User/Func/Src/HWDataAccess.c **** /*!
+ 408:User/Func/Src/HWDataAccess.c ****     @brief  initialize the lsm303 E-compass sensor
+ 409:User/Func/Src/HWDataAccess.c **** 
+ 410:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 411:User/Func/Src/HWDataAccess.c **** 
+ 412:User/Func/Src/HWDataAccess.c **** 	@return 0 if successful
+ 413:User/Func/Src/HWDataAccess.c **** */
+ 414:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 415:User/Func/Src/HWDataAccess.c **** uint8_t HW_Ecompass_Init(void)
+ 416:User/Func/Src/HWDataAccess.c **** {
+ 780              		.loc 1 416 1 is_stmt 1 view -0
+ 781              		.cfi_startproc
+ 782              		@ args = 0, pretend = 0, frame = 0
+ 783              		@ frame_needed = 0, uses_anonymous_args = 0
+ 784 0000 08B5     		push	{r3, lr}
+ 785              	.LCFI24:
+ 786              		.cfi_def_cfa_offset 8
+ 787              		.cfi_offset 3, -8
+ 788              		.cfi_offset 14, -4
+ 417:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_LSM303
+ 418:User/Func/Src/HWDataAccess.c **** 		return LSM303DLH_Init();
+ 789              		.loc 1 418 3 view .LVU146
+ 790              		.loc 1 418 10 is_stmt 0 view .LVU147
+ 791 0002 FFF7FEFF 		bl	LSM303DLH_Init
+ 792              	.LVL46:
+ 419:User/Func/Src/HWDataAccess.c **** 	#endif
+ 420:User/Func/Src/HWDataAccess.c **** 
+ 421:User/Func/Src/HWDataAccess.c **** 	return -1;
+ 422:User/Func/Src/HWDataAccess.c **** }
+ 793              		.loc 1 422 1 view .LVU148
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 23
+
+
+ 794 0006 08BD     		pop	{r3, pc}
+ 795              		.cfi_endproc
+ 796              	.LFE235:
+ 798              		.section	.text.HW_Ecompass_Sleep,"ax",%progbits
+ 799              		.align	1
+ 800              		.global	HW_Ecompass_Sleep
+ 801              		.syntax unified
+ 802              		.thumb
+ 803              		.thumb_func
+ 805              	HW_Ecompass_Sleep:
+ 806              	.LFB236:
+ 423:User/Func/Src/HWDataAccess.c **** 
+ 424:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 425:User/Func/Src/HWDataAccess.c **** /*!
+ 426:User/Func/Src/HWDataAccess.c ****     @brief  SET the lsm303 E-compass sensor to sleep mode
+ 427:User/Func/Src/HWDataAccess.c **** 
+ 428:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 429:User/Func/Src/HWDataAccess.c **** 
+ 430:User/Func/Src/HWDataAccess.c **** 	@return NULL
+ 431:User/Func/Src/HWDataAccess.c **** */
+ 432:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 433:User/Func/Src/HWDataAccess.c **** void HW_Ecompass_Sleep(void)
+ 434:User/Func/Src/HWDataAccess.c **** {
+ 807              		.loc 1 434 1 is_stmt 1 view -0
+ 808              		.cfi_startproc
+ 809              		@ args = 0, pretend = 0, frame = 0
+ 810              		@ frame_needed = 0, uses_anonymous_args = 0
+ 811 0000 08B5     		push	{r3, lr}
+ 812              	.LCFI25:
+ 813              		.cfi_def_cfa_offset 8
+ 814              		.cfi_offset 3, -8
+ 815              		.cfi_offset 14, -4
+ 435:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_LSM303
+ 436:User/Func/Src/HWDataAccess.c **** 		LSM303DLH_Sleep();
+ 816              		.loc 1 436 3 view .LVU150
+ 817 0002 FFF7FEFF 		bl	LSM303DLH_Sleep
+ 818              	.LVL47:
+ 437:User/Func/Src/HWDataAccess.c **** 	#endif
+ 438:User/Func/Src/HWDataAccess.c **** }
+ 819              		.loc 1 438 1 is_stmt 0 view .LVU151
+ 820 0006 08BD     		pop	{r3, pc}
+ 821              		.cfi_endproc
+ 822              	.LFE236:
+ 824              		.section	.text.HW_HRmeter_Init,"ax",%progbits
+ 825              		.align	1
+ 826              		.global	HW_HRmeter_Init
+ 827              		.syntax unified
+ 828              		.thumb
+ 829              		.thumb_func
+ 831              	HW_HRmeter_Init:
+ 832              	.LFB237:
+ 439:User/Func/Src/HWDataAccess.c **** 
+ 440:User/Func/Src/HWDataAccess.c **** /***************************
+ 441:User/Func/Src/HWDataAccess.c ****  *  heart rate meter Fucntions - em7028
+ 442:User/Func/Src/HWDataAccess.c ****  ***************************/
+ 443:User/Func/Src/HWDataAccess.c **** 
+ 444:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 24
+
+
+ 445:User/Func/Src/HWDataAccess.c **** /*!
+ 446:User/Func/Src/HWDataAccess.c ****     @brief  initialize the EM7028 heart rate sensor
+ 447:User/Func/Src/HWDataAccess.c **** 
+ 448:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 449:User/Func/Src/HWDataAccess.c **** 
+ 450:User/Func/Src/HWDataAccess.c **** 	@return 0 if successful
+ 451:User/Func/Src/HWDataAccess.c **** */
+ 452:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 453:User/Func/Src/HWDataAccess.c **** uint8_t HW_HRmeter_Init(void)
+ 454:User/Func/Src/HWDataAccess.c **** {
+ 833              		.loc 1 454 1 is_stmt 1 view -0
+ 834              		.cfi_startproc
+ 835              		@ args = 0, pretend = 0, frame = 0
+ 836              		@ frame_needed = 0, uses_anonymous_args = 0
+ 837 0000 08B5     		push	{r3, lr}
+ 838              	.LCFI26:
+ 839              		.cfi_def_cfa_offset 8
+ 840              		.cfi_offset 3, -8
+ 841              		.cfi_offset 14, -4
+ 455:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_EM7028
+ 456:User/Func/Src/HWDataAccess.c **** 		return EM7028_hrs_init();
+ 842              		.loc 1 456 3 view .LVU153
+ 843              		.loc 1 456 10 is_stmt 0 view .LVU154
+ 844 0002 FFF7FEFF 		bl	EM7028_hrs_init
+ 845              	.LVL48:
+ 457:User/Func/Src/HWDataAccess.c **** 	#endif
+ 458:User/Func/Src/HWDataAccess.c **** 
+ 459:User/Func/Src/HWDataAccess.c **** 	return -1;
+ 460:User/Func/Src/HWDataAccess.c **** 
+ 461:User/Func/Src/HWDataAccess.c **** }
+ 846              		.loc 1 461 1 view .LVU155
+ 847 0006 08BD     		pop	{r3, pc}
+ 848              		.cfi_endproc
+ 849              	.LFE237:
+ 851              		.section	.text.HW_HRmeter_Sleep,"ax",%progbits
+ 852              		.align	1
+ 853              		.global	HW_HRmeter_Sleep
+ 854              		.syntax unified
+ 855              		.thumb
+ 856              		.thumb_func
+ 858              	HW_HRmeter_Sleep:
+ 859              	.LFB238:
+ 462:User/Func/Src/HWDataAccess.c **** 
+ 463:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 464:User/Func/Src/HWDataAccess.c **** /*!
+ 465:User/Func/Src/HWDataAccess.c ****     @brief  SET the EM7028 HR sensor to sleep mode
+ 466:User/Func/Src/HWDataAccess.c **** 
+ 467:User/Func/Src/HWDataAccess.c ****     @param	NULL
+ 468:User/Func/Src/HWDataAccess.c **** 
+ 469:User/Func/Src/HWDataAccess.c **** 	@return NULL
+ 470:User/Func/Src/HWDataAccess.c **** */
+ 471:User/Func/Src/HWDataAccess.c **** /**************************************************************************/
+ 472:User/Func/Src/HWDataAccess.c **** void HW_HRmeter_Sleep(void)
+ 473:User/Func/Src/HWDataAccess.c **** {
+ 860              		.loc 1 473 1 is_stmt 1 view -0
+ 861              		.cfi_startproc
+ 862              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 25
+
+
+ 863              		@ frame_needed = 0, uses_anonymous_args = 0
+ 864 0000 08B5     		push	{r3, lr}
+ 865              	.LCFI27:
+ 866              		.cfi_def_cfa_offset 8
+ 867              		.cfi_offset 3, -8
+ 868              		.cfi_offset 14, -4
+ 474:User/Func/Src/HWDataAccess.c **** 	#if HW_USE_EM7028
+ 475:User/Func/Src/HWDataAccess.c **** 		EM7028_hrs_DisEnable();
+ 869              		.loc 1 475 3 view .LVU157
+ 870 0002 FFF7FEFF 		bl	EM7028_hrs_DisEnable
+ 871              	.LVL49:
+ 476:User/Func/Src/HWDataAccess.c **** 	#endif
+ 477:User/Func/Src/HWDataAccess.c **** }
+ 872              		.loc 1 477 1 is_stmt 0 view .LVU158
+ 873 0006 08BD     		pop	{r3, pc}
+ 874              		.cfi_endproc
+ 875              	.LFE238:
+ 877              		.global	HWInterface
+ 878              		.section	.data.HWInterface,"aw"
+ 879              		.align	2
+ 882              	HWInterface:
+ 883 0000 00000000 		.word	HW_RTC_Get_TimeDate
+ 884 0004 00000000 		.word	HW_RTC_Set_Date
+ 885 0008 00000000 		.word	HW_RTC_Set_Time
+ 886 000c 00000000 		.word	HW_weekday_calculate
+ 887 0010 00000000 		.word	HW_BLE_Init
+ 888 0014 00000000 		.word	HW_BLE_Enable
+ 889 0018 00000000 		.word	HW_BLE_Disable
+ 890 001c 00       		.byte	0
+ 891 001d 000000   		.space	3
+ 892 0020 00000000 		.word	HW_Power_Init
+ 893 0024 00000000 		.word	HW_Power_Shutdown
+ 894 0028 00000000 		.word	HW_Power_BatCalculate
+ 895 002c 00000000 		.word	HW_LCD_Set_Light
+ 896 0030 01       		.byte	1
+ 897 0031 00       		.space	1
+ 898 0032 0000     		.short	0
+ 899 0034 01       		.byte	1
+ 900 0035 00       		.byte	0
+ 901 0036 0000     		.space	2
+ 902 0038 00000000 		.word	HW_MPU_Init
+ 903 003c 00000000 		.word	HW_MPU_Wrist_Enable
+ 904 0040 00000000 		.word	HW_MPU_Wrist_Disable
+ 905 0044 00000000 		.word	HW_MPU_Get_Steps
+ 906 0048 00000000 		.word	HW_MPU_Set_Steps
+ 907 004c 01       		.byte	1
+ 908 004d 1A       		.byte	26
+ 909 004e 43       		.byte	67
+ 910 004f 00       		.space	1
+ 911 0050 00000000 		.word	HW_AHT21_Init
+ 912 0054 00000000 		.word	HW_AHT21_Get_Humi_Temp
+ 913 0058 01       		.byte	1
+ 914 0059 00       		.space	1
+ 915 005a 1300     		.short	19
+ 916 005c 00000000 		.word	HW_Barometer_Init
+ 917 0060 01       		.byte	1
+ 918 0061 00       		.space	1
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 26
+
+
+ 919 0062 2D00     		.short	45
+ 920 0064 00000000 		.word	HW_Ecompass_Init
+ 921 0068 00000000 		.word	HW_Ecompass_Sleep
+ 922 006c 01       		.byte	1
+ 923 006d 00       		.byte	0
+ 924 006e 63       		.byte	99
+ 925 006f 00       		.space	1
+ 926 0070 00000000 		.word	HW_HRmeter_Init
+ 927 0074 00000000 		.word	HW_HRmeter_Sleep
+ 928              		.text
+ 929              	.Letext0:
+ 930              		.file 2 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 931              		.file 3 "D:\\CubeCLT\\STM32CubeCLT_1.20.0\\GNU-tools-for-STM32\\bin/../lib/gcc/arm-none-eabi/13.3.
+ 932              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 933              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 934              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h"
+ 935              		.file 7 "User/Func/Src/../Inc/HWDataAccess.h"
+ 936              		.file 8 "Core/Inc/rtc.h"
+ 937              		.file 9 "BSP/EM7028/em70x8.h"
+ 938              		.file 10 "BSP/LSM303DLH/LSM303.h"
+ 939              		.file 11 "BSP/SPL06_001/SPL06_001.h"
+ 940              		.file 12 "BSP/AHT21/AHT21.h"
+ 941              		.file 13 "BSP/MPU6050/eMPL/inv_mpu_dmp_motion_driver.h"
+ 942              		.file 14 "BSP/MPU6050/eMPL/inv_mpu.h"
+ 943              		.file 15 "BSP/KT6328/kt6328.h"
+ 944              		.file 16 "BSP/POWER/power.h"
+ 945              		.file 17 "BSP/LCD/lcd_init.h"
+ 946              		.file 18 "SYSTEM/sys.h"
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 27
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 HWDataAccess.c
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:21     .text.HW_weekday_calculate:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:27     .text.HW_weekday_calculate:00000000 HW_weekday_calculate
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:136    .text.HW_weekday_calculate:00000064 $d
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:142    .text.HW_MPU_Wrist_Enable:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:148    .text.HW_MPU_Wrist_Enable:00000000 HW_MPU_Wrist_Enable
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:165    .text.HW_MPU_Wrist_Enable:0000000c $d
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:882    .data.HWInterface:00000000 HWInterface
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:170    .text.HW_MPU_Wrist_Disable:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:176    .text.HW_MPU_Wrist_Disable:00000000 HW_MPU_Wrist_Disable
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:193    .text.HW_MPU_Wrist_Disable:0000000c $d
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:198    .text.HW_RTC_Get_TimeDate:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:204    .text.HW_RTC_Get_TimeDate:00000000 HW_RTC_Get_TimeDate
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:299    .text.HW_RTC_Get_TimeDate:00000050 $d
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:304    .text.HW_RTC_Set_Date:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:310    .text.HW_RTC_Set_Date:00000000 HW_RTC_Set_Date
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:332    .text.HW_RTC_Set_Time:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:338    .text.HW_RTC_Set_Time:00000000 HW_RTC_Set_Time
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:360    .text.HW_Power_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:366    .text.HW_Power_Init:00000000 HW_Power_Init
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:386    .text.HW_Power_Shutdown:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:392    .text.HW_Power_Shutdown:00000000 HW_Power_Shutdown
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:412    .text.HW_Power_BatCalculate:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:418    .text.HW_Power_BatCalculate:00000000 HW_Power_BatCalculate
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:439    .text.HW_BLE_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:445    .text.HW_BLE_Init:00000000 HW_BLE_Init
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:465    .text.HW_BLE_Enable:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:471    .text.HW_BLE_Enable:00000000 HW_BLE_Enable
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:491    .text.HW_BLE_Disable:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:497    .text.HW_BLE_Disable:00000000 HW_BLE_Disable
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:517    .text.HW_LCD_Set_Light:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:523    .text.HW_LCD_Set_Light:00000000 HW_LCD_Set_Light
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:545    .text.HW_MPU_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:551    .text.HW_MPU_Init:00000000 HW_MPU_Init
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:572    .text.HW_MPU_Get_Steps:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:578    .text.HW_MPU_Get_Steps:00000000 HW_MPU_Get_Steps
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:622    .text.HW_MPU_Get_Steps:00000024 $d
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:627    .text.HW_MPU_Set_Steps:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:633    .text.HW_MPU_Set_Steps:00000000 HW_MPU_Set_Steps
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:669    .text.HW_MPU_Set_Steps:00000018 $d
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:674    .text.HW_AHT21_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:680    .text.HW_AHT21_Init:00000000 HW_AHT21_Init
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:701    .text.HW_AHT21_Get_Humi_Temp:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:707    .text.HW_AHT21_Get_Humi_Temp:00000000 HW_AHT21_Get_Humi_Temp
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:740    .text.HW_AHT21_Get_Humi_Temp:00000014 $d
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:745    .text.HW_Barometer_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:751    .text.HW_Barometer_Init:00000000 HW_Barometer_Init
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:772    .text.HW_Ecompass_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:778    .text.HW_Ecompass_Init:00000000 HW_Ecompass_Init
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:799    .text.HW_Ecompass_Sleep:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:805    .text.HW_Ecompass_Sleep:00000000 HW_Ecompass_Sleep
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:825    .text.HW_HRmeter_Init:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:831    .text.HW_HRmeter_Init:00000000 HW_HRmeter_Init
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:852    .text.HW_HRmeter_Sleep:00000000 $t
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:858    .text.HW_HRmeter_Sleep:00000000 HW_HRmeter_Sleep
+C:\Users\chen\AppData\Local\Temp\ccty83N6.s:879    .data.HWInterface:00000000 $d
+ARM GAS  C:\Users\chen\AppData\Local\Temp\ccty83N6.s 			page 28
+
+
+
+UNDEFINED SYMBOLS
+HAL_RTC_GetTime
+HAL_RTC_GetDate
+weekday_calculate
+hrtc
+RTC_SetDate
+RTC_SetTime
+Power_Init
+Power_DisEnable
+PowerCalculate
+KT6328_GPIO_Init
+KT6328_Enable
+KT6328_Disable
+LCD_Set_Light
+mpu_dmp_init
+dmp_get_pedometer_step_count
+dmp_set_pedometer_step_count
+AHT_Init
+AHT_Read
+SPL_init
+LSM303DLH_Init
+LSM303DLH_Sleep
+EM7028_hrs_init
+EM7028_hrs_DisEnable
