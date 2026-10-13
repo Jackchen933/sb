@@ -1,0 +1,21 @@
+# Keil 编译产物
+MDK-ARM/output/
+*.uvguix.*
+*.bak
+*.dep
+*.lnp
+*.map
+
+# IDE / 本地配置
+.vscode/
+.claude/
+JLinkLog/
+*.jlink
+
+# SquareLine 临时导出目录
+/1/
+/2/
+.mxproject
+
+# 学习笔记等杂项
+*.html
